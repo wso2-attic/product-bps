@@ -1,0 +1,250 @@
+<!--
+ ~ Copyright (c) WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>org.wso2.carbon</groupId>
+        <artifactId>carbon-products</artifactId>
+        <version>4.2.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wso2.bps</groupId>
+    <artifactId>wso2bps-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>3.5.0-SNAPSHOT</version>
+    <name>WSO2 BPS - Parent</name>
+    <url>http://wso2.org/projects/bps/java</url>
+    <description>WSO2 Business Process Server</description>
+
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <modules>
+        <module>modules/styles</module>
+        <module>modules/samples</module>
+        <module>modules/services</module>
+        <module>modules/features</module>
+        <module>modules/p2-profile-gen</module>
+        <module>modules/distribution</module>
+        <module>modules/org.wso2.stratos.bps.dashboard.ui</module>
+        <module>modules/org.wso2.stratos.bps.login.ui</module>
+        <module>modules/integration</module>
+    </modules>
+
+    <profiles>
+        <profile>
+	    <id>sign</id>
+            <activation>
+                <property>
+                    <name>sign</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.0-alpha-3</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.ui</artifactId>
+                <version>${carbon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.framework</artifactId>
+                <version>1.0.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.osgi.core</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.main</artifactId>
+                <version>1.0.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.osgi.compendium</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.http.servlet</artifactId>
+                <version>2.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.http.helper</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>org.eclipse.equinox.jsp.jasper</artifactId>
+                <version>1.0.1.R33x_v20070816</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>javax.servlet.jsp</artifactId>
+                <version>2.0.0.v200706191603</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.equinox</groupId>
+                <artifactId>org.apache.jasper</artifactId>
+                <version>5.5.17.v200706111724</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt</artifactId>
+                <version>${eclipse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
+                <version>${eclipse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jface</groupId>
+                <artifactId>org.eclipse.jface</artifactId>
+                <version>${eclipse.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <scm>
+        <connection>scm:svn:https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/bps/</connection>
+        <developerConnection>scm:svn:https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/bps/</developerConnection>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>wso2-maven2-repository</id>
+            <url>http://dist.wso2.org/maven2</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+
+    <distributionManagement>
+        <repository>
+            <id>wso2-maven2-repository</id>
+            <name>WSO2 Maven2 Repository</name>
+            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>wso2-maven2-snapshot-repository</id>
+            <name>WSO2 Maven2 Repository</name>
+            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/maven2/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <organization>
+        <name>WSO2 Inc</name>
+        <url>http://wso2.com</url>
+    </organization>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>http://wso2.org/jira/browse/BPS</url>
+    </issueManagement>
+
+    <properties>
+	<carbon.version>4.2.0</carbon.version>
+        <carbon.kernel.version>4.2.0</carbon.kernel.version>
+        <carbon.platform.version>4.2.0</carbon.platform.version>
+        <carbon.platform.version.4.2.1>4.2.1</carbon.platform.version.4.2.1>
+        <carbon.platform.version.4.2.2>4.2.2</carbon.platform.version.4.2.2>
+        <carbon.platform.version.4.2.3>4.2.3</carbon.platform.version.4.2.3>
+        <bps.version>3.5.0-SNAPSHOT</bps.version>
+        <stratos.version>2.2.0</stratos.version>
+        <axis2.aar.maven.plugin.version>1.6.1-wso2v10</axis2.aar.maven.plugin.version>
+        <eclipse.version>3.2.0</eclipse.version>
+        <servlet-api.version>2.4</servlet-api.version>
+        <spring.version>2.5.1.wso2v1</spring.version>
+        <h2.engine.version>${version.h2.engine}</h2.engine.version>
+        <wso2.h2.orbit.version>${h2.engine.version}</wso2.h2.orbit.version>
+        <!--carbon.core.patch.version>4.1.0</carbon.core.patch.version-->
+        <rampart.version>1.6.1-wso2v12</rampart.version>
+        <rampart.mar.version>1.6.1-wso2v12</rampart.mar.version>
+        <rampart.osgi.version>1.6.1.wso2v12</rampart.osgi.version>
+    </properties>
+
+    <mailingLists>
+        <mailingList>
+            <name>WSO2 Users' list</name>
+            <post>mailto:user@wso2.org</post>
+            <archive>http://wso2.markmail.org/search/+list:org%2Ewso2%2Euser</archive>
+            <subscribe>mailto:dev-request@wso2.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:dev-request@wso2.org?subject=unsubscribe</unsubscribe>
+        </mailingList>
+        <mailingList>
+            <name>WSO2 Developers' List</name>
+            <post>mailto:dev@wso2.org</post>
+            <archive>http://wso2.markmail.org/search/+list:org%2Ewso2%2Edev</archive>
+            <subscribe>mailto:user-request@wso2.org?subject=subscribe</subscribe>
+            <unsubscribe>mailto:user-request@wso2.org?subject=unsubscribe</unsubscribe>
+        </mailingList>
+    </mailingLists>
+
+</project>

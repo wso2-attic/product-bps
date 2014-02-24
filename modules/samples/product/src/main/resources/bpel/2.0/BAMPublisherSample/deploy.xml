@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:sample="http://wso2.org/bps/sample">
+  <process name="sample:BAMPublisherSample">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="sample:BAMPublisherSample" port="BAMPublisherSamplePort"/>
+    </provide>
+    <bamServerProfiles>
+    	<profile name="BAMServerProfile" location="conf:/BamProfiles/BAMServerProfile.xml"/>
+    </bamServerProfiles>
+  </process>
+</deploy>

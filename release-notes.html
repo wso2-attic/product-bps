@@ -1,0 +1,227 @@
+<!--
+~ Copyright WSO2, Inc. (http://wso2.com)
+~
+~ Licensed under the Apache License, Version 2.0 (the "License");
+~ you may not use this file except in compliance with the License.
+~ You may obtain a copy of the License at
+~
+~ http://www.apache.org/licenses/LICENSE-2.0
+~
+~ Unless required by applicable law or agreed to in writing, software
+~ distributed under the License is distributed on an "AS IS" BASIS,
+~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~ See the License for the specific language governing permissions and
+~ limitations under the License.
+-->
+<html>
+<head>
+    <meta http-equiv="content-type" content=""></meta>
+    <title>WSO2 Business Process Server @product.version@ Release
+        Notes</title>
+    <link href="./tools/cmd/css/wsas-dist-doc.css" rel="stylesheet"
+          type="text/css" media="all"></link>
+</head>
+
+<body>
+<h1>WSO2 Business Process Server(WSO2 BPS) @product.version@
+    Release Notes</h1>
+
+<h3>January 2014</h3>
+
+<p>
+    WSO2 Business Process Server (BPS) is an easy-to-use Open Source Business Process Server that
+    executes business processes written following WS-BPEL and WS-Human Task standards.
+    WS-BPEL is the defacto standard for composing multiple synchronous and asynchronous
+    web services into collaborative and transactional process flows which increase the flexibility
+    and agility of your Service Oriented Architecture. WS-Human Task allows people activities to be
+    integrated with business processes.. WSO2 BPS is powered by
+    <a href="http://ode.apache.org">Apache ODE</a>
+    and available under<a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Software License
+    v2.0</a>. WSO2 BPS provides a complete Web based graphical console to deploy,
+    manage and monitor business process and process instances.
+</p>
+
+<p>
+    WSO2 BPS is developed on top of the revolutionary Carbon platform (Middleware a' la carte), and is based on
+    the OSGi framework to achieve the better modularity for you SOA. Carbon platform contains lots of new
+    features and many other optional components that can be used to customize or enhance the functionalities
+    provided by BPS to suits you SOA needs. In addition to installing optional components you can uninstall
+    unwanted features without any trouble.
+</p>
+
+
+<p>WSO2 BPS is an opensource product available under the
+    <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache
+        Software
+        License (v2.0)</a>
+    . This includes all of the extra integration and management functionality as well.
+</p>
+
+<h2>Key Features</h2>
+<ul>
+    <li>Deploying Business Processes written in compliance with WS-BPEL 2.0 Standard and BPEL4WS 1.1 standard.</li>
+    <li>Support for Human Interactions in BPEL Processes with WS-Human Task and BPEL4People.</li>
+    <li>Managing BPEL packages, processes and process instances.</li>
+    <li>BPEL Extensions and XPath extensions support</li>
+    <li>Instance recovery(Only supports 'Invoke' activity) support through management console</li>
+    <li>OpenJPA based Data Access Layer For BPEL and Human Tasks</li>
+    <li>WS-Security support for business processes.</li>
+    <li>Support for invoking secured(Using WS-Security) partner services.</li>
+    <li>Support for HumanTask Coordination</li>
+    <li>BPEL Package hot update which facilitate Versioning of BPEL Packages</li>
+    <li>Human Task versioning support </li>
+    <li>E4X based data manipulation support for BPEL assignments</li>
+    <li>Configure external data base system as the BPEL engine's persistence storage</li>
+    <li>Caching support for business processes.</li>
+    <li>Throttling support for business processes.</li>
+    <li>Transport management.</li>
+    <li>Internationalized web based management console.</li>
+    <li>System monitoring.</li>
+    <li>Try-it for business processes.</li>
+    <li>SOAP Message Tracing.</li>
+    <li>End-point configuration mechanism based on WSO2 Unified Endpoints.</li>
+    <li>Customizable server - You can customize the BPS to fit into your
+        exact requirements, by removing certain features or by adding new
+        optional features.
+    </li>
+    <li>Performance improvements in XPath evaluations</li>
+    <li>Clustering support for BPEL engine.</li>
+    <li>Process monitoring with WSO2 Business Activity Monitor</li>
+    <li>JMX monitoring support </li>
+    <li>Migration tool for BPS 3.0.0 to BPS 3.2.0 and BPS 3.1.0 to BPS 3.2.0 </li>
+    <li>Process cleanup tool to remove RETIRED versions of bpel processes </li>
+</ul>
+
+
+<h2>New Features In This Release</h2>
+<ul>
+    <li>Human Task Versioning support</li>
+    <li>Caching support for people queries</li>
+    <li>Command line process cleanup tool to remove RETIRED versions of bpel process </li>
+    <li>Migration tool to move from BPS 3.0.0 to BPS 3.2.0 and BPS 3.1.0 to BPS 3.2.0</li>
+    <li>Instance View Performance Improvements</li>
+    <li>New BPS UI</li>
+    <li>Many other bug fixes</li>
+</ul>
+
+<h2>Issues Fixed for this release</h2>
+<ul>
+    <li>WSO2 BPS related components of the WSO2 Carbon Platform -
+        <a href="https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11711">https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11711</a>
+    </li>
+</ul>
+
+<h2>XML &amp; WS-* Standards Support</h2>
+<ul>
+    <li>BPEL4WS 1.1</li>
+    <li>WS-BPEL 2.0</li>
+    <li>WS-Human Task 1.1</li>
+    <li>BPEL4People 1.1</li>
+    <li>SOAP 1.1/1.2</li>
+    <li>WSDL 1.1</li>
+    <li>WSDL 2.0</li>
+    <li>MTOM, XOP &amp; SOAP with Attachments</li>
+    <li>WS-Addressing</li>
+    <li>WS-Security 1.0/1.1</li>
+    <li>WS-Trust</li>
+    <li>WS-SecureConversation</li>
+    <li>WS-SecurityPolicy</li>
+    <li>WS-ReliableMessaging</li>
+    <li>WS-Policy</li>
+    <li>WS-PolicyAttachment</li>
+    <li>WS-MetadataExchange</li>
+    <li>WS-Transfer</li>
+    <li>XKMS</li>
+</ul>
+
+<h2>Open Source components included in WSO2 BPS/Java</h2>
+<ul>
+    <li>Apache ODE (BPEL)</li>
+    <li>Apache Axis2 (SOAP)</li>
+    <li>Apache Axiom (High performance XML Object Model)</li>
+    <li>Apache Rampart/Apache WSS4J (WS-Security)</li>
+    <li>Apache Rahas(WS-SecureConversation)</li>
+    <li>Apache Sandesha2 (WS-ReliableMessaging)</li>
+    <li>Apache Batik</li>
+    <li>WS-Addressing implementation in Axis2</li>
+    <li>Apache Neethi (WS-Policy)</li>
+    <li>WS-SecurityPolicy implementation in Axis2</li>
+    <li>Apache XML Schema</li>
+    <li>Apache Derby (Database)</li>
+    <li>Apache OpenJPA</li>
+    <li>Embedded Apache Tomcat</li>
+    <li>Spring Framework</li>
+</ul>
+
+
+<h2>Apache Axis2 modules included with WSO2 BPS</h2>
+<ul>
+   <li>Apache Rampart: Supporting WS-Security &amp; WS-Trust</li>
+   <li>Apache Rahas: Supporting WS-SecureConversation</li>
+   <li>Apache Sandesha2: Supporting WS-Reliable Messaging</li>
+   <li>Mex: Supporting WS-MetaDataExchange</li>
+   <li>Throttle: For throttling requests</li>
+   <li>Statistics: For gathering &amp; monitoring statistics</li>
+   <li>SOAP Tracer: For tracing SOAP requests &amp; responses</li>
+   <li>XFer: Supporting WS-Transfer</li>
+   <li>XKMS: Supporting XML Key Management Specification</li>
+</ul>
+
+<h2>Known Issues</h2>
+<ul>
+    <li>WS-Human Task implementation does not support sub tasks and lean tasks.
+        BPEL4People only supports remote tasks and remote notification creation.
+    </li>
+    <li>For a complete list of features to be implemented please refer the list of known issues :
+        <a href="https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11712">https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11712</a>
+    </li>
+
+</ul>
+
+<p></p>
+
+<p></p>
+
+<h2>Reporting Problems</h2>
+<ul>
+    <li>Issues can be reported using the BPS public JIRA available at
+        <a href="https://wso2.org/jira/browse/BPS" target="_blank">
+            https://wso2.org/jira/browse/BPS</a>
+    </li>
+</ul>
+
+<h2>Contact us</h2>
+WSO2 developers can be contacted via the mailing list:
+<a href="mailto:dev@wso2.org">dev@wso2.org</a>
+<br></br>
+For details on subscriptions see
+<a href="http://wso2.org/mail">
+    http://wso2.org/mail</a>
+<br></br>
+
+<h2>Support</h2>
+
+<p>
+    We are committed to ensuring that your enterprise middleware deployment is completely supported from
+    evaluation to production. Our unique approach ensures that all support leverages our open development
+    methodology and is provided by the very same engineers who build the technology.
+    <br/>
+    <br/>
+
+    For more details and to take advantage of this unique opportunity please visit
+    <a target="_blank" href="http://wso2.com/support/">http://wso2.com/support/</a>
+</p>
+
+<p> For more information about WSO2 BPS, please see
+    <a href="http://wso2.com/products/business-process-server/" target="_blank">http://wso2.com/products/business-process-server/</a>
+</p>
+
+
+<p>Thank you for your interest in WSO2 BPS</p>
+<strong>
+    <em>- The WSO2 BPS Team -</em>
+</strong>
+<hr></hr>
+
+</body>
+</html>

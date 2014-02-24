@@ -1,0 +1,25 @@
+How to run this sample
+
+Deploy this sample in BPS. 
+
+In the BPS.xml , enable bam publisher extension as follows.
+
+<tns:ExtensionBundles>
+     <tns:runtimes>
+         <tns:runtime class="org.wso2.carbon.bpel.bam.publisher.BAMPublisherExtensionBundle"/>
+     </tns:runtimes>
+</tns:ExtensionBundles>
+
+BAM Server profile is configured to publish the received variable data to bam. 
+You need to have bam server up, and runing , inorder for the sample to work properly.
+
+This sample publishes the same data that is published by the KPI sample in bam2. Hence the same
+toolbox can be used to visualise the data published.
+
+With enableLoadBalancing attribute in Connection element, you can define whether to use the LoadBalancing data
+publisher or Async data publisher. 
+
+When the enableLoadBalancing=false, it will use aysnc data publisher and it will only publish data to one bam 
+server. When enableLoadBalancing=true, you can publish data to multiple bam servers in a round robin manner. For
+that scenario, you can configure mulitple bam publishing urls in a comma seperated manner. 
+
