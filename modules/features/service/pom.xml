@@ -40,33 +40,27 @@
         <!--module>org.wso2.stratos.bps.samples.utils.feature</module-->
     </modules>
 
-    <dependencyManagement>
         <dependencies>
             <!-- Dependencies for org.wso2.stratos.bps.styles.feature -->
             <dependency>
             	<groupId>org.wso2.bps</groupId>
             	<artifactId>org.wso2.stratos.bps.styles</artifactId>
-            	<version>${project.version}</version>
-            </dependency>
+             </dependency>
             <!-- Dependencies for org.wso2.stratos.bps.dashboard.ui.feature -->
              <dependency>
                 <groupId>org.wso2.bps</groupId>
                 <artifactId>org.wso2.stratos.bps.dashboard.ui</artifactId>
-                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.ui.menu.stratos</artifactId>
-                <version>${stratos.version}</version>
             </dependency>
             <!-- Dependencies for org.wso2.stratos.bps.login.ui.feature -->
             <dependency>
                 <groupId>org.wso2.bps</groupId>
                 <artifactId>org.wso2.stratos.bps.login.ui</artifactId>
-                <version>${project.version}</version>
             </dependency>
         </dependencies>
-    </dependencyManagement>
 
 </project>
 
