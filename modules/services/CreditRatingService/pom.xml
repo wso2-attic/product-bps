@@ -18,11 +18,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.wso2.bps</groupId>
         <artifactId>sample-services</artifactId>
         <version>3.5.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>CreditRatingService</artifactId>
     <packaging>aar</packaging>
     <name>WSO2 BPS - CreditRatingService Service</name>
@@ -94,29 +96,22 @@
         <dependency>
             <groupId>org.apache.axis2.wso2</groupId>
             <artifactId>axis2</artifactId>
-            <version>${axis2.osgi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.rampart.wso2</groupId>
             <artifactId>rampart-policy</artifactId>
-            <version>${rampart.osgi.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.rampart.wso2</groupId>
             <artifactId>rampart-trust</artifactId>
-            <version>${rampart.osgi.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.rampart.wso2</groupId>
             <artifactId>rampart-core</artifactId>
-            <version>${rampart.osgi.version}</version>
         </dependency>
-		<dependency>
-			<groupId>org.apache.ws.commons.axiom.wso2</groupId>
-			<artifactId>axiom</artifactId>
-			<version>${axiom.osgi.version}</version>
-		</dependency>
+	<dependency>
+            <groupId>org.apache.ws.commons.axiom.wso2</groupId>
+            <artifactId>axiom</artifactId>
+	</dependency>
     </dependencies>
 </project>
