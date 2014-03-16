@@ -51,6 +51,7 @@
         </dependency>
         <dependency>
             <groupId>wsdl4j.wso2</groupId>
+            <artifactId>wsdl4j</artifactId>
         </dependency>
     </dependencies>
     <build>
