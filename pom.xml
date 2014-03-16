@@ -181,6 +181,26 @@
             <artifactId>xmlbeans</artifactId>
             <version>${orbit.version.org.apache.xmlbeans.wso2.xmlbeans}</version>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.registry.resource.stub</artifactId>
+            <version>${carbon.platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.authenticator.stub</artifactId>
+            <version>${carbon.kernel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.utils</artifactId>
+            <version>${carbon.kernel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2.wso2</groupId>
+            <artifactId>axis2</artifactId>
+            <version>${axis2.osgi.version}</version>
+        </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -313,6 +333,7 @@
         <bouncycastle.version>132</bouncycastle.version>
 	<version.commons.logging>1.1.1</version.commons.logging>
 	<orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1</orbit.version.org.apache.xmlbeans.wso2.xmlbeans>
+        <axis2.osgi.version>1.6.1.wso2v10</axis2.osgi.version>
     </properties>
 
     <mailingLists>

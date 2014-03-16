@@ -34,7 +34,6 @@
         <dependency>
             <groupId>org.apache.axis2.wso2</groupId>
             <artifactId>axis2</artifactId>
-            <version>${axis2.osgi.version}</version>
         </dependency>
     </dependencies>
 
@@ -119,8 +118,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            
+            </plugin>            
         </plugins>
     </build>
 </project>
