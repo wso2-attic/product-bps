@@ -34,40 +34,31 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.axis2.wso2</groupId>
-			<artifactId>axis2</artifactId>
-            <version>${axis2.osgi.version}</version>
+	    <artifactId>axis2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.rampart.wso2</groupId>
             <artifactId>rampart-policy</artifactId>
-            <version>${rampart.osgi.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.rampart.wso2</groupId>
             <artifactId>rampart-trust</artifactId>
-            <version>${rampart.osgi.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.rampart.wso2</groupId>
             <artifactId>rampart-core</artifactId>
-            <version>${rampart.osgi.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>${version.commons.logging}</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.core</artifactId>
-            <version>4.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.utils</artifactId>
-            <version>4.0.2</version>
         </dependency>
     </dependencies>
 
@@ -81,8 +72,6 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-
-
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -127,5 +116,4 @@
     </properties>
 
 </project>
-
 
