@@ -41,10 +41,10 @@
         <module>modules/services</module>
         <!--module>modules/features</module>
         <module>modules/p2-profile-gen</module>
-        <module>modules/distribution</module>
+        <module>modules/distribution</module-->
         <module>modules/org.wso2.stratos.bps.dashboard.ui</module>
         <module>modules/org.wso2.stratos.bps.login.ui</module>
-        <module>modules/integration</module-->
+        <!--module>modules/integration</module-->
     </modules>
 
     <profiles>
@@ -459,6 +459,7 @@
 	<wsdl4j.wso2.version>1.6.2.wso2v3</wsdl4j.wso2.version>
         <rampart.osgi.version>1.6.1.wso2v10</rampart.osgi.version>
 	<commons-io.wso2.version>2.0.0.wso2v1</commons-io.wso2.version>
+        <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
     </properties>
 
     <mailingLists>
