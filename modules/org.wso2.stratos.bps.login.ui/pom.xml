@@ -31,9 +31,7 @@
     <name>WSO2 Stratos BPS - Login User Interface</name>
 
     <build>
-
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -41,8 +39,7 @@
                     <source>1.5</source>
                     <target>1.5</target>
                 </configuration>
-            </plugin>
-	    
+            </plugin>   
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -85,18 +82,16 @@
         </plugins>
     </build>
 
-    <dependencies>
-
-       
+    <dependencies>       
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.ui</artifactId>
-	    <version>${carbon.version}</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.core</artifactId>
-	    <version>${carbon.version}</version>
         </dependency>       
     </dependencies>
+
 </project>
+
