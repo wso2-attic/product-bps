@@ -35,19 +35,16 @@
         <dependency>
             <groupId>bouncycastle</groupId>
             <artifactId>bcprov-jdk15</artifactId>
-            <version>${bouncycastle.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.h2database.wso2</groupId>
             <artifactId>h2-database-engine</artifactId>
-            <version>${wso2.h2.orbit.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.rampart</groupId>
             <artifactId>rampart</artifactId>
-            <version>${rampart.mar.version}</version>
             <type>mar</type>
         </dependency>
 
@@ -57,13 +54,6 @@
         <!--<version>05</version>-->
         <!--</dependency>-->
     </dependencies>
-
-    <properties>
-        <maven.build.timestamp.format>dd MMM yyyy</maven.build.timestamp.format>
-        <buildNumber>${maven.build.timestamp}</buildNumber>
-        <product.version>${project.parent.version}</product.version>
-    </properties>
-
 
     <build>
         <plugins>
@@ -93,7 +83,7 @@
                                 <artifactItem>
                                     <groupId>org.wso2.carbon</groupId>
                                     <artifactId>wso2carbon-core</artifactId>
-                                    <version>${carbon.version}</version>
+                                    <version>${carbon.kernel.version}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
@@ -126,7 +116,7 @@
                                 import org.w3c.dom.Element
 
                                 def axis2XML = new
-                                File("$pom.basedir/target/wso2carbon-core-${carbon.version}/repository/conf/axis2.xml");
+                                File("$pom.basedir/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/axis2.xml");
                                 if (axis2XML.exists()) {
                                 println "###### Editing axis2.xml of root tenant. ######";
                                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -154,7 +144,7 @@
                                 OutputStream f0;
                                 def buf = outputXML.getBytes();
                                 f0 = new
-                                FileOutputStream("$pom.basedir/target/wso2carbon-core-${carbon.version}/repository/conf/axis2.xml");
+                                FileOutputStream("$pom.basedir/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/axis2.xml");
                                 for (int i = 0; i &lt; buf.length; i++) {
                                 f0.write(buf[i]);
                                 }
@@ -345,7 +335,7 @@
                                 <delete dir="target/archive-tmp"/>
                                 <delete dir="target/dependency-maven-plugin-markers"/>
                                 <delete dir="target/maven-archiver"/>
-                                <delete dir="target/wso2carbon-core-${carbon.version}"/>
+                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}"/>
                                 <delete file="target/${project.artifactId}-${project.version}.jar"/>
                                 <delete dir="target/sources"/>
                                 <delete dir="target/site"/>

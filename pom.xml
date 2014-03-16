@@ -150,6 +150,22 @@
                 <artifactId>org.eclipse.jface</artifactId>
                 <version>${eclipse.version}</version>
             </dependency>
+        <dependency>
+            <groupId>bouncycastle</groupId>
+            <artifactId>bcprov-jdk15</artifactId>
+            <version>${bouncycastle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database.wso2</groupId>
+            <artifactId>h2-database-engine</artifactId>
+            <version>${wso2.h2.orbit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.rampart</groupId>
+            <artifactId>rampart</artifactId>
+            <version>${rampart.mar.version}</version>
+            <type>mar</type>
+        </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -262,7 +278,7 @@
 
     <properties>
 	<carbon.platform.version>4.3.0-SNAPSHOT</carbon.version>
-        <carbon.kernel.version>4.2.0</carbon.kernel.version>
+        <carbon.kernel.version>4.3.0-SNAPSHOT</carbon.kernel.version>
         <previous.version>4.2.0</previous.version>
         <carbon.platform.version.4.2.1>4.2.1</carbon.platform.version.4.2.1>
         <carbon.platform.version.4.2.2>4.2.2</carbon.platform.version.4.2.2>
@@ -273,11 +289,12 @@
         <eclipse.version>3.2.0</eclipse.version>
         <servlet-api.version>2.4</servlet-api.version>
         <spring.version>2.5.1.wso2v1</spring.version>
-        <h2.engine.version>${version.h2.engine}</h2.engine.version>
+        <h2.engine.version>1.2.140.wso2v3</h2.engine.version>
         <wso2.h2.orbit.version>${h2.engine.version}</wso2.h2.orbit.version>
         <rampart.version>1.6.1-wso2v12</rampart.version>
         <rampart.mar.version>1.6.1-wso2v12</rampart.mar.version>
         <rampart.osgi.version>1.6.1.wso2v12</rampart.osgi.version>
+        <bouncycastle.version>132</bouncycastle.version>
     </properties>
 
     <mailingLists>
