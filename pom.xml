@@ -19,13 +19,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <parent>
-        <groupId>org.wso2.carbon</groupId>
-        <artifactId>carbon-products</artifactId>
-        <version>4.2.0</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.bps</groupId>
     <artifactId>wso2bps-parent</artifactId>
@@ -166,6 +159,11 @@
     </scm>
 
     <repositories>
+        <!-- Before adding ANYTHING in here, please start a discussion on the dev list.
+             Ideally the Axis2 build should only use Maven central (which is available
+             by default) and nothing else. We had troubles with other repositories in
+             the past. Therefore configuring additional repositories here should be
+             considered very carefully. -->
         <repository>
             <id>wso2-nexus</id>
             <name>WSO2 internal Repository</name>
@@ -176,26 +174,79 @@
                 <checksumPolicy>ignore</checksumPolicy>
             </releases>
         </repository>
+
+        <repository>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>wso2.snapshots</id>
+            <name>WSO2 Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
-            <id>wso2-maven2-repository</id>
-            <url>http://dist.wso2.org/maven2</url>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>wso2.snapshots</id>
+            <name>Apache Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
         </pluginRepository>
     </pluginRepositories>
 
-
     <distributionManagement>
         <repository>
-            <id>wso2-maven2-repository</id>
-            <name>WSO2 Maven2 Repository</name>
-            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/maven2/</url>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
         </repository>
+
         <snapshotRepository>
-            <id>wso2-maven2-snapshot-repository</id>
-            <name>WSO2 Maven2 Repository</name>
-            <url>scp://dist.wso2.org/home/httpd/dist.wso2.org/maven2/</url>
+            <id>wso2.snapshots</id>
+            <name>WSO2 Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -224,7 +275,6 @@
         <spring.version>2.5.1.wso2v1</spring.version>
         <h2.engine.version>${version.h2.engine}</h2.engine.version>
         <wso2.h2.orbit.version>${h2.engine.version}</wso2.h2.orbit.version>
-        <!--carbon.core.patch.version>4.1.0</carbon.core.patch.version-->
         <rampart.version>1.6.1-wso2v12</rampart.version>
         <rampart.mar.version>1.6.1-wso2v12</rampart.mar.version>
         <rampart.osgi.version>1.6.1.wso2v12</rampart.osgi.version>
