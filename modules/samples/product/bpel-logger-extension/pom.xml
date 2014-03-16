@@ -35,17 +35,14 @@
         <dependency>
             <groupId>org.apache.ode.wso2</groupId>
             <artifactId>ode</artifactId>
-            <version>${orbit.version.ode}</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>${version.commons.logging}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlbeans.wso2</groupId>
             <artifactId>xmlbeans</artifactId>
-            <version>${orbit.version.org.apache.xmlbeans.wso2.xmlbeans}</version>
         </dependency>
     </dependencies>
 

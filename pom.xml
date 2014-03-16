@@ -176,6 +176,11 @@
             <artifactId>commons-logging</artifactId>
             <version>${version.commons.logging}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.xmlbeans.wso2</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>${orbit.version.org.apache.xmlbeans.wso2.xmlbeans}</version>
+        </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -307,6 +312,7 @@
         <rampart.osgi.version>1.6.1.wso2v12</rampart.osgi.version>
         <bouncycastle.version>132</bouncycastle.version>
 	<version.commons.logging>1.1.1</version.commons.logging>
+	<orbit.version.org.apache.xmlbeans.wso2.xmlbeans>2.3.0.wso2v1</orbit.version.org.apache.xmlbeans.wso2.xmlbeans>
     </properties>
 
     <mailingLists>
