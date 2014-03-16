@@ -277,7 +277,7 @@
     </issueManagement>
 
     <properties>
-	<carbon.platform.version>4.3.0-SNAPSHOT</carbon.version>
+	<carbon.platform.version>4.3.0-SNAPSHOT</carbon.platform.version>
         <carbon.kernel.version>4.3.0-SNAPSHOT</carbon.kernel.version>
         <previous.version>4.2.0</previous.version>
         <carbon.platform.version.4.2.1>4.2.1</carbon.platform.version.4.2.1>
