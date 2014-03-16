@@ -60,7 +60,7 @@
                         </configuration>
                     </execution>
                      
-		<execution>
+		<!--execution>
                         <id>2-unpack-kernel-patch</id>
                         <phase>test</phase>
                         <goals>
@@ -110,7 +110,7 @@
                                 </artifactItem>
                             	</artifactItems>
                         </configuration>
-		</execution>
+		</execution-->
 
                     <execution>
                         <id>unpack-equinox-executable</id>
@@ -170,7 +170,7 @@
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.service.mgt.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.transport.mgt.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.message.flows.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.sts.feature:${carbon.platform.version}</featureArtifactDef>
+                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.sts.feature:${previous.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.tryit.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.wsdl.tools.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.datasource.server.feature:${previous.version}</featureArtifactDef>
@@ -250,7 +250,7 @@
                             <productConfigurationFile>${basedir}/carbon.product</productConfigurationFile>
                             <metadataRepository>file:${basedir}/target/p2-repo</metadataRepository>
                             <artifactRepository>file:${basedir}/target/p2-repo</artifactRepository>
-                            <targetPath>file:${basedir}/target/wso2carbon-core-4.2.0/repository/components</targetPath>
+                            <targetPath>file:${basedir}/target/wso2carbon-core-${carbon.kernel.version}/repository/components</targetPath>
                             <profile>worker</profile>
                         </configuration>
                     </execution>
@@ -265,7 +265,7 @@
                             <metadataRepository>file:${basedir}/target/p2-repo</metadataRepository>
                             <artifactRepository>file:${basedir}/target/p2-repo</artifactRepository>
                             <destination>
-                                ${basedir}/target/wso2carbon-core-4.2.0/repository/components
+                                ${basedir}/target/wso2carbon-core-${carbon.kernel.version}/repository/components
                             </destination>
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
@@ -331,11 +331,11 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.sts.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${previous.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.tryit.feature.group</id>
-                                    <version>${carbon.platform.version.4.2.1}</version>
+                                    <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.wsdl.tools.feature.group</id>
@@ -603,7 +603,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.sts.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${previous.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.tryit.feature.group</id>
