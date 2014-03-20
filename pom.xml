@@ -442,8 +442,14 @@
         <eclipse.version>3.2.0</eclipse.version>
         <servlet-api.version>2.4</servlet-api.version>
         <spring.version>2.5.1.wso2v1</spring.version>
+
+        <!-- H2 Database Engine -->
         <h2.engine.version>1.2.140.wso2v3</h2.engine.version>
         <wso2.h2.orbit.version>${h2.engine.version}</wso2.h2.orbit.version>
+        <orbit.version.h2.engine>1.2.140.wso2v3</orbit.version.h2.engine>
+        <exp.pkg.version.h2.engine>1.2.140.wso2v3</exp.pkg.version.h2.engine>
+        <imp.pkg.version.h2.engine>[1.2.140.wso2v3, 2)</imp.pkg.version.h2.engine>
+
         <rampart.version>1.6.1-wso2v12</rampart.version>
         <rampart.mar.version>1.6.1-wso2v12</rampart.mar.version>
         <rampart.osgi.version>1.6.1.wso2v12</rampart.osgi.version>
