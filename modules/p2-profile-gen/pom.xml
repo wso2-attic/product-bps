@@ -60,58 +60,6 @@
                         </configuration>
                     </execution>
                      
-		<!--execution>
-                        <id>2-unpack-kernel-patch</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0001</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0002</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-	               		<artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0003</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-	               		<artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0004</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-	               		<artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>WSO2-CARBON-PATCH-4.2.0</artifactId>
-                                    <version>0005</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                            	</artifactItems>
-                        </configuration>
-		</execution-->
-
                     <execution>
                         <id>unpack-equinox-executable</id>
                         <phase>test</phase>
@@ -171,10 +119,8 @@
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.service.mgt.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.transport.mgt.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.message.flows.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.sts.feature:${previous.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.tryit.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.wsdl.tools.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.datasource.server.feature:${carbon.platform.version.4.2.1}</featureArtifactDef>
+                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.datasource.server.feature:${carbon.platform.version}</featureArtifactDef>
 
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.ndatasource.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.ndatasource.ui.feature:${carbon.platform.version}</featureArtifactDef>
@@ -202,14 +148,22 @@
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.ntask.feature:${carbon.platform.version}</featureArtifactDef>
 
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.attachment.mgt.feature:${carbon.platform.version}</featureArtifactDef>
-                                <!--featureArtifactDef>org.wso2.carbon:org.wso2.carbon.stratos.usage.agent.feature:${stratos.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.stratos.throttling.agent.feature:${stratos.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.stratos.deployment.feature:${stratos.version}</featureArtifactDef>
-			        <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.load.balance.agent.server.feature:${stratos.version}</featureArtifactDef-->
-                        	<!--
-				<featureArtifactDef>org.wso2.carbon:org.wso2.carbon.reporting.server.feature:${carbon.platform.version.4.2.1}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.reporting.ui.feature:${carbon.platform.version}</featureArtifactDef>
-				-->
+                                
+				                                <!--Stratos features -->
+                                <featureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.tenant.common.feature:${carbon.platform.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.tenant.usage.agent.feature:${carbon.platform.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.tenant.throttling.agent.feature:${carbon.platform.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon:org.wso2.carbon.tenant.deployment.feature:${carbon.platform.version}
+                                </featureArtifactDef>
+
+
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.event.common.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.event.server.feature:${carbon.platform.version}</featureArtifactDef>
 				<featureArtifactDef>org.wso2.carbon:org.wso2.carbon.identity.authenticator.saml2.sso.server.feature:${carbon.platform.version}</featureArtifactDef>
@@ -221,8 +175,6 @@
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.caching.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.rm.feature:${carbon.platform.version}</featureArtifactDef>
 				<featureArtifactDef>org.wso2.carbon:org.wso2.carbon.service.mgt.server.feature:${carbon.platform.version}</featureArtifactDef>
-				<featureArtifactDef>org.wso2.carbon:org.wso2.carbon.core.server.feature:${carbon.kernel.version}</featureArtifactDef>
-                                <!--featureArtifactDef>org.wso2.carbon:org.wso2.carbon.stratos.common.feature:${stratos.version}</featureArtifactDef-->
 				
                             </featureArtifacts>
                         </configuration>
@@ -272,10 +224,6 @@
                             </destination>
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
-                                <feature>
-                                    <id>org.wso2.carbon.core.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.logging.mgt.feature.group</id>
                                     <version>${carbon.platform.version}</version>
@@ -341,15 +289,7 @@
                                     <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.sts.feature.group</id>
-                                    <version>${previous.version}</version>
-                                </feature>
-                                <feature>
                                     <id>org.wso2.carbon.tryit.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.wsdl.tools.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
@@ -378,7 +318,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.datasource.server.feature.group</id>
-                                    <version>${carbon.platform.version.4.2.1}</version>
+                                    <version>${carbon.platform.version}</version>
                                 </feature>
 
                                 <feature>
@@ -451,32 +391,22 @@
                                     <id>org.wso2.carbon.attachment.mgt.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-                                <!--feature>
-                                    <id>org.wso2.carbon.stratos.usage.agent.feature.group</id>
-                                    <version>${stratos.version}</version>
-                                </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.stratos.throttling.agent.feature.group</id>
-                                    <version>${stratos.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.stratos.deployment.feature.group</id>
-                                    <version>${stratos.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.load.balance.agent.server.feature.group</id>
-                                    <version>${stratos.version}</version>
-                                </feature-->
-				<!--
-                                <feature>
-                                    <id>org.wso2.carbon.reporting.server.feature.group</id>
-                                    <version>${carbon.platform.version.4.2.1}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.reporting.ui.feature.group</id>
+                                    <id>org.wso2.carbon.tenant.common.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-				-->
+                                <feature>
+                                    <id>org.wso2.carbon.tenant.usage.agent.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.tenant.throttling.agent.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.tenant.deployment.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.common.feature.group</id>
                                     <version>${carbon.platform.version}</version>
@@ -517,10 +447,6 @@
                                     <id>org.wso2.carbon.service.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-		                <!--feature>	
-                                    <id>org.wso2.carbon.stratos.common.feature.group</id>
-                                    <version>${stratos.version}</version>
-                                 </feature-->
 				
                             </features>
                         </configuration>
@@ -617,15 +543,7 @@
                                     <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.sts.server.feature.group</id>
-                                    <version>${previous.version}</version>
-                                </feature>
-                                <feature>
                                     <id>org.wso2.carbon.tryit.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.wsdl.tools.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
@@ -654,7 +572,7 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.datasource.server.feature.group</id>
-                                    <version>${carbon.platform.version.4.2.1}</version>
+                                    <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.ndatasource.feature.group</id>
@@ -711,29 +629,23 @@
                                 <feature>
                                     <id>org.wso2.carbon.attachment.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
-                                </feature>                               
-                                <!--feature>
-                                    <id>org.wso2.carbon.stratos.usage.agent.feature.group</id>
-                                    <version>${stratos.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.stratos.throttling.agent.feature.group</id>
-                                    <version>${stratos.version}</version>
+                                    <id>org.wso2.carbon.tenant.common.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.stratos.deployment.feature.group</id>
-                                    <version>${stratos.version}</version>
+                                    <id>org.wso2.carbon.tenant.usage.agent.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.load.balance.agent.server.feature.group</id>
-                                    <version>${stratos.version}</version>
-                                </feature-->
-				<!--
-                                <feature>
-                                    <id>org.wso2.carbon.reporting.server.feature.group</id>
-                                    <version>${carbon.platform.version.4.2.1}</version>
+                                    <id>org.wso2.carbon.tenant.throttling.agent.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
                                 </feature>
-				-->
+                                <feature>
+                                    <id>org.wso2.carbon.tenant.deployment.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.common.feature.group</id>
                                     <version>${carbon.platform.version}</version>
@@ -770,10 +682,6 @@
                                     <id>org.wso2.carbon.rm.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-		               <!--feature>
-                                    <id>org.wso2.carbon.stratos.common.feature.group</id>
-                                    <version>${stratos.version}</version>
-                               </feature-->				
                             </features>
                         </configuration>
                     </execution>
