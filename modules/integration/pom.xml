@@ -29,7 +29,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>wso2bps-integration-tests</artifactId>
+    <artifactId>wso2bps-integration</artifactId>
     <packaging>pom</packaging>
     <name>WSO2 BPS - Integration Parent</name>
     <description>WSO2 Business Process Server (BPS) Integration Parent</description>
@@ -43,12 +43,11 @@
 
 
     <modules>
-        <module>org.wso2.bps.integration.core</module>
-        <module>org.wso2.bps.bpel.taftests</module>
-        <module>org.wso2.bps.humantask.taftests</module>
-        <module>org.wso2.bps.humantask.coordination.taftests</module>
-        <module>reports</module>
+        <module>tests-common/admin-clients</module>
+        <module>tests-common/integration-test-utils</module>
+        <module>tests-integration/bpel</module>
     </modules>
+
 
 
 </project>
