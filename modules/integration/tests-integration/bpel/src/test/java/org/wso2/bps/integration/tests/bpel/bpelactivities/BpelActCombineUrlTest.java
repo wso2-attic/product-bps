@@ -20,14 +20,6 @@ package org.wso2.bps.integration.tests.bpel.bpelactivities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.wso2.bps.integration.common.clients.bpel.BpelInstanceManagementClient;
 import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.bps.integration.common.clients.bpel.BpelProcessManagementClient;
@@ -35,6 +27,10 @@ import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.RequestSender;
 import org.wso2.carbon.bpel.stub.mgt.types.LimitedInstanceInfoType;
 import org.wso2.carbon.bpel.stub.mgt.types.PaginatedInstanceList;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BpelActCombineUrlTest extends BPSMasterTest {
 

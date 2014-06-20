@@ -44,7 +44,7 @@
         <module>modules/distribution</module>
         <module>modules/org.wso2.stratos.bps.login.ui</module>
         <module>modules/org.wso2.stratos.bps.dashboard.ui</module>
-        <module>modules/integration</module>
+        <!--module>modules/integration</module-->
     </modules>
 
     <profiles>
@@ -413,6 +413,11 @@
                 <scope>test</scope>
                 <type>aar</type>
             </dependency>
+           <dependency>
+             <groupId>org.wso2.carbon</groupId>
+             <artifactId>org.wso2.carbon.integration.common.tests</artifactId>
+             <version>${carbon.platform.version}</version>
+           </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -527,7 +532,7 @@
     <properties>
         <carbon.platform.version>4.3.0-SNAPSHOT</carbon.platform.version>
         <carbon.kernel.version>4.3.0-SNAPSHOT</carbon.kernel.version>
-        <previous.version>4.2.0</previous.version>
+        <!--previous.version>4.2.0</previous.version-->
         <carbon.platform.version.4.2.1>4.2.1</carbon.platform.version.4.2.1>
         <carbon.platform.version.4.2.2>4.2.2</carbon.platform.version.4.2.2>
         <carbon.platform.version.4.2.3>4.2.3</carbon.platform.version.4.2.3>

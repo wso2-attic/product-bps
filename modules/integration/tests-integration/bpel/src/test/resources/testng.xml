@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="BPS Test Suite" parallel="false">
+
+    <test name="BPEL Test" preserve-order="true" verbose="2">
+        <packages>
+            <package name="org.wso2.bps.integration.tests.bpel.bpelactivities"/>
+            <!--<package name="org.wso2.carbon.bps.uploadscenarios"/>-->
+            <!--<package name="org.wso2.carbon.bps.managescenarios"/>-->
+            <!--<package name="org.wso2.carbon.bps.mgtstructuredactivities"/>-->
+        </packages>
+    </test>
+
+</suite>
