@@ -22,12 +22,14 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.bps.integration.common.clients.bpel.BpelUploaderClient;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
 import org.wso2.carbon.integration.common.admin.client.SecurityAdminServiceClient;
 import org.wso2.bps.integration.common.clients.humantasks.HumanTaskUploaderClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 
 import javax.xml.xpath.XPathExpressionException;
+import java.io.File;
 import java.rmi.RemoteException;
 
 public class BPSMasterTest {
@@ -74,7 +76,10 @@ public class BPSMasterTest {
    }
 
     protected void uploadBpelForTest(String bpelFileName) throws Exception {
-//        uploadBpelForTest(bpelFileName, filePath);
+        String dirPath = FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS +
+                File.separator + BPSTestConstants.DIR_BPEL;
+        uploadBpelForTest(bpelFileName, dirPath);
+
     }
 
     protected void uploadBpelForTest(String bpelPackageName, String artifactLocation) throws RemoteException, InterruptedException, PackageManagementException {
@@ -82,8 +87,8 @@ public class BPSMasterTest {
     }
 
     protected void uploadHumanTaskForTest(String humantaskName) throws Exception {
-//        uploadHumanTaskForTest(humantaskName, ProductConstant.SYSTEM_TEST_RESOURCE_LOCATION + BPSTestConstants.DIR_ARTIFACTS
-//                + File.separator + BPSTestConstants.DIR_HUMAN_TASK);
+        uploadHumanTaskForTest(humantaskName, FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS
+                + File.separator + BPSTestConstants.DIR_HUMAN_TASK);
     }
 
     protected void uploadHumanTaskForTest(String taskPackageName, String taskPackageLocation) throws InterruptedException, RemoteException, org.wso2.carbon.humantask.stub.mgt.PackageManagementException {
