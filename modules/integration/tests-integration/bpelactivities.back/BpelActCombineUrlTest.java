@@ -20,9 +20,6 @@ package org.wso2.bps.integration.tests.bpel.bpelactivities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpel.BpelInstanceManagementClient;
 import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.bps.integration.common.clients.bpel.BpelProcessManagementClient;
@@ -55,7 +52,7 @@ public class BpelActCombineUrlTest extends BPSMasterTest {
         requestSender = new RequestSender();
     }
 
-    @BeforeClass(alwaysRun = true, groups = {"wso2.bps", "wso2.bps.bpelactivities"})
+    //@BeforeClass(alwaysRun = true, groups = {"wso2.bps", "wso2.bps.bpelactivities"})
     public void deployArtifact() throws Exception {
         setEnvironment();
         uploadBpelForTest("TestCombineUrl");
@@ -63,7 +60,7 @@ public class BpelActCombineUrlTest extends BPSMasterTest {
         requestSender.waitForProcessDeployment(backEndUrl + "TestCombineUrlService");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "Invike combine URL Bpel")
+    //@Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "Invike combine URL Bpel")
     public void testCombineUrl() throws Exception, RemoteException {
         int instanceCount = 0;
 
@@ -88,7 +85,7 @@ public class BpelActCombineUrlTest extends BPSMasterTest {
         }
     }
 
-    @AfterClass(alwaysRun = true, groups = {"wso2.bps", "wso2.bps.bpelactivities"})
+  //  @AfterClass(alwaysRun = true, groups = {"wso2.bps", "wso2.bps.bpelactivities"})
     public void removeArtifacts()  throws Exception {
         bpelPackageManagementClient.undeployBPEL("TestCombineUrl");
         this.loginLogoutClient.logout();

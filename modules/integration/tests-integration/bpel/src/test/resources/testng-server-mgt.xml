@@ -13,7 +13,7 @@
     <test name="bps-integration-tests-server-mgt" preserve-order="true" parallel="false">
         <classes>
             <class name="org.wso2.bps.integration.tests.server.mgt.BPSServerStartupTestCase"/>
-            <class name="org.wso2.bps.integration.tests.server.mgt.OSGIServerBundleStatusTestCase"/>
+            <!--<class name="org.wso2.bps.integration.tests.server.mgt.OSGIServerBundleStatusTestCase"/>-->
         </classes>
     </test>
 
