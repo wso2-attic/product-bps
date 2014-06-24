@@ -79,6 +79,7 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
         addRoles();
         // 3) Enable HT-Coordination
         log.info("Enable HumanTask coordination and restarting server.");
+        serverConfigurationManager = new ServerConfigurationManager(bpsServer);
         applyCoordinationConfig();
         init();
         requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.CLAIM_APPROVAL_PROCESS_SERVICE);
@@ -118,10 +119,15 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
                 + BPSTestConstants.DIR_CONFIG + File.separator
                 + BPSTestConstants.DIR_HT_COORDINATION + File.separator;
 
-        File humantaskConfig = new File(artifactLocation + BPSTestConstants.HUMANTASK_XML);
-        serverConfigurationManager.applyConfigurationWithoutRestart(humantaskConfig);
-        File b4pConfig = new File(artifactLocation + BPSTestConstants.B4P_COORDINATION_CONFIG_XML);
-        serverConfigurationManager.applyConfiguration(b4pConfig);
+        File humantaskConfigNew = new File(artifactLocation + BPSTestConstants.HUMANTASK_XML);
+        File humantaskConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
+                + BPSTestConstants.HUMANTASK_XML);
+        serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, false);
+
+        File b4pConfigNew = new File(artifactLocation + BPSTestConstants.B4P_COORDINATION_CONFIG_XML);
+        File b4pConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
+                + BPSTestConstants.B4P_COORDINATION_CONFIG_XML);
+        serverConfigurationManager.applyConfiguration(b4pConfigNew,b4pConfigOriginal, true, true);
     }
 
     private void addRoles() throws Exception {
