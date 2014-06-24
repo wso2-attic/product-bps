@@ -1,4 +1,4 @@
-org.wso2.carbon.bpel
+cd org.wso2.carbon.bpel
 org.wso2.carbon.bpel.deployer
 org.wso2.carbon.bpel.cluster.notifier
 org.wso2.carbon.bpel.ui

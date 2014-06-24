@@ -1,12 +1,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="BPS HumanTask TestSuite" parallel="false">
+
+    <parameter name="useDefaultListeners" value="false"/>
     <listeners>
-        <listener class-name="org.wso2.carbon.automation.core.PlatformExecutionManager"/>
-        <listener class-name="org.wso2.carbon.automation.core.PlatformSuiteManager"/>
-        <listener class-name="org.wso2.carbon.automation.core.PlatformAnnotationTransferManager"/>
-        <listener class-name="org.wso2.carbon.automation.core.PlatformTestManager"/>
-        <listener class-name="org.wso2.carbon.automation.core.PlatformReportManager"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestExecutionListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestManagerListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestReportListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestSuiteListener"/>
+        <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestTransformerListener"/>
     </listeners>
 
     <test name="Server Stratup" preserve-order="true" verbose="2">
@@ -17,13 +19,13 @@
     <!-- HumanTask TestCases -->
     <test name="HumanTask Basic Test Cases" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.carbon.bps.humantask.HumanTaskCreationTestCase" />
+            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskCreationTestCase" />
         </classes>
     </test>
 
     <test name="HumanTask People Assignment Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.carbon.bps.humantask.HumanTaskPeopleAssignment" />
+            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskPeopleAssignment" />
         </classes>
     </test>
 </suite>

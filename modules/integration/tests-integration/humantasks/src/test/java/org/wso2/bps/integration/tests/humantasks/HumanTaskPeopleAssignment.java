@@ -31,29 +31,26 @@ import org.wso2.bps.integration.common.clients.humantasks.HumanTaskPackageManage
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.BPSTestConstants;
 import org.wso2.bps.integration.common.utils.RequestSender;
+import org.wso2.carbon.automation.engine.FrameworkConstants;
+import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.*;
 import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
-import org.wso2.carbon.user.mgt.stub.types.carbon.FlaggedName;
+import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 
 import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.assertTrue;
-
 public class HumanTaskPeopleAssignment extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(HumanTaskPeopleAssignment.class);
-
     //Test Automation API Clients
+    private HumanTaskClientApiClient clerk1Client, clerk2Client, clerk3Client, manager1Client, manager3Client;
     private HumanTaskPackageManagementClient humanTaskPackageManagementClient;
-    private HumanTaskClientApiClient humanTaskClientApiClient;
     private UserManagementClient userManagementClient;
-
     private RequestSender requestSender;
-
     private URI taskID = null;
 
     @BeforeClass(alwaysRun = true)
@@ -62,13 +59,53 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
         humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
         requestSender = new RequestSender();
         initialize();
+
+        //initialize HT Client API for Clerk1 user
+        AutomationContext clerk1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "clerk1");
+        LoginLogoutClient clerk1LoginLogoutClient = new LoginLogoutClient(clerk1AutomationContext);
+        String clerk1SessionCookie = clerk1LoginLogoutClient.login();
+
+        clerk1Client = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
+
+
+        //initialize HT Client API for Clerk2 user
+        AutomationContext clerk2AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "clerk2");
+        LoginLogoutClient clerk2LoginLogoutClient = new LoginLogoutClient(clerk2AutomationContext);
+        String clerk2SessionCookie = clerk2LoginLogoutClient.login();
+
+        clerk2Client = new HumanTaskClientApiClient(backEndUrl, clerk2SessionCookie);
+
+
+        //initialize HT Client API for Clerk3 user
+        AutomationContext clerk3AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "clerk3");
+        LoginLogoutClient clerk3LoginLogoutClient = new LoginLogoutClient(clerk3AutomationContext);
+        String clerk3SessionCookie = clerk3LoginLogoutClient.login();
+
+        clerk3Client = new HumanTaskClientApiClient(backEndUrl, clerk3SessionCookie);
+
+        //initialize HT Client API for Manager1 user
+        AutomationContext manager1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "manager1");
+        LoginLogoutClient manager1LoginLogoutClient = new LoginLogoutClient(manager1AutomationContext);
+        String manager1SessionCookie = manager1LoginLogoutClient.login();
+        manager1Client = new HumanTaskClientApiClient(backEndUrl, manager1SessionCookie);
+
+
+        //initialize HT Client API for Manager3 user
+        AutomationContext manager3AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "manager3");
+        LoginLogoutClient manager3LoginLogoutClient = new LoginLogoutClient(manager3AutomationContext);
+        String manager3SessionCookie = manager3LoginLogoutClient.login();
+        manager3Client = new HumanTaskClientApiClient(backEndUrl, manager3SessionCookie);
     }
 
     @BeforeGroups(groups = {"wso2.bps.task.people.assignment"})
     protected void initialize() throws Exception {
         log.info("Initializing HumanTask task creation Test...");
         userManagementClient = new UserManagementClient(backEndUrl, sessionCookie);
-        addUsers();
         addRoles();
         humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
         log.info("Add users success !");
@@ -88,31 +125,11 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
         uploadHumanTaskForTest(HumanTaskTestConstants.CLAIMS_APPROVAL_PACKAGE_ORG_ENTITY_NAME, artifactLocation);
     }
 
-    private void addUsers()
-            throws Exception {
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD, null, null);
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK2_USER, HumanTaskTestConstants.CLERK2_PASSWORD, null, null);
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK3_USER, HumanTaskTestConstants.CLERK3_PASSWORD, null, null);
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK4_USER, HumanTaskTestConstants.CLERK4_PASSWORD, null, null);
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK5_USER, HumanTaskTestConstants.CLERK5_PASSWORD, null, null);
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK6_USER, HumanTaskTestConstants.CLERK6_PASSWORD, null, null);
-
-        //Managers
-        userManagementClient.addUser(HumanTaskTestConstants.MANAGER_USER, HumanTaskTestConstants.MANAGER_PASSWORD, null, null);
-        userManagementClient.addUser(HumanTaskTestConstants.MANAGER2_USER, HumanTaskTestConstants.MANAGER2_PASSWORD, null, null);
-        userManagementClient.addUser(HumanTaskTestConstants.MANAGER3_USER, HumanTaskTestConstants.MANAGER3_PASSWORD, null, null);
-
-        assertTrue(validateUsers(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, "clerk*") == 6,
-                "There should be exactly 2 clerks users in the system!");
-        assertTrue(validateUsers(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE, "manager*") == 3,
-                "The manager was not added to the regional manager's role properly");
-    }
-
     private void addRoles() throws Exception {
         String[] rc1 = new String[]{HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK2_USER, HumanTaskTestConstants.CLERK3_USER};
         String[] rc2 = new String[]{HumanTaskTestConstants.CLERK3_USER, HumanTaskTestConstants.CLERK4_USER, HumanTaskTestConstants.CLERK5_USER};
         String[] rc3 = new String[]{HumanTaskTestConstants.CLERK4_USER, HumanTaskTestConstants.CLERK5_USER, HumanTaskTestConstants.CLERK6_USER};
-        String[] rm1 = new String[]{HumanTaskTestConstants.MANAGER_USER, HumanTaskTestConstants.MANAGER2_USER};
+        String[] rm1 = new String[]{HumanTaskTestConstants.MANAGER1_USER, HumanTaskTestConstants.MANAGER2_USER};
         String[] rm2 = new String[]{HumanTaskTestConstants.MANAGER2_USER, HumanTaskTestConstants.MANAGER3_USER};
 
         userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, rc1,
@@ -131,19 +148,6 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
                 new String[]{"/permission/admin/login",
                         "/permission/admin/manage/humantask"}, false);
     }
-
-    private int validateUsers(String roleName, String filter) throws Exception {
-        int count = 0;
-        FlaggedName[] users = userManagementClient.getUsersOfRole(roleName, filter, -1);
-        String filterNew = filter.replace("*", ".*");
-        for (FlaggedName user : users) {
-            if (user.getItemName() != null && user.getItemName().matches(filterNew)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
 
     @Test(groups = {"wso2.bps.task.createTask"}, description = "Create Task 1", priority = 1, singleThreaded = true)
     public void createTask() throws Exception {
@@ -185,11 +189,8 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
         queryInput.setPageNumber(0);
         queryInput.setSimpleQueryCategory(TSimpleQueryCategory.CLAIMABLE);
 
-        //Login As Clerk1 user
-        loginLogoutClient.logout();
-        String clerk1SessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
-        TTaskSimpleQueryResultSet taskResults = humanTaskClientApiClient.simpleQuery(queryInput);
+        //Query as Clerk1 user
+        TTaskSimpleQueryResultSet taskResults = clerk1Client.simpleQuery(queryInput);
 
         TTaskSimpleQueryResultRow[] rows = taskResults.getRow();
 
@@ -204,18 +205,15 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
         queryInput.setPageNumber(0);
         queryInput.setSimpleQueryCategory(TSimpleQueryCategory.CLAIMABLE);
 
-        //Login As Clerk1 user
-        loginLogoutClient.logout();
-        String clerk1SessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
-        TTaskSimpleQueryResultSet taskResults = humanTaskClientApiClient.simpleQuery(queryInput);
+        //Query as Clerk1 user
+        TTaskSimpleQueryResultSet taskResults = clerk1Client.simpleQuery(queryInput);
 
         TTaskSimpleQueryResultRow[] rows = taskResults.getRow();
         TTaskSimpleQueryResultRow b4pTask = rows[0];
         this.taskID = b4pTask.getId();
-        humanTaskClientApiClient.claim(taskID);
+        clerk1Client.claim(taskID);
 
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskID);
+        TTaskAbstract loadedTask = clerk1Client.loadTask(taskID);
         Assert.assertEquals(loadedTask.getActualOwner().getTUser(), HumanTaskTestConstants.CLERK1_USER,
                 "The assignee should be clerk1 !");
         Assert.assertEquals(loadedTask.getStatus().toString(), "RESERVED",
@@ -225,21 +223,15 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
     @Test(groups = {"wso2.bps.task.claim"}, description = "Clerk2 claim task which is RESERVED", priority = 4, singleThreaded = true, expectedExceptions = AxisFault.class)
     public void clerk2Claim() throws Exception {
         //Clerk2 can't claim this task since clerk1 already claimed it.
-        //Login As Clerk2 user
-        loginLogoutClient.logout();
-        String sessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.CLERK2_USER, HumanTaskTestConstants.CLERK2_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, sessionCookie);
-        humanTaskClientApiClient.claim(this.taskID);
+        //Claim As Clerk2 user
+        clerk2Client.claim(this.taskID);
     }
 
     @Test(groups = {"wso2.bps.task.claim"}, description = "Clerk1 release task", priority = 5, singleThreaded = true)
     public void clerk1Release() throws Exception {
-        //Login As Clerk2 user
-        loginLogoutClient.logout();
-        String sessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, sessionCookie);
-        humanTaskClientApiClient.release(this.taskID);
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskID);
+        //Release As Clerk1 user
+        clerk1Client.release(this.taskID);
+        TTaskAbstract loadedTask = clerk1Client.loadTask(taskID);
         Assert.assertNull(loadedTask.getActualOwner(), "Task has an actual owner. Task Release failed");
         Assert.assertEquals(loadedTask.getStatus().toString(), "READY", "The task status should be READY!");
     }
@@ -247,17 +239,14 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
     @Test(groups = {"wso2.bps.task.claim"}, description = "Clerk2 re-claim task and release", priority = 6, singleThreaded = true)
     public void clerk2ReClaimAndRelease() throws Exception {
         //Login As Clerk2 user
-        loginLogoutClient.logout();
-        String sessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.CLERK2_USER, HumanTaskTestConstants.CLERK2_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, sessionCookie);
-        humanTaskClientApiClient.claim(this.taskID);
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskID);
+        clerk2Client.claim(this.taskID);
+        TTaskAbstract loadedTask = clerk2Client.loadTask(taskID);
         Assert.assertEquals(loadedTask.getActualOwner().getTUser(), HumanTaskTestConstants.CLERK2_USER,
                 "The assignee should be clerk2 !");
         Assert.assertEquals(loadedTask.getStatus().toString(), "RESERVED",
                 "The task status should be RESERVED!");
-        humanTaskClientApiClient.release(this.taskID);
-        loadedTask = humanTaskClientApiClient.loadTask(taskID);
+        clerk2Client.release(this.taskID);
+        loadedTask = clerk2Client.loadTask(taskID);
         Assert.assertNull(loadedTask.getActualOwner(), "Task has an actual owner. Task Release failed");
         Assert.assertEquals(loadedTask.getStatus().toString(), "READY", "The task status should be READY!");
     }
@@ -265,10 +254,7 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
     @Test(groups = {"wso2.bps.task.claim"}, description = "Clerk3 (an excluded owner) try to claim", priority = 7, singleThreaded = true, expectedExceptions = AxisFault.class)
     public void clerk3Claim() throws Exception {
         //Login As Clerk3 user
-        loginLogoutClient.logout();
-        String sessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.CLERK3_USER, HumanTaskTestConstants.CLERK3_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, sessionCookie);
-        humanTaskClientApiClient.claim(this.taskID);
+        clerk3Client.claim(this.taskID);
     }
 
     //TODO test for viewing task
@@ -277,29 +263,24 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
     public void testUnion() throws Exception {
         // All 3 manager users should able to perform administrative task.
 
-        //Login As manager user
+        //Login As manager1 user
         loginLogoutClient.logout();
 
-        String sessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.MANAGER_USER, HumanTaskTestConstants.MANAGER_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, sessionCookie);
         TPriority tPriority = new TPriority();
         tPriority.setTPriority(BigInteger.valueOf(2));
-        humanTaskClientApiClient.setPriority(taskID, tPriority);
+        manager1Client.setPriority(taskID, tPriority);
 
-        TTaskAbstract taskAfterPriorityChange1 = humanTaskClientApiClient.loadTask(taskID);
+        TTaskAbstract taskAfterPriorityChange1 = manager1Client.loadTask(taskID);
         TPriority prio1 = taskAfterPriorityChange1.getPriority();
         int newPriority1Int = prio1.getTPriority().intValue();
         Assert.assertEquals(newPriority1Int, 2, "The new priority should be 2 after the set priority operation");
 
         //Login As manager3 user
-        loginLogoutClient.logout();
-        sessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.MANAGER3_USER, HumanTaskTestConstants.MANAGER3_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, sessionCookie);
         tPriority = new TPriority();
         tPriority.setTPriority(BigInteger.valueOf(3));
-        humanTaskClientApiClient.setPriority(taskID, tPriority);
+        manager3Client.setPriority(taskID, tPriority);
 
-        taskAfterPriorityChange1 = humanTaskClientApiClient.loadTask(taskID);
+        taskAfterPriorityChange1 = manager3Client.loadTask(taskID);
         TPriority prio2 = taskAfterPriorityChange1.getPriority();
         int newPriority1Int2 = prio2.getTPriority().intValue();
         Assert.assertEquals(newPriority1Int2, 3, "The new priority should be 3 after the set priority operation");
@@ -307,15 +288,6 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
 
     @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server", priority = 100, singleThreaded = true)
     public void cleanTestEnvironment() throws Exception {
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK1_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK2_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK3_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK4_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK5_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK6_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.MANAGER_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.MANAGER2_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.MANAGER3_USER);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE_2);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE_3);

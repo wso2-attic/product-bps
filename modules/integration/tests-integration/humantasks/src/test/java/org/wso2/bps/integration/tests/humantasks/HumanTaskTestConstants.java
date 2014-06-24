@@ -34,8 +34,8 @@ public final class HumanTaskTestConstants {
     public static final String CLERK5_PASSWORD = "clerk5password";
     public static final String CLERK6_USER = "clerk6";
     public static final String CLERK6_PASSWORD = "clerk6password";
-    public static final String MANAGER_USER = "manager";
-    public static final String MANAGER_PASSWORD = "managerpassword";
+    public static final String MANAGER1_USER = "manager1";
+    public static final String MANAGER1_PASSWORD = "manager1password";
     public static final String MANAGER2_USER = "manager2";
     public static final String MANAGER2_PASSWORD = "manager2password";
     public static final String MANAGER3_USER = "manager3";

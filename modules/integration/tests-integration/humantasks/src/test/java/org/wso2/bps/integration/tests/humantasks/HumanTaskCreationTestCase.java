@@ -15,8 +15,8 @@
  */
 package org.wso2.bps.integration.tests.humantasks;
 
-import org.apache.axis2.databinding.types.URI;
 import org.apache.axis2.databinding.types.NCName;
+import org.apache.axis2.databinding.types.URI;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,8 +29,8 @@ import org.wso2.bps.integration.common.clients.humantasks.HumanTaskClientApiClie
 import org.wso2.bps.integration.common.clients.humantasks.HumanTaskPackageManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.RequestSender;
+import org.wso2.carbon.automation.engine.FrameworkConstants;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
-import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.humantask.stub.mgt.types.HumanTaskPackageDownloadData;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.*;
 import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
@@ -49,37 +49,48 @@ import static org.testng.Assert.assertTrue;
 public class HumanTaskCreationTestCase extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(HumanTaskCreationTestCase.class);
-
     //Test Automation API Clients
     private BpelPackageManagementClient bpelPackageManagementClient;
     private HumanTaskPackageManagementClient humanTaskPackageManagementClient;
     private BpelInstanceManagementClient instanceManagementClient;
-    private HumanTaskClientApiClient humanTaskClientApiClient;
     private UserManagementClient userManagementClient;
 
+    private HumanTaskClientApiClient  clerk1HumanTaskClientApiClient, manager1HumanTaskClientApiClient;
+
     private RequestSender requestSender;
-    private ServerConfigurationManager serverConfigurationManager;
 
     private URI taskId = null;
-
     private Set<String> taskEvents = new HashSet<String>();
 
-
-    @BeforeClass( alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
+
         init();  //init master class
         bpelPackageManagementClient = new BpelPackageManagementClient(backEndUrl, sessionCookie);
         humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
         requestSender = new RequestSender();
         initialize();
-    }
 
+        //initialize HT Client API for Clerk1 user
+        AutomationContext clerk1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "clerk1");
+        LoginLogoutClient clerk1LoginLogoutClient = new LoginLogoutClient(clerk1AutomationContext);
+        String clerk1SessionCookie = clerk1LoginLogoutClient.login();
+
+        clerk1HumanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
+
+        //initialize HT Client API for Manager1 user
+        AutomationContext manager1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "manager1");
+        LoginLogoutClient manager1LoginLogoutClient = new LoginLogoutClient(manager1AutomationContext);
+        String manager1SessionCookie = manager1LoginLogoutClient.login();
+        manager1HumanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, manager1SessionCookie);
+    }
 
     protected void initialize() throws Exception {
         log.info("Initializing HumanTask task creation Test...");
         userManagementClient = new UserManagementClient(backEndUrl, sessionCookie);
         addRoles();
-        addUsers();
         instanceManagementClient = new BpelInstanceManagementClient(backEndUrl, sessionCookie);
         humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
         log.info("Add users success !");
@@ -88,48 +99,23 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.CLAIM_SERVICE);
     }
 
-    public void deployArtifact()
-            throws Exception {
+    public void deployArtifact() throws Exception {
         uploadBpelForTest("ClaimsApprovalProcess");
         uploadHumanTaskForTest("ClaimsApprovalTask");
     }
 
     private void addRoles() throws Exception {
-        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, null,
+        String[] clerkUsers = new String[]{HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK2_USER,
+                HumanTaskTestConstants.CLERK3_USER};
+        String[] managerUsers = new String[]{HumanTaskTestConstants.MANAGER1_USER, HumanTaskTestConstants.MANAGER2_USER,
+                HumanTaskTestConstants.MANAGER3_USER};
+        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, clerkUsers,
                 new String[]{"/permission/admin/login",
                         "/permission/admin/manage/humantask/viewtasks"}, false);
-        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE, null,
+        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE, managerUsers,
                 new String[]{"/permission/admin/login",
                         "/permission/admin/manage/humantask/viewtasks"}, false);
-    }
 
-
-    private void addUsers()
-            throws Exception {
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD,
-                new String[]{HumanTaskTestConstants.REGIONAL_CLERKS_ROLE}, null);
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK2_USER, HumanTaskTestConstants.CLERK2_PASSWORD,
-                new String[]{HumanTaskTestConstants.REGIONAL_CLERKS_ROLE}, null);
-
-        userManagementClient.addUser(HumanTaskTestConstants.MANAGER_USER, HumanTaskTestConstants.MANAGER_PASSWORD,
-                new String[]{HumanTaskTestConstants.REGIONAL_MANAGER_ROLE}, null);
-
-        assertTrue(validateUsers(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, "clerk*") == 2,
-                "There should be exactly 2 clerks users in the system!");
-        assertTrue(validateUsers(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE, "manager*") == 1,
-                "The manager was not added to the regional manager's role properly");
-    }
-
-    private int validateUsers(String roleName, String filter) throws Exception {
-        int count = 0;
-        FlaggedName[] users = userManagementClient.getUsersOfRole(roleName, filter, -1);
-        String filterNew = filter.replace("*", ".*");
-        for (FlaggedName user : users) {
-            if (user.getItemName() != null && user.getItemName().matches(filterNew)) {
-                count++;
-            }
-        }
-        return count;
     }
 
     @Test(groups = {"wso2.bps.task.create"}, description = "Claims approval test case", priority = 1, singleThreaded = true)
@@ -206,16 +192,7 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         queryInput.setPageNumber(0);
         queryInput.setSimpleQueryCategory(TSimpleQueryCategory.ALL_TASKS);
 
-        //Login As Clerk1 user
-        loginLogoutClient.logout();
-
-        AutomationContext newContext = new AutomationContext("BPS", TestUserMode.SUPER_TENANT_USER);
-        LoginLogoutClient loginLogoutClient1 = new LoginLogoutClient(newContext);
-
-
-        String clerk1SessionCookie = loginLogoutClient1.login();
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
-        TTaskSimpleQueryResultSet taskResults = humanTaskClientApiClient.simpleQuery(queryInput);
+        TTaskSimpleQueryResultSet taskResults = clerk1HumanTaskClientApiClient.simpleQuery(queryInput);
 
         TTaskSimpleQueryResultRow[] rows = taskResults.getRow();
         TTaskSimpleQueryResultRow b4pTask = null;
@@ -235,7 +212,7 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
 
         Assert.assertNotNull(b4pTask, "Task creation has failed");
 
-        String claimApprovalRequest = (String) humanTaskClientApiClient.getInput(b4pTask.getId(), null);
+        String claimApprovalRequest = (String) clerk1HumanTaskClientApiClient.getInput(b4pTask.getId(), null);
 
         Assert.assertNotNull(claimApprovalRequest, "The input of the Task:" +
                 b4pTask.getId() + " is null.");
@@ -244,12 +221,12 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
                 "Unexpected input found for the Task");
 
         //claim the task before starting.
-        humanTaskClientApiClient.claim(b4pTask.getId());
+        clerk1HumanTaskClientApiClient.claim(b4pTask.getId());
 
         //start the task before completing.
-        humanTaskClientApiClient.start(b4pTask.getId());
+        clerk1HumanTaskClientApiClient.start(b4pTask.getId());
 
-        humanTaskClientApiClient.complete(b4pTask.getId(), "<sch:ClaimApprovalResponse xmlns:sch=\"http://www.example.com/claims/schema\">\n" +
+        clerk1HumanTaskClientApiClient.complete(b4pTask.getId(), "<sch:ClaimApprovalResponse xmlns:sch=\"http://www.example.com/claims/schema\">\n" +
                 "         <sch:approved>true</sch:approved>\n" +
                 "      </sch:ClaimApprovalResponse>");
 
@@ -269,13 +246,13 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         queryInput.setPageNumber(0);
         queryInput.setSimpleQueryCategory(TSimpleQueryCategory.ALL_TASKS);
 
-        TTaskSimpleQueryResultSet allTasksList = humanTaskClientApiClient.simpleQuery(queryInput);
+        TTaskSimpleQueryResultSet allTasksList = clerk1HumanTaskClientApiClient.simpleQuery(queryInput);
 
         TTaskSimpleQueryResultRow[] rows = allTasksList.getRow();
 
 
         int taskIdInt = Integer.MAX_VALUE;
-
+        // Getting Task ID created first.
         for (TTaskSimpleQueryResultRow row : rows) {
             int rowTaskId = Integer.parseInt(row.getId().toString());
             if (rowTaskId < taskIdInt) {
@@ -287,14 +264,13 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         Assert.assertEquals(rows.length, 3, "There should be 3 tasks from the query");
     }
 
-
     @Test(groups = {"wso2.bps.task.operate"}, description = "Load Task Test", priority = 5, singleThreaded = true)
     public void testLoadTask()
             throws Exception {
 
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
 
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        TTaskAbstract loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertNotNull(loadedTask, "The task is not created successfully");
         Assert.assertEquals(loadedTask.getId().toString(), taskId.toString(), "The task id is wrong");
 
@@ -305,8 +281,8 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
             throws Exception {
 
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        humanTaskClientApiClient.claim(taskId);
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.claim(taskId);
+        TTaskAbstract loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertEquals(loadedTask.getActualOwner().getTUser(), HumanTaskTestConstants.CLERK1_USER,
                 "The assignee should be clerk1 !");
         Assert.assertEquals(loadedTask.getStatus().toString(), "RESERVED",
@@ -319,24 +295,24 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     @Test(groups = {"wso2.bps.task.operate"}, description = "Task Start without Claim Test", priority = 7, singleThreaded = true)
     public void testTaskStartWithoutClaim() throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        humanTaskClientApiClient.release(taskId);
+        clerk1HumanTaskClientApiClient.release(taskId);
 
         // Now start the task without claiming it explicitly.
-        humanTaskClientApiClient.start(taskId);
+        clerk1HumanTaskClientApiClient.start(taskId);
 
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        TTaskAbstract loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
 
         //2. The task status should go back to READY
         Assert.assertEquals(loadedTask.getStatus().toString(), "IN_PROGRESS",
                 "The task status should be IN_PROGRESS!");
 
-        humanTaskClientApiClient.stop(taskId);
+        clerk1HumanTaskClientApiClient.stop(taskId);
 
-        humanTaskClientApiClient.release(taskId);
+        clerk1HumanTaskClientApiClient.release(taskId);
 
-        humanTaskClientApiClient.claim(taskId);
+        clerk1HumanTaskClientApiClient.claim(taskId);
 
-        loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
 
         Assert.assertNotNull(loadedTask.getActualOwner(),
                 "After claim the task the actual owner should be not null");
@@ -348,8 +324,8 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     public void taskReleaseAndReClaimTask()
             throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        humanTaskClientApiClient.release(taskId);
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.release(taskId);
+        TTaskAbstract loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
 
         //Now as the task have been release
         //1. The actual user value should be empty.
@@ -362,8 +338,8 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         taskEvents.add("release");
 
         // Now reclaim the task to continue with other operations.
-        humanTaskClientApiClient.claim(taskId);
-        TTaskAbstract loadedTaskAferReClaim = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.claim(taskId);
+        TTaskAbstract loadedTaskAferReClaim = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertEquals(loadedTaskAferReClaim.getActualOwner().getTUser(), HumanTaskTestConstants.CLERK1_USER,
                 "The assignee should be clerk1 !");
         Assert.assertEquals(loadedTaskAferReClaim.getStatus().toString(), "RESERVED",
@@ -373,7 +349,7 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     @Test(groups = {"wso2.bps.task.operate"}, description = "Get Task input test", priority = 9, singleThreaded = true)
     public void testTaskGetInput() throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        String input = (String) humanTaskClientApiClient.getInput(taskId, null);
+        String input = (String) clerk1HumanTaskClientApiClient.getInput(taskId, null);
 
         Assert.assertNotNull(input, "The input message cannot be null");
         Assert.assertTrue(input.contains("<ClaimApprovalData xmlns=\"http://www.example.com/claims/schema\" " +
@@ -384,7 +360,7 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         NCName ncName = new NCName();
         ncName.setValue("ClaimApprovalRequest");
 
-        String inputMessageWithPartName = (String) humanTaskClientApiClient.getInput(taskId, ncName);
+        String inputMessageWithPartName = (String) clerk1HumanTaskClientApiClient.getInput(taskId, ncName);
         Assert.assertNotNull(input, "The input message cannot be null");
         Assert.assertTrue(input.contains("<ClaimApprovalData xmlns=\"http://www.example.com/claims/schema\" " +
                 "xmlns:p=\"http://www.example.com/claims/schema\" " +
@@ -399,13 +375,12 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     public void testStartTask()
             throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        humanTaskClientApiClient.start(taskId);
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.start(taskId);
+        TTaskAbstract loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertEquals(loadedTask.getStatus().toString(), "IN_PROGRESS",
                 "The task status should be IN_PROGRESS after starting the task!");
         taskEvents.add("start");
     }
-
 
     @Test(groups = {"wso2.bps.task.operate"}, description = "Task priority change test case", priority = 11, singleThreaded = true)
     public void testChangeTaskPriority() throws Exception {
@@ -413,14 +388,9 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         TPriority newPriority1 = new TPriority();
         newPriority1.setTPriority(BigInteger.valueOf(1));
 
-        //Login As Manager user
-        loginLogoutClient.logout();
-        String managerSessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.MANAGER_USER, HumanTaskTestConstants.MANAGER_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, managerSessionCookie);
+        manager1HumanTaskClientApiClient.setPriority(taskId, newPriority1);
 
-        humanTaskClientApiClient.setPriority(taskId, newPriority1);
-
-        TTaskAbstract taskAfterPriorityChange1 = humanTaskClientApiClient.loadTask(taskId);
+        TTaskAbstract taskAfterPriorityChange1 = manager1HumanTaskClientApiClient.loadTask(taskId);
         TPriority prio1 = taskAfterPriorityChange1.getPriority();
         int newPriority1Int = prio1.getTPriority().intValue();
         Assert.assertEquals(newPriority1Int, 1, "The new priority should be 1 after the set priority " +
@@ -429,9 +399,9 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         TPriority newPriority2 = new TPriority();
         newPriority2.setTPriority(BigInteger.valueOf(10));
 
-        humanTaskClientApiClient.setPriority(taskId, newPriority2);
+        manager1HumanTaskClientApiClient.setPriority(taskId, newPriority2);
 
-        TTaskAbstract taskAfterPriorityChange2 = humanTaskClientApiClient.loadTask(taskId);
+        TTaskAbstract taskAfterPriorityChange2 = manager1HumanTaskClientApiClient.loadTask(taskId);
         TPriority prio2 = taskAfterPriorityChange2.getPriority();
         int newPriority2Int = prio2.getTPriority().intValue();
         Assert.assertEquals(newPriority2Int, 10, "The new priority should be 10 after the set priority " +
@@ -443,20 +413,16 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     public void testStopTask()
             throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        //Login As Clerk1 user
-        loginLogoutClient.logout();
-        String clerk1SessionCookie = "";//authenticatorClient.login(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
 
-        humanTaskClientApiClient.stop(taskId);
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.stop(taskId);
+        TTaskAbstract loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertEquals(loadedTask.getStatus().toString(), "RESERVED",
                 "The task status should be RESERVED after stopping the task!");
         taskEvents.add("stop");
 
         // Now start the task again
-        humanTaskClientApiClient.start(taskId);
-        TTaskAbstract loadedTask2 = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.start(taskId);
+        TTaskAbstract loadedTask2 = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertEquals(loadedTask2.getStatus().toString(), "IN_PROGRESS",
                 "The task status should be IN_PROGRESS after re-starting the task!");
     }
@@ -465,16 +431,16 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     public void testSuspendAndResume()
             throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        humanTaskClientApiClient.suspend(taskId);
-        TTaskAbstract loadedTask = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.suspend(taskId);
+        TTaskAbstract loadedTask = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertEquals(loadedTask.getStatus().toString(), "SUSPENDED",
                 "The task status should be SUSPENDED after suspending the task!");
         Assert.assertEquals(loadedTask.getPreviousStatus().toString(), "IN_PROGRESS",
                 "The task previous status should be IN_PROGRESS");
         taskEvents.add("suspend");
 
-        humanTaskClientApiClient.resume(taskId);
-        TTaskAbstract loadedTaskAfterResume = humanTaskClientApiClient.loadTask(taskId);
+        clerk1HumanTaskClientApiClient.resume(taskId);
+        TTaskAbstract loadedTaskAfterResume = clerk1HumanTaskClientApiClient.loadTask(taskId);
         Assert.assertEquals(loadedTaskAfterResume.getStatus().toString(), "IN_PROGRESS",
                 "The task status should be IN_PROGRESS after resuming the suspended task!");
         taskEvents.add("resume");
@@ -484,33 +450,33 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     public void testTaskCommentOperations() throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
         String commentText1 = "This is a test comment";
-        URI taskCommentId = humanTaskClientApiClient.addComment(taskId, commentText1);
+        URI taskCommentId = clerk1HumanTaskClientApiClient.addComment(taskId, commentText1);
 
         taskEvents.add("addcomment");
 
         Assert.assertNotNull(taskCommentId, "The comment id cannot be null");
 
-        TComment[] taskComments = humanTaskClientApiClient.getComments(taskId);
+        TComment[] taskComments = clerk1HumanTaskClientApiClient.getComments(taskId);
         Assert.assertEquals(taskComments.length, 1, "The task comments size should be 1 after adding only 1 comment");
         Assert.assertEquals(taskComments[0].getId(), taskCommentId, "The task comment id returned should be equal");
 
         String commentText2 = "This is a test comment 2";
-        URI taskCommentId2 = humanTaskClientApiClient.addComment(taskId, commentText2);
+        URI taskCommentId2 = clerk1HumanTaskClientApiClient.addComment(taskId, commentText2);
         Assert.assertNotNull(taskCommentId2, "The comment id cannot be null");
 
-        TComment[] taskComments2 = humanTaskClientApiClient.getComments(taskId);
+        TComment[] taskComments2 = clerk1HumanTaskClientApiClient.getComments(taskId);
         Assert.assertEquals(taskComments2.length, 2, "The task comments size should be 2 after adding 2 comments");
         Assert.assertEquals(taskComments2[1].getId(), taskCommentId2, "The task comment id returned should be equal");
 
         //delete the comments
-        humanTaskClientApiClient.deleteComment(taskId, taskCommentId);
-        TComment[] commentsAfterDeletion = humanTaskClientApiClient.getComments(taskId);
+        clerk1HumanTaskClientApiClient.deleteComment(taskId, taskCommentId);
+        TComment[] commentsAfterDeletion = clerk1HumanTaskClientApiClient.getComments(taskId);
         Assert.assertEquals(commentsAfterDeletion.length, 1, "Only 1 comment should be left");
         Assert.assertEquals(commentsAfterDeletion[0].getId(), taskCommentId2, "Only comment 2 should be left after deleting comment 1");
 
         //delete the left over comment as well
-        humanTaskClientApiClient.deleteComment(taskId, taskCommentId2);
-        TComment[] commentsAfterAllDeletions = humanTaskClientApiClient.getComments(taskId);
+        clerk1HumanTaskClientApiClient.deleteComment(taskId, taskCommentId2);
+        TComment[] commentsAfterAllDeletions = clerk1HumanTaskClientApiClient.getComments(taskId);
         Assert.assertNull(commentsAfterAllDeletions, "There should not be any comments left!");
 
         taskEvents.add("deletecomment");
@@ -521,7 +487,7 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
     @Test(groups = {"wso2.bps.task.operate"}, description = "Task event persistence", priority = 15, singleThreaded = true)
     public void testTaskEventHistory() throws Exception {
         Assert.assertNotNull(taskId, "The task ID has to be set by now!");
-        TTaskEvents tTaskEvents = humanTaskClientApiClient.loadTaskEvents(taskId);
+        TTaskEvents tTaskEvents = clerk1HumanTaskClientApiClient.loadTaskEvents(taskId);
         TTaskEvent[] events = tTaskEvents.getEvent();
 
         Assert.assertNotNull(events, "The task event history cannot be empty after performing task operations");
@@ -553,9 +519,7 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
 
     @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server", priority = 17, singleThreaded = true)
     public void removeArtifacts() throws Exception {
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK1_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.CLERK2_USER);
-        userManagementClient.deleteUser(HumanTaskTestConstants.MANAGER_USER);
+        //Deleting roles.
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE);
         Assert.assertFalse(userManagementClient.roleNameExists(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE));
