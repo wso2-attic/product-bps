@@ -129,18 +129,42 @@
                     </user>
                 </admin>
                 <users>
-                    <user key="userKey1">
+                    <user key="clerk1">
                         <userName>clerk1</userName>
                         <password>clerk1password</password>
                     </user>
-                    <!--<user key="userKey2">-->
-                        <!--<userName>testu2</userName>-->
-                        <!--<password>testu2pass</password>-->
-                    <!--</user>-->
-                    <!--<user key="userKey3">-->
-                        <!--<userName>testu3</userName>-->
-                        <!--<password>testu3pass</password>-->
-                    <!--</user>-->
+                    <user key="clerk2">
+                        <userName>clerk2</userName>
+                        <password>clerk2password</password>
+                    </user>
+                    <user key="clerk3">
+                        <userName>clerk3</userName>
+                        <password>clerk3password</password>
+                    </user>
+                    <user key="clerk4">
+                        <userName>clerk4</userName>
+                        <password>clerk4password</password>
+                    </user>
+                    <user key="clerk5">
+                        <userName>clerk5</userName>
+                        <password>clerk5password</password>
+                    </user>
+                    <user key="clerk6">
+                        <userName>clerk6</userName>
+                        <password>clerk6password</password>
+                    </user>
+                    <user key="manager1">
+                        <userName>manager1</userName>
+                        <password>manager1password</password>
+                    </user>
+                    <user key="manager2">
+                        <userName>manager2</userName>
+                        <password>manager2password</password>
+                    </user>
+                    <user key="manager3">
+                        <userName>manager3</userName>
+                        <password>manager3password</password>
+                    </user>
                 </users>
             </tenant>
         </superTenant>
