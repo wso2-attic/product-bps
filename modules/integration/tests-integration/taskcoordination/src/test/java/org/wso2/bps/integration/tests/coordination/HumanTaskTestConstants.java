@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.bps.humantask.coordination;
+package org.wso2.bps.integration.tests.coordination;
 
 /**
  *
@@ -26,8 +26,8 @@ public final class HumanTaskTestConstants {
     public static final String CLERK1_PASSWORD = "clerk1password";
     public static final String CLERK2_USER = "clerk2";
     public static final String CLERK2_PASSWORD = "clerk2password";
-    public static final String MANAGER_USER = "manager";
-    public static final String MANAGER_PASSWORD = "managerpassword";
+    public static final String MANAGER1_USER = "manager1";
+    public static final String MANAGER1_PASSWORD = "manager1password";
 
     //Credentials for HT-Coordination Test suite
     public static final String HT_COORDINATOR_USER = "htcoor";

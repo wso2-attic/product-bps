@@ -23,43 +23,41 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.wso2.bps.integration.common.clients.bpel.BpelInstanceManagementClient;
+import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
+import org.wso2.bps.integration.common.clients.humantasks.HumanTaskClientApiClient;
+import org.wso2.bps.integration.common.clients.humantasks.HumanTaskPackageManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
-import org.wso2.bps.integration.core.BPSTestConstants;
+import org.wso2.bps.integration.common.utils.BPSTestConstants;
+import org.wso2.bps.integration.common.utils.RequestSender;
 import org.wso2.carbon.authenticator.stub.LogoutAuthenticationExceptionException;
-import org.wso2.carbon.automation.api.clients.bpel.BpelInstanceManagementClient;
-import org.wso2.carbon.automation.api.clients.bpel.BpelPackageManagementClient;
-import org.wso2.carbon.automation.api.clients.humantask.HumanTaskClientApiClient;
-import org.wso2.carbon.automation.api.clients.humantask.HumanTaskPackageManagementClient;
-import org.wso2.carbon.automation.api.clients.user.mgt.UserManagementClient;
-import org.wso2.carbon.automation.core.ProductConstant;
-import org.wso2.carbon.automation.core.RequestSender;
-import org.wso2.carbon.automation.core.utils.serverutils.ServerConfigurationManager;
+import org.wso2.carbon.automation.engine.FrameworkConstants;
+import org.wso2.carbon.automation.engine.context.AutomationContext;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
 import org.wso2.carbon.bpel.stub.mgt.types.InstanceInfoType;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.TSimpleQueryCategory;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.TSimpleQueryInput;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.TTaskSimpleQueryResultRow;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.TTaskSimpleQueryResultSet;
-import org.wso2.carbon.user.mgt.stub.types.carbon.FlaggedName;
+import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
+import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
+import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 
 import java.io.File;
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.testng.Assert.assertTrue;
-
 public class HumanTaskCoordinationTest extends BPSMasterTest {
 
     private static Log log = LogFactory.getLog(HumanTaskCoordinationTest.class);
-
     //Test Automation API Clients
     private BpelPackageManagementClient bpelPackageManagementClient;
     private HumanTaskPackageManagementClient humanTaskPackageManagementClient;
     private BpelInstanceManagementClient instanceManagementClient;
-    private HumanTaskClientApiClient humanTaskClientApiClient;
     private UserManagementClient userManagementClient;
-
+    private HumanTaskClientApiClient clerk1HumanTaskClientApiClient;
     private RequestSender requestSender;
     private ServerConfigurationManager serverConfigurationManager;
 
@@ -77,13 +75,13 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
         log.info("Deploying Artifacts");
         deployArtifact();
         // 2) Adding Users and Roles
-        log.info("Creating uses and roles");
-        setupUsersAndRoles();
+        log.info("Creating user roles");
+        addRoles();
         // 3) Enable HT-Coordination
         log.info("Enable HumanTask coordination and restarting server.");
         applyCoordinationConfig();
         init();
-        requestSender.waitForProcessDeployment(backEndUrl + org.wso2.carbon.bps.humantask.coordination.HumanTaskTestConstants.CLAIM_APPROVAL_PROCESS_SERVICE);
+        requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.CLAIM_APPROVAL_PROCESS_SERVICE);
         requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.CLAIM_SERVICE);
         log.info("BPEL and Humantask services are up and running");
         // Need to re-initialize since we have restarted the server
@@ -91,25 +89,33 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
         humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
         instanceManagementClient = new BpelInstanceManagementClient(backEndUrl, sessionCookie);
         log.info("Server setting up completed.");
+        serverConfigurationManager = new ServerConfigurationManager(bpsServer);
+
+        //initialize HT Client API for Clerk1 user
+        AutomationContext clerk1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "clerk1");
+        LoginLogoutClient clerk1LoginLogoutClient = new LoginLogoutClient(clerk1AutomationContext);
+        String clerk1SessionCookie = clerk1LoginLogoutClient.login();
+
+        clerk1HumanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
     }
 
     public void deployArtifact() throws Exception {
 
-        final String artifactLocation = ProductConstant.SYSTEM_TEST_RESOURCE_LOCATION + BPSTestConstants.DIR_ARTIFACTS
+        final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation()
+                + BPSTestConstants.DIR_ARTIFACTS
                 + File.separator + BPSTestConstants.DIR_HUMAN_TASK + File.separator + BPSTestConstants.DIR_SCENARIOS
                 + File.separator + BPSTestConstants.DIR_HT_COORDINATION;
         uploadBpelForTest(BPSTestConstants.CLAIMS_APPROVAL_PROCESS, artifactLocation);
         uploadHumanTaskForTest(BPSTestConstants.CLAIMS_APPROVAL_TASK, artifactLocation);
     }
 
-
     /**
      * Copy humantask.xml and b4p-coordination-config.xml configuration file and restart server
      */
     private void applyCoordinationConfig() throws Exception {
-        serverConfigurationManager = new ServerConfigurationManager(backEndUrl);
-
-        final String artifactLocation = ProductConstant.SYSTEM_TEST_RESOURCE_LOCATION + BPSTestConstants.DIR_CONFIG + File.separator
+        final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation()
+                + BPSTestConstants.DIR_CONFIG + File.separator
                 + BPSTestConstants.DIR_HT_COORDINATION + File.separator;
 
         File humantaskConfig = new File(artifactLocation + BPSTestConstants.HUMANTASK_XML);
@@ -118,52 +124,16 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
         serverConfigurationManager.applyConfiguration(b4pConfig);
     }
 
-    /**
-     * Add Users and Roles
-     */
-    private void setupUsersAndRoles() throws Exception {
-        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, null,
+    private void addRoles() throws Exception {
+        String[] clerkUsers = new String[]{HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK2_USER};
+        String[] managerUsers = new String[]{HumanTaskTestConstants.MANAGER1_USER};
+        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, clerkUsers,
                 new String[]{"/permission/admin/login",
                         "/permission/admin/manage/humantask/viewtasks"}, false);
-        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE, null,
-                new String[]{"/permission/admin/login",
-                        "/permission/admin/manage/humantask/viewtasks"}, false);
-        userManagementClient.addRole(HumanTaskTestConstants.HT_COORDINATOR_ROLE, null,
+        userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE, managerUsers,
                 new String[]{"/permission/admin/login",
                         "/permission/admin/manage/humantask/viewtasks"}, false);
 
-        //Adding Users
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD,
-                new String[]{HumanTaskTestConstants.REGIONAL_CLERKS_ROLE}, null);
-
-        userManagementClient.addUser(HumanTaskTestConstants.CLERK2_USER, HumanTaskTestConstants.CLERK2_PASSWORD,
-                new String[]{HumanTaskTestConstants.REGIONAL_CLERKS_ROLE}, null);
-
-        userManagementClient.addUser(HumanTaskTestConstants.MANAGER_USER, HumanTaskTestConstants.MANAGER_PASSWORD,
-                new String[]{HumanTaskTestConstants.REGIONAL_MANAGER_ROLE}, null);
-
-        userManagementClient.addUser(HumanTaskTestConstants.HT_COORDINATOR_USER, HumanTaskTestConstants.HT_COORDINATOR_PASSWORD,
-                new String[]{HumanTaskTestConstants.HT_COORDINATOR_ROLE}, null);
-
-        assertTrue(validateUsers(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, "clerk*") == 2,
-                "There should be exactly 2 clerks users in the system!");
-        assertTrue(validateUsers(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE, "manager*") == 1,
-                "The manager was not added to the regional manager's role properly");
-        assertTrue(validateUsers(HumanTaskTestConstants.HT_COORDINATOR_ROLE, "htcoor*") == 1,
-                "htcoor user was not added to the " + HumanTaskTestConstants.HT_COORDINATOR_ROLE + "'s role properly");
-
-    }
-
-    private int validateUsers(String roleName, String filter) throws Exception {
-        int count = 0;
-        FlaggedName[] users = userManagementClient.getUsersOfRole(roleName, filter, -1);
-        String filterNew = filter.replace("*", ".*");
-        for (FlaggedName user : users) {
-            if (user.getItemName() != null && user.getItemName().matches(filterNew)) {
-                count++;
-            }
-        }
-        return count;
     }
 
     @Test(groups = {"wso2.bps.task.create"}, description = "Approve Task", priority = 1, singleThreaded = true)
@@ -181,8 +151,8 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
         String operation = "claimsApprovalProcessOperation";
         String serviceName = "ClaimsApprovalProcessService";
         List<String> expectedOutput = Collections.emptyList();
-        log.info("Calling Service: " + backEndUrl  +  serviceName);
-        requestSender.sendRequest(backEndUrl  +  serviceName, operation, soapBody, 1, expectedOutput, false);
+        log.info("Calling Service: " + backEndUrl + serviceName);
+        requestSender.sendRequest(backEndUrl + serviceName, operation, soapBody, 1, expectedOutput, false);
         Thread.sleep(5000);
 
         instanceManagementClient.listInstances("{http://www.wso2.org/humantask/claimsapprovalprocess.bpel}ClaimsApprovalProcess", 1);
@@ -192,11 +162,7 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
         queryInput.setSimpleQueryCategory(TSimpleQueryCategory.ALL_TASKS);
 
         //Login As Clerk1 user
-        authenticatorClient.logOut();
-        String clerk1SessionCookie = authenticatorClient.login(HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK1_PASSWORD, "localhost");
-        humanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
-
-        TTaskSimpleQueryResultSet taskResults = humanTaskClientApiClient.simpleQuery(queryInput);
+        TTaskSimpleQueryResultSet taskResults = clerk1HumanTaskClientApiClient.simpleQuery(queryInput);
 
         TTaskSimpleQueryResultRow[] rows = taskResults.getRow();
         TTaskSimpleQueryResultRow b4pTask = null;
@@ -217,7 +183,7 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
         // Validating Task
         Assert.assertNotNull(b4pTask, "Task creation has failed");
 
-        String claimApprovalRequest = (String) humanTaskClientApiClient.getInput(b4pTask.getId(), null);
+        String claimApprovalRequest = (String) clerk1HumanTaskClientApiClient.getInput(b4pTask.getId(), null);
 
         Assert.assertNotNull(claimApprovalRequest, "The input of the Task:" + b4pTask.getId() + " is null.");
 
@@ -225,14 +191,14 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
 
         // Perform Task Operation
         // Claim and Start and Complete.
-        humanTaskClientApiClient.claim(b4pTask.getId());
-        humanTaskClientApiClient.start(b4pTask.getId());
-        humanTaskClientApiClient.complete(b4pTask.getId(), "<sch:ClaimApprovalResponse xmlns:sch=\"http://www.example.com/claims/schema\">\n" +
+        clerk1HumanTaskClientApiClient.claim(b4pTask.getId());
+        clerk1HumanTaskClientApiClient.start(b4pTask.getId());
+        clerk1HumanTaskClientApiClient.complete(b4pTask.getId(), "<sch:ClaimApprovalResponse xmlns:sch=\"http://www.example.com/claims/schema\">\n" +
                 "         <sch:approved>true</sch:approved>\n" +
                 "      </sch:ClaimApprovalResponse>");
 
         Thread.sleep(5000);
-        List<String> instances = instanceManagementClient.listInstances("{http://www.wso2.org/humantask/claimsapprovalprocess.bpel}ClaimsApprovalProcess" , 1);
+        List<String> instances = instanceManagementClient.listInstances("{http://www.wso2.org/humantask/claimsapprovalprocess.bpel}ClaimsApprovalProcess", 1);
 
         Assert.assertTrue(instances.size() == 1, "Number of process instances not equal to one.");
         log.info("Waiting for Process instance to Complete.");
@@ -252,14 +218,14 @@ public class HumanTaskCoordinationTest extends BPSMasterTest {
 
     }
 
-
     @AfterClass(alwaysRun = true, description = "Unload packages after test.")
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException, org.wso2.carbon.humantask.stub.mgt.PackageManagementException {
         bpelPackageManagementClient.undeployBPEL("ClaimsApprovalProcess");
         humanTaskPackageManagementClient.unDeployHumanTask("ClaimsApprovalTask", "ApproveClaim");
-        authenticatorClient.logOut();
+        loginLogoutClient.logout();
+        ;
     }
 
 
