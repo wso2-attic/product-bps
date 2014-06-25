@@ -23,6 +23,7 @@ package org.wso2.bps.integration.tests.bpel.bpelactivities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
@@ -46,11 +47,15 @@ public class BPELMultiUploadTest extends BPSMasterTest {
         bpelPackageManagementClient = new BpelPackageManagementClient(backEndUrl, sessionCookie);
     }
 
-    @Test(groups = {"wso2.bps"}, description = "Copy all artifacts test case", priority = 0)
-    public void copyArtifacts() throws Exception {
+    @BeforeClass(alwaysRun = true)
+    public void initialize() throws Exception {
         setEnvironment();
         samples = FileManipulator.getMatchingFiles(FrameworkPathUtil.getSystemResourceLocation() + "artifacts"
                 + File.separator + "bpel", null, "zip");
+    }
+
+    @Test(groups = {"wso2.bps"}, description = "Copy all artifacts test case", priority = 0)
+    public void copyArtifacts() throws Exception {
 
         for (File sample : samples) {
 
@@ -62,7 +67,7 @@ public class BPELMultiUploadTest extends BPSMasterTest {
         }
     }
 
-    @Test(groups = {"wso2.bps"}, description = "Remove all artifacts test case", priority = 0)
+    @Test(groups = {"wso2.bps"}, description = "Remove all artifacts test case", priority = 1)
     public void removeArtifacts() throws InterruptedException, RemoteException, PackageManagementException {
 
         for (File sample : samples) {
