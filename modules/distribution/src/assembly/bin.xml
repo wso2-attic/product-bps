@@ -169,6 +169,11 @@
             <directory>target/samples/humantask</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/samples/humantask</outputDirectory>
         </fileSet>
+        <!-- BPMN Samples-->
+        <fileSet>
+            <directory>target/samples/bpmn</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/samples/bpmn</outputDirectory>
+        </fileSet>
 
         <fileSet>
             <directory>../../modules/samples/product/sample-utils/src/main/scripts</directory>

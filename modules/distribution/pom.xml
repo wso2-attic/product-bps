@@ -185,9 +185,12 @@
                                 <property name="bpelSampleDir" value="target/samples/bpel"/>
                                 <property name="humantaskSampleDir"
                                           value="target/samples/humantask"/>
+                                <property name="bpmnSampleDir"
+                                          value="target/samples/bpmn"/>
                                 <mkdir dir="${tempdir}"/>
                                 <mkdir dir="${bpelSampleDir}"/>
                                 <mkdir dir="${humantaskSampleDir}"/>
+                                <mkdir dir="${bpmnSampleDir}"/>
                                 <zip destfile="target/samples/bpel/CustomerInfo.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CustomerInfo"/>
                                 <zip destfile="target/samples/bpel/LoanProcess.zip"
@@ -305,6 +308,9 @@
                                 <zip destfile="target/samples/humantask/HTWithServiceDescriptorANDUnifiedEndpoint.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint"/>
 
+                                <!--  Copying BPMN sample -->
+                                <zip destfile="target/samples/bpmn/HelloWorld.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
 
                                 <echo message="######### Copying Samples Services are temporary skipped###########"/>
 
