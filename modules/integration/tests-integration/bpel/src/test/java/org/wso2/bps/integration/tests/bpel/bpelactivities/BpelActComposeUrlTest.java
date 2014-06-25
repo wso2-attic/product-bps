@@ -21,6 +21,7 @@ package org.wso2.bps.integration.tests.bpel.bpelactivities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -91,7 +92,7 @@ public class BpelActComposeUrlTest extends BPSMasterTest {
         }
     }
 
-    @AfterTest(alwaysRun = true, groups = {"wso2.bps", "wso2.bps.bpelactivities"})
+    @AfterClass(alwaysRun = true, groups = {"wso2.bps", "wso2.bps.bpelactivities"})
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
