@@ -44,7 +44,7 @@
         <module>modules/distribution</module>
         <module>modules/org.wso2.stratos.bps.login.ui</module>
         <module>modules/org.wso2.stratos.bps.dashboard.ui</module>
-        <!--module>modules/integration</module-->
+        <module>modules/integration</module>
     </modules>
 
     <profiles>
