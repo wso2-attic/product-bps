@@ -169,6 +169,11 @@
             <directory>target/samples/humantask</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/samples/humantask</outputDirectory>
         </fileSet>
+        <!-- BPMN Samples-->
+        <fileSet>
+            <directory>target/samples/bpmn</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/samples/bpmn</outputDirectory>
+        </fileSet>
 
         <fileSet>
             <directory>../../modules/samples/product/sample-utils/src/main/scripts</directory>
@@ -444,6 +449,11 @@
         <file>
             <source>../../modules/samples/product/src/main/scripts/wso2bps-samples.sh</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/bin/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../../modules/distribution/conf/activiti.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
     </files>
