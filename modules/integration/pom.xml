@@ -48,6 +48,7 @@
         <module>tests-integration/bpel</module>
         <module>tests-integration/humantasks</module>
         <module>tests-integration/taskcoordination</module>
+        <module>tests-integration/reports</module>
     </modules>
 
 

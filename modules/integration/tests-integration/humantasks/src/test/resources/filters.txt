@@ -1,5 +1,6 @@
 -*.stub*
 -*.stub_
+-*.stub_4.0.0
 -*.stub-
 -org.eclipse.*
 -*.equinox.*
@@ -14,3 +15,12 @@
 -*transports*
 -org.wso2.carbon.mediation.statistics*
 -*startup*
+-org.oasisOpen*
+-org.w3*
+#-org.wso2.carbon.bpel.b4p*
+-schemaorg_apache*
+-org.wso2.carbon.bpel.skeleton*
+-org.wso2.carbon.bpel.b4p*
+-org.wso2.carbon.humantask.skeleton*
+
+
