@@ -77,12 +77,6 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts</outputDirectory>
         </fileSet>
 
-        <!-- ODE Database Derby + H2 -->
-        <fileSet>
-            <directory>target/database</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/database</outputDirectory>
-        </fileSet>
-
         <fileSet>
             <directory>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/
@@ -244,21 +238,22 @@
                 <include>taskmigrationtool.bat</include>
             </includes>
         </fileSet>
+
         <!--copying bps dbscripts-->
         <fileSet>
-            <directory>sql</directory>
+            <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/bps</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps</outputDirectory>
-            <excludes>
-                <exclude>**/hibernate/**</exclude>
-            </excludes>
+            <!--<excludes>-->
+                <!--<exclude>**/hibernate/**</exclude>-->
+            <!--</excludes>-->
         </fileSet>
         <fileSet>
-            <directory>../../modules/samples/product/process-tools/dbscripts/310_320</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/migration/310_320</outputDirectory>
+            <directory>../../modules/distribution/sql/bpel/upgrade/310_350</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/310_350</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>../../modules/samples/product/process-tools/dbscripts/300_320</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/migration/300_320</outputDirectory>
+            <directory>../../modules/distribution/sql/bpel/upgrade/300_320</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/300_350</outputDirectory>
         </fileSet>
 	
         <!-- copy the landing page webapp -->
@@ -352,8 +347,10 @@
             <filtered>true</filtered>
             <fileMode>744</fileMode>
         </file>
+
+        <!-- copying BPS related configuration files -->
         <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/attachment-management.xml</source>
+            <source>../../modules/distribution/conf/attachment-management.xml</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
@@ -363,26 +360,53 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/b4p-coordination-config.xml</source>
+            <source>../../modules/distribution/conf/b4p-coordination-config.xml</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>../../modules/distribution/conf/ht/humantask.xml</source>
+            <source>../../modules/distribution/conf/humantask.xml</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
+        <file>
+            <source>../../modules/distribution/conf/activiti.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
          <!-- copying edition.properties file -->
         <file>
             <source>../../modules/distribution/conf/edition.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
+
+        <!-- Copying data-sources configs -->
         <file>
-            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/datasources.properties</source>
+            <source>../../modules/distribution/conf/datasources/activiti-datasources.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../../modules/distribution/conf/datasources.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
+
+        <!-- Copying ODE and Activiti H2 Database-->
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/database/jpadb.h2.db</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/database</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/database/activiti.h2.db</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/database</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
+        <!-- Copying Other configs -->
         <file>
             <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/log4j.properties</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
@@ -449,11 +473,6 @@
         <file>
             <source>../../modules/samples/product/src/main/scripts/wso2bps-samples.sh</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/bin/</outputDirectory>
-            <fileMode>644</fileMode>
-        </file>
-        <file>
-            <source>../../modules/distribution/conf/activiti.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
     </files>

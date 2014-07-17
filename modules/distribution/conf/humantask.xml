@@ -1,4 +1,4 @@
-<HumanTaskServerConfig xmlns="http://wso2.org/humantask/schema/server/config">
+<HumanTaskServerConfig xmlns="http://wso2.org/humantask/schema/server/config" xmlns:svns="http://org.wso2.securevault/configuration">
     <PersistenceConfig>
         <DataSource>bpsds</DataSource>
         <GenerateDdl>true</GenerateDdl>
@@ -24,4 +24,31 @@
         <ClassName>ClassName</ClassName>
         <ClassName>ClassName</ClassName>
     </TaskEventListeners-->
+    <UIRenderingEnabled>true</UIRenderingEnabled>
+    <HumanTaskCoordination>
+        <!-- HumanTask Coordination configuration -->
+        <TaskCoordinationEnabled>false</TaskCoordinationEnabled>
+
+        <!--Task Engine's protocol handler authentication -->
+        <RegistrationServiceAuthentication>
+            <Username>admin</Username>
+            <Password>admin</Password>
+        </RegistrationServiceAuthentication>
+
+        <!-- Set TaskRegistrationEnabled to true, for Register tasks at task parent's Registration Service. -->
+        <TaskRegistrationEnabled>false</TaskRegistrationEnabled>
+
+        <!--Uncomment if task engines are Clustered and set LoadBalancerURL -->
+        <!--<ClusteredTaskEngines>
+            <LoadBalancerURL>https://bps.loadbalancer-url.com</LoadBalancerURL>
+        </ClusteredTaskEngines> -->
+    </HumanTaskCoordination>
+    <!-- Enable to perform HT operations by BusinessAdministrator -->
+    <EnableTaskOperationsForBusinessAdministrator>false</EnableTaskOperationsForBusinessAdministrator>
+
+    <!-- Enable Disable Caching -->
+    <!--CacheConfiguration>
+	<EnableCaching>true</EnableCaching>
+    </CacheConfiguration-->
+    <EnableTaskValidationBeforeDeployment>true</EnableTaskValidationBeforeDeployment>
 </HumanTaskServerConfig>
