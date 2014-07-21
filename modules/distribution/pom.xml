@@ -314,27 +314,27 @@
 
                                 <echo message="######### Copying Samples Services are temporary skipped###########"/>
 
+                                <!-- Commenting h2 database generation, since we are copying h2 databases from feature -->
+                                <!--<path id="h2.classpath">-->
+                                    <!--<path refid="maven.compile.classpath"/>-->
+                                <!--</path>-->
 
-                                <path id="h2.classpath">
-                                    <path refid="maven.compile.classpath"/>
-                                </path>
+                                <!--<echo-->
+                                        <!--message="########### Create BPS Database ##############"/>-->
+                                <!--<sql-->
+                                        <!--driver="org.h2.Driver"-->
+                                        <!--url="jdbc:h2:${basedir}/target/database/jpadb;create=true"-->
+                                        <!--userid="wso2carbon" password="wso2carbon" autocommit="true"-->
+                                        <!--onerror="continue">-->
+                                    <!--<classpath>-->
+                                        <!--<path refid="h2.classpath"/>-->
+                                    <!--</classpath>-->
+                                    <!--<fileset-->
+                                            <!--file="${basedir}/sql/h2.sql"/>-->
+                                <!--</sql>-->
 
-                                <echo
-                                        message="########### Create BPS Database ##############"/>
-                                <sql
-                                        driver="org.h2.Driver"
-                                        url="jdbc:h2:${basedir}/target/database/jpadb;create=true"
-                                        userid="wso2carbon" password="wso2carbon" autocommit="true"
-                                        onerror="continue">
-                                    <classpath>
-                                        <path refid="h2.classpath"/>
-                                    </classpath>
-                                    <fileset
-                                            file="${basedir}/sql/h2.sql"/>
-                                </sql>
-
-                                <echo
-                                        message="##################### END ############################"/>
+                                <!--<echo-->
+                                        <!--message="##################### END ############################"/>-->
                             </tasks>
                         </configuration>
                     </execution>
