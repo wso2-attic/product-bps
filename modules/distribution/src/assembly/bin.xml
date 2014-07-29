@@ -170,6 +170,13 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/samples/bpmn</outputDirectory>
         </fileSet>
 
+
+ 	<!--  Copying BPMN Humantask Explorer Jaggery Application--> 
+        <fileSet>
+            <directory>target/bpmn-humantask-explorer</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/bpmn-humantask-explorer</outputDirectory>
+        </fileSet>
+
         <fileSet>
             <directory>../../modules/samples/product/sample-utils/src/main/scripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/axis2Server</outputDirectory>
