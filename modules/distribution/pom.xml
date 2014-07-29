@@ -48,6 +48,13 @@
             <artifactId>rampart</artifactId>
             <type>mar</type>
         </dependency>
+	<dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
+            <version>${carbon.platform.version}</version>
+	    <classifier>web</classifier>
+	    <type>zip</type>                    
+        </dependency>
     </dependencies>
 
     <build>
@@ -92,6 +99,15 @@
                                     <artifactId>wso2carbon-core</artifactId>
                                     <version>${carbon.kernel.version}</version>
                                     <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.carbon</groupId>
+                                    <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
+                                    <version>${carbon.platform.version}</version>
+				    <classifier>web</classifier>
+				    <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
                                 </artifactItem>
@@ -313,7 +329,7 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
 
                                 <echo message="######### Copying Samples Services are temporary skipped###########"/>
-
+                                
                                 <!-- Commenting h2 database generation, since we are copying h2 databases from feature -->
                                 <!--<path id="h2.classpath">-->
                                     <!--<path refid="maven.compile.classpath"/>-->
@@ -426,7 +442,7 @@
                                 <delete dir="target/sources"/>
                                 <delete dir="target/site"/>
                                 <delete dir="target/database"/>
-                                <delete dir="target/samples"/>
+                                <delete dir="target/bpmn-humantask-explorer"/>
                                 <delete dir="src/site"/>
                             </tasks>
                         </configuration>
