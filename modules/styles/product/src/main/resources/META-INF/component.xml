@@ -20,9 +20,9 @@
     <contexts>
         <context>
             <context-id>default-context</context-id>
-            <context-name>bpmn-humantask-explorer</context-name>
-            <protocol>http</protocol>
-            <description>BPS BPMN HumanTask Explorer</description>
+            <context-name>bpmn-explorer</context-name>
+            <protocol>https</protocol>
+            <description>BPS BPMN Explorer</description>
         </context>
     </contexts>
 
