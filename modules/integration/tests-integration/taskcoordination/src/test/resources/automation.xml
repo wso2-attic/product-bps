@@ -251,9 +251,15 @@
 
     <listenerExtensions>
         <platformExecutionManager>
-            <extentionClasses>
-                <className>org.wso2.carbon.integration.common.extensions.carbonserver.CarbonServerExtension</className>
-                <className>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</className>
+   	    <extentionClasses>
+                <class>
+                    <name>org.wso2.carbon.integration.common.extensions.carbonserver.CarbonServerExtension</name>
+                    <!--<parameter name="portOffSet" value="2" />
+                    <parameter name="cmdArg" value="debug 5005" />-->
+                </class>
+                <class>
+                    <name>org.wso2.carbon.integration.common.extensions.usermgt.UserPopulateExtension</name>
+                </class>
             </extentionClasses>
         </platformExecutionManager>
 

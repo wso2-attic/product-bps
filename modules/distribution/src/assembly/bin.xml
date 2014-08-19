@@ -170,6 +170,13 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/samples/bpmn</outputDirectory>
         </fileSet>
 
+
+ 	<!--  Copying BPMN Humantask Explorer Jaggery Application--> 
+        <fileSet>
+            <directory>target/bpmn-humantask-explorer</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/bpmn-humantask-explorer</outputDirectory>
+        </fileSet>
+
         <fileSet>
             <directory>../../modules/samples/product/sample-utils/src/main/scripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/axis2Server</outputDirectory>
@@ -272,6 +279,15 @@
         <fileSet>
             <directory>../../modules/samples/product/sample-client/src/main/resources/</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/client/resources</outputDirectory>
+        </fileSet>
+ 	
+<!-- Copy Jaggery Modules-->
+        <fileSet>
+            <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/modules</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/modules</outputDirectory>
+            <includes>
+                <include>*/**</include>
+            </includes>
         </fileSet>
 
     </fileSets>
