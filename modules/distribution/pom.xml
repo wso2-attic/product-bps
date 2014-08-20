@@ -442,7 +442,7 @@
                                 <delete dir="target/sources"/>
                                 <delete dir="target/site"/>
                                 <delete dir="target/database"/>
-                                <delete dir="target/bpmn-humantask-explorer"/>
+                                <delete dir="target/bpmn-explorer"/>
                                 <delete dir="src/site"/>
                             </tasks>
                         </configuration>

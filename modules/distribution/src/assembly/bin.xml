@@ -173,8 +173,8 @@
 
  	<!--  Copying BPMN Humantask Explorer Jaggery Application--> 
         <fileSet>
-            <directory>target/bpmn-humantask-explorer</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/bpmn-humantask-explorer</outputDirectory>
+            <directory>target/bpmn-explorer</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/bpmn-explorer</outputDirectory>
         </fileSet>
 
         <fileSet>
