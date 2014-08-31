@@ -21,7 +21,8 @@
     <tns:DataBaseConfig>
         <!-- Data source configuration. Use data sources created in data sources component. -->
         <tns:DataSource name="bpsds">
-          <tns:JNDI contextFactory="com.sun.jndi.rmi.registry.RegistryContextFactory" providerURL="rmi://localhost:2199"/>
+          <!--tns:JNDI contextFactory="com.sun.jndi.rmi.registry.RegistryContextFactory" providerURL="rmi://localhost:2199"/-->
+          <tns:JNDI contextFactory="com.sun.jndi.rmi.registry.RegistryContextFactory" />
         </tns:DataSource>
     </tns:DataBaseConfig>
 
@@ -61,6 +62,7 @@
     <!-- OpenJPA specific configuration properties -->
     <tns:OpenJPAConfig>
         <tns:property name="openjpa.FlushBeforeQueries" value="true"/>
+	<tns:property name="openjpa.TransactionMode" value="local"/>
     </tns:OpenJPAConfig>
 
     <!-- Message exchange timeout. Default value is 120000ms -->
@@ -107,7 +109,7 @@
     <!--tns:ODESchedulerThreadPoolSize>0</tns:ODESchedulerThreadPoolSize-->
     
     <!-- If you are using BPS in a clustered environment, then uncomment blow entry -->
-    <!--  <tns:UseDistributedLock>true</tns:UseDistributedLock> -->
+    <!-- <tns:UseDistributedLock>true</tns:UseDistributedLock> -->
     
     <!-- <tns:UseInstanceStateCache>true</tns:UseInstanceStateCache> -->
 
