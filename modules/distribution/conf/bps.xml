@@ -22,7 +22,6 @@
         <!-- Data source configuration. Use data sources created in data sources component. -->
         <tns:DataSource name="bpsds">
           <!--tns:JNDI contextFactory="com.sun.jndi.rmi.registry.RegistryContextFactory" providerURL="rmi://localhost:2199"/-->
-          <tns:JNDI contextFactory="com.sun.jndi.rmi.registry.RegistryContextFactory" />
         </tns:DataSource>
     </tns:DataBaseConfig>
 
