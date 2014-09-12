@@ -25,6 +25,7 @@ public class BPSTestConstants {
 
     public final static String DIR_HUMAN_TASK = "humantask";
     public final static String DIR_BPEL= "bpel";
+    public final static String DIR_BPMN= "bpmn";
     public final static String DIR_SCENARIOS = "scenarios";
     public final static String DIR_CONFIG = "config";
 

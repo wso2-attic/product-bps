@@ -54,7 +54,6 @@ public class BpelUploaderClient {
             throws RemoteException, InterruptedException, PackageManagementException {
         boolean success = false;
         deployPackage(packageName, dirPath, bpelUploaderStub);
-        Thread.sleep(10000);
         return success;
     }
 

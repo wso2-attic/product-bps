@@ -139,7 +139,7 @@
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.application.mgt.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.application.mgt.bpel.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.application.deployer.bpel.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.application.deployer.bpmn.feature:${carbon.platform.version}</featureArtifactDef>
+                                <!--featureArtifactDef>org.wso2.carbon:org.wso2.carbon.application.deployer.bpmn.feature:${carbon.platform.version}</featureArtifactDef-->
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.application.mgt.humantask.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.application.deployer.humantask.feature:${carbon.platform.version}</featureArtifactDef>
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.unifiedendpoint.server.feature:${carbon.platform.version}</featureArtifactDef>
@@ -354,10 +354,10 @@
                                     <id>org.wso2.carbon.application.deployer.bpel.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-                                <feature>
+                                <!--feature>
                                     <id>org.wso2.carbon.application.deployer.bpmn.feature.group</id>
                                     <version>${carbon.platform.version}</version>
-                                </feature>
+                                </feature-->
                                 <feature>
                                     <id>org.wso2.carbon.application.mgt.humantask.feature.group</id>
                                     <version>${carbon.platform.version}</version>
@@ -604,10 +604,10 @@
                                     <id>org.wso2.carbon.application.deployer.bpel.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-                                <feature>
+                                <!--feature>
                                     <id>org.wso2.carbon.application.deployer.bpmn.feature.group</id>
                                     <version>${carbon.platform.version}</version>
-                                </feature>
+                                </feature-->
                                 <feature>
                                     <id>org.wso2.carbon.application.mgt.humantask.feature.group</id>
                                     <version>${carbon.platform.version}</version>
