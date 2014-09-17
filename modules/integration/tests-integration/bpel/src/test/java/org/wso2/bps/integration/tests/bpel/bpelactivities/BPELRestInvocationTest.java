@@ -27,7 +27,6 @@ import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.RequestSender;
-import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.authenticator.stub.LogoutAuthenticationExceptionException;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
 
@@ -68,14 +67,11 @@ public class BPELRestInvocationTest extends BPSMasterTest {
             String serviceName = "RestTestService";
             List<String> expectedOutput = new ArrayList<String>();
             expectedOutput.add("<link>https://wso2.org/jira/browse/CARBON-9659</link>");
-
-
             requestSender.sendRequest(backEndUrl + serviceName, operation, payload,
                     1, expectedOutput, true);
         } catch (IOException e) {
             log.error("Internet connection is not available. Ignoring the external REST invocation...", e);
         }
-
     }
 
     @AfterClass(alwaysRun = true)
