@@ -49,7 +49,7 @@ public class BPELMessageRoutingTest extends BPSMasterTest {
         requestSender = new RequestSender();
     }
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeClass(alwaysRun = true, groups = "wso2.bps.bpelactivities")
     public void deployArtifact()
             throws Exception {
         setEnvironment();
