@@ -68,7 +68,7 @@ public class BpelInstanceManagementTest extends BPSMasterTest {
         requestSender.waitForProcessDeployment(backEndUrl + "PickService");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set setvice to Active State", priority = 1)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set service to Active State", priority = 1)
     public void testCreateInstance()
             throws InterruptedException, XMLStreamException, RemoteException,
             ProcessManagementException, InstanceManagementException, LoginAuthenticationExceptionException {

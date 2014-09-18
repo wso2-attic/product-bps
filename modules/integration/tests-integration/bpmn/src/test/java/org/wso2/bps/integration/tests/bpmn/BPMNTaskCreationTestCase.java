@@ -66,10 +66,10 @@ public class BPMNTaskCreationTestCase extends BPSMasterTest {
 
     }
 
-    @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server", priority = 17, singleThreaded = true)
+    @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server", priority = 2, singleThreaded = true)
     public void removeArtifacts() throws Exception {
 
-        workflowServiceClient.undeploy("HelloApprove");
+//        workflowServiceClient.undeploy("HelloApprove");
         loginLogoutClient.logout();
     }
 }
