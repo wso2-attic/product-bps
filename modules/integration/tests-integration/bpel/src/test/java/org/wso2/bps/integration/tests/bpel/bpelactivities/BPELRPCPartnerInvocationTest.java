@@ -54,6 +54,7 @@ public class BPELRPCPartnerInvocationTest extends BPSMasterTest {
         uploadBpelForTest("RPCServiceProcess");
         uploadBpelForTest("RPCClientProcess");
         requestSender.waitForProcessDeployment(backEndUrl + "RPCClientProcessService");
+        requestSender.waitForProcessDeployment(backEndUrl + "RPCClientProcessService");
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "invoke RPC client process")
