@@ -44,13 +44,13 @@
     <modules>
         <module>tests-common/admin-clients</module>
         <module>tests-common/integration-test-utils</module>
-        <module>tests-common/ui-pages</module>
+        <!--<module>tests-common/ui-pages</module>-->
 
         <module>tests-integration/bpel</module>
         <module>tests-integration/humantasks</module>
         <module>tests-integration/bpmn</module>
         <!--module>tests-integration/taskcoordination</module-->
-        <module>tests-ui-integration</module>
+        <!--<module>tests-ui-integration</module>-->
         <module>tests-integration/reports</module>
 
     </modules>
