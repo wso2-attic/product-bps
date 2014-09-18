@@ -43,13 +43,11 @@ import java.rmi.RemoteException;
 public class BpelInstanceManagementTest extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(BpelInstanceManagementTest.class);
-
     LimitedInstanceInfoType instanceInfo = null;
-    BpelPackageManagementClient bpelPackageManagementClient;
-    BpelProcessManagementClient bpelProcessManagementClient;
-    BpelInstanceManagementClient bpelInstanceManagementClient;
-
-    RequestSender requestSender;
+    BpelPackageManagementClient bpelPackageManagementClient = null;
+    BpelProcessManagementClient bpelProcessManagementClient = null;
+    BpelInstanceManagementClient bpelInstanceManagementClient = null;
+    RequestSender requestSender = null;
 
 
     public void setEnvironment() throws Exception {
@@ -61,14 +59,13 @@ public class BpelInstanceManagementTest extends BPSMasterTest {
     }
 
     @BeforeClass(alwaysRun = true)
-    public void deployArtifact()
-            throws Exception {
+    public void deployArtifact() throws Exception {
         setEnvironment();
         uploadBpelForTest("TestPickOneWay");
         requestSender.waitForProcessDeployment(backEndUrl + "PickService");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set setvice to Active State", priority = 1)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set service to Active State", priority = 1)
     public void testCreateInstance()
             throws InterruptedException, XMLStreamException, RemoteException,
             ProcessManagementException, InstanceManagementException, LoginAuthenticationExceptionException {
@@ -84,28 +81,28 @@ public class BpelInstanceManagementTest extends BPSMasterTest {
         }
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Suspends The Service", priority = 2)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Suspends The Service", dependsOnMethods = "testCreateInstance", singleThreaded = true)
     public void testSuspendInstance()
-            throws InterruptedException, InstanceManagementException, RemoteException , LoginAuthenticationExceptionException{
+            throws InterruptedException, InstanceManagementException, RemoteException, LoginAuthenticationExceptionException {
         bpelInstanceManagementClient.performAction(instanceInfo.getIid(), BpelInstanceManagementClient.InstanceOperation.SUSPEND);
         Assert.assertTrue(bpelInstanceManagementClient.getInstanceInfo(instanceInfo.getIid()).getStatus().getValue().equals("SUSPENDED"), "The Service Is not Suspended");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Suspends The Service", priority = 3)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Resume The Service", dependsOnMethods = "testSuspendInstance", singleThreaded = true)
     public void testResumeInstance()
-            throws InterruptedException, InstanceManagementException, RemoteException , LoginAuthenticationExceptionException{
+            throws InterruptedException, InstanceManagementException, RemoteException, LoginAuthenticationExceptionException {
         bpelInstanceManagementClient.performAction(instanceInfo.getIid(), BpelInstanceManagementClient.InstanceOperation.RESUME);
         Assert.assertTrue(bpelInstanceManagementClient.getInstanceInfo(instanceInfo.getIid()).getStatus().getValue().equals("ACTIVE"), "The Service Is not Suspended");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Suspends The Service", priority = 4)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Terminate The Service", dependsOnMethods = "testResumeInstance", singleThreaded = true)
     public void testTerminateInstance()
-            throws InterruptedException, InstanceManagementException, RemoteException , LoginAuthenticationExceptionException{
+            throws InterruptedException, InstanceManagementException, RemoteException, LoginAuthenticationExceptionException {
         bpelInstanceManagementClient.performAction(instanceInfo.getIid(), BpelInstanceManagementClient.InstanceOperation.TERMINATE);
         Assert.assertTrue(bpelInstanceManagementClient.getInstanceInfo(instanceInfo.getIid()).getStatus().getValue().equals("TERMINATED"), "The Service Is not Terminated");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Suspends The Service", priority = 5)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Delete the instance", dependsOnMethods = "testTerminateInstance")
     public void testDeleteInstance()
             throws InterruptedException, InstanceManagementException, RemoteException, LoginAuthenticationExceptionException {
 
@@ -116,7 +113,7 @@ public class BpelInstanceManagementTest extends BPSMasterTest {
     @AfterClass(alwaysRun = true)
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
-            LoginAuthenticationExceptionException , LogoutAuthenticationExceptionException{
+            LoginAuthenticationExceptionException, LogoutAuthenticationExceptionException {
         bpelPackageManagementClient.undeployBPEL("TestPickOneWay");
         this.loginLogoutClient.logout();
     }

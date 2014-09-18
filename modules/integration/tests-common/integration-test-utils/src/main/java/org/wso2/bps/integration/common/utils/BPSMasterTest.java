@@ -20,12 +20,13 @@ package org.wso2.bps.integration.common.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.bps.integration.common.clients.bpel.BpelUploaderClient;
+import org.wso2.bps.integration.common.clients.bpmn.BPMNUploaderClient;
+import org.wso2.bps.integration.common.clients.humantasks.HumanTaskUploaderClient;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
 import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
 import org.wso2.carbon.integration.common.admin.client.SecurityAdminServiceClient;
-import org.wso2.bps.integration.common.clients.humantasks.HumanTaskUploaderClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -33,7 +34,7 @@ import java.io.File;
 import java.rmi.RemoteException;
 
 public class BPSMasterTest {
-    private static final Log log = LogFactory.getLog(BPSMasterTest.class);  
+    private static final Log log = LogFactory.getLog(BPSMasterTest.class);
 
     protected AutomationContext bpsServer;
     protected String sessionCookie = null;
@@ -42,6 +43,7 @@ public class BPSMasterTest {
     protected SecurityAdminServiceClient securityAdminServiceClient;
     protected BpelUploaderClient bpelUploaderClient;
     protected HumanTaskUploaderClient humanTaskUploaderClient;
+    protected BPMNUploaderClient bpmnUploaderClient;
     protected LoginLogoutClient loginLogoutClient;
 
 
@@ -53,6 +55,7 @@ public class BPSMasterTest {
         serviceUrl = bpsServer.getContextUrls().getServiceUrl();
         bpelUploaderClient = new BpelUploaderClient(backEndUrl, sessionCookie);
         humanTaskUploaderClient = new HumanTaskUploaderClient(backEndUrl, sessionCookie);
+        bpmnUploaderClient = new BPMNUploaderClient(backEndUrl, sessionCookie);
     }
 
     protected void init() throws Exception {
@@ -63,17 +66,19 @@ public class BPSMasterTest {
         serviceUrl = bpsServer.getContextUrls().getServiceUrl();
         bpelUploaderClient = new BpelUploaderClient(backEndUrl, sessionCookie);
         humanTaskUploaderClient = new HumanTaskUploaderClient(backEndUrl, sessionCookie);
+        bpmnUploaderClient = new BPMNUploaderClient(backEndUrl, sessionCookie);
     }
 
-   protected void init(String domainKey, String userKey) throws Exception{
-       bpsServer = new AutomationContext("BPS", "bpsServerInstance0001", domainKey, userKey);
-       loginLogoutClient = new LoginLogoutClient(bpsServer);
-       sessionCookie = loginLogoutClient.login();
-       backEndUrl = bpsServer.getContextUrls().getBackEndUrl();
-       serviceUrl = bpsServer.getContextUrls().getServiceUrl();
-       bpelUploaderClient = new BpelUploaderClient(backEndUrl, sessionCookie);
-       humanTaskUploaderClient = new HumanTaskUploaderClient(backEndUrl, sessionCookie);
-   }
+    protected void init(String domainKey, String userKey) throws Exception {
+        bpsServer = new AutomationContext("BPS", "bpsServerInstance0001", domainKey, userKey);
+        loginLogoutClient = new LoginLogoutClient(bpsServer);
+        sessionCookie = loginLogoutClient.login();
+        backEndUrl = bpsServer.getContextUrls().getBackEndUrl();
+        serviceUrl = bpsServer.getContextUrls().getServiceUrl();
+        bpelUploaderClient = new BpelUploaderClient(backEndUrl, sessionCookie);
+        humanTaskUploaderClient = new HumanTaskUploaderClient(backEndUrl, sessionCookie);
+        bpmnUploaderClient = new BPMNUploaderClient(backEndUrl, sessionCookie);
+    }
 
     protected void uploadBpelForTest(String bpelFileName) throws Exception {
         String dirPath = FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS +
@@ -91,8 +96,17 @@ public class BPSMasterTest {
                 + File.separator + BPSTestConstants.DIR_HUMAN_TASK);
     }
 
+    protected void uploadBPMNForTest(String bpmnPackageNam) throws Exception {
+        uploadBPMNForTest(bpmnPackageNam, FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS
+                + File.separator + BPSTestConstants.DIR_BPMN);
+    }
+
     protected void uploadHumanTaskForTest(String taskPackageName, String taskPackageLocation) throws InterruptedException, RemoteException, org.wso2.carbon.humantask.stub.mgt.PackageManagementException {
         humanTaskUploaderClient.deployHumantask(taskPackageName, taskPackageLocation);
+    }
+
+    protected void uploadBPMNForTest(String taskPackageName, String taskPackageLocation) throws InterruptedException, RemoteException, org.wso2.carbon.humantask.stub.mgt.PackageManagementException {
+        bpmnUploaderClient.deployBPMN(taskPackageName, taskPackageLocation);
     }
 
     protected String getServiceUrl(String serviceName) throws XPathExpressionException {

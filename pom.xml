@@ -393,6 +393,11 @@
                 <version>${bps.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.wso2.bps</groupId>
+                <artifactId>org.wso2.bps.integration.ui.pages</artifactId>
+                <version>${bps.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.service.mgt.stub</artifactId>
                 <version>${carbon.platform.version}</version>
@@ -427,6 +432,11 @@
            <dependency>
              <groupId>org.wso2.carbon</groupId>
              <artifactId>org.wso2.carbon.integration.common.tests</artifactId>
+             <version>${carbon.platform.version}</version>
+           </dependency>
+           <dependency>
+             <groupId>org.wso2.carbon</groupId>
+             <artifactId>org.wso2.carbon.bpmn.stub</artifactId>
              <version>${carbon.platform.version}</version>
            </dependency>
         </dependencies>

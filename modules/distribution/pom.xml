@@ -327,7 +327,9 @@
                                 <!--  Copying BPMN sample -->
                                 <zip destfile="target/samples/bpmn/HelloWorld.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
-
+ 				
+				<concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">
+				org.restlet.level=SEVERE</concat>
                                 <echo message="######### Copying Samples Services are temporary skipped###########"/>
                                 
                                 <!-- Commenting h2 database generation, since we are copying h2 databases from feature -->
