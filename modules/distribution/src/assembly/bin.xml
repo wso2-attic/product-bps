@@ -409,8 +409,8 @@
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>../../modules/distribution/conf/datasources.properties</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/</outputDirectory>
+            <source>../../modules/distribution/conf/datasources/bps-datasources.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
 
