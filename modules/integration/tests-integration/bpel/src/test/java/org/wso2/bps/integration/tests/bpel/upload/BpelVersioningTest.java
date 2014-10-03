@@ -50,7 +50,7 @@ public class BpelVersioningTest extends BPSMasterTest {
     BpelProcessManagementClient bpelProcessManagementClient;
     BpelInstanceManagementClient bpelInstanceManagementClient;
 
-    RequestSender requestSender;
+    private RequestSender requestSender;
     private LinkedList<String> activeStatus;
 
 
@@ -71,7 +71,7 @@ public class BpelVersioningTest extends BPSMasterTest {
 
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading Bpel Service with In memory", priority = 0)
+    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading Bpel Service with In memory", singleThreaded = true)
     public void getVersion() throws RemoteException, XMLStreamException, InterruptedException,
             ProcessManagementException {
 
@@ -100,7 +100,7 @@ public class BpelVersioningTest extends BPSMasterTest {
     }
 
 
-    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading Bpel Service with In memory", priority = 2)
+    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading BPEL process in-memory setting", dependsOnMethods = "getVersion")
     public void checkVersion() throws InterruptedException, XMLStreamException, RemoteException,
             ProcessManagementException, PackageManagementException {
 

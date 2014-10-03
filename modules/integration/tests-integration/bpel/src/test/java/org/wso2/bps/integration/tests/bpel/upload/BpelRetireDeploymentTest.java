@@ -21,20 +21,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpel.BpelInstanceManagementClient;
 import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.bps.integration.common.clients.bpel.BpelProcessManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.RequestSender;
-import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.authenticator.stub.LogoutAuthenticationExceptionException;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
-import org.wso2.carbon.bpel.stub.mgt.ProcessManagementException;
 import org.wso2.carbon.bpel.stub.mgt.types.LimitedInstanceInfoType;
 
-import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
 public class BpelRetireDeploymentTest extends BPSMasterTest {
@@ -57,7 +53,7 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
         requestSender = new RequestSender();
     }
 
-    @BeforeClass(alwaysRun = true)
+
     public void deployArtifact()
             throws Exception {
         setEnvironment();
@@ -65,10 +61,11 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
 
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading Bpel with retire true")
-    public void testRetireClient() throws ProcessManagementException, RemoteException, LoginAuthenticationExceptionException, InterruptedException {
+    @Test(groups = {"wso2.bps", "wso2.bps.deployment"}, description = "Tests uploading Bpel with retire true", priority = 1)
+    public void testRetireClient() throws Exception {
         // wait till the uploaded process deploy
-        Thread.sleep(5000);
+        deployArtifact();
+        Thread.sleep(10000);
         String processId = bpelProcessManagementClient.getProcessId("HelloWorld-retire");
         String status = bpelProcessManagementClient.getStatus(processId);
         Assert.assertTrue(status.equals("RETIRED".toUpperCase()), "Process State is still Active");

@@ -55,7 +55,6 @@ public class HumanTaskUploaderClient {
             throws RemoteException, InterruptedException, PackageManagementException {
         boolean success = false;
         deployPackage(packageName, dirPath, htUploaderStub);
-        Thread.sleep(10000);
         return success;
     }
 

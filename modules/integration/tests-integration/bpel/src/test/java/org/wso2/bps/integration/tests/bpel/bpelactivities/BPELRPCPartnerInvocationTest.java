@@ -27,7 +27,6 @@ import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.RequestSender;
-import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.authenticator.stub.LogoutAuthenticationExceptionException;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
 
@@ -48,13 +47,14 @@ public class BPELRPCPartnerInvocationTest extends BPSMasterTest {
         requestSender = new RequestSender();
     }
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeClass(alwaysRun = true, groups = "wso2.bps.bpelactivities")
     public void deployArtifact()
             throws Exception {
         setEnvironment();
         uploadBpelForTest("RPCServiceProcess");
         uploadBpelForTest("RPCClientProcess");
         requestSender.waitForProcessDeployment(backEndUrl + "RPCClientProcessService");
+        requestSender.waitForProcessDeployment(backEndUrl + "RPCServiceProcessService");
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "invoke RPC client process")

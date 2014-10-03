@@ -28,21 +28,17 @@ import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
 import org.wso2.bps.integration.common.clients.bpel.BpelProcessManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.RequestSender;
-import org.wso2.carbon.authenticator.stub.LoginAuthenticationExceptionException;
 import org.wso2.carbon.bpel.stub.mgt.ProcessManagementException;
-import org.wso2.carbon.bpel.stub.mgt.types.LimitedInstanceInfoType;
 
 import java.rmi.RemoteException;
 
 public class BpelProcessManagementTest extends BPSMasterTest {
     private static final Log log = LogFactory.getLog(BpelProcessManagementTest.class);
 
-    LimitedInstanceInfoType instanceInfo = null;
-    BpelPackageManagementClient bpelPackageManagementClient;
-    BpelProcessManagementClient bpelProcessManagementClient;
-    BpelInstanceManagementClient bpelInstanceManagementClient;
-
-    RequestSender requestSender;
+    BpelPackageManagementClient bpelPackageManagementClient = null;
+    BpelProcessManagementClient bpelProcessManagementClient = null;
+    BpelInstanceManagementClient bpelInstanceManagementClient = null;
+    RequestSender requestSender = null;
 
 
     public void setEnvironment() throws Exception {
@@ -60,27 +56,26 @@ public class BpelProcessManagementTest extends BPSMasterTest {
         requestSender.waitForProcessDeployment(backEndUrl + "XKLoanService");
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set setvice to Retire State", priority = 1)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set process to retired State", priority = 1, singleThreaded = true)
     public void testServiceRetire() throws ProcessManagementException, RemoteException {
         try {
             String processID = bpelProcessManagementClient.getProcessId("XKLoanService");
             bpelProcessManagementClient.setStatus(processID, "RETIRED");
-            Assert.assertTrue(bpelProcessManagementClient.getStatus(processID).equals("RETIRED"), "PPEL process is not set as RETIRED");
-            Assert.assertFalse(requestSender.isServiceAvailable(backEndUrl + "XKLoanService"), "Service is still available");
             Thread.sleep(5000);
+            Assert.assertTrue(bpelProcessManagementClient.getStatus(processID).equals("RETIRED"), "BPEL process is not set as RETIRED");
+            Assert.assertFalse(requestSender.isServiceAvailable(backEndUrl + "XKLoanService"), "Service is still available");
         } catch (InterruptedException e) {
-            log.error("Process management failed " + e);
-            Assert.fail("Process management failed " + e);
+            log.debug("Thread interrupted");
         }
     }
 
-    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set setvice to Active State", priority = 2)
+    @Test(groups = {"wso2.bps", "wso2.bps.manage"}, description = "Set service to Active State", dependsOnMethods = "testServiceRetire", singleThreaded = true)
     public void testServiceActive() throws ProcessManagementException, RemoteException {
         try {
             String processID = bpelProcessManagementClient.getProcessId("XKLoanService");
             bpelProcessManagementClient.setStatus(processID, "ACTIVE");
             Thread.sleep(5000);
-            Assert.assertTrue(bpelProcessManagementClient.getStatus(processID).equals("ACTIVE"), "PPEL process is not set as ACTIVE");
+            Assert.assertTrue(bpelProcessManagementClient.getStatus(processID).equals("ACTIVE"), "BPEL process is not set as ACTIVE");
             Assert.assertTrue(requestSender.isServiceAvailable(backEndUrl + "XKLoanService"), "Service is not available");
         } catch (InterruptedException e) {
             log.error("Process management failed" + e);

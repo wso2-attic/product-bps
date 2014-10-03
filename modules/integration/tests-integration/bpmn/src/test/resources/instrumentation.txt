@@ -1,0 +1,3 @@
+org.wso2.carbon.bpel
+org.wso2.carbon.humantask
+#org.wso2.carbon.attachment.mgt
