@@ -16,7 +16,7 @@
  ~ under the License.
  -->
 <assembly>
-    <!--<id>bin</id>-->
+    <id>wso2bps-bin</id>
     <formats>
         <format>zip</format>
     </formats>
