@@ -55,13 +55,6 @@
 	    <classifier>web</classifier>
 	    <type>zip</type>                    
         </dependency>
-        <!--dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.humantask.humantaskweb</artifactId>
-            <version>${carbon.platform.version}</version>
-	    <classifier>web</classifier>
-	    <type>zip</type>                    
-        </dependency-->
     </dependencies>
 
     <build>
@@ -112,15 +105,6 @@
                                 <artifactItem>
                                     <groupId>org.wso2.carbon</groupId>
                                     <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
-                                    <version>${carbon.platform.version}</version>
-				    <classifier>web</classifier>
-				    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>org.wso2.carbon.humantask.humantaskweb</artifactId>
                                     <version>${carbon.platform.version}</version>
 				    <classifier>web</classifier>
 				    <type>zip</type>
@@ -461,7 +445,6 @@
                                 <delete dir="target/site"/>
                                 <delete dir="target/database"/>
                                 <delete dir="target/bpmn-explorer"/>
-                                <delete dir="target/humantask-explorer"/>
                                 <delete dir="src/site"/>
                             </tasks>
                         </configuration>
