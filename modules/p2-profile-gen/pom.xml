@@ -447,7 +447,7 @@
                                     <id>org.wso2.carbon.service.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-				                <feature>
+				<feature>
                                     <id>org.jaggeryjs.server.feature.group</id>
                                     <version>0.9.0-SNAPSHOT</version>
                                 </feature>
