@@ -71,11 +71,11 @@
     <!--<tns:ExternalServiceTimeOut value="60000"/>-->
 
     <!-- MultithreadedHttpConnectionManager tuning parameters -->
-    <!--<tns:MultithreadedHttpConnectionManagerConfig>
+    <tns:MultithreadedHttpConnectionManagerConfig>
         <tns:maxConnectionsPerHost value="20"/>
         <tns:maxTotalConnections value="100"/>
-        <tns:KeepAlive value="true"/> 
-    </tns:MultithreadedHttpConnectionManagerConfig> -->
+        <!--<tns:connectionKeepAlive value="false"/> -->
+    </tns:MultithreadedHttpConnectionManagerConfig>
 
     <!-- Process instance cleanup feature in WSO2 Business Process Server
          allows you to configure periodic process instance cleanup tasks based
