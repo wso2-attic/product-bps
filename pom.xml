@@ -626,6 +626,10 @@
         <emma.version>2.1.5320</emma.version>
         <jruby.version>1.3.0</jruby.version>
 
+        <!-- jaggery -->
+        <process.feature.version>1.0.0</process.feature.version>
+        <carbon.feature.version>1.1.0</carbon.feature.version>
+
     </properties>
 
     <mailingLists>
