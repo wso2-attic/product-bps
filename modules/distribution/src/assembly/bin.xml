@@ -75,7 +75,6 @@
         <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}/dbscripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts</outputDirectory>
-            <fileMode>644</fileMode>
         </fileSet>
 
         <fileSet>
@@ -251,7 +250,6 @@
         <fileSet>
             <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/bps</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps</outputDirectory>
-            <fileMode>644</fileMode>
             <!--<excludes>-->
                 <!--<exclude>**/hibernate/**</exclude>-->
             <!--</excludes>-->
@@ -259,12 +257,10 @@
         <fileSet>
             <directory>../../modules/distribution/sql/bpel/upgrade/310_350</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/310_350</outputDirectory>
-            <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
             <directory>../../modules/distribution/sql/bpel/upgrade/300_350</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/300_350</outputDirectory>
-            <fileMode>644</fileMode>
         </fileSet>
 	
         <!-- copy the landing page webapp -->
