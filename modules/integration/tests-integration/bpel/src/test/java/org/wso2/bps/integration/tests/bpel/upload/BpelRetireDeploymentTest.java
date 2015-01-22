@@ -65,7 +65,7 @@ public class BpelRetireDeploymentTest extends BPSMasterTest {
     public void testRetireClient() throws Exception {
         // wait till the uploaded process deploy
         deployArtifact();
-        Thread.sleep(10000);
+        Thread.sleep(20000);
         String processId = bpelProcessManagementClient.getProcessId("HelloWorld-retire");
         String status = bpelProcessManagementClient.getStatus(processId);
         Assert.assertTrue(status.equals("RETIRED".toUpperCase()), "Process State is still Active");
