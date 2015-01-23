@@ -33,6 +33,7 @@ import org.wso2.carbon.automation.engine.context.TestUserMode;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
 
 import javax.xml.stream.XMLStreamException;
+import javax.xml.xpath.XPathExpressionException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 
@@ -54,29 +55,32 @@ public class CARBON14841TenantHTTPHeadersTest extends BPSMasterTest {
             throws Exception {
         setEnvironment();
         uploadBpelForTest("AdminServiceInvoke");
-        requestSender.waitForProcessDeployment(backEndUrl + "AdminServiceInvoke");
+        String domain = this.bpsServer.getContextTenant().getDomain();
+        String eprUrl = backEndUrl + "/t/" + domain + "/AdminServiceInvoke";
+        requestSender.waitForProcessDeployment(eprUrl);
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.testPatches"}, description = "CARBON14841TenantHTTPHeaders test case", priority = 0)
     public void process() throws InterruptedException, RemoteException, PackageManagementException,
-                                 MalformedURLException, XMLStreamException {
+            MalformedURLException, XMLStreamException, XPathExpressionException {
 
         String payload = "   <p:AdminServiceInvokeRequest xmlns:p=\"http://wso2.org/bps/sample\">\n" +
                          "      <input xmlns=\"http://wso2.org/bps/sample\">test</input>\n" +
-                         "   </p:AdminServiceInvokeRequest";
+                         "   </p:AdminServiceInvokeRequest>";
 
         String operation = "process";
         String serviceName = "AdminServiceInvoke";
         String expectedOutput = "RDBMS";
-        requestSender.assertRequest(backEndUrl + serviceName, operation, payload,
-                                    1, expectedOutput, true);
+        String domain = this.bpsServer.getContextTenant().getDomain();
+        String eprUrl = backEndUrl + "/t/" + domain + "/"+ serviceName;
+        requestSender.assertRequest(eprUrl, operation, payload, 1, expectedOutput, true);
     }
 
     @AfterClass(alwaysRun = true)
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
                    LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("AdminServiceInvokeSample");
+        bpelPackageManagementClient.undeployBPEL("AdminServiceInvoke");
         this.loginLogoutClient.logout();
     }
 }
