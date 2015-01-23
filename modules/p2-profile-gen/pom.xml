@@ -162,11 +162,14 @@
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.user.mgt.feature:${carbon.platform.version}</featureArtifactDef>
 
                                 <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.module.mgt.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.throttle.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.caching.feature:${carbon.platform.version}</featureArtifactDef>
-                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.rm.feature:${carbon.platform.version}</featureArtifactDef>
-				                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.service.mgt.server.feature:${carbon.platform.version}</featureArtifactDef>
-				<featureArtifactDef>org.jaggeryjs:org.jaggeryjs.server.feature:0.9.0.ALPHA5.wso2v1-SNAPSHOT</featureArtifactDef>				
+                                <!--featureArtifactDef>org.wso2.carbon:org.wso2.carbon.throttle.feature:${carbon.platform.version}</featureArtifactDef-->
+                                <!--featureArtifactDef>org.wso2.carbon:org.wso2.carbon.caching.feature:${carbon.platform.version}</featureArtifactDef-->
+                                <!--featureArtifactDef>org.wso2.carbon:org.wso2.carbon.rm.feature:${carbon.platform.version}</featureArtifactDef-->
+			        <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.service.mgt.server.feature:${carbon.platform.version}</featureArtifactDef>
+			        <featureArtifactDef>org.jaggeryjs:org.jaggeryjs.server.feature:${jaggeryjs.server.version}</featureArtifactDef>
+                                <featureArtifactDef>org.wso2.carbon:org.wso2.carbon.webapp.mgt.feature:${carbon.platform.version}</featureArtifactDef>
+                                <featureArtifactDef>org.jaggeryjs.modules:process.feature:${process.feature.version}</featureArtifactDef>
+                                <featureArtifactDef>org.jaggeryjs.modules:carbon.feature:${carbon.feature.version}</featureArtifactDef>
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -430,7 +433,7 @@
                                     <id>org.wso2.carbon.module.mgt.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-                                <feature>
+                                <!--feature>
                                     <id>org.wso2.carbon.throttle.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
@@ -441,14 +444,26 @@
                                 <feature>
                                     <id>org.wso2.carbon.rm.feature.group</id>
                                     <version>${carbon.platform.version}</version>
-                                </feature>
+                                </feature-->
                                 <feature>
                                     <id>org.wso2.carbon.service.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-				<feature>
+				                <feature>
                                     <id>org.jaggeryjs.server.feature.group</id>
-                                    <version>0.9.0.ALPHA5.wso2v1-SNAPSHOT</version>
+                                    <version>${jaggeryjs.server.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.webapp.mgt.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.process.feature.group</id>
+                                    <version>${process.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.carbon.feature.group</id>
+                                    <version>${carbon.feature.version}</version>
                                 </feature>
                             </features>
                         </configuration>
@@ -470,15 +485,15 @@
                             <features>
                                 <feature>
                                     <id>org.wso2.carbon.core.common.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.core.server.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.core.runtime.feature.group</id>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.user.mgt.feature.group</id>
@@ -680,7 +695,7 @@
                                     <id>org.wso2.carbon.module.mgt.server.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
-                                <feature>
+                                <!--feature>
                                     <id>org.wso2.carbon.throttle.feature.group</id>
                                     <version>${carbon.platform.version}</version>
                                 </feature>
@@ -691,10 +706,22 @@
                                 <feature>
                                     <id>org.wso2.carbon.rm.feature.group</id>
                                     <version>${carbon.platform.version}</version>
-                                </feature>
+                                </feature-->
 				<feature>
                                     <id>org.jaggeryjs.server.feature.group</id>
-                                    <version>0.9.0.ALPHA5.wso2v1-SNAPSHOT</version>
+                                    <version>${jaggeryjs.server.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.webapp.mgt.feature.group</id>
+                                    <version>${carbon.platform.version}</version>
+                                </feature>
+				                <feature>
+                                    <id>org.jaggeryjs.modules.process.feature.group</id>
+                                    <version>${process.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.carbon.feature.group</id>
+                                    <version>${carbon.feature.version}</version>
                                 </feature>
                             </features>
                         </configuration>

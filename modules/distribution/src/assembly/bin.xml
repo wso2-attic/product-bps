@@ -16,7 +16,7 @@
  ~ under the License.
  -->
 <assembly>
-    <!--<id>bin</id>-->
+    <id>wso2bps-bin</id>
     <formats>
         <format>zip</format>
     </formats>
@@ -75,7 +75,6 @@
         <fileSet>
             <directory>target/wso2carbon-core-${carbon.kernel.version}/dbscripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts</outputDirectory>
-            <fileMode>644</fileMode>
         </fileSet>
 
         <fileSet>
@@ -176,6 +175,10 @@
             <directory>target/bpmn-explorer</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/bpmn-explorer</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>target/humantask-explorer</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/humantask-explorer</outputDirectory>
+        </fileSet>
 
         <fileSet>
             <directory>../../modules/samples/product/sample-utils/src/main/scripts</directory>
@@ -251,7 +254,6 @@
         <fileSet>
             <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/bps</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps</outputDirectory>
-            <fileMode>644</fileMode>
             <!--<excludes>-->
                 <!--<exclude>**/hibernate/**</exclude>-->
             <!--</excludes>-->
@@ -259,12 +261,10 @@
         <fileSet>
             <directory>../../modules/distribution/sql/bpel/upgrade/310_350</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/310_350</outputDirectory>
-            <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
             <directory>../../modules/distribution/sql/bpel/upgrade/300_350</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/300_350</outputDirectory>
-            <fileMode>644</fileMode>
         </fileSet>
 	
         <!-- copy the landing page webapp -->
