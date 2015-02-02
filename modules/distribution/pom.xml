@@ -49,9 +49,9 @@
             <type>mar</type>
         </dependency>
 	<dependency>
-        <groupId>org.wso2.carbon</groupId>
+        <groupId>org.wso2.carbon.business-process</groupId>
          <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
-         <version>${carbon.platform.version}</version>
+         <version>${carbon.business-process.version}</version>
 	    <classifier>web</classifier>
 	    <type>zip</type>                    
         </dependency>
