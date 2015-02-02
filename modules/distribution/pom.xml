@@ -105,7 +105,7 @@
                                 <artifactItem>
                                     <groupId>org.wso2.carbon</groupId>
                                     <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.business-process.version}</version>
 				                    <classifier>web</classifier>
 				                    <type>zip</type>
                                     <overWrite>true</overWrite>
@@ -114,7 +114,7 @@
                                 <artifactItem>
                                     <groupId>org.wso2.carbon</groupId>
                                     <artifactId>org.wso2.carbon.humantask.humantaskweb</artifactId>
-                                    <version>${carbon.platform.version}</version>
+                                    <version>${carbon.business-process.version}</version>
                                     <classifier>web</classifier>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
