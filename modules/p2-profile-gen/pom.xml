@@ -231,7 +231,6 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.business-process:org.wso2.carbon.attachment.mgt.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
-                                <!--Stratos features -->
                                 <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.common.feature:${carbon.multitenancy.version}
                                 </featureArtifactDef>
@@ -244,7 +243,6 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.deployment.feature:${carbon.multitenancy.version}
                                 </featureArtifactDef>
-
                                 <featureArtifactDef>
                                     org.wso2.carbon.commons:org.wso2.carbon.event.common.feature:${carbon.commons.version}
                                 </featureArtifactDef>
