@@ -103,7 +103,7 @@
                                     <outputDirectory>target</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
+                                    <groupId>org.wso2.carbon.business-process</groupId>
                                     <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
                                     <version>${carbon.business-process.version}</version>
 				                    <classifier>web</classifier>
@@ -112,7 +112,7 @@
                                     <outputDirectory>target</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
+                                    <groupId>org.wso2.carbon.business-process</groupId>
                                     <artifactId>org.wso2.carbon.humantask.humantaskweb</artifactId>
                                     <version>${carbon.business-process.version}</version>
                                     <classifier>web</classifier>
