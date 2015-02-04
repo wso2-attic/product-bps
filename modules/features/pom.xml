@@ -40,41 +40,8 @@
         </license>
     </licenses>
 
-    <profiles>
-        <profile>
-            <id>product-service</id>
-            <activation>
-                <property>
-                    <name>service</name>
-                    <value>service</value>
-                </property>
-            </activation>
-            <modules>
-                <module>service</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>product-product</id>
-            <activation>
-                <property>
-                    <name>product</name>
-                    <value>product</value>
-                </property>
-            </activation>
-            <modules>
-                <module>product</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>product</module>
-                <!--<module>service</module>-->
-            </modules>
-        </profile>
-    </profiles>
+    <modules>
+        <module>product</module>
+    </modules>
 
 </project>
