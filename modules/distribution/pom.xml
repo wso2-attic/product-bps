@@ -15,19 +15,17 @@
  ~ specific language governing permissions and limitations
  ~ under the License.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.wso2.bps</groupId>
         <artifactId>wso2bps-parent</artifactId>
-        <version>3.5.0-SNAPSHOT</version>
+        <version>3.5.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>wso2bps</artifactId>
-    <version>3.5.0-SNAPSHOT</version>
+    <version>3.5.0</version>
     <packaging>jar</packaging>
     <name>WSO2 BPS - Distribution</name>
     <description>WSO2 Business Process Server Distribution</description>
@@ -204,163 +202,103 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <echo message="######## Creating BPEL / HumanTask Archives. #########"/>
-                                <property name="tempdir" value="target/samples"/>
-                                <property name="bpelSampleDir" value="target/samples/bpel"/>
-                                <property name="humantaskSampleDir"
-                                          value="target/samples/humantask"/>
-                                <property name="bpmnSampleDir"
-                                          value="target/samples/bpmn"/>
-                                <mkdir dir="${tempdir}"/>
-                                <mkdir dir="${bpelSampleDir}"/>
-                                <mkdir dir="${humantaskSampleDir}"/>
-                                <mkdir dir="${bpmnSampleDir}"/>
-                                <zip destfile="target/samples/bpel/CustomerInfo.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CustomerInfo"/>
-                                <zip destfile="target/samples/bpel/LoanProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/LoanProcess"/>
-                                <zip destfile="target/samples/bpel/LoanService.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/LoanService"/>
-                                <zip destfile="target/samples/bpel/TestE4XDirect.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestE4XDirect"/>
-                                <zip destfile="target/samples/bpel/AttachmentHandlingProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AttachmentHandlingProcess"/>
-                                <zip destfile="target/samples/bpel/CreditRating.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CreditRating"/>
-                                <zip destfile="target/samples/bpel/CleanUpTest1.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CleanUpTest1"/>
-                                <zip destfile="target/samples/bpel/FlexibleAssign.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/FlexibleAssign"/>
-                                <zip destfile="target/samples/bpel/helloHeaderTest.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/helloHeaderTest"/>
-                                <zip destfile="target/samples/bpel/HelloWorld2.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/HelloWorld2"/>
-                                <zip destfile="target/samples/bpel/MyRoleMexTestProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/MyRoleMexTestProcess"/>
-                                <zip destfile="target/samples/bpel/RPCClientProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/RPCClientProcess"/>
-                                <zip destfile="target/samples/bpel/RPCServiceProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/RPCServiceProcess"/>
-                                <zip destfile="target/samples/bpel/FlightReservationProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleCompensationHandlers/FlightReservationProcess/"/>
-                                <zip destfile="target/samples/bpel/SampleEventHandler.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleEventHandlers"/>
-                                <zip destfile="target/samples/bpel/AdderProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/AdderProcess/"/>
-                                <zip destfile="target/samples/bpel/DivisionProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/DivisionProcess/"/>
-                                <zip destfile="target/samples/bpel/FaultHandlingSample.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/FaultHandlingSample/"/>
-                                <zip destfile="target/samples/bpel/Async-Client.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client/"/>
-                                <zip destfile="target/samples/bpel/Async-Server.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server/"/>
-                                <zip destfile="target/samples/bpel/SecurePartnerBPEL.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SecurePartnerBPEL"/>
-                                <zip destfile="target/samples/bpel/TestAlarm.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestAlarm"/>
-                                <zip destfile="target/samples/bpel/TestAssignActivity1.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestAssignActivity1"/>
-                                <zip destfile="target/samples/bpel/TestAssignDate.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestAssignDate"/>
-                                <zip destfile="target/samples/bpel/TestCombineUrl.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestCombineUrl"/>
-                                <zip destfile="target/samples/bpel/TestComposeUrl.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestComposeUrl"/>
-                                <zip destfile="target/samples/bpel/TestCorrelationUnique.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestCorrelationUnique"/>
-                                <zip destfile="target/samples/bpel/TestCounter.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestCounter"/>
-                                <zip destfile="target/samples/bpel/TestE4XDirect.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestE4XDirect"/>
-                                <zip destfile="target/samples/bpel/TestExpandTemplate.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestExpandTemplate"/>
-                                <zip destfile="target/samples/bpel/TestFlowLinks.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestFlowLinks"/>
-                                <zip destfile="target/samples/bpel/TestForEach.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestForEach"/>
-                                <zip destfile="target/samples/bpel/TestIf.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestIf"/>
-                                <zip destfile="target/samples/bpel/TestIgnoreMissingFromData.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestIgnoreMissingFromData"/>
-                                <zip destfile="target/samples/bpel/TestPickOneWay.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestPickOneWay"/>
-                                <zip destfile="target/samples/bpel/TestProcessProperties.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestProcessProperties"/>
-                                <zip destfile="target/samples/bpel/TestPubSubInProc.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestPubSubInProc"/>
-                                <zip destfile="target/samples/bpel/TestRepeatUntil.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestRepeatUntil"/>
-                                <zip destfile="target/samples/bpel/TestRESTProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestRESTProcess"/>
-                                <zip destfile="target/samples/bpel/TestSplit.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestSplit"/>
-                                <zip destfile="target/samples/bpel/TestThrowCatchFaultHandling.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestThrowCatchFaultHandling"/>
-                                <zip destfile="target/samples/bpel/TestWhile.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestWhile"/>
-                                <zip destfile="target/samples/bpel/TestXslTransform.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestXslTransform"/>
-                                <zip destfile="target/samples/bpel/ClaimsApprovalProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/ClaimsApprovalProcess"/>
-                                <zip destfile="target/samples/bpel/DynPartner.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/DynPartner"/>
-                                <zip destfile="target/samples/bpel/XMLAttributeProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/XMLAttributeProcess"/>
-                                <zip destfile="target/samples/bpel/Async-Server.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server"/>
-                                <zip destfile="target/samples/bpel/Async-Client.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client"/>
-                                <zip destfile="target/samples/bpel/SecuredWithServiceDescriptorProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SecuredWithServiceDescriptorProcess"/>
-                                <zip destfile="target/samples/bpel/KPISample.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/KPISample"/>
-                                <zip destfile="target/samples/bpel/AdminServiceInvokeSample.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AdminServiceInvokeSample"/>
-                                <zip destfile="target/samples/bpel/AbstractHeaderSample.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AbstractHeaderSample"/>
-                                <zip destfile="target/samples/bpel/SoapHeaderBasedCorrelationSample.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SoapHeaderBasedCorrelation"/>
-                                <zip destfile="target/samples/bpel/UserRestProcess.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/UserRestProcess"/>
+                                <echo message="######## Creating BPEL / HumanTask Archives. #########" />
+                                <property name="tempdir" value="target/samples" />
+                                <property name="bpelSampleDir" value="target/samples/bpel" />
+                                <property name="humantaskSampleDir" value="target/samples/humantask" />
+                                <property name="bpmnSampleDir" value="target/samples/bpmn" />
+                                <mkdir dir="${tempdir}" />
+                                <mkdir dir="${bpelSampleDir}" />
+                                <mkdir dir="${humantaskSampleDir}" />
+                                <mkdir dir="${bpmnSampleDir}" />
+                                <zip destfile="target/samples/bpel/CustomerInfo.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CustomerInfo" />
+                                <zip destfile="target/samples/bpel/LoanProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/LoanProcess" />
+                                <zip destfile="target/samples/bpel/LoanService.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/LoanService" />
+                                <zip destfile="target/samples/bpel/TestE4XDirect.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestE4XDirect" />
+                                <zip destfile="target/samples/bpel/AttachmentHandlingProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AttachmentHandlingProcess" />
+                                <zip destfile="target/samples/bpel/CreditRating.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CreditRating" />
+                                <zip destfile="target/samples/bpel/CleanUpTest1.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CleanUpTest1" />
+                                <zip destfile="target/samples/bpel/FlexibleAssign.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/FlexibleAssign" />
+                                <zip destfile="target/samples/bpel/helloHeaderTest.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/helloHeaderTest" />
+                                <zip destfile="target/samples/bpel/HelloWorld2.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/HelloWorld2" />
+                                <zip destfile="target/samples/bpel/MyRoleMexTestProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/MyRoleMexTestProcess" />
+                                <zip destfile="target/samples/bpel/RPCClientProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/RPCClientProcess" />
+                                <zip destfile="target/samples/bpel/RPCServiceProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/RPCServiceProcess" />
+                                <zip destfile="target/samples/bpel/FlightReservationProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleCompensationHandlers/FlightReservationProcess/" />
+                                <zip destfile="target/samples/bpel/SampleEventHandler.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleEventHandlers" />
+                                <zip destfile="target/samples/bpel/AdderProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/AdderProcess/" />
+                                <zip destfile="target/samples/bpel/DivisionProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/DivisionProcess/" />
+                                <zip destfile="target/samples/bpel/FaultHandlingSample.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleFaultHandler/FaultHandlingSample/" />
+                                <zip destfile="target/samples/bpel/Async-Client.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client/" />
+                                <zip destfile="target/samples/bpel/Async-Server.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server/" />
+                                <zip destfile="target/samples/bpel/SecurePartnerBPEL.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SecurePartnerBPEL" />
+                                <zip destfile="target/samples/bpel/TestAlarm.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestAlarm" />
+                                <zip destfile="target/samples/bpel/TestAssignActivity1.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestAssignActivity1" />
+                                <zip destfile="target/samples/bpel/TestAssignDate.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestAssignDate" />
+                                <zip destfile="target/samples/bpel/TestCombineUrl.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestCombineUrl" />
+                                <zip destfile="target/samples/bpel/TestComposeUrl.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestComposeUrl" />
+                                <zip destfile="target/samples/bpel/TestCorrelationUnique.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestCorrelationUnique" />
+                                <zip destfile="target/samples/bpel/TestCounter.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestCounter" />
+                                <zip destfile="target/samples/bpel/TestE4XDirect.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestE4XDirect" />
+                                <zip destfile="target/samples/bpel/TestExpandTemplate.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestExpandTemplate" />
+                                <zip destfile="target/samples/bpel/TestFlowLinks.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestFlowLinks" />
+                                <zip destfile="target/samples/bpel/TestForEach.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestForEach" />
+                                <zip destfile="target/samples/bpel/TestIf.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestIf" />
+                                <zip destfile="target/samples/bpel/TestIgnoreMissingFromData.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestIgnoreMissingFromData" />
+                                <zip destfile="target/samples/bpel/TestPickOneWay.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestPickOneWay" />
+                                <zip destfile="target/samples/bpel/TestProcessProperties.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestProcessProperties" />
+                                <zip destfile="target/samples/bpel/TestPubSubInProc.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestPubSubInProc" />
+                                <zip destfile="target/samples/bpel/TestRepeatUntil.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestRepeatUntil" />
+                                <zip destfile="target/samples/bpel/TestRESTProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestRESTProcess" />
+                                <zip destfile="target/samples/bpel/TestSplit.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestSplit" />
+                                <zip destfile="target/samples/bpel/TestThrowCatchFaultHandling.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestThrowCatchFaultHandling" />
+                                <zip destfile="target/samples/bpel/TestWhile.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestWhile" />
+                                <zip destfile="target/samples/bpel/TestXslTransform.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/TestXslTransform" />
+                                <zip destfile="target/samples/bpel/ClaimsApprovalProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/ClaimsApprovalProcess" />
+                                <zip destfile="target/samples/bpel/DynPartner.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/DynPartner" />
+                                <zip destfile="target/samples/bpel/XMLAttributeProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/XMLAttributeProcess" />
+                                <zip destfile="target/samples/bpel/Async-Server.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Server" />
+                                <zip destfile="target/samples/bpel/Async-Client.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SampleAsynchronousProcess/Async-Client" />
+                                <zip destfile="target/samples/bpel/SecuredWithServiceDescriptorProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SecuredWithServiceDescriptorProcess" />
+                                <zip destfile="target/samples/bpel/KPISample.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/KPISample" />
+                                <zip destfile="target/samples/bpel/AdminServiceInvokeSample.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AdminServiceInvokeSample" />
+                                <zip destfile="target/samples/bpel/AbstractHeaderSample.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AbstractHeaderSample" />
+                                <zip destfile="target/samples/bpel/SoapHeaderBasedCorrelationSample.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/SoapHeaderBasedCorrelation" />
+                                <zip destfile="target/samples/bpel/UserRestProcess.zip" basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/UserRestProcess" />
                                 <!--  Copying Human Tasks Sample -->
 
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTask.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/humantask/ClaimsApprovalTask"/>
-                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithDeadline.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithDeadline"/>
-                                <zip destfile="target/samples/humantask/HTWithServiceDescriptorANDUnifiedEndpoint.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint"/>
+                                <zip destfile="target/samples/humantask/ClaimsApprovalTask.zip" basedir="${basedir}/../samples/product/src/main/resources/humantask/ClaimsApprovalTask" />
+                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithDeadline.zip" basedir="${basedir}/../samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithDeadline" />
+                                <zip destfile="target/samples/humantask/HTWithServiceDescriptorANDUnifiedEndpoint.zip" basedir="${basedir}/../samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint" />
 
                                 <!--  Copying BPMN sample -->
-                                <zip destfile="target/samples/bpmn/HelloWorld.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
+                                <zip destfile="target/samples/bpmn/HelloWorld.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld" />
  				
 				<concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">
 				org.restlet.level=SEVERE</concat>
-                                <echo message="######### Copying Samples Services are temporary skipped###########"/>
+                                <echo message="######### Copying Samples Services are temporary skipped###########" />
                                 
                                 <!-- Commenting h2 database generation, since we are copying h2 databases from feature -->
                                 <!--<path id="h2.classpath">-->
-                                    <!--<path refid="maven.compile.classpath"/>-->
+                                    <!--<path refid="maven.compile.classpath" />-->
                                 <!--</path>-->
 
                                 <!--<echo-->
-                                        <!--message="########### Create BPS Database ##############"/>-->
+                                        <!--message="########### Create BPS Database ##############" />-->
                                 <!--<sql-->
                                         <!--driver="org.h2.Driver"-->
                                         <!--url="jdbc:h2:${basedir}/target/database/jpadb;create=true"-->
                                         <!--userid="wso2carbon" password="wso2carbon" autocommit="true"-->
                                         <!--onerror="continue">-->
                                     <!--<classpath>-->
-                                        <!--<path refid="h2.classpath"/>-->
+                                        <!--<path refid="h2.classpath" />-->
                                     <!--</classpath>-->
                                     <!--<fileset-->
-                                            <!--file="${basedir}/sql/h2.sql"/>-->
+                                            <!--file="${basedir}/sql/h2.sql" />-->
                                 <!--</sql>-->
 
                                 <!--<echo-->
-                                        <!--message="##################### END ############################"/>-->
+                                        <!--message="##################### END ############################" />-->
                             </tasks>
                         </configuration>
                     </execution>
@@ -372,68 +310,63 @@
                         </goals>
                         <configuration>
                             <tasks>
-                                <property name="tempdir" value="target/docs-temp"/>
-                                <mkdir dir="${tempdir}"/>
+                                <property name="tempdir" value="target/docs-temp" />
+                                <mkdir dir="${tempdir}" />
                                 <unzip dest="${tempdir}">
                                     <fileset dir="target">
-                                        <include
-                                                name="${project.artifactId}-${project.version}.zip"/>
+                                        <include name="${project.artifactId}-${project.version}.zip" />
                                     </fileset>
                                 </unzip>
-                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components"
-                                      overwrite="true">
-                                    <fileset
-                                            dir="${tempdir}/${project.artifactId}-${project.version}/repository/components">
+                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components" overwrite="true">
+                                    <fileset dir="${tempdir}/${project.artifactId}-${project.version}/repository/components">
                                     </fileset>
                                 </copy>
-                                <delete file="target/${project.artifactId}-${project.version}.zip"/>
-                                <delete dir="${tempdir}"/>
-                                <mkdir dir="${tempdir}"/>
+                                <delete file="target/${project.artifactId}-${project.version}.zip" />
+                                <delete dir="${tempdir}" />
+                                <mkdir dir="${tempdir}" />
                                 <unzip dest="${tempdir}">
-                                    <fileset
-                                            dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
-                                        <include name="*.ui*.jar"/>
+                                    <fileset dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
+                                        <include name="*.ui*.jar" />
                                     </fileset>
                                 </unzip>
                                 <move todir="${tempdir}/web/" includeemptydirs="false">
                                     <fileset dir="${tempdir}/web/">
-                                        <exclude name="**/yui/**"/>
-                                        <exclude name="**/ajax/**"/>
-                                        <exclude name="**/WEB-INF/**"/>
-                                        <include name="**/*.html"/>
+                                        <exclude name="**/yui/**" />
+                                        <exclude name="**/ajax/**" />
+                                        <exclude name="**/WEB-INF/**" />
+                                        <include name="**/*.html" />
                                     </fileset>
-                                    <mapper type="glob" from="*.html" to="*.xml"/>
+                                    <mapper type="glob" from="*.html" to="*.xml" />
                                 </move>
-                                <mkdir dir="src/site/xdoc"/>
-                                <copy todir="src/site/xdoc" overwrite="false"
-                                      includeemptydirs="false">
+                                <mkdir dir="src/site/xdoc" />
+                                <copy todir="src/site/xdoc" overwrite="false" includeemptydirs="false">
                                     <fileset dir="${tempdir}/web">
-                                        <exclude name="**/yui/**"/>
-                                        <exclude name="**/ajax/**"/>
-                                        <exclude name="**/WEB-INF/**"/>
-                                        <exclude name="**/*.html"/>
-                                        <exclude name="**/*.js"/>
-                                        <exclude name="**/*.jsp"/>
-                                        <exclude name="**/*.xsl"/>
-                                        <exclude name="**/codepress.xml"/>
-                                        <exclude name="**/template.xml"/>
-                                        <exclude name="*.*"/>
+                                        <exclude name="**/yui/**" />
+                                        <exclude name="**/ajax/**" />
+                                        <exclude name="**/WEB-INF/**" />
+                                        <exclude name="**/*.html" />
+                                        <exclude name="**/*.js" />
+                                        <exclude name="**/*.jsp" />
+                                        <exclude name="**/*.xsl" />
+                                        <exclude name="**/codepress.xml" />
+                                        <exclude name="**/template.xml" />
+                                        <exclude name="*.*" />
                                     </fileset>
                                 </copy>
                                 <!--<copy todir="src/site" overwrite="false" includeemptydirs="false">-->
                                     <!--<fileset dir="../../docs">-->
-                                        <!--<exclude name="**/user-mgt-actdir.xml"/>-->
-                                        <!--<exclude name="**/user-mgt-jdbc.xml"/>-->
-                                        <!--<exclude name="**/user-mgt-ldap.xml"/>-->
+                                        <!--<exclude name="**/user-mgt-actdir.xml" />-->
+                                        <!--<exclude name="**/user-mgt-jdbc.xml" />-->
+                                        <!--<exclude name="**/user-mgt-ldap.xml" />-->
                                     <!--</fileset>-->
                                 <!--</copy>-->
                                 <!--<copy todir="target/site/" overwrite="false"-->
                                       <!--includeemptydirs="false">-->
                                     <!--<fileset dir="src/site/xdoc/">-->
-                                        <!--<include name="**/images/*.*"/>-->
+                                        <!--<include name="**/images/*.*" />-->
                                     <!--</fileset>-->
                                 <!--</copy>-->
-                                <delete dir="${tempdir}"/>
+                                <delete dir="${tempdir}" />
 
                             </tasks>
                         </configuration>
@@ -444,19 +377,19 @@
                         <phase>install</phase>
                         <configuration>
                             <tasks>
-                                <delete dir="target/archive-tmp"/>
-                                <delete dir="target/dependency-maven-plugin-markers"/>
-                                <delete dir="target/maven-shared-archive-resources"/>
-                                <delete dir="target/maven-archiver"/>
-                                <delete dir="target/samples"/>
-                                <delete dir="target/classes"/>
-                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}"/>
-                                <delete file="target/${project.artifactId}-${project.version}.jar"/>
-                                <delete dir="target/sources"/>
-                                <delete dir="target/site"/>
-                                <delete dir="target/database"/>
-                                <delete dir="target/bpmn-explorer"/>
-                                <delete dir="src/site"/>
+                                <delete dir="target/archive-tmp" />
+                                <delete dir="target/dependency-maven-plugin-markers" />
+                                <delete dir="target/maven-shared-archive-resources" />
+                                <delete dir="target/maven-archiver" />
+                                <delete dir="target/samples" />
+                                <delete dir="target/classes" />
+                                <delete dir="target/wso2carbon-core-${carbon.kernel.version}" />
+                                <delete file="target/${project.artifactId}-${project.version}.jar" />
+                                <delete dir="target/sources" />
+                                <delete dir="target/site" />
+                                <delete dir="target/database" />
+                                <delete dir="target/bpmn-explorer" />
+                                <delete dir="src/site" />
                             </tasks>
                         </configuration>
                         <goals>
