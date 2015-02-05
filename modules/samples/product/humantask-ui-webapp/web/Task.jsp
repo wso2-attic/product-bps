@@ -1,12 +1,12 @@
 <%@page import="org.wso2.carbon.humantask.stub.mgt.types.TaskStatusType"%>
-<%@page import="org.wso2.carbon.humantask.sample.manager.LoginManager"%>
+<%@page import="org.wso2.bps.humantask.sample.manager.LoginManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="org.apache.axis2.context.ConfigurationContext"%>
 <%@ page import="org.apache.axis2.context.ServiceContext"%>
 <%@ page import="org.apache.axis2.transport.http.HTTPConstants"%>
 <%@ page
-	import="org.wso2.carbon.humantask.sample.clients.HumanTaskClientAPIServiceClient"%>
+	import="org.wso2.bps.humantask.sample.clients.HumanTaskClientAPIServiceClient"%>
 <%@ page import="org.apache.axis2.databinding.types.URI"%>
 <%@ page import="org.apache.axiom.om.OMElement"%>
 <%@ page

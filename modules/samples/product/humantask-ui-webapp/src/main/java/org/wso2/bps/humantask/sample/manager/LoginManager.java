@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.humantask.sample.manager;
+package org.wso2.bps.humantask.sample.manager;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -29,8 +29,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ServiceContext;
 import org.apache.axis2.transport.http.HTTPConstants;
-import org.wso2.carbon.humantask.sample.clients.HumanTaskClientAPIServiceClient;
-import org.wso2.carbon.humantask.sample.clients.LoginAdminServiceClient;
+import org.wso2.bps.humantask.sample.clients.HumanTaskClientAPIServiceClient;
+import org.wso2.bps.humantask.sample.clients.LoginAdminServiceClient;
 
 public class LoginManager extends HttpServlet {
 
@@ -57,7 +57,7 @@ public class LoginManager extends HttpServlet {
 
 			// getting configuration properties
 			prop.load(getClass().getClassLoader().getResourceAsStream(
-					"org/wso2/carbon/humantask/sample/config.properties"));
+					"org/wso2/bps/humantask/sample/config.properties"));
 
 			String BACK_END_URL = prop.getProperty("BACK_END_URL");
 			String BPS_JKS_PATH = prop.getProperty("BPS_JKS_PATH");

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.humantask.sample.clients;
+package org.wso2.bps.humantask.sample.clients;
 
 import java.math.BigInteger;
 import java.rmi.RemoteException;

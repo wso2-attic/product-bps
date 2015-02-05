@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.humantask.sample.util;
+package org.wso2.bps.humantask.sample.util;
 
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.TPresentationName;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.TPresentationSubject;
