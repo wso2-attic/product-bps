@@ -39,7 +39,7 @@
 	<module>bpel-logger-extension</module>
 	<module>process-tools</module>
 	<module>bpel-property-reader</module>
-	<module>humantask-ui-webapp</module>
+	<!--module>humantask-ui-webapp</module-->
     </modules>
 
 </project>
