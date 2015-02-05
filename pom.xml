@@ -21,7 +21,7 @@
     <groupId>org.wso2.bps</groupId>
     <artifactId>wso2bps-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.5.0</version>
+    <version>3.5.1-SNAPSHOT</version>
     <name>WSO2 BPS - Parent</name>
     <url>http://wso2.org/projects/bps/java</url>
     <description>WSO2 Business Process Server</description>
@@ -420,7 +420,7 @@
 	<url>https://github.com/wso2/product-bps.git</url>
         <developerConnection>scm:git:https://github.com/wso2/product-bps.git</developerConnection>
         <connection>scm:git:https://github.com/wso2/product-bps.git</connection>
-        <tag>3.5.0-m0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <repositories>
@@ -557,7 +557,7 @@
 
     <properties>
 
-        <bps.version>3.5.0</bps.version>
+        <bps.version>3.5.1-SNAPSHOT</bps.version>
 
         <carbon.kernel.version>4.3.0</carbon.kernel.version>
 
