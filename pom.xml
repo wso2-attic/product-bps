@@ -15,13 +15,15 @@
  ~ specific language governing permissions and limitations
  ~ under the License.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.bps</groupId>
     <artifactId>wso2bps-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.5.1-SNAPSHOT</version>
+    <version>3.5.0-SNAPSHOT</version>
     <name>WSO2 BPS - Parent</name>
     <url>http://wso2.org/projects/bps/java</url>
     <description>WSO2 Business Process Server</description>
@@ -557,7 +559,7 @@
 
     <properties>
 
-        <bps.version>3.5.1-SNAPSHOT</bps.version>
+        <bps.version>3.5.0-SNAPSHOT</bps.version>
 
         <carbon.kernel.version>4.3.0</carbon.kernel.version>
 

@@ -15,13 +15,14 @@
  ~ specific language governing permissions and limitations
  ~ under the License.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.wso2.bps</groupId>
         <artifactId>sample-services</artifactId>
-        <version>3.5.1-SNAPSHOT</version>
+        <version>3.5.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>CreditRatingService</artifactId>
@@ -52,10 +53,12 @@
                         <configuration>
                             <tasks>
                                 <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
-                                    <arg line="-uri src/org/wso2/bps/samples/creditrating/META-INF/CreditRatingService.wsdl -uw -ss -sd -o . -p org.wso2.bps.samples.creditrating -ns2p http://wso2.org/bps/samples/loan_process/schema=org.wso2.bps.samples.creditrating.types,http://wso2.org/bps/samples/CreditRating=org.wso2.bps.samples.creditrating" />
-                                    <classpath refid="maven.dependency.classpath" />
-                                    <classpath refid="maven.compile.classpath" />
-                                    <classpath refid="maven.runtime.classpath" />
+                                    <arg line="-uri src/org/wso2/bps/samples/creditrating/META-INF/CreditRatingService.wsdl -uw -ss -sd
+                                    -o . -p org.wso2.bps.samples.creditrating
+                                    -ns2p http://wso2.org/bps/samples/loan_process/schema=org.wso2.bps.samples.creditrating.types,http://wso2.org/bps/samples/CreditRating=org.wso2.bps.samples.creditrating"/>
+                                    <classpath refid="maven.dependency.classpath"/>
+                                    <classpath refid="maven.compile.classpath"/>
+                                    <classpath refid="maven.runtime.classpath"/>
                                 </java>
                             </tasks>
                         </configuration>

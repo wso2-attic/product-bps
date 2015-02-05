@@ -17,12 +17,14 @@
   ~  under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.wso2.bps</groupId>
         <artifactId>wso2bps-parent</artifactId>
-        <version>3.5.1-SNAPSHOT</version>
+        <version>3.5.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -48,7 +50,8 @@
         <module>tests-integration/humantasks</module>
         <module>tests-integration/bpmn</module>
         <module>tests-patches/bpel</module>
-        <module>tests-integration/taskcoordination</module <module>tests-ui-integration</module>
+        <module>tests-integration/taskcoordination</module
+        <module>tests-ui-integration</module>
         <module>tests-integration/reports</module> -->
 
     </modules>
