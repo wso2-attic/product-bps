@@ -1,4 +1,4 @@
-<%@page import="org.wso2.carbon.humantask.sample.manager.LoginManager"%>
+<%@page import="org.wso2.bps.humantask.sample.manager.LoginManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="javax.xml.namespace.*"%>
@@ -20,7 +20,7 @@
 <%@ page
 	import="org.wso2.carbon.humantask.stub.ui.task.client.api.types.TTaskSimpleQueryResultSet"%>
 <%@ page
-	import="org.wso2.carbon.humantask.sample.util.HumanTaskSampleUtil"%>
+	import="org.wso2.bps.humantask.sample.util.HumanTaskSampleUtil"%>
 <%@ page
 	import="javax.xml.namespace.QName"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">

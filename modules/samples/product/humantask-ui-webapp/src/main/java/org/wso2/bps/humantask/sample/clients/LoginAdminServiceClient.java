@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.humantask.sample.clients;
+package org.wso2.bps.humantask.sample.clients;
 
 import org.apache.axis2.AxisFault;  
 import org.wso2.carbon.authenticator.stub.AuthenticationAdminStub;  

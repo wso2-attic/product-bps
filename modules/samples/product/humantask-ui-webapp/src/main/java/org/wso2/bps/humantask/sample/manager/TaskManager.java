@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.humantask.sample.manager;
+package org.wso2.bps.humantask.sample.manager;
 
 import java.io.IOException;
 
