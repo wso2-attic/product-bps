@@ -9,11 +9,11 @@
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>Home</servlet-name>
-		<servlet-class>org.wso2.carbon.humantask.sample.manager.LoginManager</servlet-class>
+		<servlet-class>org.wso2.bps.humantask.sample.manager.LoginManager</servlet-class>
 	</servlet>
 		<servlet>
 		<servlet-name>Task</servlet-name>
-		<servlet-class>org.wso2.carbon.humantask.sample.manager.TaskManager</servlet-class>
+		<servlet-class>org.wso2.bps.humantask.sample.manager.TaskManager</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Home</servlet-name>
