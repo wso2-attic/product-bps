@@ -280,5 +280,9 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.activiti.wso2</groupId>
+            <artifactId>activiti-engine</artifactId>
+        </dependency>
     </dependencies>
 </project>

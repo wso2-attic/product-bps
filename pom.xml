@@ -421,6 +421,11 @@
                 <artifactId>org.wso2.carbon.bpmn.stub</artifactId>
                 <version>${carbon.business-process.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.activiti.wso2</groupId>
+                <artifactId>activiti-engine</artifactId>
+                <version>${org.activiti.wso2.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -597,6 +602,8 @@
         <carbon.automation.version>4.3.1</carbon.automation.version>
 
         <orbit.version.ode>1.3.5.wso2v12</orbit.version.ode>
+
+        <org.activiti.wso2.version>5.16-wso2v1</org.activiti.wso2.version>
 
         <!-- H2 Database Engine       -->
         <h2.engine.version>1.2.140.wso2v3</h2.engine.version>
