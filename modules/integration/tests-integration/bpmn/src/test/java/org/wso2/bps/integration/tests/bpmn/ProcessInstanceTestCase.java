@@ -44,7 +44,7 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
 		Assert.assertTrue("Deployment Present",deploymentCheckResponse[2].contains(fileName));
 
 		//Acquiring Process Definition ID to start Process Instance
-		String[] definitionResponse = tester.FindProcessDefinitionsID(deploymentResponse[1]);
+		String[] definitionResponse = tester.findProcessDefinitionsID(deploymentResponse[1]);
 		Assert.assertTrue("Search Success",definitionResponse[0].contains(BPMNTestConstants.OK));
 
 		//Starting and Verifying Process Instance

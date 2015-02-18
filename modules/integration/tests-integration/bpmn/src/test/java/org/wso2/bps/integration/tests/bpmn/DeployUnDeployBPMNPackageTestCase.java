@@ -27,7 +27,7 @@ import java.io.File;
 public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
 
 	@Test(groups = {"wso2.bps.test.deploy"}, description = "Deploy/UnDeploy Package Test", priority = 1, singleThreaded = true)
-	public void deployUnDeployPackage() throws Exception{
+	public void deployUnDeployBPMNPackage() throws Exception{
 		init();
 		ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"),bpsServer.getInstance().getHosts().get("default"));
 		String filePath = FrameworkPathUtil.getSystemResourceLocation()+ File.separator

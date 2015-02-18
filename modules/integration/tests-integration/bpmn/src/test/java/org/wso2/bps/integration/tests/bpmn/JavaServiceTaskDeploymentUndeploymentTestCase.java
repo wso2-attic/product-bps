@@ -56,7 +56,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
 
 	@Test(groups = {"wso2.bps.test.deploy.JavaServiceTask"}, description = "Deploy/UnDeploy Package Test", priority = 1, singleThreaded = true)
 
-	public void deployUnDeployJavaServicePackage() throws Exception{
+	public void deployUnDeployJavaServiceTaskBPMNPackage() throws Exception{
 		init();
 		ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http")
 											,bpsServer.getInstance().getHosts().get("default"));
@@ -74,7 +74,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
 		Assert.assertTrue("Deployment Present",deploymentCheckResponse[2].contains(fileName));
 
 
-		String[] definitionResponse = tester.FindProcessDefinitionsID(deploymentResponse[1]);
+		String[] definitionResponse = tester.findProcessDefinitionsID(deploymentResponse[1]);
 		Assert.assertTrue("Search Success",definitionResponse[0].contains("200"));
 
 		//Starting and Verifying Process Instance

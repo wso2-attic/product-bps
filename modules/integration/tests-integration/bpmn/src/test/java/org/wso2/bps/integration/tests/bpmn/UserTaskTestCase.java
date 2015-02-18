@@ -45,7 +45,7 @@ public class UserTaskTestCase extends BPSMasterTest {
 		Assert.assertTrue("Deployment Present",deploymentCheckResponse[2].contains(fileName));
 
 		//Acquiring Process Definition ID to start Process Instance
-		String[] definitionResponse = tester.FindProcessDefinitionsID(deploymentResponse[1]);
+		String[] definitionResponse = tester.findProcessDefinitionsID(deploymentResponse[1]);
 		Assert.assertTrue("Search Success",definitionResponse[0].contains(BPMNTestConstants.OK));
 
 		//Starting and Verifying Process Instance
@@ -57,7 +57,7 @@ public class UserTaskTestCase extends BPSMasterTest {
 		tester.waitForTaskGeneration();
 
 		//Acquiring TaskID to perform Task Related Tests
-		String[] taskResponse = tester.FindTaskIdByProcessInstanceID(processInstanceResponse[1]);
+		String[] taskResponse = tester.findTaskIdByProcessInstanceID(processInstanceResponse[1]);
 		Assert.assertTrue("Task ID Acquired", taskResponse[0].contains(BPMNTestConstants.OK));
 
 		//Claiming a User Task
