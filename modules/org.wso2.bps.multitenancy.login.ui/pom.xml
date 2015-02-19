@@ -25,10 +25,10 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.stratos.bps.login.ui</artifactId>
+    <artifactId>org.wso2.bps.multitenancy.login.ui</artifactId>
     <version>3.5.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>WSO2 Stratos BPS - Login User Interface</name>
+    <name>WSO2 BPS - Tenant Login User Interface</name>
 
     <build>
         <plugins>
@@ -39,7 +39,7 @@
                     <source>1.5</source>
                     <target>1.5</target>
                 </configuration>
-            </plugin>   
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -62,7 +62,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                
+
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
@@ -82,7 +82,7 @@
         </plugins>
     </build>
 
-    <dependencies>       
+    <dependencies>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.ui</artifactId>
@@ -90,7 +90,7 @@
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.core</artifactId>
-        </dependency>       
+        </dependency>
     </dependencies>
 
 </project>

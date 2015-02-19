@@ -27,40 +27,30 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>wso2stratos-bps-features</artifactId>
+    <artifactId>wso2bps-multitenancy-features</artifactId>
     <version>3.5.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>WSO2 Stratos BPS - Features Aggregator Module</name>
+    <name>WSO2 BPS - Tenant Dashboard Features Aggregator Module</name>
     <url>http://wso2.org</url>
 
     <modules>
-        <module>org.wso2.stratos.bps.styles.feature</module>
-        <module>org.wso2.stratos.bps.dashboard.ui.feature</module>
-        <module>org.wso2.stratos.bps.login.ui.feature</module>
-        <!--module>org.wso2.stratos.bps.samples.utils.feature</module-->
+        <!--<module>org.wso2.bps.multitenancy.styles.feature</module>-->
+        <module>org.wso2.bps.multitenancy.dashboard.ui.feature</module>
+        <!--<module>org.wso2.bps.multitenancy.login.ui.feature</module>-->
     </modules>
-
         <dependencies>
-            <!-- Dependencies for org.wso2.stratos.bps.styles.feature -->
-            <dependency>
-            	<groupId>org.wso2.bps</groupId>
-            	<artifactId>org.wso2.stratos.bps.styles</artifactId>
-             </dependency>
-            <!-- Dependencies for org.wso2.stratos.bps.dashboard.ui.feature -->
+            <!--<dependency>-->
+            	<!--<groupId>org.wso2.bps</groupId>-->
+            	<!--<artifactId>org.wso2.bps.multitenancy.styles</artifactId>-->
+             <!--</dependency>-->
              <dependency>
                 <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.stratos.bps.dashboard.ui</artifactId>
+                <artifactId>org.wso2.bps.multitenancy.dashboard.ui</artifactId>
             </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.ui.menu.stratos</artifactId>
-            </dependency>
-            <!-- Dependencies for org.wso2.stratos.bps.login.ui.feature -->
-            <dependency>
-                <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.stratos.bps.login.ui</artifactId>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.wso2.bps</groupId>-->
+                <!--<artifactId>org.wso2.bps.multitenancy.login.ui</artifactId>-->
+            <!--</dependency>-->
         </dependencies>
-
 </project>
 

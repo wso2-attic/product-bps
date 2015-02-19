@@ -268,6 +268,10 @@
                                 <featureArtifactDef>
                                     org.jaggeryjs.modules:carbon.feature:${carbon.feature.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.bps:org.wso2.bps.multitenancy.dashboard.ui.feature:${bps.version}
+                                </featureArtifactDef>
+
                             </featureArtifacts>
                         </configuration>
                     </execution>
@@ -554,6 +558,10 @@
                                     <id>org.jaggeryjs.modules.carbon.feature.group</id>
                                     <version>${carbon.feature.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.bps.multitenancy.dashboard.ui.feature.group</id>
+                                    <version>${bps.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -806,6 +814,10 @@
                                 <feature>
                                     <id>org.jaggeryjs.modules.carbon.feature.group</id>
                                     <version>${carbon.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.bps.multitenancy.dashboard.ui.feature.group</id>
+                                    <version>${bps.version}</version>
                                 </feature>
                             </features>
                         </configuration>

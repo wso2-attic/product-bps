@@ -21,21 +21,21 @@
 
     <parent>
         <groupId>org.wso2.bps</groupId>
-    	<artifactId>wso2stratos-bps-features</artifactId>
-	<version>3.5.0-SNAPSHOT</version>
+        <artifactId>wso2bps-multitenancy-features</artifactId>
+        <version>3.5.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.stratos.bps.dashboard.ui.feature</artifactId>
+    <artifactId>org.wso2.bps.multitenancy.dashboard.ui.feature</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Stratos BPS - Dashboard UI Features</name>
+    <name>WSO2 BPS - Tenant Dashboard UI Features</name>
     <url>http://wso2.org</url>
 
     <dependencies>
         <dependency>
             <groupId>org.wso2.bps</groupId>
-            <artifactId>org.wso2.stratos.bps.dashboard.ui</artifactId>
+            <artifactId>org.wso2.bps.multitenancy.dashboard.ui</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
@@ -44,7 +44,7 @@
     </dependencies>
 
     <build>
-       <plugins>
+        <plugins>
             <plugin>
                 <groupId>org.wso2.maven</groupId>
                 <artifactId>carbon-p2-plugin</artifactId>
@@ -57,19 +57,23 @@
                             <goal>p2-feature-gen</goal>
                         </goals>
                         <configuration>
-                            <id>org.wso2.stratos.bps.dashboard.ui</id>
+                            <id>org.wso2.bps.multitenancy.dashboard.ui</id>
                             <propertiesFile>../etc/feature.properties</propertiesFile>
                             <adviceFile>
                                 <properties>
-                                    <propertyDef>org.wso2.carbon.p2.category.type:console</propertyDef>
+                                    <propertyDef>org.wso2.carbon.p2.category.type:console
+                                    </propertyDef>
                                 </properties>
-                            </adviceFile>                            
+                            </adviceFile>
                             <bundles>
-                                <bundleDef>org.wso2.bps:org.wso2.stratos.bps.dashboard.ui</bundleDef>
-				<bundleDef>org.wso2.carbon:org.wso2.carbon.ui.menu.stratos</bundleDef>
+                                <bundleDef>org.wso2.bps:org.wso2.bps.multitenancy.dashboard.ui
+                                </bundleDef>
+                                <bundleDef>org.wso2.carbon:org.wso2.carbon.ui.menu.stratos
+                                </bundleDef>
                             </bundles>
                             <importFeatures>
-                                <importFeatureDef>org.wso2.carbon.core.ui:${carbon.kernel.version}</importFeatureDef>
+                                <importFeatureDef>org.wso2.carbon.core.ui:${carbon.kernel.version}
+                                </importFeatureDef>
                             </importFeatures>
                         </configuration>
                     </execution>
@@ -77,5 +81,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

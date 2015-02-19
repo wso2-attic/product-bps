@@ -48,9 +48,9 @@
         <module>modules/features</module>
         <module>modules/p2-profile-gen</module>
         <module>modules/distribution</module>
-        <!--<module>modules/org.wso2.stratos.bps.login.ui</module>-->
-        <!--<module>modules/org.wso2.stratos.bps.dashboard.ui</module>-->
-        <module>modules/integration</module>
+        <module>modules/org.wso2.bps.multitenancy.login.ui</module>
+        <module>modules/org.wso2.bps.multitenancy.dashboard.ui</module>
+        <!--<module>modules/integration</module>-->
     </modules>
 
 
@@ -247,11 +247,6 @@
                 <artifactId>org.wso2.carbon.application.deployer</artifactId>
                 <version>${carbon.kernel.version}</version>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.wso2.carbon</groupId>-->
-                <!--<artifactId>org.wso2.carbon.securevault</artifactId>-->
-                <!--<version>${carbon.kernel.version}</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.core</artifactId>
@@ -279,22 +274,22 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.stratos.bps.styles</artifactId>
+                <artifactId>org.wso2.bps.multitenancy.styles</artifactId>
                 <version>${bps.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.stratos.bps.dashboard.ui</artifactId>
+                <artifactId>org.wso2.bps.multitenancy.dashboard.ui</artifactId>
                 <version>${bps.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.ui.menu.stratos</artifactId>
-                <version>${stratos.version}</version>
+                <version>2.2.0</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.stratos.bps.login.ui</artifactId>
+                <artifactId>org.wso2.bps.multitenancy.login.ui</artifactId>
                 <version>${bps.version}</version>
             </dependency>
             <dependency>
@@ -420,6 +415,22 @@
                 <groupId>org.wso2.carbon.business-process</groupId>
                 <artifactId>org.wso2.carbon.bpmn.stub</artifactId>
                 <version>${carbon.business-process.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wso2.bps</groupId>
+                <artifactId>org.wso2.bps.multitenancy.styles</artifactId>
+                <version>${bps.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.bps</groupId>
+                <artifactId>org.wso2.bps.multitenancy.dashboard.ui</artifactId>
+                <version>${bps.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.bps</groupId>
+                <artifactId>org.wso2.bps.multitenancy.login.ui</artifactId>
+                <version>${bps.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
