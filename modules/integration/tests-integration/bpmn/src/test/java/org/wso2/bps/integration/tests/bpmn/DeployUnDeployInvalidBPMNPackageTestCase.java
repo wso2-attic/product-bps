@@ -26,17 +26,17 @@ import java.io.File;
 
 public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
 
-	@Test(groups = {"wso2.bps.test.deploy.invalidPackage"}, description = "Deploy/UnDeploy Invalid Package Test", priority = 1, singleThreaded = true)
-	public void deployUnDeployInvalidBPMNPackage() throws Exception{
-		init();
-		ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"),bpsServer.getInstance().getHosts().get("default"));
-		String filePath = FrameworkPathUtil.getSystemResourceLocation()+ File.separator
-		                  +BPMNTestConstants.DIR_ARTIFACTS + File.separator
-		                  +BPMNTestConstants.DIR_BPMN + File.separator +"InvalidHelloApprove.bar";
-		String fileName = "InvalidHelloApprove.bar";
-		String[] deploymentResponse;
-		deploymentResponse = tester.deployBPMNPackage(filePath,fileName);
-		Assert.assertTrue("Checking the Status", deploymentResponse[0].contains(BPMNTestConstants.INTERNAL_SERVER_ERROR));
-		Assert.assertTrue("Checking for Error Message",deploymentResponse[1].contains("Error parsing XML"));
-	}
+    @Test(groups = {"wso2.bps.test.deploy.invalidPackage"}, description = "Deploy/UnDeploy Invalid Package Test", priority = 1, singleThreaded = true)
+    public void deployUnDeployInvalidBPMNPackage() throws Exception {
+        init();
+        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"), bpsServer.getInstance().getHosts().get("default"));
+        String filePath = FrameworkPathUtil.getSystemResourceLocation() + File.separator
+                          + BPMNTestConstants.DIR_ARTIFACTS + File.separator
+                          + BPMNTestConstants.DIR_BPMN + File.separator + "InvalidHelloApprove.bar";
+        String fileName = "InvalidHelloApprove.bar";
+        String[] deploymentResponse;
+        deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
+        Assert.assertTrue("Checking the Status", deploymentResponse[0].contains(BPMNTestConstants.INTERNAL_SERVER_ERROR));
+        Assert.assertTrue("Checking for Error Message", deploymentResponse[1].contains("Error parsing XML"));
+    }
 }

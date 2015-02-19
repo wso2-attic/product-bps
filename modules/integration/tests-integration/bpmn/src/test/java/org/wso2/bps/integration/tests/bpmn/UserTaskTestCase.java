@@ -27,70 +27,70 @@ import java.io.File;
 
 public class UserTaskTestCase extends BPSMasterTest {
 
-	@Test(groups = {"wso2.bps.test.usertasks"}, description = "User Task Test", priority = 1, singleThreaded = true)
-	public void UserTaskTestCase()throws Exception{
-	    init();
-		ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"),bpsServer.getInstance().getHosts().get("default"));
-		//deploying Package
-		String filePath = FrameworkPathUtil.getSystemResourceLocation()+ File.separator
-		                                    +BPMNTestConstants.DIR_ARTIFACTS + File.separator
-		                                    +BPMNTestConstants.DIR_BPMN + File.separator +"AssigneeIsEmpty.bar";
+    @Test(groups = {"wso2.bps.test.usertasks"}, description = "User Task Test", priority = 1, singleThreaded = true)
+    public void UserTaskTestCase() throws Exception {
+        init();
+        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"), bpsServer.getInstance().getHosts().get("default"));
+        //deploying Package
+        String filePath = FrameworkPathUtil.getSystemResourceLocation() + File.separator
+                          + BPMNTestConstants.DIR_ARTIFACTS + File.separator
+                          + BPMNTestConstants.DIR_BPMN + File.separator + "AssigneeIsEmpty.bar";
 
-		String fileName = "AssigneeIsEmpty.bar";
+        String fileName = "AssigneeIsEmpty.bar";
 
 
-		String[] deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
-		Assert.assertTrue("Deployment Successful",deploymentResponse[0].contains(BPMNTestConstants.CREATED));
-		String[] deploymentCheckResponse = tester.getDeploymentById(deploymentResponse[1]);
-		Assert.assertTrue("Deployment Present",deploymentCheckResponse[2].contains(fileName));
+        String[] deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
+        Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
+        String[] deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
+        Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
 
-		//Acquiring Process Definition ID to start Process Instance
-		String[] definitionResponse = tester.findProcessDefinitionsID(deploymentResponse[1]);
-		Assert.assertTrue("Search Success",definitionResponse[0].contains(BPMNTestConstants.OK));
+        //Acquiring Process Definition ID to start Process Instance
+        String[] definitionResponse = tester.findProcessDefinitionInfoById(deploymentResponse[1]);
+        Assert.assertTrue("Search Success", definitionResponse[0].contains(BPMNTestConstants.OK));
 
-		//Starting and Verifying Process Instance
-		String[] processInstanceResponse = tester.startProcessInstanceByDefintionID(definitionResponse[1]);
-		Assert.assertTrue("Process Instance Started", processInstanceResponse[0].contains(BPMNTestConstants.CREATED));
-		String searchResponse = tester.searchProcessInstanceByDefintionID(definitionResponse[1]);
-		Assert.assertTrue("Process Instance Present", searchResponse.contains(BPMNTestConstants.OK));
+        //Starting and Verifying Process Instance
+        String[] processInstanceResponse = tester.startProcessInstanceByDefintionID(definitionResponse[1]);
+        Assert.assertTrue("Process Instance Started", processInstanceResponse[0].contains(BPMNTestConstants.CREATED));
+        String searchResponse = tester.searchProcessInstanceByDefintionID(definitionResponse[1]);
+        Assert.assertTrue("Process Instance Present", searchResponse.contains(BPMNTestConstants.OK));
 
-		tester.waitForTaskGeneration();
+        tester.waitForTaskGeneration();
 
-		//Acquiring TaskID to perform Task Related Tests
-		String[] taskResponse = tester.findTaskIdByProcessInstanceID(processInstanceResponse[1]);
-		Assert.assertTrue("Task ID Acquired", taskResponse[0].contains(BPMNTestConstants.OK));
+        //Acquiring TaskID to perform Task Related Tests
+        String[] taskResponse = tester.findTaskIdByProcessInstanceID(processInstanceResponse[1]);
+        Assert.assertTrue("Task ID Acquired", taskResponse[0].contains(BPMNTestConstants.OK));
 
-		//Claiming a User Task
-		String[] claimResponse = tester.claimTask(taskResponse[1]);
-		Assert.assertTrue("User has claimed Task",claimResponse[0].contains(BPMNTestConstants.NO_CONTENT));
-		String currentAssignee = tester.getAssigneeByTaskId(taskResponse[1]);
-		Assert.assertTrue("User has been assigned", currentAssignee.contains(BPMNTestConstants.userClaim));
+        //Claiming a User Task
+        String[] claimResponse = tester.claimTaskByTaskId(taskResponse[1]);
+        Assert.assertTrue("User has claimed Task", claimResponse[0].contains(BPMNTestConstants.NO_CONTENT));
+        String currentAssignee = tester.getAssigneeByTaskId(taskResponse[1]);
+        Assert.assertTrue("User has been assigned", currentAssignee.contains(BPMNTestConstants.userClaim));
 
-		//Delegating a User Task
-		String delegateStatus = tester.delegateTask(taskResponse[1]);
-		Assert.assertTrue("Task has been delegated",delegateStatus.contains(BPMNTestConstants.NO_CONTENT));
-		currentAssignee = tester.getAssigneeByTaskId(taskResponse[1]);
-		Assert.assertTrue("Testing Delegated User Matches Assignee", currentAssignee.equals(BPMNTestConstants.userDelegate));
+        //Delegating a User Task
+        String delegateStatus = tester.delegateTaskByTaskId(taskResponse[1]);
+        Assert.assertTrue("Task has been delegated", delegateStatus.contains(BPMNTestConstants.NO_CONTENT));
+        currentAssignee = tester.getAssigneeByTaskId(taskResponse[1]);
+        Assert.assertTrue("Testing Delegated User Matches Assignee", currentAssignee.equals(BPMNTestConstants.userDelegate));
 
-		//Commenting on a user task
-		String[] commentResponse = tester.addNewCommentOnTask(taskResponse[1],BPMNTestConstants.message);
-		Assert.assertTrue("Comment Has been added", commentResponse[0].contains(BPMNTestConstants.CREATED));
-		Assert.assertTrue("Comment is visible", commentResponse[1].contains(BPMNTestConstants.message));
+        //Commenting on a user task
+        String[] commentResponse = tester.addNewCommentOnTaskByTaskId(taskResponse[1], BPMNTestConstants.message);
+        Assert.assertTrue("Comment Has been added", commentResponse[0].contains(BPMNTestConstants.CREATED));
+        Assert.assertTrue("Comment is visible", commentResponse[1].contains(BPMNTestConstants.message));
 
-		//resolving a User Task
-		String status = tester.resolveTask(taskResponse[1]);
-		String stateValue = tester.getDelegationsStateByTaskId(taskResponse[1]);
-		Assert.assertTrue("Checking Delegation State", stateValue.equals("resolved"));
+        //resolving a User Task
+        String status = tester.resolveTaskByTaskId(taskResponse[1]);
+        String stateValue = tester.getDelegationsStateByTaskId(taskResponse[1]);
+        Assert.assertTrue("Checking Delegation State", stateValue.equals("resolved"));
 
-		//Deleting a Process Instance
-		String deleteStatus = tester.deleteProcessInstanceByID(processInstanceResponse[1]);
-		Assert.assertTrue("Process Instance Removed", deleteStatus.contains(BPMNTestConstants.NO_CONTENT));
+        //Deleting a Process Instance
+        String deleteStatus = tester.deleteProcessInstanceByID(processInstanceResponse[1]);
+        Assert.assertTrue("Process Instance Removed", deleteStatus.contains(BPMNTestConstants.NO_CONTENT));
 
-		//Deleting the Deployment
-		String undeployStatus = tester.unDeployPackage(deploymentResponse[1]);
-		Assert.assertTrue("Package UnDeployed",undeployStatus.contains(BPMNTestConstants.NO_CONTENT));
+        //Deleting the Deployment
+        String undeployStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
+        Assert.assertTrue("Package UnDeployed", undeployStatus.contains(BPMNTestConstants.NO_CONTENT));
 
-	}
+    }
 
 
 }

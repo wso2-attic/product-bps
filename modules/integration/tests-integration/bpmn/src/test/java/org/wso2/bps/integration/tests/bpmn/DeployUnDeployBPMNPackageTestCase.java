@@ -26,22 +26,22 @@ import java.io.File;
 
 public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
 
-	@Test(groups = {"wso2.bps.test.deploy"}, description = "Deploy/UnDeploy Package Test", priority = 1, singleThreaded = true)
-	public void deployUnDeployBPMNPackage() throws Exception{
-		init();
-		ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"),bpsServer.getInstance().getHosts().get("default"));
-		String filePath = FrameworkPathUtil.getSystemResourceLocation()+ File.separator
-		                  +BPMNTestConstants.DIR_ARTIFACTS + File.separator
-		                  +BPMNTestConstants.DIR_BPMN + File.separator +"HelloApprove.bar";
-		String fileName = "HelloApprove.bar";
-		String[] deploymentResponse;
-		deploymentResponse = tester.deployBPMNPackage(filePath,fileName);
+    @Test(groups = {"wso2.bps.test.deploy"}, description = "Deploy/UnDeploy Package Test", priority = 1, singleThreaded = true)
+    public void deployUnDeployBPMNPackage() throws Exception {
+        init();
+        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"), bpsServer.getInstance().getHosts().get("default"));
+        String filePath = FrameworkPathUtil.getSystemResourceLocation() + File.separator
+                          + BPMNTestConstants.DIR_ARTIFACTS + File.separator
+                          + BPMNTestConstants.DIR_BPMN + File.separator + "HelloApprove.bar";
+        String fileName = "HelloApprove.bar";
+        String[] deploymentResponse;
+        deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
 
-		Assert.assertTrue("Deployment Successful",deploymentResponse[0].contains(BPMNTestConstants.CREATED));
-		String[] deploymentCheckResponse = tester.getDeploymentById(deploymentResponse[1]);
-		Assert.assertTrue("Deployment Present",deploymentCheckResponse[2].contains(fileName));
+        Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
+        String[] deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
+        Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
 
-		String status = tester.unDeployPackage(deploymentResponse[1]);
-		Assert.assertTrue("Package UnDeployed",status.contains(BPMNTestConstants.NO_CONTENT));
-	}
+        String status = tester.unDeployBPMNPackage(deploymentResponse[1]);
+        Assert.assertTrue("Package UnDeployed", status.contains(BPMNTestConstants.NO_CONTENT));
+    }
 }
