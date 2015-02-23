@@ -17,15 +17,27 @@
 package org.wso2.bps.integration.tests.bpmn;
 
 import junit.framework.Assert;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.JSONException;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpmn.ActivitiRestClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
 
+    private static final Log log = LogFactory.getLog(DeployUnDeployInvalidBPMNPackageTestCase.class);
+
+    /**
+     * The BPMN package being used to test is Invalid, it is used to test how gracefully
+     * the system handles the invalid bpmn package,
+     *
+     * @throws Exception
+     */
     @Test(groups = {"wso2.bps.test.deploy.invalidPackage"}, description = "Deploy/UnDeploy Invalid Package Test", priority = 1, singleThreaded = true)
     public void deployUnDeployInvalidBPMNPackage() throws Exception {
         init();
@@ -34,9 +46,19 @@ public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
                           + BPMNTestConstants.DIR_ARTIFACTS + File.separator
                           + BPMNTestConstants.DIR_BPMN + File.separator + "InvalidHelloApprove.bar";
         String fileName = "InvalidHelloApprove.bar";
-        String[] deploymentResponse;
-        deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
-        Assert.assertTrue("Checking the Status", deploymentResponse[0].contains(BPMNTestConstants.INTERNAL_SERVER_ERROR));
-        Assert.assertTrue("Checking for Error Message", deploymentResponse[1].contains("Error parsing XML"));
+
+
+        try {
+            String[] deploymentResponse;
+            deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
+            Assert.assertTrue("Checking the Status", deploymentResponse[0].contains(BPMNTestConstants.INTERNAL_SERVER_ERROR));
+            Assert.assertTrue("Checking for Error Message", deploymentResponse[1].contains("Error parsing XML"));
+        } catch (IOException ioException) {
+           log.info(ioException.getMessage());
+            Assert.fail();
+        } catch (JSONException jsonException) {
+            log.info(jsonException.getMessage());
+            Assert.fail();
+        }
     }
 }

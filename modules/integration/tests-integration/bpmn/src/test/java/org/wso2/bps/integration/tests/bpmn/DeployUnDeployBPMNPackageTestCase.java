@@ -17,31 +17,72 @@
 package org.wso2.bps.integration.tests.bpmn;
 
 import junit.framework.Assert;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.JSONException;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpmn.ActivitiRestClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
+
+    private static final Log log = LogFactory.getLog(DeployUnDeployBPMNPackageTestCase.class);
 
     @Test(groups = {"wso2.bps.test.deploy"}, description = "Deploy/UnDeploy Package Test", priority = 1, singleThreaded = true)
     public void deployUnDeployBPMNPackage() throws Exception {
         init();
+
         ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"), bpsServer.getInstance().getHosts().get("default"));
         String filePath = FrameworkPathUtil.getSystemResourceLocation() + File.separator
                           + BPMNTestConstants.DIR_ARTIFACTS + File.separator
                           + BPMNTestConstants.DIR_BPMN + File.separator + "HelloApprove.bar";
         String fileName = "HelloApprove.bar";
-        String[] deploymentResponse;
-        deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
+        String[] deploymentResponse = {};
+        String[] deploymentCheckResponse = {};
+        String deploymentStatus = "";
 
-        Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
-        String[] deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
-        Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
 
-        String status = tester.unDeployBPMNPackage(deploymentResponse[1]);
-        Assert.assertTrue("Package UnDeployed", status.contains(BPMNTestConstants.NO_CONTENT));
+        try {
+            deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
+            Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
+        } catch (IOException ioException) {
+            log.info(ioException.getMessage());
+            Assert.fail();
+        } catch (JSONException jsonException) {
+            log.info(jsonException.getMessage());
+            Assert.fail();
+        }
+        try {
+            deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
+            Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
+        } catch (IOException ioException) {
+            log.info(ioException.getMessage());
+            Assert.fail();
+        } catch (JSONException jsonException) {
+            log.info(jsonException.getMessage());
+            Assert.fail();
+        }
+
+        try {
+            deploymentStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
+            Assert.assertTrue("Package UnDeployed", deploymentStatus.contains(BPMNTestConstants.NO_CONTENT));
+        } catch (IOException ioException) {
+            log.info(ioException.getMessage());
+            Assert.fail();
+        }
+        try {
+            String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
+            Assert.assertTrue("Package UnDeployment", unDeployCheck[0].equals(BPMNTestConstants.NOT_AVAILABLE));
+        } catch (IOException ioException) {
+            log.info(ioException.getMessage());
+            Assert.fail();
+        } catch (JSONException jsonException) {
+            log.info(jsonException.getMessage());
+            Assert.fail();
+        }
     }
 }

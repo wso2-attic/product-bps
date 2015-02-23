@@ -21,19 +21,20 @@ package org.wso2.bps.integration.tests.bpmn;
  */
 public class BPMNTestConstants {
 
-	public static final String DIR_RESOURCES = "resources";
-	public static final String DIR_ARTIFACTS = "artifacts";
-	public static final String DIR_BPMN = "bpmn";
+    public static final String DIR_ARTIFACTS = "artifacts";
+    public static final String DIR_BPMN = "bpmn";
 
-	public static final String userClaim = "paul";
-	public static final String userDelegate = "will";
-	public static final String message = "Testing 123";
-	public static final String deleteReason = "Testing";
+    public static final String USER_CLAIM = "paul";
+    public static final String USER_DELEGATE = "will";
+    public static final String COMMENT_MESSAGE = "Testing 123";
+    public final static String NOT_AVAILABLE = "Not Available";
+
 
     public static final String CREATED = "201";
     public static final String OK = "200";
     public static final String NO_CONTENT = "204";
     public static final String NOT_FOUND = "404";
     public static final String INTERNAL_SERVER_ERROR = "500";
+
 
 }

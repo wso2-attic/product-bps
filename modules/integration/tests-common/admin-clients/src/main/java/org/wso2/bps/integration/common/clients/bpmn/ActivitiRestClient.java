@@ -28,6 +28,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +51,8 @@ public class ActivitiRestClient {
     private final static String password = "admin";
     private final static String userClaim = "paul";
     private final static String userDelegate = "will";
+    private final static String NOT_AVAILABLE = "Not Available";
+    private final static String AVAILABLE = "Available";
     private int port;
     private String hostname = "";
     private String serviceURL = "";
@@ -93,34 +96,28 @@ public class ActivitiRestClient {
                 new AuthScope(target.getHostName(), target.getPort()),
                 new UsernamePasswordCredentials(username, password)
         );
-        try {
 
-            HttpPost httpPost = new HttpPost(url);
+        HttpPost httpPost = new HttpPost(url);
 
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.addBinaryBody("file", new File(filePath),
-                                  ContentType.MULTIPART_FORM_DATA, fileName);
-            HttpEntity multipart = builder.build();
-            httpPost.setEntity(multipart);
-            HttpResponse response = httpClient.execute(httpPost);
-            String status = response.getStatusLine().toString();
-            String responseData = EntityUtils.toString(response.getEntity());
-            JSONObject jsonResponseObject = new JSONObject(responseData);
-            if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-                String deploymentID = jsonResponseObject.getString("id");
-                String name = jsonResponseObject.getString("name");
-                return new String[]{status, deploymentID, name};
-            }
-            if (status.contains(Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR))) {
-                String errorMessage = jsonResponseObject.getString("errorMessage");
-                return new String[]{status, errorMessage};
-            }
-        } catch (IOException ioMessage) {
-            log.error("Data Post Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.addBinaryBody("file", new File(filePath),
+                              ContentType.MULTIPART_FORM_DATA, fileName);
+        HttpEntity multipart = builder.build();
+        httpPost.setEntity(multipart);
+        HttpResponse response = httpClient.execute(httpPost);
+        String status = response.getStatusLine().toString();
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
+            String deploymentID = jsonResponseObject.getString("id");
+            String name = jsonResponseObject.getString("name");
+            return new String[]{status, deploymentID, name};
+        } else if (status.contains(Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR))) {
+            String errorMessage = jsonResponseObject.getString("errorMessage");
+            return new String[]{status, errorMessage};
+        } else {
+            return new String[]{status};
         }
-        return new String[]{null, null, null};
     }
 
 
@@ -143,23 +140,20 @@ public class ActivitiRestClient {
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
 
-        try {
-            HttpGet httpget = new HttpGet(url);
-            HttpResponse response = httpClient.execute(httpget);
-            String status = response.getStatusLine().toString();
-            String responseData = EntityUtils.toString(response.getEntity());
-            JSONObject jsonResponseObject = new JSONObject(responseData);
-            if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-                String ID = jsonResponseObject.getString("id");
-                String name = jsonResponseObject.getString("name");
-                return new String[]{status, ID, name};
-            }
-        } catch (IOException ioMessage) {
-            log.error("Get Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        String status = response.getStatusLine().toString();
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
+            String ID = jsonResponseObject.getString("id");
+            String name = jsonResponseObject.getString("name");
+            return new String[]{status, ID, name};
+        } else if (status.contains(Integer.toString(HttpStatus.SC_NOT_FOUND))) {
+            return new String[]{NOT_AVAILABLE};
+        } else {
+            return new String[]{status};
         }
-        return new String[]{null, null, null};
     }
 
     /**
@@ -179,14 +173,9 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpDelete httpDelete = new HttpDelete(url);
-            HttpResponse response = httpClient.execute(httpDelete);
-            return response.getStatusLine().toString();
-        } catch (IOException ioMessage) {
-            log.error("Delete Request Failure", ioMessage);
-        }
-        return null;
+        HttpDelete httpDelete = new HttpDelete(url);
+        HttpResponse response = httpClient.execute(httpDelete);
+        return response.getStatusLine().toString();
     }
 
     /**
@@ -206,34 +195,28 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpGet httpget = new HttpGet(url);
-            HttpResponse response = httpClient.execute(httpget);
 
-            String status = response.getStatusLine().toString();
-            String responseData = EntityUtils.toString(response.getEntity());
-            JSONObject jsonResponseObject = new JSONObject(responseData);
-            JSONArray data = jsonResponseObject.getJSONArray("data");
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
 
-            int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total").toString());
+        String status = response.getStatusLine().toString();
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        JSONArray data = jsonResponseObject.getJSONArray("data");
 
-            for (int j = 0; j < responseObjectSize; j++) {
-                if (data.getJSONObject(j).getString("deploymentId").equals(deploymentID)) {
-                    definitionId = data.getJSONObject(j).getString("id");
-                }
+        int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total").toString());
+
+        for (int j = 0; j < responseObjectSize; j++) {
+            if (data.getJSONObject(j).getString("deploymentId").equals(deploymentID)) {
+                definitionId = data.getJSONObject(j).getString("id");
             }
-            return new String[]{status, definitionId};
-        } catch (IOException ioMessage) {
-            log.error("Get Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
         }
+        return new String[]{status, definitionId};
 
-        return new String[]{null, null, null};
     }
 
     /**
-     * Methods used to test/search if the specifiy process instance is present
+     * Methods used to test/search if the specify process instance is present
      *
      * @param processDefintionID used to start a processInstance
      * @return String which contains the status
@@ -247,18 +230,47 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpPost httpPost = new HttpPost(url);
-            StringEntity params = new StringEntity("{\"processDefinitionId\":\""
-                                                   + processDefintionID
-                                                   + "\"}", ContentType.APPLICATION_JSON);
-            httpPost.setEntity(params);
-            HttpResponse response = httpClient.execute(httpPost);
-            return response.getStatusLine().toString();
-        } catch (IOException ioMessage) {
-            log.error("Post Request Failure", ioMessage);
+
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity params = new StringEntity("{\"processDefinitionId\":\""
+                                               + processDefintionID
+                                               + "\"}", ContentType.APPLICATION_JSON);
+        httpPost.setEntity(params);
+        HttpResponse response = httpClient.execute(httpPost);
+        String status = response.getStatusLine().toString();
+        return status;
+    }
+
+    /**
+     * This method is used to validate/check if the process instance is present or not
+     *
+     * @param processDefinitionID used to identify the process instance
+     * @return a String value of the status
+     * @throws IOException
+     * @throws JSONException
+     */
+    public String validateProcessInstanceById(String processDefinitionID)
+            throws IOException, JSONException {
+        String url = serviceURL + "runtime/process-instances";
+        HttpHost target = new HttpHost(hostname, port, "http");
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.getCredentialsProvider().setCredentials
+                (new AuthScope(target.getHostName(), target.getPort()),
+                 new UsernamePasswordCredentials(username, password));
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        JSONArray data = jsonResponseObject.getJSONArray("data");
+
+        int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total").toString());
+
+        for (int j = 0; j < responseObjectSize; j++) {
+            if (data.getJSONObject(j).getString("processDefinitionId").equals(processDefinitionID)) {
+                return AVAILABLE;
+            }
         }
-        return null;
+        return NOT_AVAILABLE;
     }
 
 
@@ -280,29 +292,21 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity params = new StringEntity("{\"processDefinitionId\":\""
+                                               + processDefintionID + "\"}",
+                                               ContentType.APPLICATION_JSON);
+        httpPost.setEntity(params);
+        HttpResponse response = httpClient.execute(httpPost);
 
-            HttpPost httpPost = new HttpPost(url);
-            StringEntity params = new StringEntity("{\"processDefinitionId\":\""
-                                                   + processDefintionID + "\"}",
-                                                   ContentType.APPLICATION_JSON);
-            httpPost.setEntity(params);
-            HttpResponse response = httpClient.execute(httpPost);
-
-            String status = response.getStatusLine().toString();
-            String responseData = EntityUtils.toString(response.getEntity());
-            JSONObject jsonResponseObject = new JSONObject(responseData);
-            if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-                String processInstanceID = jsonResponseObject.getString("id");
-                return new String[]{status, processInstanceID};
-            }
-            return new String[]{status, null};
-        } catch (IOException ioMessage) {
-            log.error("Data Post Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
+        String status = response.getStatusLine().toString();
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
+            String processInstanceID = jsonResponseObject.getString("id");
+            return new String[]{status, processInstanceID};
         }
-        return new String[]{null, null, null};
+        return new String[]{status};
     }
 
     /**
@@ -321,17 +325,13 @@ public class ActivitiRestClient {
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
 
-        try {
-            HttpPut httpPut = new HttpPut(url);
-            StringEntity params = new StringEntity("{\"action\":\"activate\"}",
-                                                   ContentType.APPLICATION_JSON);
-            httpPut.setEntity(params);
-            HttpResponse response = httpClient.execute(httpPut);
-            return EntityUtils.toString(response.getEntity());
-        } catch (IOException ioMessage) {
-            log.error("Put Request Failure", ioMessage);
-        }
-        return null;
+        HttpPut httpPut = new HttpPut(url);
+        StringEntity params = new StringEntity("{\"action\":\"activate\"}",
+                                               ContentType.APPLICATION_JSON);
+        httpPut.setEntity(params);
+        HttpResponse response = httpClient.execute(httpPut);
+        return EntityUtils.toString(response.getEntity());
+
     }
 
     /**
@@ -351,26 +351,38 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpPut httpPut = new HttpPut(url);
-            StringEntity params = new StringEntity("{\"action\":\"suspend\"}",
-                                                   ContentType.APPLICATION_JSON);
-            httpPut.setEntity(params);
-            HttpResponse response = httpClient.execute(httpPut);
-            String status = response.getStatusLine().toString();
-            String responseData = EntityUtils.toString(response.getEntity());
-            JSONObject jsonResponseObject = new JSONObject(responseData);
-            if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-                String state = jsonResponseObject.getString("suspended");
-                return new String[]{status, state};
-            }
-            return new String[]{status, null};
-        } catch (IOException ioMessage) {
-            log.error("Put Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
+
+        HttpPut httpPut = new HttpPut(url);
+        StringEntity params = new StringEntity("{\"action\":\"suspend\"}",
+                                               ContentType.APPLICATION_JSON);
+        httpPut.setEntity(params);
+        HttpResponse response = httpClient.execute(httpPut);
+        String status = response.getStatusLine().toString();
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
+            String state = jsonResponseObject.getString("suspended");
+            return new String[]{status, state};
         }
-        return new String[]{null, null, null};
+        return new String[]{status};
+    }
+
+    public String getSuspendedStateOfProcessInstanceByID(String processInstanceID)
+            throws IOException, JSONException {
+        String url = serviceURL + "runtime/process-instances/" + processInstanceID;
+        String responseData = "";
+        HttpHost target = new HttpHost(hostname, port, "http");
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.getCredentialsProvider().setCredentials
+                (new AuthScope(target.getHostName(), target.getPort()),
+                 new UsernamePasswordCredentials(username, password));
+
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        responseData = EntityUtils.toString(response.getEntity());
+        JSONObject resObj = new JSONObject(responseData);
+        return resObj.getString("suspended");
+
     }
 
     /**
@@ -382,7 +394,8 @@ public class ActivitiRestClient {
      * @throws IOException
      * @throws JSONException
      */
-    public String[] getValueOfVariableOfProcessInstanceById(String processInstanceId, String variable)
+    public String[] getValueOfVariableOfProcessInstanceById(String processInstanceId,
+                                                            String variable)
             throws IOException, JSONException {
         String url = serviceURL + "runtime/process-instances/"
                      + processInstanceId + "/variables/" + variable;
@@ -392,21 +405,16 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpGet httpget = new HttpGet(url);
-            HttpResponse response = httpClient.execute(httpget);
-            responseData = EntityUtils.toString(response.getEntity());
-            JSONObject resObj = new JSONObject(responseData);
-            String status = response.getStatusLine().toString();
-            String name = resObj.getString("name");
-            String value = resObj.getString("value");
-            return new String[]{status, name, value};
-        } catch (IOException ioMessage) {
-            log.error("Get Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
-        }
-        return null;
+
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        responseData = EntityUtils.toString(response.getEntity());
+        JSONObject resObj = new JSONObject(responseData);
+        String status = response.getStatusLine().toString();
+        String name = resObj.getString("name");
+        String value = resObj.getString("value");
+        return new String[]{status, name, value};
+
     }
 
     /**
@@ -424,16 +432,11 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
 
-            HttpDelete httpDelete = new HttpDelete(url);
-            HttpResponse response = httpClient.execute(httpDelete);
-            return response.getStatusLine().toString();
+        HttpDelete httpDelete = new HttpDelete(url);
+        HttpResponse response = httpClient.execute(httpDelete);
+        return response.getStatusLine().toString();
 
-        } catch (IOException ioMessage) {
-            log.error("Delete Request Failure", ioMessage);
-        }
-        return null;
     }
 
     /**
@@ -453,18 +456,12 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpGet httpget = new HttpGet(url);
-            HttpResponse response = httpClient.execute(httpget);
-            responseData = EntityUtils.toString(response.getEntity());
-            JSONObject resObj = new JSONObject(responseData);
-            return resObj.getString("delegationState");
-        } catch (IOException ioMessage) {
-            log.error("Get Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
-        }
-        return null;
+
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        responseData = EntityUtils.toString(response.getEntity());
+        JSONObject resObj = new JSONObject(responseData);
+        return resObj.getString("delegationState");
     }
 
     /**
@@ -481,17 +478,12 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpPost httpPost = new HttpPost(url);
-            StringEntity params = new StringEntity("{\"action\" : \"resolve\"}",
-                                                   ContentType.APPLICATION_JSON);
-            httpPost.setEntity(params);
-            HttpResponse response = httpClient.execute(httpPost);
-            return response.getStatusLine().toString();
-        } catch (IOException ioMessage) {
-            log.error("Post Request Failure", ioMessage);
-        }
-        return null;
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity params = new StringEntity("{\"action\" : \"resolve\"}",
+                                               ContentType.APPLICATION_JSON);
+        httpPost.setEntity(params);
+        HttpResponse response = httpClient.execute(httpPost);
+        return response.getStatusLine().toString();
     }
 
     /**
@@ -511,18 +503,28 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpGet httpget = new HttpGet(url);
-            HttpResponse response = httpClient.execute(httpget);
-            responseData = EntityUtils.toString(response.getEntity());
-            JSONObject resObj = new JSONObject(responseData);
-            return resObj.getString("assignee");
-        } catch (IOException ioMessage) {
-            log.error("Get Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
-        }
-        return null;
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        responseData = EntityUtils.toString(response.getEntity());
+        JSONObject resObj = new JSONObject(responseData);
+        return resObj.getString("assignee");
+    }
+
+
+    public String getCommentByTaskIdAndCommentId(String taskID, String commentID)
+            throws IOException, JSONException {
+        String url = serviceURL + "runtime/tasks/" + taskID + "/comments/" + commentID;
+        String responseData = "";
+        HttpHost target = new HttpHost(hostname, port, "http");
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.getCredentialsProvider().setCredentials
+                (new AuthScope(target.getHostName(), target.getPort()),
+                 new UsernamePasswordCredentials(username, password));
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        responseData = EntityUtils.toString(response.getEntity());
+        JSONObject resObj = new JSONObject(responseData);
+        return resObj.getString("message");
     }
 
     /**
@@ -544,29 +546,22 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpGet httpget = new HttpGet(url);
-            HttpResponse response = httpClient.execute(httpget);
-            String status = response.getStatusLine().toString();
-            String responseData = EntityUtils.toString(response.getEntity());
-            JSONObject jsonResponseObject = new JSONObject(responseData);
-            JSONArray data = jsonResponseObject.getJSONArray("data");
-            int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total")
-                                                              .toString());
-            for (int j = 0; j < responseObjectSize; j++) {
-                if (data.getJSONObject(j).getString("processInstanceId").equals(
-                        processInstanceId)) {
-                    taskId = data.getJSONObject(j).getString("id");
-                }
-
+        HttpGet httpget = new HttpGet(url);
+        HttpResponse response = httpClient.execute(httpget);
+        String status = response.getStatusLine().toString();
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        JSONArray data = jsonResponseObject.getJSONArray("data");
+        int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total")
+                                                          .toString());
+        for (int j = 0; j < responseObjectSize; j++) {
+            if (data.getJSONObject(j).getString("processInstanceId").equals(
+                    processInstanceId)) {
+                taskId = data.getJSONObject(j).getString("id");
             }
-            return new String[]{status, taskId};
-        } catch (IOException ioMessage) {
-            log.error("Get Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
+
         }
-        return new String[]{null, null};
+        return new String[]{status, taskId};
     }
 
     /**
@@ -576,7 +571,7 @@ public class ActivitiRestClient {
      * @return String Array containing status
      * @throws IOException
      */
-    public String[] claimTaskByTaskId(String taskID) throws IOException {
+    public String claimTaskByTaskId(String taskID) throws IOException {
         String url = serviceURL + "runtime/tasks/" + taskID;
 
         HttpHost target = new HttpHost(hostname, port, "http");
@@ -584,21 +579,14 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpPost httpPost = new HttpPost(url);
-            StringEntity params = new StringEntity("{\"action\" : \"claim\"," +
-                                                   "\"assignee\" :\"" + userClaim + "\"}",
-                                                   ContentType.APPLICATION_JSON);
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity params = new StringEntity("{\"action\" : \"claim\"," +
+                                               "\"assignee\" :\"" + userClaim + "\"}",
+                                               ContentType.APPLICATION_JSON);
 
-            httpPost.setEntity(params);
-            HttpResponse response = httpClient.execute(httpPost);
-            String status = response.getStatusLine().toString();
-            return new String[]{status, null};
-
-        } catch (IOException ioMessage) {
-            log.error("Post Request Failure", ioMessage);
-        }
-        return new String[]{null, null};
+        httpPost.setEntity(params);
+        HttpResponse response = httpClient.execute(httpPost);
+        return response.getStatusLine().toString();
     }
 
     /**
@@ -616,21 +604,14 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-
-            HttpPost httpPost = new HttpPost(url);
-            StringEntity params = new StringEntity("{\"action\" : \"delegate\"," +
-                                                   "\"assignee\" :\"" + userDelegate + "\"}",
-                                                   ContentType.APPLICATION_JSON);
-            httpPost.setEntity(params);
-            HttpResponse response;
-            response = httpClient.execute(httpPost);
-            return response.getStatusLine().toString();
-
-        } catch (IOException ioMessage) {
-            log.error("Post Request Failure", ioMessage);
-        }
-        return null;
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity params = new StringEntity("{\"action\" : \"delegate\"," +
+                                               "\"assignee\" :\"" + userDelegate + "\"}",
+                                               ContentType.APPLICATION_JSON);
+        httpPost.setEntity(params);
+        HttpResponse response;
+        response = httpClient.execute(httpPost);
+        return response.getStatusLine().toString();
     }
 
     /**
@@ -651,27 +632,23 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpPost httpPost = new HttpPost(url);
-            StringEntity params = new StringEntity("{\"message\" : \"" + comment
-                                                   + "\",\"saveProcessInstanceId\" : true}",
-                                                   ContentType.APPLICATION_JSON);
-            httpPost.setEntity(params);
-            HttpResponse response = httpClient.execute(httpPost);
-            String status = response.getStatusLine().toString();
-            String responseData = EntityUtils.toString(response.getEntity());
-            JSONObject jsonResponseObject = new JSONObject(responseData);
-            if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-                String message = jsonResponseObject.getString("message");
-                return new String[]{status, message};
-            }
-            return new String[]{status, null};
-        } catch (IOException ioMessage) {
-            log.error("Post Request Failure", ioMessage);
-        } catch (JSONException jsonMessage) {
-            log.error("JSON Conversion Failure", jsonMessage);
+
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity params = new StringEntity("{\"message\" : \"" + comment
+                                               + "\",\"saveProcessInstanceId\" : true}",
+                                               ContentType.APPLICATION_JSON);
+        httpPost.setEntity(params);
+        HttpResponse response = httpClient.execute(httpPost);
+        String status = response.getStatusLine().toString();
+        String responseData = EntityUtils.toString(response.getEntity());
+        JSONObject jsonResponseObject = new JSONObject(responseData);
+        if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
+            String message = jsonResponseObject.getString("message");
+            String commentID = jsonResponseObject.getString("id");
+            return new String[]{status, message, commentID};
+        } else {
+            return new String[]{status};
         }
-        return new String[]{null, null};
     }
 
     /**
@@ -695,13 +672,10 @@ public class ActivitiRestClient {
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-        try {
-            HttpDelete httpDelete = new HttpDelete(url);
-            HttpResponse response = httpClient.execute(httpDelete);
-            return response.getStatusLine().toString();
-        } catch (IOException ioMessage) {
-            log.error("Delete Request Failure", ioMessage);
-        }
-        return null;
+
+        HttpDelete httpDelete = new HttpDelete(url);
+        HttpResponse response = httpClient.execute(httpDelete);
+        return response.getStatusLine().toString();
+
     }
 }
