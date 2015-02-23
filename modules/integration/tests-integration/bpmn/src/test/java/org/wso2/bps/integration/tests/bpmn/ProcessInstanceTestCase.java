@@ -47,23 +47,17 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
         try {
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
             Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        }  catch (Exception exception) {
+            log.info("Failed to Deploy BPMN Package " + fileName, exception);
+            Assert.fail("Failed to Deploy BPMN Package " + fileName);
         }
-
+        
         try {
             String[] deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        }  catch (Exception exception) {
+            log.info("Deployed BPMN Package " + fileName + " was not found ", exception);
+            Assert.fail("Deployed BPMN Package " + fileName + " was not found ");
         }
 
         //Acquiring Process Definition ID to start Process Instance
@@ -71,12 +65,9 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
         try {
             definitionResponse = tester.findProcessDefinitionInfoById(deploymentResponse[1]);
             Assert.assertTrue("Search Success", definitionResponse[0].contains(BPMNTestConstants.OK));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Could not find Defintion ID for BPMN Package " + fileName, exception);
+            Assert.fail("Could not find Defintion ID for BPMN Package " + fileName);
         }
 
         //Starting and Verifying Process Instance
@@ -84,20 +75,17 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
         try {
             processInstanceResponse = tester.startProcessInstanceByDefintionID(definitionResponse[1]);
             Assert.assertTrue("Process Instance Started", processInstanceResponse[0].contains(BPMNTestConstants.CREATED));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Process instance failed to start ", exception);
+            Assert.fail("Process instance failed to start ");
         }
 
         try {
             String searchResponse = tester.searchProcessInstanceByDefintionID(definitionResponse[1]);
             Assert.assertTrue("Process Instance Present", searchResponse.contains(BPMNTestConstants.OK));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Process instance cannot be found", exception);
+            Assert.fail("Process instance cannot be found");
         }
 
         //Suspending the Process Instance
@@ -105,63 +93,51 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
             String[] suspendResponse = tester.suspendProcessInstanceById(processInstanceResponse[1]);
             Assert.assertTrue("Process Instance has been suspended", suspendResponse[0].contains(BPMNTestConstants.OK));
             Assert.assertTrue("Process Instance has been suspended", suspendResponse[1].contains("true"));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Process instance cannot be suspended", exception);
+            Assert.fail("The Process instance cannot be suspended");
         }
 
         try {
             String stateVerfication = tester.getSuspendedStateOfProcessInstanceByID(processInstanceResponse[1]);
             Assert.assertTrue("Verifying Suspended State", stateVerfication.contains("true"));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        }  catch (Exception exception) {
+            log.info("The process instance is not in suspended state ", exception);
+            Assert.fail("The process instance is not in suspended state ");
         }
 
         //Deleting a Process Instance
         try {
             String deleteStatus = tester.deleteProcessInstanceByID(processInstanceResponse[1]);
             Assert.assertTrue("Process Instance Removed", deleteStatus.contains(BPMNTestConstants.NO_CONTENT));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Process instance cannot be removed", exception);
+            Assert.fail("Process instance cannot be removed");
         }
 
         try {
             String deleteCheck = tester.validateProcessInstanceById(definitionResponse[1]);
             Assert.assertTrue("Process Instance Removed Check", deleteCheck.contains(BPMNTestConstants.NOT_AVAILABLE));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Process instance is still present", exception);
+            Assert.fail("Process instance was not removed successfully");
         }
 
         //Deleting the Deployment
         try {
             String undeployStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployed", undeployStatus.contains(BPMNTestConstants.NO_CONTENT));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Failed to remove BPMN Package " + fileName, exception);
+            Assert.fail("Failed to remove BPMN Package " + fileName);
         }
 
         try {
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployment", unDeployCheck[0].equals(BPMNTestConstants.NOT_AVAILABLE));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("BPMN Package " + fileName + " still exists ", exception);
+            Assert.fail("BPMN Package " + fileName + " still exists ");
         }
     }
 }

@@ -49,40 +49,31 @@ public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
         try {
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
             Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Failed to Deploy BPMN Package " +fileName, exception);
+            Assert.fail("Failed to Deploy BPMN Package " +fileName);
         }
         try {
             deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("Deployed BPMN Package " +fileName+" Not Present" +exception.getMessage());
+            Assert.fail("Deployed BPMN Package " +fileName+" Not Present");
         }
 
         try {
             deploymentStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployed", deploymentStatus.contains(BPMNTestConstants.NO_CONTENT));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("BPMN Package cannot be undeployed " + fileName , exception);
+            Assert.fail("BPMN Package cannot be undeployed " + fileName);
         }
         try {
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployment", unDeployCheck[0].equals(BPMNTestConstants.NOT_AVAILABLE));
-        } catch (IOException ioException) {
-            log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+            log.info("BPMN Package " +fileName+ " Still Exists" , exception);
+            Assert.fail("BPMN Package " +fileName+ " Still Exists");
         }
     }
 }

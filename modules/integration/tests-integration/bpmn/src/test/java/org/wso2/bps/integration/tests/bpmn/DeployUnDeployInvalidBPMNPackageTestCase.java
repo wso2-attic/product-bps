@@ -53,12 +53,9 @@ public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
             Assert.assertTrue("Checking the Status", deploymentResponse[0].contains(BPMNTestConstants.INTERNAL_SERVER_ERROR));
             Assert.assertTrue("Checking for Error Message", deploymentResponse[1].contains("Error parsing XML"));
-        } catch (IOException ioException) {
-           log.info(ioException.getMessage());
-            Assert.fail();
-        } catch (JSONException jsonException) {
-            log.info(jsonException.getMessage());
-            Assert.fail();
+        } catch (Exception exception) {
+           log.info("Unhandled Error, Uploading Invalid BPMN Package " + fileName, exception);
+            Assert.fail("Unhandled Error, Uploading Invalid BPMN Package " + fileName);
         }
     }
 }
