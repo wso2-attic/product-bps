@@ -36,7 +36,7 @@
         </RegistrationServiceAuthentication>
 
         <!-- Set TaskRegistrationEnabled to true, for Register tasks at task parent's Registration Service. -->
-        <TaskRegistrationEnabled>false</TaskRegistrationEnabled>
+        <TaskRegistrationEnabled>true</TaskRegistrationEnabled>
 
         <!--Uncomment if task engines are Clustered and set LoadBalancerURL -->
         <!--<ClusteredTaskEngines>

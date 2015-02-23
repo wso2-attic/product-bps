@@ -38,6 +38,9 @@ public final class HumanTaskTestConstants {
     public static final String REGIONAL_MANAGER_ROLE = "regionalManagerRole";
     public static final String HT_COORDINATOR_ROLE = "htcoordinator";
 
+	//Artifact Location
+	public final static String DIR_WS_COORDINATION = "wscoordination";
+
 
     // Package Names
     public static final String CLAIMS_APPROVAL_PACKAGE_NAME = "ClaimsApprovalTask";

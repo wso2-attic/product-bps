@@ -129,6 +129,10 @@
                     </user>
                 </admin>
                 <users>
+                    <user key="htcoor">
+                        <userName>htcoor</userName>
+                        <password>htcooradmin</password>
+                    </user>
                     <user key="clerk1">
                         <userName>clerk1</userName>
                         <password>clerk1password</password>
