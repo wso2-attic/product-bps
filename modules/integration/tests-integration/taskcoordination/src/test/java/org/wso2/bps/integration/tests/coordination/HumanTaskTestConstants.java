@@ -42,7 +42,37 @@ public final class HumanTaskTestConstants {
     // Package Names
     public static final String CLAIMS_APPROVAL_PACKAGE_NAME = "ClaimsApprovalTask";
 
-    //Services
+    //Services and Operations
     public static final String CLAIM_APPROVAL_PROCESS_SERVICE = "ClaimsApprovalProcessService";
+    public static final String CLAIM_APPROVAL_PROCESS_OPERATION = "claimsApprovalProcessOperation";
+
     public static final String CLAIM_SERVICE = "ClaimService";
+
+
+    // Other constants
+    public static final String CLAIM_APPROVAL_NAMESPACE = "{http://www.wso2.org/humantask/claimsapprovalprocess.bpel}ClaimsApprovalProcess";
+    public static final String COMPLETED = "COMPLETED";
+    public static final String TERMINATED = "TERMINATED";
+    public static final String EXITED = "EXITED";
+    public static final String FAILED = "FAILED";
+
+
+    public static String createClaimApprovalProcessRequest(String custID, String firstName, String lastName, long amount) {
+        return "<cla:ClaimApprovalProcessInput xmlns:cla=\"http://www.wso2.org/humantask/claimsapprovalprocessservice.wsdl\">\n" +
+                "         <cla:custID>" + custID + "</cla:custID>\n" +
+                "         <cla:custFName>" + firstName + "</cla:custFName>\n" +
+                "         <cla:custLName>" + lastName + "</cla:custLName>\n" +
+                "         <cla:amount>" + amount + "</cla:amount>\n" +
+                "         <cla:region>LK</cla:region>\n" +
+                "         <cla:priority>4</cla:priority>\n" +
+                "      </cla:ClaimApprovalProcessInput>";
+    }
+
+    public static String createClaimTaskOutput(boolean approved) {
+        return "<sch:ClaimApprovalResponse xmlns:sch=\"http://www.example.com/claims/schema\">\n" +
+                "         <sch:approved>" + approved + "</sch:approved>\n" +
+                "      </sch:ClaimApprovalResponse>";
+
+    }
+
 }
