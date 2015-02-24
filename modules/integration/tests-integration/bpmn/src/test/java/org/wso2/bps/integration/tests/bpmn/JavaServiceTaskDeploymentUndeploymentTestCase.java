@@ -75,7 +75,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
             Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
         } catch (Exception exception) {
-            log.info("Failed to Deploy BPMN Package " + fileName, exception);
+            log.error("Failed to Deploy BPMN Package " + fileName, exception);
             Assert.fail("Failed to Deploy BPMN Package " + fileName);
         }
 
@@ -83,7 +83,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             String[] deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
         } catch (Exception exception) {
-            log.info("Deployed BPMN Package " + fileName + " was not found ", exception);
+            log.error("Deployed BPMN Package " + fileName + " was not found ", exception);
             Assert.fail("Deployed BPMN Package " + fileName + " was not found ");
         }
 
@@ -93,7 +93,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             definitionResponse = tester.findProcessDefinitionInfoById(deploymentResponse[1]);
             Assert.assertTrue("Search Success", definitionResponse[0].contains("200"));
         } catch (Exception exception) {
-            log.info("Could not find Defintion ID for BPMN Package " + fileName, exception);
+            log.error("Could not find Defintion ID for BPMN Package " + fileName, exception);
             Assert.fail("Could not find Defintion ID for BPMN Package " + fileName);
         }
 
@@ -103,7 +103,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             processInstanceResponse = tester.startProcessInstanceByDefintionID(definitionResponse[1]);
             Assert.assertTrue("Process Instance Started", processInstanceResponse[0].contains(BPMNTestConstants.CREATED));
         } catch (Exception exception) {
-            log.info("Process instance failed to start ", exception);
+            log.error("Process instance failed to start ", exception);
             Assert.fail("Process instance failed to start ");
         }
 
@@ -111,7 +111,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             String searchResponse = tester.searchProcessInstanceByDefintionID(definitionResponse[1]);
             Assert.assertTrue("Process Instance Present", searchResponse.contains(BPMNTestConstants.OK));
         } catch (Exception exception) {
-            log.info("Process instance cannot be found", exception);
+            log.error("Process instance cannot be found", exception);
             Assert.fail("Process instance cannot be found");
         }
 
@@ -122,7 +122,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             Assert.assertTrue("Variable Present", invocationResponse[1].contains("executionState"));
             Assert.assertTrue("Variable Value is True", invocationResponse[2].contains("true"));
         } catch (Exception exception) {
-            log.info("Execution variable response cannot be found ", exception);
+            log.error("Execution variable response cannot be found ", exception);
             Assert.fail("The execution variable response cannot be found ");
         }
 
@@ -133,7 +133,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             Assert.assertTrue("Process Instance has been suspended", suspendResponse[0].contains(BPMNTestConstants.OK));
             Assert.assertTrue("Process Instance has been suspended", suspendResponse[1].contains("true"));
         } catch (Exception exception) {
-            log.info("Process instance cannot be suspended", exception);
+            log.error("Process instance cannot be suspended", exception);
             Assert.fail("The Process instance cannot be suspended");
         }
 
@@ -142,7 +142,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             String stateVerfication = tester.getSuspendedStateOfProcessInstanceByID(processInstanceResponse[1]);
             Assert.assertTrue("Verifying Suspended State", stateVerfication.contains("true"));
         } catch (Exception exception) {
-            log.info("The process instance is not in suspended state ", exception);
+            log.error("The process instance is not in suspended state ", exception);
             Assert.fail("The process instance is not in suspended state ");
         }
 
@@ -152,7 +152,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             String deleteStatus = tester.deleteProcessInstanceByID(processInstanceResponse[1]);
             Assert.assertTrue("Process Instance Removed", deleteStatus.contains(BPMNTestConstants.NO_CONTENT));
         } catch (Exception exception) {
-            log.info("Process instance cannot be removed", exception);
+            log.error("Process instance cannot be removed", exception);
             Assert.fail("Process instance cannot be removed");
         }
 
@@ -160,7 +160,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             String deleteCheck = tester.validateProcessInstanceById(definitionResponse[1]);
             Assert.assertTrue("Process Instance Removed Check", deleteCheck.contains(BPMNTestConstants.NOT_AVAILABLE));
         } catch (Exception exception) {
-            log.info("Process instance is still present", exception);
+            log.error("Process instance is still present", exception);
             Assert.fail("Process instance was not removed successfully");
         }
 
@@ -169,7 +169,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             String undeployStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployed", undeployStatus.contains(BPMNTestConstants.NO_CONTENT));
         } catch (Exception exception) {
-            log.info("Failed to remove BPMN Package " + fileName, exception);
+            log.error("Failed to remove BPMN Package " + fileName, exception);
             Assert.fail("Failed to remove BPMN Package " + fileName);
         }
 
@@ -177,7 +177,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployment", unDeployCheck[0].equals(BPMNTestConstants.NOT_AVAILABLE));
         } catch (Exception exception) {
-            log.info("BPMN Package " + fileName + " still exists ", exception);
+            log.error("BPMN Package " + fileName + " still exists ", exception);
             Assert.fail("BPMN Package " + fileName + " still exists ");
         }
     }

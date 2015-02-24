@@ -50,30 +50,30 @@ public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
             Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
         } catch (Exception exception) {
-            log.info("Failed to Deploy BPMN Package " +fileName, exception);
-            Assert.fail("Failed to Deploy BPMN Package " +fileName);
+            log.error("Failed to Deploy BPMN Package " + fileName, exception);
+            Assert.fail("Failed to Deploy BPMN Package " + fileName);
         }
         try {
             deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
         } catch (Exception exception) {
-            log.info("Deployed BPMN Package " +fileName+" Not Present" +exception.getMessage());
-            Assert.fail("Deployed BPMN Package " +fileName+" Not Present");
+            log.error("Deployed BPMN Package " + fileName + " Not Present", exception);
+            Assert.fail("Deployed BPMN Package " + fileName + " Not Present");
         }
 
         try {
             deploymentStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployed", deploymentStatus.contains(BPMNTestConstants.NO_CONTENT));
         } catch (Exception exception) {
-            log.info("BPMN Package cannot be undeployed " + fileName , exception);
+            log.error("BPMN Package cannot be undeployed " + fileName, exception);
             Assert.fail("BPMN Package cannot be undeployed " + fileName);
         }
         try {
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
             Assert.assertTrue("Package UnDeployment", unDeployCheck[0].equals(BPMNTestConstants.NOT_AVAILABLE));
         } catch (Exception exception) {
-            log.info("BPMN Package " +fileName+ " Still Exists" , exception);
-            Assert.fail("BPMN Package " +fileName+ " Still Exists");
+            log.error("BPMN Package " + fileName + " Still Exists", exception);
+            Assert.fail("BPMN Package " + fileName + " Still Exists");
         }
     }
 }
