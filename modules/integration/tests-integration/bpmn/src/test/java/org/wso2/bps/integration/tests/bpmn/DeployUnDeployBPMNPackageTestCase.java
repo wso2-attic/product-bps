@@ -70,10 +70,10 @@ public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
         }
         try {
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
-            Assert.assertTrue("Package UnDeployment", unDeployCheck[0].equals(BPMNTestConstants.NOT_AVAILABLE));
+            Assert.fail("Package Not Present");
         } catch (Exception exception) {
+            Assert.assertTrue("BPMN Package " + fileName + " Does Not Exist", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
             log.error("BPMN Package " + fileName + " Still Exists", exception);
-            Assert.fail("BPMN Package " + fileName + " Still Exists");
         }
     }
 }

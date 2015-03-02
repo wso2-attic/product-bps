@@ -34,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.apache.commons.logging.Log;
+import org.wso2.carbon.bpmn.core.xsd.BPSException;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -86,7 +88,7 @@ public class ActivitiRestClient {
      * @returns String array with status, deploymentID and Name
      */
     public String[] deployBPMNPackage(String filePath, String fileName)
-            throws IOException, JSONException {
+            throws Exception {
         String url = serviceURL + "repository/deployments";
 
         HttpHost target = new HttpHost(hostname, port, "http");
@@ -113,10 +115,12 @@ public class ActivitiRestClient {
             String name = jsonResponseObject.getString("name");
             return new String[]{status, deploymentID, name};
         } else if (status.contains(Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR))) {
+
             String errorMessage = jsonResponseObject.getString("errorMessage");
-            return new String[]{status, errorMessage};
+            throw new RestClientException(errorMessage);
+//            return new String[]{status, errorMessage};
         } else {
-            return new String[]{status};
+            throw new RestClientException("Failed to deploy package " + fileName);
         }
     }
 
@@ -129,7 +133,7 @@ public class ActivitiRestClient {
      * @throws org.json.JSONException
      * @returns String Array with status, deploymentID and Name
      */
-    public String[] getDeploymentInfoById(String deploymentID) throws IOException, JSONException {
+    public String[] getDeploymentInfoById(String deploymentID) throws Exception {
 
         String url = serviceURL + "repository/deployments/"
                      + deploymentID;
@@ -150,9 +154,9 @@ public class ActivitiRestClient {
             String name = jsonResponseObject.getString("name");
             return new String[]{status, ID, name};
         } else if (status.contains(Integer.toString(HttpStatus.SC_NOT_FOUND))) {
-            return new String[]{NOT_AVAILABLE};
+            throw new RestClientException(NOT_AVAILABLE);
         } else {
-            return new String[]{status};
+            throw new RestClientException("Cannot find deployment");
         }
     }
 
@@ -250,7 +254,7 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String validateProcessInstanceById(String processDefinitionID)
-            throws IOException, JSONException {
+            throws Exception {
         String url = serviceURL + "runtime/process-instances";
         HttpHost target = new HttpHost(hostname, port, "http");
         DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -270,7 +274,7 @@ public class ActivitiRestClient {
                 return AVAILABLE;
             }
         }
-        return NOT_AVAILABLE;
+        throw new RestClientException(NOT_AVAILABLE);
     }
 
 
@@ -283,7 +287,7 @@ public class ActivitiRestClient {
      * @returns String Array which contains status and processInstanceID
      */
     public String[] startProcessInstanceByDefintionID(String processDefintionID)
-            throws IOException, JSONException {
+            throws Exception {
 
         String url = serviceURL + "runtime/process-instances";
 
@@ -306,7 +310,7 @@ public class ActivitiRestClient {
             String processInstanceID = jsonResponseObject.getString("id");
             return new String[]{status, processInstanceID};
         }
-        return new String[]{status};
+        throw new RestClientException("Cannot Find Process Instance");
     }
 
     /**
@@ -343,7 +347,7 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String[] suspendProcessInstanceById(String processInstanceID)
-            throws IOException, JSONException {
+            throws Exception {
 
         String url = serviceURL + "runtime/process-instances/" + processInstanceID;
         HttpHost target = new HttpHost(hostname, port, "http");
@@ -364,9 +368,17 @@ public class ActivitiRestClient {
             String state = jsonResponseObject.getString("suspended");
             return new String[]{status, state};
         }
-        return new String[]{status};
+        throw new RestClientException("Cannot Suspend Process");
     }
 
+    /**
+     * Method is used to find thw suspended state of a process instance
+     *
+     * @param processInstanceID used to identify the process instance
+     * @return String containing the suspended state of the process instance
+     * @throws IOException
+     * @throws JSONException
+     */
     public String getSuspendedStateOfProcessInstanceByID(String processInstanceID)
             throws IOException, JSONException {
         String url = serviceURL + "runtime/process-instances/" + processInstanceID;
@@ -510,7 +522,15 @@ public class ActivitiRestClient {
         return resObj.getString("assignee");
     }
 
-
+    /**
+     * This method is used to get the comment by comment id and task id
+     *
+     * @param taskID    used to identify the task where the comment is made
+     * @param commentID used to identify the comment uniquely
+     * @return String containing the comment
+     * @throws IOException
+     * @throws JSONException
+     */
     public String getCommentByTaskIdAndCommentId(String taskID, String commentID)
             throws IOException, JSONException {
         String url = serviceURL + "runtime/tasks/" + taskID + "/comments/" + commentID;
@@ -624,7 +644,7 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String[] addNewCommentOnTaskByTaskId(String taskID, String comment)
-            throws IOException, JSONException {
+            throws Exception {
         String url = serviceURL + "runtime/tasks/" + taskID + "/comments";
 
         HttpHost target = new HttpHost(hostname, port, "http");
@@ -647,7 +667,7 @@ public class ActivitiRestClient {
             String commentID = jsonResponseObject.getString("id");
             return new String[]{status, message, commentID};
         } else {
-            return new String[]{status};
+            throw new RestClientException("Cannot Add Comment");
         }
     }
 
