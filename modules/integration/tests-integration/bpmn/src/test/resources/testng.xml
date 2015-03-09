@@ -21,6 +21,7 @@
         <classes>
             <class name="org.wso2.bps.integration.tests.bpmn.BPMNTaskCreationTestCase" />
             <class name="org.wso2.bps.integration.tests.bpmn.BPMNCappDeploymentTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.BPMNMultiTenancyTestCase" />
         </classes>
     </test>
 
