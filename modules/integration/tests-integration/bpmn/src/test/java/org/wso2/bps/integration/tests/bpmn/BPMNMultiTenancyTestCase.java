@@ -33,7 +33,6 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
     private static final Log log = LogFactory.getLog(BPMNTaskCreationTestCase.class);
 
     private WorkflowServiceClient workflowServiceClient;
-    private WorkflowServiceClient workflowServiceClient2;
     private int deploymentCount;
     boolean accessedSameArtifactInstance = false;
     String domainKey1 = "wso2.com";
