@@ -25,9 +25,7 @@ import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpmn.WorkflowServiceClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNDeployment;
-import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
-import org.wso2.carbon.integration.common.admin.client.TenantManagementServiceClient;
-import org.wso2.carbon.integration.common.admin.client.AuthenticatorClient;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -48,24 +46,17 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
     public void createTenant() throws Exception {
 
         // initialize for tenant wso2.com
-        init(domainKey1, userKey1);
-        workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
-
-        BPMNDeployment[] bpmnDeployments = workflowServiceClient.getDeployments();
-        if (bpmnDeployments != null) {
-            deploymentCount = workflowServiceClient.getDeployments().length;
-        }
-
+        initialize(domainKey1, userKey1);
 
     }
 
-    //initialize for abc.com
-    public void initializeForTenant2() throws Exception {
-        init(domainKey2, userKey2);
-        workflowServiceClient2 = new WorkflowServiceClient(backEndUrl, sessionCookie);
-        BPMNDeployment[] bpmnDeployments = workflowServiceClient2.getDeployments();
+    //initialize for each tenant
+    public void initialize(String domainKey, String userKey) throws Exception {
+        init(domainKey, userKey);
+        workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
+        BPMNDeployment[] bpmnDeployments = workflowServiceClient.getDeployments();
         if (bpmnDeployments != null) {
-            deploymentCount = workflowServiceClient2.getDeployments().length;
+            deploymentCount = workflowServiceClient.getDeployments().length;
         }
 
     }
@@ -83,17 +74,17 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
         log.info("BPMN Process:" + processId + " accessed by tenant t1 " + session);
         loginLogoutClient.logout();
 
-        initializeForTenant2();
+        initialize(domainKey2, userKey2);
         //login as tenant abc.com
         loginLogoutClient.login();
-        int deployedInstance = workflowServiceClient2.getInstanceCount();
+        int deployedInstance = workflowServiceClient.getInstanceCount();
         if (deployedInstance == 0) {
             log.info("No processes available for tenant:" + "abc.com");
         } else {
             //if deployment instances exist for abc.com
             if (deploymentCount != 0) {
 
-                String processId2 = workflowServiceClient2.getProcesses()[workflowServiceClient.getProcesses().length - 1].getProcessId();
+                String processId2 = workflowServiceClient.getProcesses()[workflowServiceClient.getProcesses().length - 1].getProcessId();
                 //if it is the same processId as of VacationRequest
                 if (processId2.equals(processId)) {
                     accessedSameArtifactInstance = true;
@@ -113,7 +104,7 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
 
     @AfterClass(alwaysRun = true)
     public void deleteTenant() throws Exception {
-
+        initialize(domainKey1, userKey1);
         workflowServiceClient.undeploy("VacationRequest");
         log.info("Successfully undeployed:" + "VacationRequest");
 
