@@ -24,10 +24,10 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.stratos.bps.dashboard.ui</artifactId>
+    <artifactId>org.wso2.bps.multitenancy.dashboard.ui</artifactId>
     <version>3.5.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>WSO2 Stratos BPS - Dashboard UI</name>
+    <name>WSO2 BPS - Tenant Dashboard UI</name>
 
     <build>
         <plugins>           
@@ -39,9 +39,6 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
-                        <!--<Export-Package>-->
-                            <!--org.wso2.stratos.governance.dashboard.ui.*,-->
-                        <!--</Export-Package>-->
                         <Import-Package>
                             !javax.xml.namespace,
                             javax.xml.namespace; version=0.0.0,
@@ -66,7 +63,7 @@
             <artifactId>org.wso2.carbon.ui</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
+            <groupId>org.wso2.carbon.commons</groupId>
             <artifactId>org.wso2.carbon.statistics.ui</artifactId>
         </dependency>
     </dependencies>

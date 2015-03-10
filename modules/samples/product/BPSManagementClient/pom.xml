@@ -16,15 +16,16 @@
  ~ specific language governing permissions and limitations
  ~ under the License.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-     <parent>
+    <parent>
         <groupId>org.wso2.bps</groupId>
         <artifactId>samples</artifactId>
         <version>3.5.0-SNAPSHOT</version>
-         <relativePath>../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>BPSManagementClient</artifactId>
     <packaging>jar</packaging>
@@ -52,20 +53,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <!--version>2.4</version-->
                 <configuration>
-                  <archive>
-                    <manifest>
-                      <addClasspath>true</addClasspath>
-                        <!--classpathLayoutType>repository</classpathLayoutType-->
-                        <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
-                        <!--classpathPrefix>../../webapps/ROOT/WEB-INF/plugins/common/</classpathPrefix-->                        
-                        <classpathPrefix>/home/waruna/.m2/repository/</classpathPrefix>                        
-                      <mainClass>org.wso2.bps.samples.client.BPSManagementClient</mainClass>
-                    </manifest>
-                  </archive>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+                            <classpathPrefix>/home/waruna/.m2/repository/</classpathPrefix>
+                            <mainClass>org.wso2.bps.samples.client.BPSManagementClient</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
-              </plugin>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -119,7 +117,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>            
+            </plugin>
         </plugins>
     </build>
 </project>
