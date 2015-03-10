@@ -38,7 +38,6 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
     private WorkflowServiceClient workflowServiceClient2;
     private int deploymentCount;
     boolean accessedSameArtifactInstance = false;
-    String BPMNApp = "VacationRequest";
     String domainKey1 = "wso2.com";
     String userKey1 = "user1";
     String domainKey2 = "abc.com";
@@ -91,7 +90,7 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
         if (deployedInstance == 0) {
             log.info("No processes available for tenant:" + "abc.com");
         } else {
-            //if deployement instances exist for abc.com
+            //if deployment instances exist for abc.com
             if (deploymentCount != 0) {
 
                 String processId2 = workflowServiceClient2.getProcesses()[workflowServiceClient.getProcesses().length - 1].getProcessId();
