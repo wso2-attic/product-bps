@@ -151,6 +151,20 @@
                     </user>
                 </users>
             </tenant>
+            <tenant domain="abc.com" key="abc.com">
+                <admin>
+                    <user key="admin">
+                        <userName>admin</userName>
+                        <password>admin</password>
+                    </user>
+                </admin>
+                <users>
+                    <user key="user2">
+                        <userName>testuser12</userName>
+                        <password>testuser12</password>
+                    </user>
+                </users>
+            </tenant>
             <!--<tenant domain="abc.com" key="abcDomainKey">-->
                 <!--<admin>-->
                     <!--<user key="admin">-->
