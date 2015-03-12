@@ -20,6 +20,11 @@
     <test name="BPMN Basic Test Cases" preserve-order="true" verbose="2" parallel="false">
         <classes>
             <class name="org.wso2.bps.integration.tests.bpmn.BPMNTaskCreationTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.ProcessInstanceTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.UserTaskTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.DeployUnDeployBPMNPackageTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.DeployUnDeployInvalidBPMNPackageTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.JavaServiceTaskDeploymentUndeploymentTestCase" />
         </classes>
     </test>
 
