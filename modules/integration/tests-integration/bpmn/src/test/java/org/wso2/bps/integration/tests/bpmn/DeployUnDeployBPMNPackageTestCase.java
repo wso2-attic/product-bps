@@ -73,7 +73,7 @@ public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
             Assert.fail("Package Not Present");
         } catch (Exception exception) {
             Assert.assertTrue("BPMN Package " + fileName + " Does Not Exist", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("BPMN Package " + fileName + " Still Exists", exception);
+            log.error("BPMN Package " + fileName + " does not exist", exception);
         }
     }
 }

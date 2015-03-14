@@ -161,7 +161,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             Assert.fail("Process Instance Not Present");
         } catch (Exception exception) {
             Assert.assertTrue("Process instance was removed successfully", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("Process instance is still present", exception);
+            log.error("Process instance does not exist", exception);
         }
 
         //Deleting the Deployment
@@ -178,7 +178,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
             Assert.fail("Package Not Present");
         } catch (Exception exception) {
             Assert.assertTrue("BPMN Package " + fileName + " Does Not Exist", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("BPMN Package " + fileName + " Still Exists", exception);
+            log.error("BPMN Package " + fileName + " does not exist", exception);
         }
     }
 }
