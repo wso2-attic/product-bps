@@ -271,6 +271,15 @@
                                 <featureArtifactDef>
                                     org.wso2.bps:org.wso2.bps.multitenancy.dashboard.ui.feature:${bps.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.server.feature:${carbon.event-processing.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.email.server.feature:${carbon.event-processing.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.sms.server.feature:${carbon.event-processing.version}
+                                </featureArtifactDef>
 
                             </featureArtifacts>
                         </configuration>
@@ -562,6 +571,18 @@
                                     <id>org.wso2.bps.multitenancy.dashboard.ui.feature.group</id>
                                     <version>${bps.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.event.output.adapter.server.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.event.output.adapter.email.server.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.event.output.adapter.sms.server.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -818,6 +839,18 @@
                                 <feature>
                                     <id>org.wso2.bps.multitenancy.dashboard.ui.feature.group</id>
                                     <version>${bps.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.event.output.adapter.server.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.event.output.adapter.email.server.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.event.output.adapter.sms.server.feature.group</id>
+                                    <version>${carbon.event-processing.version}</version>
                                 </feature>
                             </features>
                         </configuration>
