@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by vinod on 3/29/15.
+ * Integration test for human task Xpath functions:concat(), concatWithDelimiter(), leastFrequentOccurence(),
+ * mostFrequentOccurence(), voteOnString(),and(), or(), vote(),max(), min(), avg(), sum()
+ * Test deploys artifacts from test6 folder and they depends on ClaimService service.
  */
 public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
 
