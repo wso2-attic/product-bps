@@ -53,7 +53,8 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
     private RequestSender requestSender;
     private URI taskID = null;
 
-    @BeforeClass(alwaysRun = true) public void setEnvironment() throws Exception {
+    @BeforeClass(alwaysRun = true)
+    public void setEnvironment() throws Exception {
         init();  //init master class
         humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
         requestSender = new RequestSender();
@@ -101,7 +102,8 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
 
     }
 
-    @BeforeGroups(groups = { "wso2.bps.task.people.assignment" }) protected void initialize() throws Exception {
+    @BeforeGroups(groups = { "wso2.bps.task.people.assignment" })
+    protected void initialize() throws Exception {
         log.info("Initializing HumanTask task creation Test...");
         userManagementClient = new UserManagementClient(backEndUrl, sessionCookie);
         addRoles();
@@ -244,7 +246,8 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
      * @throws Exception
      */
     @Test(groups = {
-            "wso2.bps.task.xpath" }, description = "Test Xpath string operations", priority = 10, singleThreaded = true) public void testStringFunctions()
+            "wso2.bps.task.xpath" }, description = "Test Xpath string operations", priority = 10, singleThreaded = true)
+    public void testStringFunctions()
             throws Exception {
         TTaskAbstract humanTask = manager1Client.loadTask(taskID);
         Assert.assertTrue(humanTask.getPresentationSubject().getTPresentationSubject().contains("ABC"),
@@ -290,7 +293,8 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
      * @throws Exception
      */
     @Test(groups = {
-            "wso2.bps.task.xpath" }, description = "Test Xpath boolean operations", priority = 10, singleThreaded = true) public void testBooleanFunctions()
+            "wso2.bps.task.xpath" }, description = "Test Xpath boolean operations", priority = 10, singleThreaded = true)
+    public void testBooleanFunctions()
             throws Exception {
         TTaskAbstract humanTask = manager1Client.loadTask(taskID);
         //And function
@@ -326,7 +330,8 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
      * @throws Exception
      */
     @Test(groups = {
-            "wso2.bps.task.xpath" }, description = "Test Xpath number operations", priority = 10, singleThreaded = true) public void testNumberFunctions()
+            "wso2.bps.task.xpath" }, description = "Test Xpath number operations", priority = 10, singleThreaded = true)
+    public void testNumberFunctions()
             throws Exception {
         TTaskAbstract humanTask = manager1Client.loadTask(taskID);
         //avg
@@ -345,7 +350,8 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
 
     }
 
-    @AfterClass(groups = { "wso2.bps.task.clean" }, description = "Clean up server") public void cleanTestEnvironment()
+    @AfterClass(groups = { "wso2.bps.task.clean" }, description = "Clean up server")
+    public void cleanTestEnvironment()
             throws Exception {
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE_2);
