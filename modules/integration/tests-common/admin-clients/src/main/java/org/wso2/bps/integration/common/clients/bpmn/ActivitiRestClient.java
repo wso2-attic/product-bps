@@ -63,7 +63,7 @@ public class ActivitiRestClient {
     public ActivitiRestClient(String portM, String hostnameM) {
         port = Integer.parseInt(portM);
         hostname = hostnameM;
-        serviceURL = "http://" + hostnameM + ":" + portM + "/bpmnrest/";
+        serviceURL = "http://" + hostnameM + ":" + portM + "/bpmn/";
     }
 
     /**
