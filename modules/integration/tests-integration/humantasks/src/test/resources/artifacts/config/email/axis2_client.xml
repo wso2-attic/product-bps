@@ -196,14 +196,14 @@
     </transportSender>
     <transportSender name="mailto"
                      class="org.apache.axis2.transport.mail.MailTransportSender">
-        <parameter name="mail.smtp.from">wso2test1@gmail.com</parameter>
+        <parameter name="mail.smtp.from">wso2test1localhost.com</parameter>
         <parameter name="mail.smtp.user">wso2test1</parameter>
         <parameter name="mail.smtp.password">testwso2123</parameter>
-        <parameter name="mail.smtp.host">smtp.gmail.com</parameter>
+        <parameter name="mail.smtp.host">localhost</parameter>
 
-        <parameter name="mail.smtp.port">587</parameter>
-        <parameter name="mail.smtp.starttls.enable">true</parameter>
-        <parameter name="mail.smtp.auth">true</parameter>
+        <parameter name="mail.smtp.port">3025</parameter>
+        <parameter name="mail.smtp.starttls.enable">false</parameter>
+        <parameter name="mail.smtp.auth">false</parameter>
     </transportSender>
   <!--test-->
     <!--<transportSender name="java"-->

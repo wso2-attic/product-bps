@@ -1,5 +1,4 @@
 <HumanTaskServerConfig xmlns="http://wso2.org/humantask/schema/server/config" xmlns:svns="http://org.wso2.securevault/configuration">
-    <EnableSMSNotification>true</EnableSMSNotification>
     <EnableEMailNotification>true</EnableEMailNotification>
     <PersistenceConfig>
         <DataSource>bpsds</DataSource>
