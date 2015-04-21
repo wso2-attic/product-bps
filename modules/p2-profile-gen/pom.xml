@@ -272,13 +272,13 @@
                                     org.wso2.bps:org.wso2.bps.multitenancy.dashboard.ui.feature:${bps.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.server.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.output.adapter.server.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.email.server.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.output.adapter.email.server.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.event-processing:org.wso2.carbon.event.output.adapter.sms.server.feature:${carbon.event-processing.version}
+                                    org.wso2.carbon.analytics-common:org.wso2.carbon.event.output.adapter.sms.server.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
                             </featureArtifacts>
@@ -573,15 +573,15 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adapter.server.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adapter.email.server.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adapter.sms.server.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                             </features>
                         </configuration>
@@ -842,15 +842,15 @@
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adapter.server.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adapter.email.server.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adapter.sms.server.feature.group</id>
-                                    <version>${carbon.event-processing.version}</version>
+                                    <version>${carbon.analytics-common.version}</version>
                                 </feature>
                             </features>
                         </configuration>

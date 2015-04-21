@@ -19,14 +19,14 @@
     <!-- HumanTask TestCases -->
     <test name="HumanTask Basic Test Cases" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskCreationTestCase" />
-            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskNotificationsTestCase" />
+            <!--class name="org.wso2.bps.integration.tests.humantasks.HumanTaskCreationTestCase" /-->
+            <!--class name="org.wso2.bps.integration.tests.humantasks.HumanTaskNotificationsTestCase" /-->
         </classes>
     </test>
 
     <test name="HumanTask People Assignment Test" preserve-order="true" verbose="2" parallel="false">
         <classes>
-            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskPeopleAssignment" />
+            <!--class name="org.wso2.bps.integration.tests.humantasks.HumanTaskPeopleAssignment" /-->
         </classes>
     </test>
 </suite>
