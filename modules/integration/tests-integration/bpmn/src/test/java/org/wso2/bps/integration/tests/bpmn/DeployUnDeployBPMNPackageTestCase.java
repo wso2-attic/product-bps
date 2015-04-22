@@ -26,17 +26,24 @@ import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 
 import java.io.File;
-import java.io.IOException;
 
+/**
+ * This class tests the deployment and undeployment of bpmn package.
+ */
 public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(DeployUnDeployBPMNPackageTestCase.class);
 
+    /**
+     * In the following method we deploy and undeploy a bpmn package
+     *
+     * @throws Exception
+     */
     @Test(groups = {"wso2.bps.test.deploy"}, description = "Deploy/UnDeploy Package Test", priority = 1, singleThreaded = true)
     public void deployUnDeployBPMNPackage() throws Exception {
         init();
-
-        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"), bpsServer.getInstance().getHosts().get("default"));
+        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().
+                get("http"), bpsServer.getInstance().getHosts().get("default"));
         String filePath = FrameworkPathUtil.getSystemResourceLocation() + File.separator
                           + BPMNTestConstants.DIR_ARTIFACTS + File.separator
                           + BPMNTestConstants.DIR_BPMN + File.separator + "HelloApprove.bar";
@@ -44,36 +51,43 @@ public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
         String[] deploymentResponse = {};
         String[] deploymentCheckResponse = {};
         String deploymentStatus = "";
-
-
+        // Deploying the bpmn artifact, which returns an response status 201 if deployment
+        // is successful
         try {
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
-            Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
+            Assert.assertTrue("Deployment was not successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
         } catch (Exception exception) {
-            log.error("Failed to Deploy BPMN Package " + fileName, exception);
-            Assert.fail("Failed to Deploy BPMN Package " + fileName);
+            log.error("Failed to Deploy bpmn package " + fileName, exception);
+            Assert.fail("Failed to Deploy bpmn package " + fileName);
         }
+        //validating if the deployed bpmn artifact is present, checking if the deployment id
+        // is present in the list of deployments.
         try {
             deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
-            Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
+            Assert.assertTrue("Deployment does not exist", deploymentCheckResponse[2].contains(fileName));
         } catch (Exception exception) {
-            log.error("Deployed BPMN Package " + fileName + " Not Present", exception);
-            Assert.fail("Deployed BPMN Package " + fileName + " Not Present");
+            log.error("Deployed bpmn package " + fileName + " not present", exception);
+            Assert.fail("Deployed bpmn package " + fileName + " not present");
         }
-
+        //undeploying the bpmn package. when the package is undeployed the server
+        // responds with a 204 status.
         try {
             deploymentStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
-            Assert.assertTrue("Package UnDeployed", deploymentStatus.contains(BPMNTestConstants.NO_CONTENT));
+            Assert.assertTrue("Package cannot be undeployed", deploymentStatus.contains(BPMNTestConstants.NO_CONTENT));
         } catch (Exception exception) {
             log.error("BPMN Package cannot be undeployed " + fileName, exception);
             Assert.fail("BPMN Package cannot be undeployed " + fileName);
         }
+        //validating if the bpmn package has been removed from the server.
+        // We validate by checking if the deployment id is present, if id is not present an exception
+        // is thrown.
         try {
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
-            Assert.fail("Package Still Exists After Undeployment");
+            Assert.fail("Package Still exists after undeployment");
         } catch (Exception exception) {
-            Assert.assertTrue("BPMN Package " + fileName + " Does Not Exist", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("BPMN Package " + fileName + " does not exist", exception);
+            Assert.assertTrue("Bpmn package " + fileName + "does not exist", BPMNTestConstants.
+                    NOT_AVAILABLE.equals(exception.getMessage()));
+            log.error("Bpmn package " + fileName + " does not exist", exception);
         }
     }
 }
