@@ -30,6 +30,7 @@ public class BPSTestConstants {
     public final static String DIR_CONFIG = "config";
     public final static String DIR_EMAIL = "email";
     public final static String AXIS2_CLIENT = "axis2_client.xml";
+    public final static String DIR_AXIS2 = "axis2";
 
     public final static String DIR_HT_COORDINATION = "htcoordination";
 

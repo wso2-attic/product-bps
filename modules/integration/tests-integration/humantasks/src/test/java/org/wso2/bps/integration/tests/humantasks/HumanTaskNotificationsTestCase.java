@@ -15,15 +15,12 @@
  */
 package org.wso2.bps.integration.tests.humantasks;
 
-import com.icegreen.greenmail.util.ServerSetupTest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.bps.integration.common.clients.bpel.BpelInstanceManagementClient;
-import org.wso2.bps.integration.common.clients.bpel.BpelPackageManagementClient;
-import org.wso2.bps.integration.common.clients.humantasks.HumanTaskClientApiClient;
 import org.wso2.bps.integration.common.clients.humantasks.HumanTaskPackageManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.bps.integration.common.utils.BPSTestConstants;
@@ -35,8 +32,11 @@ import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
+
 import javax.mail.Message;
+
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
+
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
@@ -45,62 +45,67 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(HumanTaskCreationTestCase.class);
     //Test Automation API Clients
-    private BpelPackageManagementClient bpelPackageManagementClient;
     private HumanTaskPackageManagementClient humanTaskPackageManagementClient;
-    private BpelInstanceManagementClient instanceManagementClient;
     private UserManagementClient userManagementClient;
     private ServerConfigurationManager serverConfigurationManager;
-
-    private HumanTaskClientApiClient clerk1HumanTaskClientApiClient, manager1HumanTaskClientApiClient;
-
     private RequestSender requestSender;
+
     //Email notification related variables
     private static GreenMail mailServer;
-
     private static final String USER_PASSWORD = "testwso2123";
     private static final String USER_NAME = "wso2test1";
     private static final String EMAIL_USER_ADDRESS = "wso2test1@localhost";
     private static final String EMAIL_SUBJECT = "email subject to user";
     private static final String EMAIL_TEXT = "Hi wso2test1";
-    private static final String EMAIL_TO = "wso2test1@localhost.com";
     private static final int SMTP_TEST_PORT = 3025;
     GreenMail greenMail;
 
+    /**
+     * Setting up Server and Apply new Configuration Files.
+     */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();  //init master class
         requestSender = new RequestSender();
+
+        serverConfigurationManager = new ServerConfigurationManager(bpsServer);
+        //Replacing config file content
+        updateConfigFiles();
+        // Need to re-initialize since we have restarted the server
+        init();
         userManagementClient = new UserManagementClient(backEndUrl, sessionCookie);
         deployArtifact();
         addRoles();
-        serverConfigurationManager = new ServerConfigurationManager(bpsServer);
-        updateConfigFiles();
-        init();
         requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.REMINDER_SERVICE);
         humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
-        instanceManagementClient = new BpelInstanceManagementClient(backEndUrl, sessionCookie);
         serverConfigurationManager = new ServerConfigurationManager(bpsServer);
-        //copy original humantask.xml/axis2_client.xml files with new configs
-        updateConfigFiles();
-
         log.info("Server setting up completed.");
-
-
         //initialize HT Client API for Clerk1 user
+
         AutomationContext clerk1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
                 FrameworkConstants.SUPER_TENANT_KEY, "clerk1");
         LoginLogoutClient clerk1LoginLogoutClient = new LoginLogoutClient(clerk1AutomationContext);
-        String clerk1SessionCookie = clerk1LoginLogoutClient.login();
+        clerk1LoginLogoutClient.login();
 
 
-        clerk1HumanTaskClientApiClient = new HumanTaskClientApiClient(backEndUrl, clerk1SessionCookie);
-        ServerSetup setup = new ServerSetup(3025, "localhost", "smtp");
-        GreenMail greenMail = new GreenMail(setup);
+        //initialize HT Client API for Manager1 user
+        AutomationContext manager1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+                FrameworkConstants.SUPER_TENANT_KEY, "manager1");
+        LoginLogoutClient manager1LoginLogoutClient = new LoginLogoutClient(manager1AutomationContext);
+        manager1LoginLogoutClient.login();
+
+
+        ServerSetup setup = new ServerSetup(SMTP_TEST_PORT, "localhost", "smtp");
+        greenMail = new GreenMail(setup);
         greenMail.setUser(EMAIL_USER_ADDRESS, USER_NAME, USER_PASSWORD);
         greenMail.start();
 
     }
 
+    /**
+     * Update content in humantask.xml/axis2_client.xml & restart server
+     * @throws Exception
+     */
     private void updateConfigFiles() throws Exception {
         final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation()
                 + BPSTestConstants.DIR_ARTIFACTS + File.separator + BPSTestConstants.DIR_CONFIG + File.separator
@@ -109,38 +114,22 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
         File humantaskConfigNew = new File(artifactLocation + BPSTestConstants.HUMANTASK_XML);
         File humantaskConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
                 + BPSTestConstants.HUMANTASK_XML);
+        serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, false);
 
         File humanTaskAxis2ClientConfigNew = new File(artifactLocation + BPSTestConstants.AXIS2_CLIENT);
-        File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
-                + BPSTestConstants.AXIS2_CLIENT);
-        serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, true);
+        File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + BPSTestConstants.DIR_AXIS2
+                + File.separator + BPSTestConstants.AXIS2_CLIENT);
         serverConfigurationManager.applyConfiguration(humanTaskAxis2ClientConfigNew, humanTaskAxis2ClientConfigOriginal, true, true);
     }
 
-    protected void initialize() throws Exception {
-        log.info("Initializing HumanTask task creation Test...");
-        userManagementClient = new UserManagementClient(backEndUrl, sessionCookie);
-        addRoles();
-        instanceManagementClient = new BpelInstanceManagementClient(backEndUrl, sessionCookie);
-        humanTaskPackageManagementClient = new HumanTaskPackageManagementClient(backEndUrl, sessionCookie);
-        log.info("Add users success !");
-        deployArtifact();
-        requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.REMINDER_SERVICE);
-        //requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.CLAIM_APPROVAL_PROCESS_SERVICE);
-        requestSender.waitForProcessDeployment(backEndUrl + HumanTaskTestConstants.CLAIM_SERVICE);
-    }
-
     public void deployArtifact() throws Exception {
-
         uploadHumanTaskForTest("taskDeadlineWithNotificationsTest");
     }
 
 
     private void addRoles() throws Exception {
-        String[] clerkUsers = new String[]{HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK2_USER,
-                HumanTaskTestConstants.CLERK3_USER};
-        String[] managerUsers = new String[]{HumanTaskTestConstants.MANAGER1_USER, HumanTaskTestConstants.MANAGER2_USER,
-                HumanTaskTestConstants.MANAGER3_USER};
+        String[] clerkUsers = new String[]{HumanTaskTestConstants.CLERK1_USER};
+        String[] managerUsers = new String[]{HumanTaskTestConstants.MANAGER1_USER};
         userManagementClient.addRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE, clerkUsers,
                 new String[]{"/permission/admin/login",
                         "/permission/admin/manage/humantask/viewtasks"}, false);
@@ -155,8 +144,8 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
 
         String soapBody =
                 "<p:notify xmlns:p=\"http://www.example.com/claims/\">\n" +
-                        "<firstname>san</firstname>\n" +
-                        "<lastname>vith</lastname>\n" +
+                        "<firstname>John</firstname>\n" +
+                        "<lastname>Denver</lastname>\n" +
                         "</p:notify>";
 
         String operation = "notify";
@@ -165,17 +154,12 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
         log.info("Calling Service: " + backEndUrl + serviceName);
         requestSender.sendRequest(backEndUrl + serviceName, operation, soapBody, 1,
                 expectedOutput, false);
-
-        Thread.sleep(60000);
-
+       //Wait for email notification to be received
         greenMail.waitForIncomingEmail(5000, 1);
         Message[] messages = greenMail.getReceivedMessages();
-
-        System.out.println("Message length =>" + messages.length);
-        System.out.println("Subject => " + messages[0].getSubject());
-        System.out.println("Content => " + messages[0].getContent().toString());
-        System.out.println("Done");
-
+        Assert.assertNotNull(messages.length);
+        Assert.assertEquals(messages[0].getSubject(), EMAIL_SUBJECT);
+        Assert.assertTrue(String.valueOf(messages[0].getContent()).contains(EMAIL_TEXT));
 
     }
 
@@ -183,6 +167,11 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
     @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server notifications", priority = 17, singleThreaded = true)
     public void removeArtifacts() throws Exception {
         greenMail.stop();
+        log.info("Undeploy claim reminder service");
+        userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE);
+        userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE);
+        humanTaskPackageManagementClient.unDeployHumanTask("ClaimReminderService", "notify");
+        loginLogoutClient.logout();
     }
 
 
