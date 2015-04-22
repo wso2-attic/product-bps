@@ -23,7 +23,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.humantasks.HumanTaskPackageManagementClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
-import org.wso2.bps.integration.common.utils.BPSTestConstants;
 import org.wso2.bps.integration.common.utils.RequestSender;
 import org.wso2.carbon.automation.engine.FrameworkConstants;
 import org.wso2.carbon.automation.engine.context.AutomationContext;
@@ -108,17 +107,17 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
      */
     private void updateConfigFiles() throws Exception {
         final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation()
-                + BPSTestConstants.DIR_ARTIFACTS + File.separator + BPSTestConstants.DIR_CONFIG + File.separator
-                + BPSTestConstants.DIR_EMAIL + File.separator;
+                + HumanTaskTestConstants.DIR_ARTIFACTS + File.separator + HumanTaskTestConstants.DIR_CONFIG + File.separator
+                + HumanTaskTestConstants.DIR_EMAIL + File.separator;
 
-        File humantaskConfigNew = new File(artifactLocation + BPSTestConstants.HUMANTASK_XML);
+        File humantaskConfigNew = new File(artifactLocation + HumanTaskTestConstants.HUMANTASK_XML);
         File humantaskConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
-                + BPSTestConstants.HUMANTASK_XML);
+                + HumanTaskTestConstants.HUMANTASK_XML);
         serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, false);
 
-        File humanTaskAxis2ClientConfigNew = new File(artifactLocation + BPSTestConstants.AXIS2_CLIENT);
-        File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + BPSTestConstants.DIR_AXIS2
-                + File.separator + BPSTestConstants.AXIS2_CLIENT);
+        File humanTaskAxis2ClientConfigNew = new File(artifactLocation + HumanTaskTestConstants.AXIS2_CLIENT);
+        File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + HumanTaskTestConstants.DIR_AXIS2
+                + File.separator + HumanTaskTestConstants.AXIS2_CLIENT);
         serverConfigurationManager.applyConfiguration(humanTaskAxis2ClientConfigNew, humanTaskAxis2ClientConfigOriginal, true, true);
     }
 
