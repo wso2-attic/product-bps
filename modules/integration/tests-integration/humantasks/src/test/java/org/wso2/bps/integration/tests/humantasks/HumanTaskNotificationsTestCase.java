@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.wso2.bps.integration.tests.humantasks;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
@@ -31,6 +32,7 @@ import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
@@ -42,6 +44,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.List;
+
 /**
  * Human Task based email notification sending using GreenMail server
  */
@@ -103,23 +106,24 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
 
     /**
      * Update content in humantask.xml/axis2_client.xml & restart server
+     *
      * @throws Exception
      */
-    private void updateConfigFiles() throws Exception{
-            final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation()
-                    + HumanTaskTestConstants.DIR_ARTIFACTS + File.separator + HumanTaskTestConstants.DIR_CONFIG + File.separator
-                    + HumanTaskTestConstants.DIR_EMAIL + File.separator;
-            //Adding new config file for humantask.xml
-            File humantaskConfigNew = new File(artifactLocation + HumanTaskTestConstants.HUMANTASK_XML);
-            File humantaskConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
-                    + HumanTaskTestConstants.HUMANTASK_XML);
-            serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, false);
-            //Adding new config file for axis2_client.xml
-            File humanTaskAxis2ClientConfigNew = new File(artifactLocation + HumanTaskTestConstants.AXIS2_CLIENT);
-            File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + HumanTaskTestConstants.DIR_AXIS2
-                    + File.separator + HumanTaskTestConstants.AXIS2_CLIENT);
-            serverConfigurationManager.applyConfiguration(humanTaskAxis2ClientConfigNew, humanTaskAxis2ClientConfigOriginal, true, true);
-        }
+    private void updateConfigFiles() throws Exception {
+        final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation()
+                + HumanTaskTestConstants.DIR_ARTIFACTS + File.separator + HumanTaskTestConstants.DIR_CONFIG + File.separator
+                + HumanTaskTestConstants.DIR_EMAIL + File.separator;
+        //Adding new config file for humantask.xml
+        File humantaskConfigNew = new File(artifactLocation + HumanTaskTestConstants.HUMANTASK_XML);
+        File humantaskConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
+                + HumanTaskTestConstants.HUMANTASK_XML);
+        serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, false);
+        //Adding new config file for axis2_client.xml
+        File humanTaskAxis2ClientConfigNew = new File(artifactLocation + HumanTaskTestConstants.AXIS2_CLIENT);
+        File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + HumanTaskTestConstants.DIR_AXIS2
+                + File.separator + HumanTaskTestConstants.AXIS2_CLIENT);
+        serverConfigurationManager.applyConfiguration(humanTaskAxis2ClientConfigNew, humanTaskAxis2ClientConfigOriginal, true, true);
+    }
 
     public void deployArtifact() throws Exception {
         uploadHumanTaskForTest("taskDeadlineWithNotificationsTest");
@@ -137,15 +141,15 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
                     new String[]{"/permission/admin/login",
                             "/permission/admin/manage/humantask/viewtasks"}, false);
         } catch (RemoteException e) {
-          log.error(e);
+            log.error(e);
         } catch (UserAdminUserAdminException e) {
-          log.error(e);
+            log.error(e);
         }
 
     }
 
     @Test(groups = {"wso2.bps.task.create"}, description = "Claims approval notification support test case", priority = 1, singleThreaded = true)
-    public void createTaskWithNotifications(){
+    public void createTaskWithNotifications() {
         try {
             String soapBody =
                     "<p:notify xmlns:p=\"http://www.example.com/claims/\">\n" +
@@ -166,18 +170,18 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
             Assert.assertEquals(messages[0].getSubject(), EMAIL_SUBJECT);
             Assert.assertTrue(String.valueOf(messages[0].getContent()).contains(EMAIL_TEXT));
         } catch (IOException e) {
-           log.error(e);
+            log.error(e);
         } catch (InterruptedException e) {
-           log.error(e);
+            log.error(e);
         } catch (MessagingException e) {
-           log.error(e);
+            log.error(e);
         } catch (Exception e) {
-          log.error(e);
+            log.error(e);
         }
     }
 
     @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server notifications", priority = 17, singleThreaded = true)
-    public void removeArtifacts()  {
+    public void removeArtifacts() {
         try {
             greenMail.stop();
             log.info("Undeploy claim reminder service");
@@ -188,17 +192,17 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
             humanTaskPackageManagementClient.unDeployHumanTask("ClaimReminderService", "notify");
             loginLogoutClient.logout();
         } catch (InterruptedException e) {
-           log.error(e);
+            log.error(e);
         } catch (RemoteException e) {
-           log.error(e);
+            log.error(e);
         } catch (LogoutAuthenticationExceptionException e) {
-           log.error(e);
+            log.error(e);
         } catch (PackageManagementException e) {
-           log.error(e);
+            log.error(e);
         } catch (UserAdminUserAdminException e) {
-          log.error(e);
+            log.error(e);
         } catch (Exception e) {
-          log.error(e);
+            log.error(e);
         }
     }
 
