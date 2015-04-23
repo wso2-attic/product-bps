@@ -1,5 +1,5 @@
 /*
- * Copyright (c) WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2015,WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 package org.wso2.bps.integration.tests.humantasks;
-
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.Assert;
@@ -31,15 +29,14 @@ import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
-
 import javax.mail.Message;
-
 import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-
+/**
+ * Human Task based email notification sending using GreenMail server
+ */
 public class HumanTaskNotificationsTestCase extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(HumanTaskCreationTestCase.class);
@@ -48,7 +45,6 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
     private UserManagementClient userManagementClient;
     private ServerConfigurationManager serverConfigurationManager;
     private RequestSender requestSender;
-
     //Email notification related variables
     private static GreenMail mailServer;
     private static final String USER_PASSWORD = "testwso2123";
@@ -60,13 +56,12 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
     GreenMail greenMail;
 
     /**
-     * Setting up Server and Apply new Configuration Files.
+     * Setting up Server after Applying new Configuration Files.
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();  //init master class
         requestSender = new RequestSender();
-
         serverConfigurationManager = new ServerConfigurationManager(bpsServer);
         //Replacing config file content
         updateConfigFiles();
@@ -80,22 +75,19 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
         serverConfigurationManager = new ServerConfigurationManager(bpsServer);
         log.info("Server setting up completed.");
         //initialize HT Client API for Clerk1 user
-
         AutomationContext clerk1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
                 FrameworkConstants.SUPER_TENANT_KEY, "clerk1");
         LoginLogoutClient clerk1LoginLogoutClient = new LoginLogoutClient(clerk1AutomationContext);
         clerk1LoginLogoutClient.login();
-
-
         //initialize HT Client API for Manager1 user
         AutomationContext manager1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
                 FrameworkConstants.SUPER_TENANT_KEY, "manager1");
         LoginLogoutClient manager1LoginLogoutClient = new LoginLogoutClient(manager1AutomationContext);
         manager1LoginLogoutClient.login();
-
-
+        //Setting greenMail server in port 3025
         ServerSetup setup = new ServerSetup(SMTP_TEST_PORT, "localhost", "smtp");
         greenMail = new GreenMail(setup);
+        //Creating user in greenMail server
         greenMail.setUser(EMAIL_USER_ADDRESS, USER_NAME, USER_PASSWORD);
         greenMail.start();
 
@@ -109,12 +101,12 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
         final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation()
                 + HumanTaskTestConstants.DIR_ARTIFACTS + File.separator + HumanTaskTestConstants.DIR_CONFIG + File.separator
                 + HumanTaskTestConstants.DIR_EMAIL + File.separator;
-
+        //Adding new config file for humantask.xml
         File humantaskConfigNew = new File(artifactLocation + HumanTaskTestConstants.HUMANTASK_XML);
         File humantaskConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
                 + HumanTaskTestConstants.HUMANTASK_XML);
         serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, false);
-
+        //Adding new config file for axis2_client.xml
         File humanTaskAxis2ClientConfigNew = new File(artifactLocation + HumanTaskTestConstants.AXIS2_CLIENT);
         File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + HumanTaskTestConstants.DIR_AXIS2
                 + File.separator + HumanTaskTestConstants.AXIS2_CLIENT);
@@ -159,9 +151,7 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
         Assert.assertNotNull(messages.length);
         Assert.assertEquals(messages[0].getSubject(), EMAIL_SUBJECT);
         Assert.assertTrue(String.valueOf(messages[0].getContent()).contains(EMAIL_TEXT));
-
     }
-
 
     @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server notifications", priority = 17, singleThreaded = true)
     public void removeArtifacts() throws Exception {
@@ -169,6 +159,8 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
         log.info("Undeploy claim reminder service");
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE);
+        Assert.assertFalse(userManagementClient.roleNameExists(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE));
+        Assert.assertFalse(userManagementClient.roleNameExists(HumanTaskTestConstants.REGIONAL_MANAGER_ROLE));
         humanTaskPackageManagementClient.unDeployHumanTask("ClaimReminderService", "notify");
         loginLogoutClient.logout();
     }
