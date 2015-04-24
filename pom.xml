@@ -615,7 +615,12 @@
         <carbon.registry.version>4.3.0</carbon.registry.version>
 
         <!-- Carbon Business Process Version -->
-        <carbon.business-process.version>4.3.1</carbon.business-process.version>
+        <carbon.business-process.version>4.3.2-SNAPSHOT</carbon.business-process.version>
+
+        <!--Carbon Event Processing Version-->
+        <!--carbon.event-processing.version>2.0.4-SNAPSHOT</carbon.event-processing.version-->
+
+        <carbon.analytics-common.version>1.0.0-SNAPSHOT</carbon.analytics-common.version>
 
         <!-- Carbon Commons Version -->
         <carbon.commons.version>4.3.4</carbon.commons.version>
