@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -27,18 +26,25 @@ import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 
 import java.io.File;
-import java.io.IOException;
 
+/**
+ * This class will deploy a bpmn package test the functionality of the process instance
+ */
 public class ProcessInstanceTestCase extends BPSMasterTest {
-
     private static final Log log = LogFactory.getLog(ProcessInstanceTestCase.class);
 
+    /**
+     * The method below tests the functionality of process instance. We deploy a bpmn package and test
+     * the requests to process, process instances.
+     *
+     * @throws Exception
+     */
     @Test(groups = {"wso2.bps.test.processInstance"}, description = "Process Instance Test", priority = 2, singleThreaded = true)
     public void ProcessInstanceTests() throws Exception {
         init();
-        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"), bpsServer.getInstance().getHosts().get("default"));
-
-        //deploying Package
+        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().
+                get("http"), bpsServer.getInstance().getHosts().get("default"));
+        //deploying a bpmn package to the server
         String filePath = FrameworkPathUtil.getSystemResourceLocation() + File.separator
                           + BPMNTestConstants.DIR_ARTIFACTS + File.separator
                           + BPMNTestConstants.DIR_BPMN + File.separator + "HelloApprove.bar";
@@ -46,98 +52,109 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
         String[] deploymentResponse = {};
         try {
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
-            Assert.assertTrue("Deployment Successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
+            Assert.assertTrue("Deployment was not successful", deploymentResponse[0].contains(BPMNTestConstants.CREATED));
         } catch (Exception exception) {
-            log.error("Failed to Deploy BPMN Package " + fileName, exception);
-            Assert.fail("Failed to Deploy BPMN Package " + fileName);
+            log.error("Failed to deploy the bpmn package " + fileName, exception);
+            Assert.fail("Failed to deploy the bpmn package " + fileName);
         }
-
+        //verifying if the deployed bpmn package is present in the deployments list by validating if
+        // the deployment name is present in the deployment list.
         try {
             String[] deploymentCheckResponse = tester.getDeploymentInfoById(deploymentResponse[1]);
-            Assert.assertTrue("Deployment Present", deploymentCheckResponse[2].contains(fileName));
+            Assert.assertTrue("Deployment is not present", deploymentCheckResponse[2].contains(fileName));
         } catch (Exception exception) {
-            log.error("Deployed BPMN Package " + fileName + " was not found ", exception);
-            Assert.fail("Deployed BPMN Package " + fileName + " was not found ");
+            log.error("Deployed bpmn package " + fileName + " was not found ", exception);
+            Assert.fail("Deployed bpmn package " + fileName + " was not found ");
         }
-
         //Acquiring Process Definition ID to start Process Instance
         String[] definitionResponse = new String[0];
         try {
             definitionResponse = tester.findProcessDefinitionInfoById(deploymentResponse[1]);
-            Assert.assertTrue("Search Success", definitionResponse[0].contains(BPMNTestConstants.OK));
+            Assert.assertTrue("Search was not success", definitionResponse[0].contains(BPMNTestConstants.OK));
         } catch (Exception exception) {
-            log.error("Could not find Defintion ID for BPMN Package " + fileName, exception);
-            Assert.fail("Could not find Defintion ID for BPMN Package " + fileName);
+            log.error("Could not find definition id for bpmn package " + fileName, exception);
+            Assert.fail("Could not find definition id for bpmn package " + fileName);
         }
-
-        //Starting and Verifying Process Instance
+        //Starting Process Instance, we used the definition ID to start the process instance,
+        //when the process instance is started successfully the server responds with a status of 201.
         String[] processInstanceResponse = new String[0];
         try {
             processInstanceResponse = tester.startProcessInstanceByDefintionID(definitionResponse[1]);
-            Assert.assertTrue("Process Instance Started", processInstanceResponse[0].contains(BPMNTestConstants.CREATED));
+            Assert.assertTrue("Process instance cannot be started", processInstanceResponse[0].
+                    contains(BPMNTestConstants.CREATED));
         } catch (Exception exception) {
             log.error("Process instance failed to start ", exception);
             Assert.fail("Process instance failed to start ");
         }
-
+        //verifying if the process instance is present in the process instance list by validating if
+        // the process instance is present in the process instance list.If, present the query request
+        //responds with a http status 200
         try {
             String searchResponse = tester.searchProcessInstanceByDefintionID(definitionResponse[1]);
-            Assert.assertTrue("Process Instance Present", searchResponse.contains(BPMNTestConstants.OK));
+            Assert.assertTrue("Process instance does not exist", searchResponse.contains(BPMNTestConstants.OK));
         } catch (Exception exception) {
             log.error("Process instance cannot be found", exception);
             Assert.fail("Process instance cannot be found");
         }
-
-        //Suspending the Process Instance
+        //Suspending the the process instance once the service task is completed. The request will
+        //respond with a status of 200 when successful.
         try {
             String[] suspendResponse = tester.suspendProcessInstanceById(processInstanceResponse[1]);
-            Assert.assertTrue("Process Instance has been suspended", suspendResponse[0].contains(BPMNTestConstants.OK));
-            Assert.assertTrue("Process Instance has been suspended", suspendResponse[1].contains("true"));
+            Assert.assertTrue("Process instance cannot be suspended", suspendResponse[0].contains(BPMNTestConstants.OK));
+            Assert.assertTrue("Process instance cannot be suspended", suspendResponse[1].contains("true"));
         } catch (Exception exception) {
             log.error("Process instance cannot be suspended", exception);
             Assert.fail("The Process instance cannot be suspended");
         }
-
+        //Validating if the process instance is in the suspended state, we retrieve the process
+        //instance and check the suspended state is true or false.
         try {
             String stateVerfication = tester.getSuspendedStateOfProcessInstanceByID(processInstanceResponse[1]);
-            Assert.assertTrue("Verifying Suspended State", stateVerfication.contains("true"));
+            Assert.assertTrue("The process instance is not in suspended state", stateVerfication.
+                    contains("true"));
         } catch (Exception exception) {
-            log.error("The process instance is not in suspended state ", exception);
+            log.error("The process instance is not in suspended state", exception);
             Assert.fail("The process instance is not in suspended state ");
         }
-
-        //Deleting a Process Instance
+        //Deleting a Process Instance once the tasks are completed. When the process instance is removed
+        //the server responds with a status of 204
         try {
             String deleteStatus = tester.deleteProcessInstanceByID(processInstanceResponse[1]);
-            Assert.assertTrue("Process Instance Removed", deleteStatus.contains(BPMNTestConstants.NO_CONTENT));
+            Assert.assertTrue("Process instance cannot be removed", deleteStatus.contains(BPMNTestConstants.
+                                                                                                  NO_CONTENT));
         } catch (Exception exception) {
             log.error("Process instance cannot be removed", exception);
             Assert.fail("Process instance cannot be removed");
         }
-
+        //validating if the process instance is removed, the request should throw an exception since
+        //the process instance is not there
         try {
             String deleteCheck = tester.validateProcessInstanceById(definitionResponse[1]);
-            Assert.fail("Process Instance is Present");
+            Assert.fail("Process instance stille exists");
         } catch (Exception exception) {
-            Assert.assertTrue("Process instance was removed successfully", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
+            Assert.assertTrue("Process instance was removed successfully", BPMNTestConstants.
+                    NOT_AVAILABLE.equals(exception.getMessage()));
             log.error("Process Instance does not exist", exception);
         }
-
-        //Deleting the Deployment
+        //Undeploying the bpmn package. The request should return response of 204 after removing the
+        //bpmn package.
         try {
             String undeployStatus = tester.unDeployBPMNPackage(deploymentResponse[1]);
-            Assert.assertTrue("Package UnDeployed", undeployStatus.contains(BPMNTestConstants.NO_CONTENT));
+            Assert.assertTrue("Package cannot be undeployed", undeployStatus.contains(BPMNTestConstants.
+                                                                                              NO_CONTENT));
         } catch (Exception exception) {
-            log.error("Failed to remove BPMN Package " + fileName, exception);
-            Assert.fail("Failed to remove BPMN Package " + fileName);
+            log.error("Failed to undeploy bpmn package " + fileName, exception);
+            Assert.fail("Failed to remove bpmn package " + fileName);
         }
-
+        //validating if the bpmn package was successfully removed, the request should throw an exception
+        //since the bpmn package has been removed.
         try {
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
-            Assert.fail("Package Still Exists After Undeployment");
+            Assert.fail("Package still exists after undeployment");
         } catch (Exception exception) {
-            Assert.assertTrue("BPMN Package " + fileName + " Does Not Exist", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("BPMN Package " + fileName + " does not exist", exception);
+            Assert.assertTrue("Bpmn package " + fileName + " does not exist", BPMNTestConstants.
+                    NOT_AVAILABLE.equals(exception.getMessage()));
+            log.error("Bpmn package " + fileName + " does not exist", exception);
         }
     }
 }
