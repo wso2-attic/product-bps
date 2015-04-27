@@ -117,10 +117,10 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
 
         try {
             String deleteCheck = tester.validateProcessInstanceById(definitionResponse[1]);
-            Assert.fail("Process Instance Not Present");
+            Assert.fail("Process Instance is Present");
         } catch (Exception exception) {
             Assert.assertTrue("Process instance was removed successfully", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("Process instance is still present", exception);
+            log.error("Process Instance does not exist", exception);
         }
 
         //Deleting the Deployment
@@ -134,10 +134,10 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
 
         try {
             String[] unDeployCheck = tester.getDeploymentInfoById(deploymentResponse[1]);
-            Assert.fail("Package Not Present");
+            Assert.fail("Package Still Exists After Undeployment");
         } catch (Exception exception) {
             Assert.assertTrue("BPMN Package " + fileName + " Does Not Exist", BPMNTestConstants.NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("BPMN Package " + fileName + " Still Exists", exception);
+            log.error("BPMN Package " + fileName + " does not exist", exception);
         }
     }
 }
