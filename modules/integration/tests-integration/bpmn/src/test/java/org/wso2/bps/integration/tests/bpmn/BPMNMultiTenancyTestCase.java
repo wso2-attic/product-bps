@@ -83,7 +83,7 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
         loginLogoutClient.login();
         int deployedInstance = workflowServiceClient.getInstanceCount();
         if (deployedInstance == 0) {
-            log.info("No processes available for tenant:" + "abc.com");
+            log.info("No processes available for tenant:" + domainKey2);
         } else {
             //if deployment instances exist for abc.com
             if (deploymentCount != 0) {
@@ -98,7 +98,7 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
         }
         loginLogoutClient.logout();
         Assert.assertEquals(accessedSameArtifactInstance, false, "Multi-tenancy implementation failed." +
-                "Artifact deployed by tenant wso2.com can be accessed by tenant abc.com");
+                "Artifact deployed by tenant" + domainKey1 + "can be accessed by tenant" + domainKey2);
     }
 
 
