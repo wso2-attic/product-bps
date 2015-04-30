@@ -28,6 +28,9 @@ import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class will test how gracefully the server will handle invalid bpmn package.
+ */
 public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(DeployUnDeployInvalidBPMNPackageTestCase.class);
@@ -47,14 +50,15 @@ public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
                           + BPMNTestConstants.DIR_BPMN + File.separator + "InvalidHelloApprove.bar";
         String fileName = "InvalidHelloApprove.bar";
 
-
+        //trying to deploy an invalid bpmn package will cause the server to throw an "error parsing
+        //XML" we are using the this message to validate.
         try {
             String[] deploymentResponse;
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
             Assert.fail("Invalid package was deployed.");
         } catch (Exception exception) {
-            Assert.assertTrue("Could not upload the invalid BPMN Package", "Error parsing XML".equals(exception.getMessage()));
-            log.error("Unhandled Error, Uploading Invalid BPMN Package " + fileName, exception);
+            Assert.assertTrue("Could not upload the invalid bpmn package", "Error parsing XML".equals(exception.getMessage()));
+            log.error("Unhandled error, uploading Invalid bpmn package " + fileName, exception);
         }
     }
 }

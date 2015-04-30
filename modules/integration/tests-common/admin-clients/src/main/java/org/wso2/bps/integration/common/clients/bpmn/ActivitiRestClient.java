@@ -59,11 +59,10 @@ public class ActivitiRestClient {
     private String hostname = "";
     private String serviceURL = "";
 
-
     public ActivitiRestClient(String portM, String hostnameM) {
         port = Integer.parseInt(portM);
         hostname = hostnameM;
-        serviceURL = "http://" + hostnameM + ":" + portM + "/bpmnrest/";
+        serviceURL = "http://" + hostnameM + ":" + portM + "/bpmn/";
     }
 
     /**
@@ -77,7 +76,6 @@ public class ActivitiRestClient {
         }
     }
 
-
     /**
      * This Method is used to deploy BPMN packages to the BPMN Server
      *
@@ -90,17 +88,8 @@ public class ActivitiRestClient {
     public String[] deployBPMNPackage(String filePath, String fileName)
             throws Exception {
         String url = serviceURL + "repository/deployments";
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials(
-                new AuthScope(target.getHostName(), target.getPort()),
-                new UsernamePasswordCredentials(username, password)
-        );
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
-
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addBinaryBody("file", new File(filePath),
                               ContentType.MULTIPART_FORM_DATA, fileName);
@@ -115,15 +104,12 @@ public class ActivitiRestClient {
             String name = jsonResponseObject.getString("name");
             return new String[]{status, deploymentID, name};
         } else if (status.contains(Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR))) {
-
             String errorMessage = jsonResponseObject.getString("errorMessage");
             throw new RestClientException(errorMessage);
-//            return new String[]{status, errorMessage};
         } else {
             throw new RestClientException("Failed to deploy package " + fileName);
         }
     }
-
 
     /**
      * Method is used to acquire deployment details using the deployment ID
@@ -134,16 +120,9 @@ public class ActivitiRestClient {
      * @returns String Array with status, deploymentID and Name
      */
     public String[] getDeploymentInfoById(String deploymentID) throws Exception {
-
         String url = serviceURL + "repository/deployments/"
                      + deploymentID;
-        HttpHost target = new HttpHost(hostname, port, "http");
-
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         String status = response.getStatusLine().toString();
@@ -167,16 +146,10 @@ public class ActivitiRestClient {
      * @return String with the Status
      * @throws IOException
      */
-
     public String unDeployBPMNPackage(String deploymentID) throws IOException {
-
         String url = serviceURL + "repository/deployments/"
                      + deploymentID;
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpDelete httpDelete = new HttpDelete(url);
         HttpResponse response = httpClient.execute(httpDelete);
         return response.getStatusLine().toString();
@@ -194,29 +167,20 @@ public class ActivitiRestClient {
             throws IOException, JSONException {
         String url = serviceURL + "repository/process-definitions";
         String definitionId = "";
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
-
         String status = response.getStatusLine().toString();
         String responseData = EntityUtils.toString(response.getEntity());
         JSONObject jsonResponseObject = new JSONObject(responseData);
         JSONArray data = jsonResponseObject.getJSONArray("data");
-
         int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total").toString());
-
         for (int j = 0; j < responseObjectSize; j++) {
             if (data.getJSONObject(j).getString("deploymentId").equals(deploymentID)) {
                 definitionId = data.getJSONObject(j).getString("id");
             }
         }
         return new String[]{status, definitionId};
-
     }
 
     /**
@@ -228,13 +192,7 @@ public class ActivitiRestClient {
      */
     public String searchProcessInstanceByDefintionID(String processDefintionID) throws IOException {
         String url = serviceURL + "query/process-instances";
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"processDefinitionId\":\""
                                                + processDefintionID
@@ -256,19 +214,13 @@ public class ActivitiRestClient {
     public String validateProcessInstanceById(String processDefinitionID)
             throws Exception {
         String url = serviceURL + "runtime/process-instances";
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         String responseData = EntityUtils.toString(response.getEntity());
         JSONObject jsonResponseObject = new JSONObject(responseData);
         JSONArray data = jsonResponseObject.getJSONArray("data");
-
         int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total").toString());
-
         for (int j = 0; j < responseObjectSize; j++) {
             if (data.getJSONObject(j).getString("processDefinitionId").equals(processDefinitionID)) {
                 return AVAILABLE;
@@ -276,7 +228,6 @@ public class ActivitiRestClient {
         }
         throw new RestClientException(NOT_AVAILABLE);
     }
-
 
     /**
      * Method use to instantiate a process instance using the definition ID
@@ -288,21 +239,14 @@ public class ActivitiRestClient {
      */
     public String[] startProcessInstanceByDefintionID(String processDefintionID)
             throws Exception {
-
         String url = serviceURL + "runtime/process-instances";
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"processDefinitionId\":\""
                                                + processDefintionID + "\"}",
                                                ContentType.APPLICATION_JSON);
         httpPost.setEntity(params);
         HttpResponse response = httpClient.execute(httpPost);
-
         String status = response.getStatusLine().toString();
         String responseData = EntityUtils.toString(response.getEntity());
         JSONObject jsonResponseObject = new JSONObject(responseData);
@@ -320,22 +264,14 @@ public class ActivitiRestClient {
      * @throws IOException
      */
     public String activateProcessInstanceById(String processDefintionID) throws IOException {
-
         String url = serviceURL + "runtime/process-instances/" + processDefintionID;
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPut httpPut = new HttpPut(url);
         StringEntity params = new StringEntity("{\"action\":\"activate\"}",
                                                ContentType.APPLICATION_JSON);
         httpPut.setEntity(params);
         HttpResponse response = httpClient.execute(httpPut);
         return EntityUtils.toString(response.getEntity());
-
     }
 
     /**
@@ -348,14 +284,8 @@ public class ActivitiRestClient {
      */
     public String[] suspendProcessInstanceById(String processInstanceID)
             throws Exception {
-
         String url = serviceURL + "runtime/process-instances/" + processInstanceID;
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPut httpPut = new HttpPut(url);
         StringEntity params = new StringEntity("{\"action\":\"suspend\"}",
                                                ContentType.APPLICATION_JSON);
@@ -383,18 +313,12 @@ public class ActivitiRestClient {
             throws IOException, JSONException {
         String url = serviceURL + "runtime/process-instances/" + processInstanceID;
         String responseData = "";
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         responseData = EntityUtils.toString(response.getEntity());
         JSONObject resObj = new JSONObject(responseData);
         return resObj.getString("suspended");
-
     }
 
     /**
@@ -412,12 +336,7 @@ public class ActivitiRestClient {
         String url = serviceURL + "runtime/process-instances/"
                      + processInstanceId + "/variables/" + variable;
         String responseData = "";
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         responseData = EntityUtils.toString(response.getEntity());
@@ -426,7 +345,6 @@ public class ActivitiRestClient {
         String name = resObj.getString("name");
         String value = resObj.getString("value");
         return new String[]{status, name, value};
-
     }
 
     /**
@@ -439,16 +357,10 @@ public class ActivitiRestClient {
     public String deleteProcessInstanceByID(String processInstanceId) throws IOException {
         String url = serviceURL + "runtime/process-instances/"
                      + processInstanceId;
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpDelete httpDelete = new HttpDelete(url);
         HttpResponse response = httpClient.execute(httpDelete);
         return response.getStatusLine().toString();
-
     }
 
     /**
@@ -460,15 +372,9 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String getDelegationsStateByTaskId(String taskID) throws IOException, JSONException {
-
         String url = serviceURL + "runtime/tasks/" + taskID;
         String responseData = "";
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         responseData = EntityUtils.toString(response.getEntity());
@@ -485,11 +391,7 @@ public class ActivitiRestClient {
      */
     public String resolveTaskByTaskId(String taskID) throws IOException {
         String url = serviceURL + "runtime/tasks/" + taskID;
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"action\" : \"resolve\"}",
                                                ContentType.APPLICATION_JSON);
@@ -507,14 +409,9 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String getAssigneeByTaskId(String taskID) throws IOException, JSONException {
-
         String url = serviceURL + "runtime/tasks/" + taskID;
         String responseData = "";
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         responseData = EntityUtils.toString(response.getEntity());
@@ -535,11 +432,7 @@ public class ActivitiRestClient {
             throws IOException, JSONException {
         String url = serviceURL + "runtime/tasks/" + taskID + "/comments/" + commentID;
         String responseData = "";
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         responseData = EntityUtils.toString(response.getEntity());
@@ -557,15 +450,9 @@ public class ActivitiRestClient {
      */
     public String[] findTaskIdByProcessInstanceID(String processInstanceId)
             throws IOException, JSONException {
-
         String url = serviceURL + "runtime/tasks";
         String taskId = "";
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
         String status = response.getStatusLine().toString();
@@ -579,7 +466,6 @@ public class ActivitiRestClient {
                     processInstanceId)) {
                 taskId = data.getJSONObject(j).getString("id");
             }
-
         }
         return new String[]{status, taskId};
     }
@@ -593,17 +479,11 @@ public class ActivitiRestClient {
      */
     public String claimTaskByTaskId(String taskID) throws IOException {
         String url = serviceURL + "runtime/tasks/" + taskID;
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"action\" : \"claim\"," +
                                                "\"assignee\" :\"" + userClaim + "\"}",
                                                ContentType.APPLICATION_JSON);
-
         httpPost.setEntity(params);
         HttpResponse response = httpClient.execute(httpPost);
         return response.getStatusLine().toString();
@@ -618,12 +498,7 @@ public class ActivitiRestClient {
      */
     public String delegateTaskByTaskId(String taskID) throws IOException {
         String url = serviceURL + "runtime/tasks/" + taskID;
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"action\" : \"delegate\"," +
                                                "\"assignee\" :\"" + userDelegate + "\"}",
@@ -646,13 +521,7 @@ public class ActivitiRestClient {
     public String[] addNewCommentOnTaskByTaskId(String taskID, String comment)
             throws Exception {
         String url = serviceURL + "runtime/tasks/" + taskID + "/comments";
-
-        HttpHost target = new HttpHost(hostname, port, "http");
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.getCredentialsProvider().setCredentials
-                (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
-
+        DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"message\" : \"" + comment
                                                + "\",\"saveProcessInstanceId\" : true}",
@@ -682,20 +551,22 @@ public class ActivitiRestClient {
      */
     public String deleteTaskByTaskId(String taskId, boolean cascadeHistory, String deleteReason)
             throws IOException {
-
         String url = serviceURL + "runtime/tasks/"
                      + taskId + "?cascadeHistory=" + cascadeHistory + "&deleteReason="
                      + deleteReason;
+        DefaultHttpClient httpClient = getHttpClient();
+        HttpDelete httpDelete = new HttpDelete(url);
+        HttpResponse response = httpClient.execute(httpDelete);
+        return response.getStatusLine().toString();
+    }
 
+
+    private DefaultHttpClient getHttpClient() {
         HttpHost target = new HttpHost(hostname, port, "http");
         DefaultHttpClient httpClient = new DefaultHttpClient();
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
                  new UsernamePasswordCredentials(username, password));
-
-        HttpDelete httpDelete = new HttpDelete(url);
-        HttpResponse response = httpClient.execute(httpDelete);
-        return response.getStatusLine().toString();
-
+        return httpClient;
     }
 }

@@ -57,11 +57,19 @@ public final class HumanTaskTestConstants {
     // Package Names
     public static final String CLAIMS_APPROVAL_PACKAGE_NAME = "ClaimsApprovalTask";
     public static final String CLAIMS_APPROVAL_PACKAGE_ORG_ENTITY_NAME = "ClaimsApprovalOrgEntity";
+    public static final String CLAIMS_APPROVAL_NOTIFICATIONS_NAME ="taskDeadlineWithNotificationsTest";
 
     //Services
     public static final String CLAIM_APPROVAL_PROCESS_SERVICE = "ClaimsApprovalProcessService";
     public static final String CLAIM_SERVICE = "ClaimService";
+    public static final String REMINDER_SERVICE = "ClaimReminderService";
 
     //Dirs
     public static final String DIR_PEOPLE_ASSIGNMENT = "peopleAssignmentTest";
+    public final static String DIR_ARTIFACTS = "artifacts";
+    public final static String DIR_CONFIG = "config";
+    public final static String DIR_EMAIL = "email";
+    public final static String AXIS2_CLIENT = "axis2_client.xml";
+    public final static String DIR_AXIS2 = "axis2";
+    public final static String HUMANTASK_XML = "humantask.xml";
 }

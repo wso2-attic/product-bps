@@ -1,5 +1,5 @@
 /*
- * Copyright (c) WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,29 +26,34 @@ import org.wso2.bps.integration.common.clients.bpmn.WorkflowServiceClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNDeployment;
 
-import java.util.concurrent.TimeUnit;
-
+/**
+ * Testing multi-tenancy support in BPMN
+ */
 public class BPMNMultiTenancyTestCase extends BPSMasterTest {
     private static final Log log = LogFactory.getLog(BPMNTaskCreationTestCase.class);
 
     private WorkflowServiceClient workflowServiceClient;
     private int deploymentCount;
     boolean accessedSameArtifactInstance = false;
+    String packageName = "VacationRequest";
     String domainKey1 = "wso2.com";
     String userKey1 = "user1";
     String domainKey2 = "abc.com";
     String userKey2 = "user2";
 
-
     @BeforeClass(alwaysRun = true)
     public void createTenant() throws Exception {
-
         // initialize for tenant wso2.com
         initialize(domainKey1, userKey1);
-
     }
 
-    //initialize for each tenant
+    /**
+     * Initialize for each tenant
+     *
+     * @param domainKey
+     * @param userKey
+     * @throws Exception
+     */
     public void initialize(String domainKey, String userKey) throws Exception {
         init(domainKey, userKey);
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
@@ -59,16 +64,17 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
 
     }
 
-    @Test(groups = {"wso2.bps.task.BPMNMultiTenancy"}, description = "Confirm BPMN Multi tenancy support test case", priority = 1, singleThreaded = true)
+    @Test(groups = {"wso2.bps.task.BPMNMultiTenancy"}, description = "Confirm BPMN Multi tenancy support test case",
+            priority = 1, singleThreaded = true)
     public void confirmMultiTenancyForBPMNArtifact() throws Exception {
 
         // log in as tenant wso2.com
         String session = loginLogoutClient.login();
         //deploy BPMN artifact from tenant wso2.com
         deployArtifact();
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "VacationRequest", deploymentCount);
-        TimeUnit.SECONDS.sleep(5);
-        String processId = workflowServiceClient.getProcesses()[workflowServiceClient.getProcesses().length - 1].getProcessId();
+        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, packageName, deploymentCount);
+        String processId = workflowServiceClient.getProcesses()
+                [workflowServiceClient.getProcesses().length - 1].getProcessId();
         log.info("BPMN Process:" + processId + " accessed by tenant t1 " + session);
         loginLogoutClient.logout();
 
@@ -77,34 +83,34 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
         loginLogoutClient.login();
         int deployedInstance = workflowServiceClient.getInstanceCount();
         if (deployedInstance == 0) {
-            log.info("No processes available for tenant:" + "abc.com");
+            log.info("No processes available for tenant:" + domainKey2);
         } else {
             //if deployment instances exist for abc.com
             if (deploymentCount != 0) {
 
-                String processId2 = workflowServiceClient.getProcesses()[workflowServiceClient.getProcesses().length - 1].getProcessId();
+                String processId2 = workflowServiceClient.getProcesses()
+                        [workflowServiceClient.getProcesses().length - 1].getProcessId();
                 //if it is the same processId as of VacationRequest
                 if (processId2.equals(processId)) {
                     accessedSameArtifactInstance = true;
                 }
             }
         }
-
         loginLogoutClient.logout();
-        Assert.assertEquals(accessedSameArtifactInstance, false, "Artifact deployed by tenant wso2.com accessed by tenant abc.com");
-
+        Assert.assertEquals(accessedSameArtifactInstance, false, "Multi-tenancy implementation failed." +
+                "Artifact deployed by tenant" + domainKey1 + "can be accessed by tenant" + domainKey2);
     }
 
 
     public void deployArtifact() throws Exception {
-        uploadBPMNForTest("VacationRequest");
+        uploadBPMNForTest(packageName);
     }
 
     @AfterClass(alwaysRun = true)
     public void removeArtifact() throws Exception {
         initialize(domainKey1, userKey1);
-        workflowServiceClient.undeploy("VacationRequest");
-        log.info("Successfully undeployed:" + "VacationRequest");
+        workflowServiceClient.undeploy(packageName);
+        log.info("Successfully undeployed:" + packageName);
 
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c)  2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,20 +29,22 @@ import org.testng.Assert;
 import java.io.File;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 import org.wso2.carbon.integration.common.admin.client.ApplicationAdminClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 
 import javax.activation.DataHandler;
 
-
+/**
+ * Deploying a cAPP file which includes bpmn artifacts
+ */
 public class BPMNCappDeploymentTestCase extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(BPMNCappDeploymentTestCase.class);
-    String carFileName = "TestPro_1.0.0";
-    private boolean BPMNProcessExists = false;
     private final int MAX_TIME = 120000;
+    String carFileName = "TestPro_1.0.0";
+    String extension = ".car";
+    private boolean bpmnProcessExists = false;
     private boolean isCarFileUploaded = false;
     private ApplicationAdminClient applicationAdminClient;
     private WorkflowServiceClient workflowServiceClient;
@@ -54,20 +56,17 @@ public class BPMNCappDeploymentTestCase extends BPSMasterTest {
     @BeforeClass(alwaysRun = true)
     public void deployTask() throws Exception {
         super.init();
-
         CarbonAppUploaderClient carbonAppUploaderClient =
                 new CarbonAppUploaderClient(backEndUrl, sessionCookie);
 
-        carbonAppUploaderClient.uploadCarbonAppArtifact("TestPro_1.0.0.car"
-                , new DataHandler(new URL("file:" + File.separator + File.separator + FrameworkPathUtil.getSystemResourceLocation() + "artifacts"
-                + File.separator + "bpmn" + File.separator + "TestPro_1.0.0.car")));
-
-
+        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + extension
+                , new DataHandler(new URL("file:" + File.separator + File.separator +
+                FrameworkPathUtil.getSystemResourceLocation() + "artifacts"
+                + File.separator + "bpmn" + File.separator + carFileName + extension)));
         isCarFileUploaded = true;
         applicationAdminClient = new ApplicationAdminClient(backEndUrl, sessionCookie);
         boolean result = isCarFileDeployed(carFileName);
         Assert.assertTrue(result, "Car file deployment failed");
-        TimeUnit.SECONDS.sleep(5);
     }
 
     /**
@@ -76,17 +75,20 @@ public class BPMNCappDeploymentTestCase extends BPSMasterTest {
      * @paramprocessId - BPMN artifact instance of the deployed C-APP
      */
 
-    @Test(groups = {"wso2.bps.task.BPMNArtifacts"}, description = "Confirm BPMN artifacts of deployed cApp  test case", priority = 1, singleThreaded = true)
-    public void confirmBPMNArtifacts() throws Exception {
+    @Test(groups = {"wso2.bps.task.BPMNArtifacts"},
+            description = "Confirm BPMN artifact deployment of uploaded cApp  test case", priority = 1,
+            singleThreaded = true)
+    public void confirmBPMNArtifactDeployment() throws Exception {
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
-        String processId = workflowServiceClient.getProcesses()[workflowServiceClient.getProcesses().length - 1].getProcessId();
+        String processId = workflowServiceClient.getProcesses()
+                [workflowServiceClient.getProcesses().length - 1].getProcessId();
 
         if (processId != null) {
-            BPMNProcessExists = true;
+            bpmnProcessExists = true;
             workflowServiceClient.startProcess(processId);
             log.info("BPMN Process:" + processId + " started ");
         }
-        Assert.assertTrue(BPMNProcessExists, "Unable to locate BPMN artifact in deployed car file.");
+        Assert.assertTrue(bpmnProcessExists, "Unable to find bpmn processes in deployed car file.");
     }
 
     /**
@@ -110,15 +112,13 @@ public class BPMNCappDeploymentTestCase extends BPSMasterTest {
                         return isCarFileDeployed;
                     }
                 }
-
             }
 
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
-                //ignore
+                log.error(e);
             }
-
         }
         return isCarFileDeployed;
     }
@@ -128,11 +128,6 @@ public class BPMNCappDeploymentTestCase extends BPSMasterTest {
         if (isCarFileUploaded) {
             applicationAdminClient.deleteApplication(carFileName);
             log.info("Successfully undeployed " + carFileName);
-
-
         }
-
     }
-
-
 }
