@@ -20,15 +20,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.TimeZone;
+import java.util.*;
 
 // The main class
 public class CleanupExecutor {
     //DB query builder according to DB type
     private static DBQuery query = new DBQuery();
+    private static HashMap<String, List<String>> map;
 
     //Get user configurations from processCleanup.properties file
     private static String getProperty(String property) throws Exception {
@@ -68,17 +66,21 @@ public class CleanupExecutor {
                 filters = "";
                 break;
             case 1:
-                filters = " and s.PID not in \n" +
-                        "(select b.PROCESS_ID \n" +
-                        "from ODE_PROCESS_INSTANCE a, ODE_PROCESS b \n" +
-                        "where a.PROCESS_ID = b.ID and (";
+                filters = " and s.DU not in \n" +
+                        "(select s.DU \n" +
+                        "from ODE_PROCESS_INSTANCE a, ODE_PROCESS b, STORE_PROCESS s \n" +
+                        "where a.PROCESS_ID = b.ID \n" +
+                        "and s.PID = b.PROCESS_ID \n" +
+                        "and (";
                 filters += " a.INSTANCE_STATE = " + status.state.values().toArray()[0] + "))";
                 break;
             default:
-                filters = " and s.PID not in \n" +
-                        "(select b.PROCESS_ID \n" +
-                        "from ODE_PROCESS_INSTANCE a, ODE_PROCESS b \n" +
-                        "where a.PROCESS_ID = b.ID and (a.INSTANCE_STATE = " + status.state.values().toArray()[0];
+                filters = " and s.DU not in \n" +
+                        "(select s.DU \n" +
+                        "from ODE_PROCESS_INSTANCE a, ODE_PROCESS b, STORE_PROCESS s \n" +
+                        "where a.PROCESS_ID = b.ID \n" +
+                        "and s.PID = b.PROCESS_ID \n" +
+                        "and (a.INSTANCE_STATE = " + status.state.values().toArray()[0];
                 for (int i = 1; i < status.state.size(); i++) {
                     filters += " or a.INSTANCE_STATE = " + status.state.values().toArray()[i];
                 }
@@ -89,32 +91,28 @@ public class CleanupExecutor {
     }
 
     //Registry and DB cleanup process
-    private static boolean deleteProcess(String process) throws Exception {
+    private static boolean deletePackages(String packageName) throws Exception {
         Connection conn = getDBConnection();
         conn.setAutoCommit(false);
         String clientTrustStorePath = getProperty("clientTrustStorePath");
         String trustStorePassword = getProperty("clientTrustStorePassword");
         String trustStoreType = getProperty("clientTrustStoreType");
-        String id = process.split(" ")[0];
-        String name = process.split(" ")[2];
-        System.out.println("Deleting process:" + name);
-        String regPath = "/_system/config/bpel/packages/" + name.split("-")[0] + "/versions/" + name;
+        System.out.println("Deleting package:" + packageName);
+        String regPath = "/_system/config/bpel/packages/" + packageName.split("-\\d*$")[0] + "/versions/" + packageName;
 
         //DB cleanup happens if the Registry cleaned successfully
         boolean regCleanSuccess = RegistryCleaner.deleteRegistry(regPath, clientTrustStorePath, trustStorePassword, trustStoreType);
         if (regCleanSuccess) {
-            String ODE_PROCESS = query.deleteFromOdeProcess(id);
-            String ODE_PROCESS_INSTANCE = query.deleteFromOdeProcessInstance(id);
-            String STORE_DU = query.deleteFromStoreDu(name);
-            String STORE_PROCESS = query.deleteFromStoreProcess(name);
-
+            List<String> processList = map.get(packageName);
             try {
-                conn.createStatement().execute(ODE_PROCESS);
-                if(getProperty("delete.instances").equals("true")){
-                    conn.createStatement().execute(ODE_PROCESS_INSTANCE);
+                if(getProperty("delete.instances").toLowerCase().equals("true")){
+                    cleanProcessInstances(processList, conn);
                 }
-                conn.createStatement().execute(STORE_DU);
-                conn.createStatement().execute(STORE_PROCESS);
+                for (String id : processList) {
+                    conn.createStatement().execute(query.deleteFromOdeProcess(id));
+                }
+                conn.createStatement().execute(query.deleteFromStoreDu(packageName));
+                conn.createStatement().execute(query.deleteFromStoreProcess(packageName));
                 conn.commit();
                 System.out.println("Database Cleaning Success!!");
                 return true;
@@ -132,8 +130,43 @@ public class CleanupExecutor {
         return false;
     }
 
-    //Using the search query gets all deletable process list
-    private static List<String> getDeletableProcessList(String name) throws Exception {
+    private static void cleanProcessInstances(List<String> processIdList, Connection conn) throws Exception {
+        int i = 0;
+        System.out.print("Instance Clean Count : 000000000");
+        try {
+            Statement stmt = conn.createStatement();
+            for (String process : processIdList) {
+                String sql = query.getInstancesSearchQuery(process);
+                ResultSet rs = stmt.executeQuery(sql);
+                while(rs.next()){
+                    String id = rs.getString("ID");
+                    conn.createStatement().execute(query.deleteFromOdePartnerLink(id));
+                    conn.createStatement().execute(query.deleteFromOdeScope(id));
+                    conn.createStatement().execute(query.deleteFromOdeEvent(id));
+                    conn.createStatement().execute(query.deleteFromOdeCorsetProp(id));
+                    conn.createStatement().execute(query.deleteFromOdeCorrelationSet(id));
+                    conn.createStatement().execute(query.deleteFromOdeXmlDataProp(id));
+                    conn.createStatement().execute(query.deleteFromOdeXmlData(id));
+                    conn.createStatement().execute(query.deleteFromOdeMexProp(id));
+                    conn.createStatement().execute(query.deleteFromOdeMessage(id));
+                    conn.createStatement().execute(query.deleteFromOdeMessageExchange(id));
+                    conn.createStatement().execute(query.deleteFromOdeMessageRoute(id));
+                    conn.createStatement().execute(query.deleteFromOdeProcessInstance(id));
+                    //printing the status
+                    System.out.print("\b\b\b\b\b\b\b\b\b");
+                    System.out.print(String.format("%09d", ++i));
+                }
+                conn.commit();
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(e);
+        }
+    }
+
+    //Using the search query gets all deletable package list
+    private static HashMap<String, List<String>> getDeletablePackageList(String name) throws Exception {
         Statement stmt = getDBConnection().createStatement();
         String filters = getFilters();
         String sql;
@@ -144,20 +177,27 @@ public class CleanupExecutor {
         }
 
         ResultSet rs = stmt.executeQuery(sql);
-        List<String> list = new ArrayList<String>();
+        HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 
-        //index used to display the option number
-        int i = 1;
-
-        while (rs.next()) {
-            //Display the options
-            String id = String.format("%9d", i);
-            System.out.println(String.format("%-10s | %s" , id, rs.getString("PROCESS_ID").split("}")[1]));
-            //Add the list of processes retrieved from DB into a list
-            list.add(rs.getInt("ID") + " " + rs.getString("PROCESS_ID").split("}")[1] + " " + rs.getString("DU"));
-            i++;
+        while(rs.next()){
+            if(map.get(rs.getString("DU")) == null){
+                List<String> list = new ArrayList<String>();
+                list.add(rs.getString("ID"));
+                map.put(rs.getString("DU"), list);
+            }else{
+                map.get(rs.getString("DU")).add(rs.getString("ID"));
+            }
         }
-        return list;
+
+        String[] keys = map.keySet().toArray(new String[]{});
+        for(int i=0; i<map.size(); i++){
+            //Display the options
+            String id = String.format("%9d", i+1);
+            //Add the list of processes retrieved from DB into a list
+            System.out.println(String.format("%-10s | %s" , id, keys[i]));
+        }
+
+        return map;
     }
 
     //Get user inputs and validate
@@ -231,14 +271,15 @@ public class CleanupExecutor {
                 try {
                     //listing out the deletable process list in the console
                     System.out.println("List of Non-Active BPEL Packages\n");
-                    System.out.println(String.format(" %-9s | %s" , "Option #", "Process Name with Version"));
+                    System.out.println(String.format(" %-9s | %s" , "Option #", "Package Name"));
                     System.out.println("==========================================");
-                    List<String> list = getDeletableProcessList(name);
-                    int deleteAllOption = list.size() + 1;
+                    map = getDeletablePackageList(name);
+                    String[] list = map.keySet().toArray(new String[]{});
+                    int deleteAllOption = list.length + 1;
 
-                    switch (list.size()){
+                    switch (list.length){
                         case 0:
-                            System.out.println("*** No Processes Found ***");
+                            System.out.println("*** No Packages Found ***");
                             System.out.println("==========================================");
                             break;
                         case 1:
@@ -253,7 +294,7 @@ public class CleanupExecutor {
                     String id = String.format("%9d", 0);
                     System.out.println(String.format("%-10s | %s" , id, "Exit"));
 
-                    //Get user input with multiple processes to delete at once
+                    //Get user input with multiple packages to delete at once
                     int options[] = getValidUserInput(0, deleteAllOption, "Enter Option Numbers to Delete (comma separated):");
 
                     if (options[0] == 0) {
@@ -261,13 +302,13 @@ public class CleanupExecutor {
                         System.exit(0);
                     } else if (options[0] == deleteAllOption) {
                         //Delete all option
-                        for (String process : list) {
-                            deleteProcess(process);
+                        for (String packageName : list) {
+                            deletePackages(packageName);
                         }
                     } else {
-                        //Delete several processes
+                        //Delete several packages
                         for (int op : options) {
-                            deleteProcess(list.get(op - 1));
+                            deletePackages(list[op - 1]);
                         }
                     }
 
