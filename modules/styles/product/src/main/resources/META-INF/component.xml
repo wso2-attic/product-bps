@@ -24,6 +24,11 @@
             <protocol>https</protocol>
             <description>BPS BPMN Explorer</description>
         </context>
+        <context>
+            <context-id>default-additional-context</context-id>
+            <context-name>humantask-explorer</context-name>
+            <protocol>https</protocol>
+            <description>BPS HumanTask Explorer</description>
+        </context>
     </contexts>
-
 </component>
