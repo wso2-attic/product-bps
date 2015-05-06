@@ -94,7 +94,14 @@ public class UserTaskTestCase extends BPSMasterTest {
             log.error("Process instance cannot be found", exception);
             Assert.fail("Process instance cannot be found");
         }
-        tester.waitForTaskGeneration();
+
+        //putting the thread to sleep until tasks have been generated.
+        try {
+            tester.waitForTaskGeneration();
+        } catch (InterruptedException exception) {
+            log.error("Cannot pause thread for task generation");
+        }
+        
         //Acquiring TaskID to perform Task Related Tests
         String[] taskResponse = new String[0];
         try {
