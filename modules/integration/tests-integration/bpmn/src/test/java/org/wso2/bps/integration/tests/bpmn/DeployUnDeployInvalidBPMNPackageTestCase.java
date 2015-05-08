@@ -58,7 +58,8 @@ public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
             Assert.fail("Invalid package was deployed.");
         } catch (Exception exception) {
             Assert.assertTrue("Could not upload the invalid bpmn package", "Error parsing XML".equals(exception.getMessage()));
-            log.error("Unhandled error, uploading Invalid bpmn package " + fileName, exception);
+            // If the deployment failed then we should get the exception with invalid bpmn package and testCase should pass.
+            // In that case we do not need to log the exception.
         }
     }
 }

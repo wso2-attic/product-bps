@@ -192,7 +192,8 @@ public class UserTaskTestCase extends BPSMasterTest {
         } catch (Exception exception) {
             Assert.assertTrue("Process instance was removed successfully", BPMNTestConstants.
                     NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("Process instance does not exist", exception);
+            // If the process instance does not exist we should get the exception and testCase should pass.
+            // In that case we do not need to log the exception.
         }
         //Undeploying the bpmn package. The request should return response of 204 after removing the
         //bpmn package.
@@ -212,7 +213,8 @@ public class UserTaskTestCase extends BPSMasterTest {
         } catch (Exception exception) {
             Assert.assertTrue("BPMN Package " + fileName + " Does Not Exist", BPMNTestConstants.
                     NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("BPMN package " + fileName + " does not exist", exception);
+            // If the unDeployment succeed then we should get the exception with deployment could not found and testCase should pass.
+            // In that case we do not need to log the exception.
         }
     }
 }
