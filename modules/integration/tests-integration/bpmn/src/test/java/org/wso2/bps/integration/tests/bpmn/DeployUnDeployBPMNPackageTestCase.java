@@ -87,7 +87,8 @@ public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
         } catch (Exception exception) {
             Assert.assertTrue("Bpmn package " + fileName + "does not exist", BPMNTestConstants.
                     NOT_AVAILABLE.equals(exception.getMessage()));
-            log.error("Bpmn package " + fileName + " does not exist", exception);
+            // If the unDeployment succeed then we should get the exception with deployment could not found and testCase should pass.
+            // In that case we do not need to log the exception.
         }
     }
 }
