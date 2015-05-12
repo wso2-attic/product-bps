@@ -69,11 +69,8 @@ public class ActivitiRestClient {
      * Used put the thread in sleep until the tasks are generated
      */
     public void waitForTaskGeneration() throws InterruptedException {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ie) {
-            log.error(" Thread Interuppted", ie);
-        }
+
+        Thread.sleep(1000);
     }
 
     /**

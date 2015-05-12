@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest {
 
-    private static final Log log = LogFactory.getLog(BPSMasterTest.class);
+    private static final Log log = LogFactory.getLog(JavaServiceTaskDeploymentUndeploymentTestCase.class);
 
 
     //Setting up the enviroment to place the java class files in the respective folder so the server
