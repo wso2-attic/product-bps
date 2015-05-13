@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpmn.ActivitiRestClient;
+import org.wso2.bps.integration.common.clients.bpmn.RestClientException;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 
@@ -33,7 +34,8 @@ import java.io.IOException;
  */
 public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
 
-    private static final Log log = LogFactory.getLog(DeployUnDeployInvalidBPMNPackageTestCase.class);
+    private static final Log log = LogFactory.getLog(DeployUnDeployInvalidBPMNPackageTestCase
+                                                             .class);
 
     /**
      * The BPMN package being used to test is Invalid, it is used to test how gracefully
@@ -41,10 +43,14 @@ public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
      *
      * @throws Exception
      */
-    @Test(groups = {"wso2.bps.test.deploy.invalidPackage"}, description = "Deploy/UnDeploy Invalid Package Test", priority = 1, singleThreaded = true)
+    @Test(groups = {"wso2.bps.test.deploy.invalidPackage"}, description = "Deploy/UnDeploy " +
+                                                                          "Invalid Package Test",
+          priority = 1, singleThreaded = true)
     public void deployUnDeployInvalidBPMNPackage() throws Exception {
         init();
-        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get("http"), bpsServer.getInstance().getHosts().get("default"));
+        ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().get
+                (BPMNTestConstants.HTTP), bpsServer.getInstance().getHosts().get
+                (BPMNTestConstants.DEFAULT));
         String filePath = FrameworkPathUtil.getSystemResourceLocation() + File.separator
                           + BPMNTestConstants.DIR_ARTIFACTS + File.separator
                           + BPMNTestConstants.DIR_BPMN + File.separator + "InvalidHelloApprove.bar";
@@ -56,10 +62,9 @@ public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
             String[] deploymentResponse;
             deploymentResponse = tester.deployBPMNPackage(filePath, fileName);
             Assert.fail("Invalid package was deployed.");
-        } catch (Exception exception) {
-            Assert.assertTrue("Could not upload the invalid bpmn package", "Error parsing XML".equals(exception.getMessage()));
-            // If the deployment failed then we should get the exception with invalid bpmn package and testCase should pass.
-            // In that case we do not need to log the exception.
+        } catch (RestClientException | IOException | JSONException exception) {
+            Assert.assertTrue("Could not upload the invalid bpmn package",
+                              "Error parsing XML".equals(exception.getMessage()));
         }
     }
 }

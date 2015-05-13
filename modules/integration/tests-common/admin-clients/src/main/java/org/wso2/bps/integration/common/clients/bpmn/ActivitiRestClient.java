@@ -55,6 +55,8 @@ public class ActivitiRestClient {
     private final static String userDelegate = "will";
     private final static String NOT_AVAILABLE = "Not Available";
     private final static String AVAILABLE = "Available";
+    private final static String ID = "id";
+    private final static String NAME = "name";
     private int port;
     private String hostname = "";
     private String serviceURL = "";
@@ -65,13 +67,6 @@ public class ActivitiRestClient {
         serviceURL = "http://" + hostnameM + ":" + portM + "/bpmn/";
     }
 
-    /**
-     * Used put the thread in sleep until the tasks are generated
-     */
-    public void waitForTaskGeneration() throws InterruptedException {
-
-        Thread.sleep(1000);
-    }
 
     /**
      * This Method is used to deploy BPMN packages to the BPMN Server
@@ -83,7 +78,7 @@ public class ActivitiRestClient {
      * @returns String array with status, deploymentID and Name
      */
     public String[] deployBPMNPackage(String filePath, String fileName)
-            throws Exception {
+            throws RestClientException, IOException, JSONException {
         String url = serviceURL + "repository/deployments";
         DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
@@ -97,8 +92,8 @@ public class ActivitiRestClient {
         String responseData = EntityUtils.toString(response.getEntity());
         JSONObject jsonResponseObject = new JSONObject(responseData);
         if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-            String deploymentID = jsonResponseObject.getString("id");
-            String name = jsonResponseObject.getString("name");
+            String deploymentID = jsonResponseObject.getString(ID);
+            String name = jsonResponseObject.getString(NAME);
             return new String[]{status, deploymentID, name};
         } else if (status.contains(Integer.toString(HttpStatus.SC_INTERNAL_SERVER_ERROR))) {
             String errorMessage = jsonResponseObject.getString("errorMessage");
@@ -116,7 +111,8 @@ public class ActivitiRestClient {
      * @throws org.json.JSONException
      * @returns String Array with status, deploymentID and Name
      */
-    public String[] getDeploymentInfoById(String deploymentID) throws Exception {
+    public String[] getDeploymentInfoById(String deploymentID)
+            throws RestClientException, IOException, JSONException {
         String url = serviceURL + "repository/deployments/"
                      + deploymentID;
         DefaultHttpClient httpClient = getHttpClient();
@@ -126,9 +122,9 @@ public class ActivitiRestClient {
         String responseData = EntityUtils.toString(response.getEntity());
         JSONObject jsonResponseObject = new JSONObject(responseData);
         if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-            String ID = jsonResponseObject.getString("id");
-            String name = jsonResponseObject.getString("name");
-            return new String[]{status, ID, name};
+            String depID = jsonResponseObject.getString(ID);
+            String name = jsonResponseObject.getString(NAME);
+            return new String[]{status, depID, name};
         } else if (status.contains(Integer.toString(HttpStatus.SC_NOT_FOUND))) {
             throw new RestClientException(NOT_AVAILABLE);
         } else {
@@ -174,7 +170,7 @@ public class ActivitiRestClient {
         int responseObjectSize = Integer.parseInt(jsonResponseObject.get("total").toString());
         for (int j = 0; j < responseObjectSize; j++) {
             if (data.getJSONObject(j).getString("deploymentId").equals(deploymentID)) {
-                definitionId = data.getJSONObject(j).getString("id");
+                definitionId = data.getJSONObject(j).getString(ID);
             }
         }
         return new String[]{status, definitionId};
@@ -209,7 +205,7 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String validateProcessInstanceById(String processDefinitionID)
-            throws Exception {
+            throws IOException, JSONException, RestClientException {
         String url = serviceURL + "runtime/process-instances";
         DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
@@ -235,7 +231,7 @@ public class ActivitiRestClient {
      * @returns String Array which contains status and processInstanceID
      */
     public String[] startProcessInstanceByDefintionID(String processDefintionID)
-            throws Exception {
+            throws IOException, JSONException, RestClientException {
         String url = serviceURL + "runtime/process-instances";
         DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
@@ -248,7 +244,7 @@ public class ActivitiRestClient {
         String responseData = EntityUtils.toString(response.getEntity());
         JSONObject jsonResponseObject = new JSONObject(responseData);
         if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
-            String processInstanceID = jsonResponseObject.getString("id");
+            String processInstanceID = jsonResponseObject.getString(ID);
             return new String[]{status, processInstanceID};
         }
         throw new RestClientException("Cannot Find Process Instance");
@@ -280,7 +276,7 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String[] suspendProcessInstanceById(String processInstanceID)
-            throws Exception {
+            throws IOException, JSONException, RestClientException {
         String url = serviceURL + "runtime/process-instances/" + processInstanceID;
         DefaultHttpClient httpClient = getHttpClient();
         HttpPut httpPut = new HttpPut(url);
@@ -339,7 +335,7 @@ public class ActivitiRestClient {
         responseData = EntityUtils.toString(response.getEntity());
         JSONObject resObj = new JSONObject(responseData);
         String status = response.getStatusLine().toString();
-        String name = resObj.getString("name");
+        String name = resObj.getString(NAME);
         String value = resObj.getString("value");
         return new String[]{status, name, value};
     }
@@ -461,7 +457,7 @@ public class ActivitiRestClient {
         for (int j = 0; j < responseObjectSize; j++) {
             if (data.getJSONObject(j).getString("processInstanceId").equals(
                     processInstanceId)) {
-                taskId = data.getJSONObject(j).getString("id");
+                taskId = data.getJSONObject(j).getString(ID);
             }
         }
         return new String[]{status, taskId};
@@ -516,7 +512,7 @@ public class ActivitiRestClient {
      * @throws JSONException
      */
     public String[] addNewCommentOnTaskByTaskId(String taskID, String comment)
-            throws Exception {
+            throws RestClientException, IOException, JSONException {
         String url = serviceURL + "runtime/tasks/" + taskID + "/comments";
         DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
@@ -530,7 +526,7 @@ public class ActivitiRestClient {
         JSONObject jsonResponseObject = new JSONObject(responseData);
         if (status.contains(Integer.toString(HttpStatus.SC_CREATED)) || status.contains(Integer.toString(HttpStatus.SC_OK))) {
             String message = jsonResponseObject.getString("message");
-            String commentID = jsonResponseObject.getString("id");
+            String commentID = jsonResponseObject.getString(ID);
             return new String[]{status, message, commentID};
         } else {
             throw new RestClientException("Cannot Add Comment");

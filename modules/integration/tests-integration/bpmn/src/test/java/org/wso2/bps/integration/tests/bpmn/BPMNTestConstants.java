@@ -23,6 +23,8 @@ public class BPMNTestConstants {
 
     public static final String DIR_ARTIFACTS = "artifacts";
     public static final String DIR_BPMN = "bpmn";
+    public static final String HTTP = "http";
+    public static final String DEFAULT = "default";
 
     public static final String USER_CLAIM = "paul";
     public static final String USER_DELEGATE = "will";
