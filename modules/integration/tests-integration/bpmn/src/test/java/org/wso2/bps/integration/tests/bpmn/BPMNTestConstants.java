@@ -28,6 +28,7 @@ public class BPMNTestConstants {
     public static final String USER_DELEGATE = "will";
     public static final String COMMENT_MESSAGE = "Testing 123";
     public final static String NOT_AVAILABLE = "Not Available";
+    public static final String CAR_EXTENSION =".car";
 
 
     public static final String CREATED = "201";
