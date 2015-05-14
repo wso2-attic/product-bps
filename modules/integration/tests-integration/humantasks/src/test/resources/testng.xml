@@ -30,6 +30,11 @@
             <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskNotificationsTestCase" />
         </classes>
     </test>
+    <test name="HumanTask Xpath Extension Functions Test " preserve-order="true" verbose="2" parallel="false">
+        <classes>
+            <class name="org.wso2.bps.integration.tests.humantasks.HumanTaskXpathExtensionsTest" />
+        </classes>
+    </test>
 </suite>
 
 
