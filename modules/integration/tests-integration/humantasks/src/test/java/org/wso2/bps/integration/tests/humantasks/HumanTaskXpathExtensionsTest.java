@@ -233,7 +233,7 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
         //Clerk1 can claim this task.
         TSimpleQueryInput queryInput = new TSimpleQueryInput();
         queryInput.setPageNumber(0);
-        queryInput.setSimpleQueryCategory(TSimpleQueryCategory.ALL_TASKS);
+        queryInput.setSimpleQueryCategory(TSimpleQueryCategory.CLAIMABLE);
 
         //Query as Clerk1 user
         TTaskSimpleQueryResultSet taskResults = clerk1Client.simpleQuery(queryInput);
