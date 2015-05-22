@@ -407,14 +407,12 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         TPriority newPriority3 = new TPriority();
         newPriority3.setTPriority(BigInteger.valueOf(0));
 
-        manager1HumanTaskClientApiClient.setPriority(taskId,newPriority3);
+        manager1HumanTaskClientApiClient.setPriority(taskId, newPriority3);
 
         TTaskAbstract taskAfterPriorityChange3 = manager1HumanTaskClientApiClient.loadTask(taskId);
         newPriority3 = taskAfterPriorityChange3.getPriority();
-        int newPriorityInt3 = newPriority3.getTPriority().intValue();
-        Assert.assertEquals(newPriorityInt3, 0, "The new priority should be 0 after the set priority " +
-                "operation");
-
+        int newPriority3Int = newPriority3.getTPriority().intValue();
+        Assert.assertEquals(newPriority3Int, 0, "The new priority should be 0 after the set priority " + "operation");
     }
 
     @Test(groups = {"wso2.bps.task.operate"}, description = "Stop task test case", priority = 12, singleThreaded = true)
