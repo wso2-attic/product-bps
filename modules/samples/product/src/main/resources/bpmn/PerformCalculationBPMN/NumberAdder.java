@@ -14,10 +14,7 @@ public class NumberAdder implements JavaDelegate {
 
         Double result = number1 + number2;
 
-        System.out.println("result of calculation is " + result);
-
         execution.setVariable("result", result);
-
 
     }
 }

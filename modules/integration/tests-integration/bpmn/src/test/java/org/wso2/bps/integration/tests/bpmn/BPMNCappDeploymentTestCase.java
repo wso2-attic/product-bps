@@ -42,7 +42,7 @@ public class BPMNCappDeploymentTestCase extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(BPMNCappDeploymentTestCase.class);
     private final int MAX_TIME = 120000;
-    String carFileName = "TestPro_1.0.0";
+    private String carFileName = "TestPro_1.0.0";
     private boolean bpmnProcessExists = false;
     private boolean isCarFileUploaded = false;
     private ApplicationAdminClient applicationAdminClient;
