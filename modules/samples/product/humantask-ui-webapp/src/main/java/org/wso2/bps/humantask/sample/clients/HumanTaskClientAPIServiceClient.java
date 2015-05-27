@@ -236,18 +236,20 @@ public class HumanTaskClientAPIServiceClient {
                 .replace("&amp;", "&");
 
     }
-    private void handleException(String errMsg,Exception ex) throws IllegalStateFault, IllegalOperationFault, IllegalArgumentFault,
-                                                      IllegalAccessFault {
-        if(ex instanceof IllegalAccessFault) {
-            throw new IllegalAccessFault(ex.getMessage());
-        } else if(ex instanceof IllegalArgumentFault) {
-            throw new  IllegalArgumentFault(ex.getMessage());
+
+    private void handleException(String errMsg, Exception ex)
+            throws IllegalStateFault, IllegalOperationFault, IllegalArgumentFault,
+                   IllegalAccessFault {
+        if (ex instanceof IllegalAccessFault) {
+            throw new IllegalAccessFault(errMsg, ex);
+        } else if (ex instanceof IllegalArgumentFault) {
+            throw new IllegalArgumentFault(errMsg, ex);
         } else if (ex instanceof IllegalOperationFault) {
-            throw new IllegalOperationFault(ex.getMessage());
+            throw new IllegalOperationFault(errMsg, ex);
         } else if (ex instanceof IllegalStateFault) {
-            throw new  IllegalStateFault(ex.getMessage());
-        }  else {
-            throw new IllegalStateFault(ex.getMessage());
+            throw new IllegalStateFault(errMsg, ex);
+        } else {
+            throw new IllegalStateFault(errMsg, ex);
         }
     }
 }

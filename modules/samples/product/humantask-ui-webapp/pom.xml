@@ -36,12 +36,6 @@
 				</executions>
 				<configuration>
 					<warSourceDirectory>web</warSourceDirectory>
-					<webResources>
-						<resource>
-							<directory>config</directory>
-							<targetPath>WEB-INF/classes/org/wso2/carbon/humantask/sample</targetPath>
-						</resource>
-					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -64,7 +58,7 @@
 		<dependency>
 			<groupId>axis</groupId>
 			<artifactId>axis-jaxrpc</artifactId>
-		</dependency>            
+		</dependency>
 	</dependencies>
 	<properties>
 		<CApp.type>web/application</CApp.type>
