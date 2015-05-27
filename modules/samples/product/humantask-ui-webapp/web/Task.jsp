@@ -1,6 +1,5 @@
 <%@page import="org.apache.axiom.om.OMElement" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="org.apache.axis2.databinding.types.URI" %>
 <%@ page import="org.wso2.bps.humantask.sample.clients.HumanTaskClientAPIServiceClient" %>
 <%@ page import="org.wso2.bps.humantask.sample.util.HumanTaskSampleConstants" %>

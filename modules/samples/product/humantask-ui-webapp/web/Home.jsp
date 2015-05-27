@@ -1,13 +1,10 @@
 <%@page import="org.wso2.bps.humantask.sample.manager.LoginManager" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="org.wso2.bps.humantask.sample.util.HumanTaskSampleUtil" %>
 <%@ page import="org.wso2.carbon.humantask.stub.ui.task.client.api.types.TSimpleQueryCategory" %>
 <%@ page import="org.wso2.carbon.humantask.stub.ui.task.client.api.types.TSimpleQueryInput" %>
-<%@ page
-        import="org.wso2.carbon.humantask.stub.ui.task.client.api.types.TTaskSimpleQueryResultRow" %>
-<%@ page
-        import="org.wso2.carbon.humantask.stub.ui.task.client.api.types.TTaskSimpleQueryResultSet" %>
+<%@ page import="org.wso2.carbon.humantask.stub.ui.task.client.api.types.TTaskSimpleQueryResultRow" %>
+<%@ page import="org.wso2.carbon.humantask.stub.ui.task.client.api.types.TTaskSimpleQueryResultSet" %>
 <%@ page import="org.wso2.bps.humantask.sample.clients.HumanTaskClientAPIServiceClient" %>
 <%@ page import="org.wso2.bps.humantask.sample.util.HumanTaskSampleConstants" %>
 <%
@@ -27,10 +24,8 @@
 </head>
 <script type="text/javascript">
     function submitSignOutForm() {
-
         var taskForm = document.getElementById('signOutForm');
         taskForm.submit();
-
     }
 </script>
 <body>
@@ -93,7 +88,6 @@
                                                 <%
 																String pageNumber = request.getParameter("pageNumber");
 																int pageNumberInt = 0;
-
 																if (pageNumber == null) {
 																	pageNumber = "0";
 																}
