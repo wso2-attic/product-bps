@@ -51,4 +51,6 @@
 	<EnableCaching>true</EnableCaching>
     </CacheConfiguration-->
     <EnableTaskValidationBeforeDeployment>true</EnableTaskValidationBeforeDeployment>
+    <EnableEMailNotification>false</EnableEMailNotification>
+    <EnableSMSNotification>false</EnableSMSNotification>
 </HumanTaskServerConfig>

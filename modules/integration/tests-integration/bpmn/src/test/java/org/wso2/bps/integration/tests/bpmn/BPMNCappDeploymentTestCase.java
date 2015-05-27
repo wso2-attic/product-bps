@@ -43,7 +43,6 @@ public class BPMNCappDeploymentTestCase extends BPSMasterTest {
     private static final Log log = LogFactory.getLog(BPMNCappDeploymentTestCase.class);
     private final int MAX_TIME = 120000;
     String carFileName = "TestPro_1.0.0";
-    String extension = ".car";
     private boolean bpmnProcessExists = false;
     private boolean isCarFileUploaded = false;
     private ApplicationAdminClient applicationAdminClient;
@@ -59,10 +58,10 @@ public class BPMNCappDeploymentTestCase extends BPSMasterTest {
         CarbonAppUploaderClient carbonAppUploaderClient =
                 new CarbonAppUploaderClient(backEndUrl, sessionCookie);
 
-        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + extension
+        carbonAppUploaderClient.uploadCarbonAppArtifact(carFileName + BPMNTestConstants.CAR_EXTENSION
                 , new DataHandler(new URL("file:" + File.separator + File.separator +
                 FrameworkPathUtil.getSystemResourceLocation() + "artifacts"
-                + File.separator + "bpmn" + File.separator + carFileName + extension)));
+                + File.separator + "bpmn" + File.separator + carFileName + BPMNTestConstants.CAR_EXTENSION)));
         isCarFileUploaded = true;
         applicationAdminClient = new ApplicationAdminClient(backEndUrl, sessionCookie);
         boolean result = isCarFileDeployed(carFileName);

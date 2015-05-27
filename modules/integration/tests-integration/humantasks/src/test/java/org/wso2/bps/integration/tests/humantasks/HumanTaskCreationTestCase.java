@@ -35,13 +35,9 @@ import org.wso2.carbon.humantask.stub.mgt.types.HumanTaskPackageDownloadData;
 import org.wso2.carbon.humantask.stub.ui.task.client.api.types.*;
 import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
 import org.wso2.carbon.integration.common.utils.LoginLogoutClient;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
-import org.wso2.carbon.user.mgt.stub.types.carbon.FlaggedName;
 
 import java.math.BigInteger;
 import java.util.*;
-
-import static org.testng.Assert.assertTrue;
 
 /**
  * This test case deals with task creation by calling the task service interface.
@@ -407,6 +403,16 @@ public class HumanTaskCreationTestCase extends BPSMasterTest {
         Assert.assertEquals(newPriority2Int, 10, "The new priority should be 10 after the set priority " +
                 "operation");
 
+        //test priority 0 is allowed
+        TPriority newPriority3 = new TPriority();
+        newPriority3.setTPriority(BigInteger.valueOf(0));
+
+        manager1HumanTaskClientApiClient.setPriority(taskId, newPriority3);
+
+        TTaskAbstract taskAfterPriorityChange3 = manager1HumanTaskClientApiClient.loadTask(taskId);
+        newPriority3 = taskAfterPriorityChange3.getPriority();
+        int newPriority3Int = newPriority3.getTPriority().intValue();
+        Assert.assertEquals(newPriority3Int, 0, "The new priority should be 0 after the set priority " + "operation");
     }
 
     @Test(groups = {"wso2.bps.task.operate"}, description = "Stop task test case", priority = 12, singleThreaded = true)
