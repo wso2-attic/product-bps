@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>HumanTask Web App</title>
 <script type="text/javascript">
-	function submitLoginForm(e) {
+	function submitLoginForm() {
 		var loginForm = document.getElementById('LoginForm');
 		if (validateLoginForm()) {
 			loginForm.submit();
@@ -29,7 +29,7 @@
 
 </head>
 <body>
-	<table id="main-table" border="0" cellspacing="0">
+	<table class="main-table" border="0" cellspacing="0">
 		<tbody>
 			<tr>
 				<td id="header" colspan="3">
@@ -73,8 +73,10 @@
 																		</tr>
 																		<tr>
 																			<td></td>
-																			<td><input type="checkbox" name="rememberMe"
-																				value="rememberMe" tabindex="3"> <label
+																			<td><%--@declare id="txtrememberme"--%><label>
+                                                                                <input type="checkbox" name="rememberMe"
+                                                                                       value="rememberMe" tabindex="3">
+                                                                            </label> <label
 																				for="txtRememberMe">Remember Me</label></td>
 																		</tr>
 																		<tr>

@@ -23,5 +23,7 @@
 		<servlet-name>Task</servlet-name>
 		<url-pattern>/task</url-pattern>
 	</servlet-mapping>
-	
+<listener>
+    <listener-class>org.wso2.bps.humantask.sample.listener.HTAppServletContextListener</listener-class>
+</listener>
 </web-app>
