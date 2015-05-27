@@ -69,7 +69,7 @@ public class BpelStructActionPickClientTest extends BPSMasterTest {
         uploadBpelForTest("TestPickOneWay");
 
         requestSender.waitForProcessDeployment(backEndUrl + "PickService");
-        System.out.println("TestPickOneWay");
+        log.info("TestPickOneWay");
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.structures"}, description = "Deploys Bpel with If activity", priority = 2)

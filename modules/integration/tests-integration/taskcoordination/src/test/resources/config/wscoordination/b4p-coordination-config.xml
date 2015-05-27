@@ -27,7 +27,7 @@
     </TaskProtocolHandlerAuthentication>
 
     <!-- Set RegistrationServiceEnabled to true, to enable RegistrationService--> 
-    <RegistrationServiceEnabled>false</RegistrationServiceEnabled>
+    <RegistrationServiceEnabled>true</RegistrationServiceEnabled>
 
     <!--Uncomment if task engines are Clustered and set LoadBalancerURL -->
     <!--<ClusteredTaskEngines>

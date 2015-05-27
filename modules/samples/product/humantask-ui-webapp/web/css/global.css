@@ -1,8 +1,24 @@
+/**
+*  Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*/
+
 body {
     background-color: white;
-    padding: 0px;
-    margin: 0px;
-    font-family: "Lucida Grande","Lucida Sans","Microsoft Sans Serif", "Lucida Sans Unicode","Verdana","Sans-serif","trebuchet ms" !important;
+    padding: 0;
+    margin: 0;
+    font-family: "Lucida Grande", "Lucida Sans", "Microsoft Sans Serif", "Lucida Sans Unicode", "Verdana", "Sans-serif", "trebuchet ms", serif !important;
     color: #111;
 	font-size:12px;
 	font-size-adjust:none;
@@ -13,37 +29,37 @@ body {
 	line-height:1.25em;
 }
 table {
-	border: 0px;
-	padding: 0px;
-	margin: 0px;
+	border: 0;
+	padding: 0;
+	margin: 0;
 }
 table thead tr th{
-	padding: 0px;
+	padding: 0;
 	text-align: left;
 	vertical-align: top;
-	border: 0px;
+	border: 0;
 }
 table tbody tr td {
-	padding: 0px;
+	padding: 0;
 	text-align: left;
 	vertical-align: top;
-	border: 0px;
+	border: 0;
 }
 table tr td {
-	padding: 0px;
+	padding: 0;
 	text-align: left;
 	vertical-align: top;
-	border: 0px;
+	border: 0;
 }
 ul {
     list-style: none;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 ul li{
     list-style: none;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 p {
@@ -64,7 +80,7 @@ a:hover {
 }
 
 a img {
-	border: 0px;
+	border: 0;
 }
 
 a.link-disable {
@@ -76,15 +92,15 @@ a.link-disable {
    Elements with a vertical margin: */
     h1, h2, h3, h4, h5, h6, p, pre,
     blockquote, ol, dl, address {
-        margin: 0 0 0px;
-        padding: 0px 0 0;
+        margin: 0 0 0;
+        padding: 0 0 0;
     }
     
 form {
-padding-top: 0px !important;
-padding-bottom: 0px !important;
-margin-top: 0px !important;
-margin-bottom: 0px !important;
+padding-top: 0 !important;
+padding-bottom: 0 !important;
+margin-top: 0 !important;
+margin-bottom: 0 !important;
 }
 h3.page-subtitle{
 	color: #8b8b8b;
@@ -94,28 +110,26 @@ h3.page-subtitle{
         margin: 10px 10px 10px 10px;
 }
 /* ---------------- template styles ------------------------- */
-table#main-table {
+table.main-table {
 	min-width: 985px;
 	width: 100%;
 }
-table#main-table td {
-	padding: 0px;
+table.main-table td {
+	padding: 0;
 }
-table#main-table td#header {
-	background-image: url( header-region-bg.gif);
-    background-repeat: repeat-x;
-    background-position: left top;
-	height: 100px;
+table.main-table td#header {
+    background: repeat-x left top;
+    height: 100px;
 }
 
-table#main-table td#menu-panel {
+table.main-table td#menu-panel {
 	background-color: #fff;
 	padding-bottom: 20px;
 	border-right: solid 1px #636466;
 	width: 225px;
 	font-size: 100%;
 }
-divtd#menu{
+div.td#menu{
 	margin-left:20px;
 }
 td#menu table#menu-table {
@@ -134,12 +148,9 @@ table#menu-table td#region2 {
 table#menu-table td#region3 {
 }
 
-table#main-table td#middle-content {
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	background-color: #F4F4F4;
+table.main-table td#middle-content {
+    padding: 15px 20px;
+    background-color: #F4F4F4;
 	/*width: 95%;*/
 }
 
@@ -156,25 +167,21 @@ table#content-table td#page-header-links {
 table#content-table td#body {
 }
 
-table#main-table td#footer {
+table.main-table td#footer {
 	height: 25px;
 	background-color: #bfbfbf;
 }	
 
 /* ---------------- header styles ------------------ */
 div#header-div {
-    background-image: url( header-bg.gif);
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     height: 100px;
     min-width: 985px;
 }
 
 div#header-div div.left-logo {
-	background-image: url( ../images/header-logo.gif );
-    background-repeat: no-repeat;
-    background-position: left top;
-	height: 32px;
+    background: no-repeat left top;
+    height: 32px;
 	/*width: 332px;*/
 	width: 332px;
 	margin-top: 23px;
@@ -224,22 +231,16 @@ div#header-div div.header-links div.right-links{
 
 div.header-links ul {
 	list-style: none;
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-right: 0px;
-	padding: 0px;
+    margin: 0;
+    padding: 0;
 	float: right;
 }
 
 div.header-links ul li {
 	position: relative;
 	float: left;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin: 0px;
+    padding: 0 5px;
+    margin: 0;
 }
 
 /* ------------ page-header-links styles -------------- */
@@ -248,15 +249,13 @@ table.page-header-links-table {
 	width: 100%;
 }
 
-table#main-table table.page-header-links-table tr td.page-header-help {
+table.main-table table.page-header-links-table tr td.page-header-help {
 	text-align: right;
 	font-size: 120%;
 }
 
 td.page-header-help a {
-	background-image: url( help.gif);
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     padding-bottom: 2px;
     display: block;
@@ -264,9 +263,7 @@ td.page-header-help a {
     z-index: 10;
 }
 div.page-header-help a {
-	background-image: url( help.gif);
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     padding-bottom: 2px;
     line-height: 17px;
@@ -277,19 +274,19 @@ div.page-header-help a {
     position: relative;
 }
 
-table#main-table table.page-header-links-table tr td.breadcrumbs table.breadcrumb-table tr td.breadcrumb-link {
-	padding-right: 0px;
+table.main-table table.page-header-links-table tr td.breadcrumbs table.breadcrumb-table tr td.breadcrumb-link {
+	padding-right: 0;
 	font-size: 90%;
 	white-space:nowrap;
 }
 
-table#main-table table.page-header-links-table tr td.breadcrumbs table.breadcrumb-table tr td.breadcrumb-link a{
-	padding-right: 0px;
+table.main-table table.page-header-links-table tr td.breadcrumbs table.breadcrumb-table tr td.breadcrumb-link a{
+	padding-right: 0;
 	font-size: 90%;
 }
 
-table#main-table table.page-header-links-table tr td.breadcrumbs table.breadcrumb-table tr td.breadcrumb-current-page a{
-	padding-right: 0px;
+table.main-table table.page-header-links-table tr td.breadcrumbs table.breadcrumb-table tr td.breadcrumb-current-page a{
+	padding-right: 0;
 	font-size: 90%;
 	color: #999;
 	cursor: text;
@@ -297,8 +294,8 @@ table#main-table table.page-header-links-table tr td.breadcrumbs table.breadcrum
 
 /* ------------- menu styles ---------------------- */
 div#menu {
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
     min-width: 224px;
 }
 
@@ -316,37 +313,26 @@ div#menu ul.main li a.menu-home {
 	font-weight:bold;
     height:22px;
     line-height:22px;
-    padding-top:0px;
-    padding-bottom:0px;
     display: block;
     /*width:215px;*/
-    padding-left: 10px;
-    padding-right: 20px;
+    padding: 0 20px 0 10px;
     color: #0067B1;
-    background-image: url(home-bg.gif);
-    background-repeat: repeat-x;
-    background-position: left top;
+    background: repeat-x left top;
 }
 
 div#menu ul.main li a.menu-home:hover {
 	color: #111;
-	background-image: none;
-	background-color: #CCCCCC;
+    background: #CCCCCC none;
 }
 
 div#menu ul.main li.menu-header {
-	background-image:url(menu-header.gif);
-    background-position: left bottom;
-    background-repeat:repeat-x;
+    background: repeat-x left bottom;
     font-weight:normal;
     height:24px;
     line-height:24px;
-    padding-top:0px;
-    padding-bottom:0px;
     display: block;
     /*width:215px;*/
-    padding-left: 10px;
-    padding-right: 20px;
+    padding: 0 20px 0 10px;
     cursor: text;
 }
 
@@ -364,17 +350,11 @@ div#menu ul.main li.menu-disabled-link img {
 }
 
 div#menu ul.main li a.menu-default {
-    background-image: url( ../images/default-menu-icon.gif );
-    background-repeat: no-repeat;
-    background-position: 16px 2px;
-    background-color: transparent;
+    background: transparent no-repeat 16px 2px;
     height: 16px;
     display: block;
     /*width:187px;*/
-    padding-left: 38px;
-    padding-right: 20px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding: 3px 20px 3px 38px;
     cursor: pointer;
     border-top: solid 1px #fff;
     border-bottom: solid 1px #fff;
@@ -383,17 +363,11 @@ div#menu ul.main li a.menu-default {
 }
 
 div#menu ul.main li a.menu-default-selected {
-    background-image: url( ../images/default-menu-icon.gif );
-    background-repeat: no-repeat;
-    background-position: 16px 2px;
-    background-color: transparent;
+    background: transparent no-repeat 16px 2px;
     height: 16px;
     display: block;
     /*width:187px;*/
-    padding-left: 38px;
-    padding-right: 20px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding: 3px 20px 3px 38px;
     cursor: pointer;
     border-top: solid 1px #ccc;
     border-bottom: solid 1px #ccc;
@@ -410,19 +384,12 @@ div#menu ul.main li a.menu-default:hover {
 }
 
 div#menu ul.main li.menu-disabled-link {
-	background-image: url( ../images/default-menu-icon.gif );
-    background-repeat: no-repeat;
-    background-position: 16px 2px;
-	background-color: #F5F5F5;
-	color: #111111;
+    background: #F5F5F5 no-repeat 16px 2px;
+    color: #111111;
     height: 16px;
     display: block;
     /*width:187px;*/
-    padding-left: 38px;
-    padding-right: 20px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    cursor: pointer;
+    padding: 3px 20px 3px 38px;
     border-top: solid 1px #fff;
     border-bottom: solid 1px #fff;
     font-weight:normal;
@@ -541,7 +508,7 @@ div#footer-div {
 div#footer-div div.footer-content {
 	height: 27px;
 	margin: auto;
-	padding: 0px;
+	padding: 0;
 }
 
 div#footer-div div.footer-content div.copyright {
@@ -553,9 +520,7 @@ div#footer-div div.footer-content div.copyright {
 }
 
 div#footer-div div.footer-content div.poweredby {
-	background-image: url( powered.gif);
-    background-repeat: no-repeat;
-    background-position: left 3px;
+    background: no-repeat left 3px;
     width: 127px;
     height: 27px;
     float: right;
@@ -576,7 +541,7 @@ div#middle div#workArea {
 
 div#middle h2 {
     color: #0D4d79;
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 10px;
     font-size: 150%;
     font-weight: normal;
@@ -626,8 +591,8 @@ div#features tr.feature td {
 div#features tr.feature-top {
 }
 div#features tr.feature-top td {
-	border-top: solid 0px #BCBEC0;
-	padding-top: 0px;
+	border-top: solid 0 #BCBEC0;
+	padding-top: 0;
 	padding-bottom: 20px;
 }
 tr.feature td img {
@@ -689,9 +654,7 @@ div#workArea table.styledLeft {
 }
 
 div#workArea table.styledLeft thead th {
-    background-image:url(table-header.gif);
-    background-position: left bottom;
-    background-repeat:repeat-x;
+    background: repeat-x left bottom;
     border:1px solid #cccccc;
     font-weight:normal;
     height:22px;
@@ -701,9 +664,7 @@ div#workArea table.styledLeft thead th {
 }
 
 div#workArea table.styledLeft tbody tr td.middle-header {
-    background-image:url(table-header.gif);
-    background-position: left bottom;
-    background-repeat:repeat-x;
+    background: repeat-x left bottom;
     border:1px solid #cccccc;
     font-weight:normal;
     height:22px;
@@ -713,12 +674,8 @@ div#workArea table.styledLeft tbody tr td.middle-header {
 }
 
 div#workArea table.styledLeft tbody tr td.sub-header {
-	background-image:url(table-header.gif);
-    background-position: left bottom;
-    background-repeat:repeat-x;
+    background: repeat-x left bottom;
     border:1px solid #cccccc;
-    border-bottom: 0px solid #666;
-    border-top: 1px solid #666;
     font-weight:normal;
     height:22px;
     line-height:20px;
@@ -739,10 +696,10 @@ div#workArea table.styledLeft tbody tr td {
 div#workArea table.styledLeft tbody tr td.nopadding {
     border: solid 1px #cccccc;
     height: 25px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     vertical-align: middle !important;
 }
 div#workArea table.styledLeft tbody tr td.formRow {
@@ -753,9 +710,7 @@ div#workArea table.styledLeft tbody tr td.formRow {
 div#workArea table.styledLeft tbody tr td.buttonRow {
     padding-top: 5px;
     padding-bottom: 5px;
-    background-image: url(buttonRow-bg.gif);
-    background-position: left top;
-    background-repeat: repeat-x;
+    background: repeat-x left top;
 }
 /* ------------Stand alone styles inside tables -------*/
 .noDataBox {
@@ -769,9 +724,7 @@ div.buttonRow {
     padding-bottom: 5px;
     padding-left:10px;
     margin-left:5px;
-    background-image: url(buttonRow-bg.gif);
-    background-position: left top;
-    background-repeat: repeat-x;
+    background: repeat-x left top;
     border:1px solid #CCCCCC;
 }
 div.tabTen{
@@ -785,8 +738,7 @@ div#workArea table.styledInner {
 }
 
 div#workArea table.styledInner thead th {
-	background-image: none;
-	background-color: #E7E7E8;
+    background: #E7E7E8 none;
     border:1px solid #cccccc;
     font-weight:normal;
     height:22px;
@@ -806,9 +758,7 @@ div#workArea table.styledInner tbody tr td {
 .buttonRowAlone {
     padding-top: 5px;
     padding-bottom: 5px;
-    background-image: url(buttonRow-bg.gif);
-    background-position: left top;
-    background-repeat: repeat-x;
+    background: repeat-x left top;
     border-bottom: solid 1px #cccccc;
     border-top: solid 1px #cccccc;
 }
@@ -827,14 +777,14 @@ div#workArea table.normal {
 }
 div#workArea table.normal-nopadding {
 	border-collapse: separate;
-	padding: 0px;
+	padding: 0;
 	width: 100%;
 }
 div#workArea table.normal tbody tr td {
-	border: 0px;
+	border: 0;
 }
 div#workArea table.normal-nopadding tbody tr td {
-    border: solid 0px #cccccc !important;
+    border: solid 0 #cccccc !important;
     height: 25px;
     padding-top: 3px;
     padding-bottom: 3px;
@@ -846,13 +796,11 @@ div#workArea table.normal-nopadding tbody tr td.top-align {
     vertical-align: top !important;
 }
 div#workArea table.normal-nopadding tbody tr td.middle-header {
-    background-image:url(table-header.gif);
-    background-position: left bottom;
-    background-repeat:repeat-x;
+    background: repeat-x left bottom;
     border-top:1px solid #cccccc !important;
     border-bottom:1px solid #cccccc !important;
-    border-left:0px solid #cccccc;
-    border-right:0px solid #cccccc;
+    border-left:0 solid #cccccc;
+    border-right:0 solid #cccccc;
     font-weight:normal;
     height:22px;
     line-height:20px;
@@ -860,12 +808,8 @@ div#workArea table.normal-nopadding tbody tr td.middle-header {
     padding-left:8px;
 }
 div#workArea table.normal-nopadding tbody tr td.sub-header {
-	background-image: none;
-    background-color: #ededed;
-    border-top:1px solid #cccccc;
-    border-bottom:1px solid #cccccc;
-    border-left:1px solid #cccccc;
-    border-right:1px solid #cccccc;
+    background: #ededed none;
+    border: 1px solid #cccccc;
     font-weight:normal;
     height:22px;
     line-height:20px;
@@ -873,12 +817,12 @@ div#workArea table.normal-nopadding tbody tr td.sub-header {
     padding-left:8px;
 }
 div#workArea table.normal-nopadding tbody tr td.nopadding {
-padding: 0px !important;
-border: 0px !important;
+padding: 0 !important;
+border: 0 !important;
 }
 div#workArea table.normal tbody tr td.nopadding {
-padding: 0px !important;
-border: 0px !important;
+padding: 0 !important;
+border: 0 !important;
 }
 /* ---------------- table styles --------------------------- */
 .tableOddRow{background-color: white;}
@@ -908,10 +852,8 @@ border: 0px !important;
 }*/
 
 a.icon-link {
-background-image: url(default-menu-icon.gif);
-background-repeat: no-repeat;
-background-position: left top;
-padding-left: 20px;
+    background: no-repeat left top;
+    padding-left: 20px;
 line-height: 17px;
 height: 17px;
 float: left;
@@ -924,10 +866,8 @@ cursor:pointer;
     color:#2F7ABD;
 }
 a.icon-link-nofloat {
-background-image: url(default-menu-icon.gif);
-background-repeat: no-repeat;
-background-position: left top;
-padding-left: 20px !important;
+    background: no-repeat left top;
+    padding-left: 20px !important;
 padding-bottom: 2px;
 line-height: 17px;
 height: 17px;
@@ -939,9 +879,7 @@ white-space: nowrap;
 display: block;
 }
 a.delete-icon-link {
-    background-image: url( delete.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -953,55 +891,47 @@ a.delete-icon-link {
     white-space: nowrap;
 }
 a.delete-icon-link-nofloat {
-    background-image: url( delete.gif );    
-    background-repeat: no-repeat;
-    background-position: left 2px;
+    background: no-repeat left 2px;
     padding-left: 20px;
     line-height: 23px;
     height: 23px;
     float: none;
     margin-left: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
     white-space: nowrap;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
     display: block;
 }
 a#delete1, a#delete2 {
-    background-image: url( delete.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
     float: left;
     position: relative;
     margin-left: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
     white-space: nowrap;
 }
 
 .item-selector-link {
-    background-image: url( delete.gif );
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
     float: left;
     position: relative;
     margin-left: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
     white-space: nowrap;
 }
 
 a.edit-icon-link {
-    background-image: url( edit.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1013,9 +943,7 @@ a.edit-icon-link {
     white-space: nowrap;
 }
 a.copy-icon-link {
-    background-image: url( copy.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1027,9 +955,7 @@ a.copy-icon-link {
     white-space: nowrap;
 }
 a.move-icon-link {
-    background-image: url( move.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1041,9 +967,7 @@ a.move-icon-link {
     white-space: nowrap;
 }
 a.view-icon-link {
-    background-image: url( view.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1055,9 +979,7 @@ a.view-icon-link {
     white-space: nowrap;
 }
 a.feed-small-res-icon-link {
-    background-image: url( icon-feed-small-res.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1069,9 +991,7 @@ a.feed-small-res-icon-link {
     white-space: nowrap;
 }
 a.registry-picker-icon-link {
-    background-image: url( registry_picker.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1083,9 +1003,7 @@ a.registry-picker-icon-link {
     white-space: nowrap;
 }
 a.nseditor-icon-link {
-    background-image: url( nseditor-icon.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1097,9 +1015,7 @@ a.nseditor-icon-link {
     white-space: nowrap;
 }
 a.add-icon-link {
-    background-image: url( add.gif );    
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1111,9 +1027,7 @@ a.add-icon-link {
     white-space: nowrap;
 }
 a.policie-icon-link {
-    background-image: url( policies.gif );
-    background-repeat: no-repeat;
-    background-position: left top;
+    background: no-repeat left top;
     padding-left: 20px;
     line-height: 17px;
     height: 17px;
@@ -1125,10 +1039,8 @@ a.policie-icon-link {
     white-space: nowrap;
 }
 span.icon-text {
-background-image: url(default-menu-icon.gif);
-background-repeat: no-repeat;
-background-position: left top;
-padding-left: 20px;
+    background: no-repeat left top;
+    padding-left: 20px;
 line-height: 17px;
 height: 17px;
 float: left;
@@ -1139,10 +1051,8 @@ margin-bottom: 3px;
 white-space: nowrap;
 }
 span.icon-text-disabled {
-background-image: url(default-menu-icon.gif);
-background-repeat: no-repeat;
-background-position: left top;
-padding-left: 20px;
+    background: no-repeat left top;
+    padding-left: 20px;
 line-height: 17px;
 height: 17px;
 float: left;
@@ -1254,19 +1164,14 @@ line-height:4px;
 border: 1px solid #CCCCCC;
 padding:5px;
 -moz-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-border-radius: 5px;
-
--moz-box-shadow: 5px 5px 5px #888;
+    border-radius: 5px;
+    -moz-box-shadow: 5px 5px 5px #888;
 -webkit-box-shadow: 5px 5px 5px #888;
 box-shadow: 5px 5px 5px #888;
- filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='panelImage.png');
  white-space:nowrap;
  line-height:25px;
 }
 .panelClass[class] {
-background-image:url(panelImage.png);
 }
 .defaultText{
     color: #666666;
@@ -1287,8 +1192,6 @@ background-image:url(panelImage.png);
     border-bottom: 1px solid #CCCCCC;
 
     -moz-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
     border-radius: 3px;
 
     margin-bottom:10px;
@@ -1305,7 +1208,6 @@ background-image:url(panelImage.png);
     -moz-transform: rotate(-90deg);
     -o-transform: rotate(-90deg);
     white-space:nowrap;
-    display:block;
     width:60px;
     *position:absolute;
     margin-left:-25px;
@@ -1314,7 +1216,7 @@ background-image:url(panelImage.png);
     padding-left:2px;
 }
 .menu-panel-buttons span.ie{
-    margin-left:0px;
+    margin-left:0;
     margin-top:-10px;
 }
 div.selected{
@@ -1341,13 +1243,6 @@ div.selected span{
     margin-left:2px;
     cursor:pointer;
 }
-
-.showToHidden{
-    background:transparent url(leftRightSlider-dark.png) no-repeat 0 0;
-}
-.hiddenToShow{
-    background:transparent url(leftRightSlider-dark.png) no-repeat -20px 0;
-}
 .vertical-menu{
     background-color: #b0bcc3;
     width:20px;
@@ -1359,9 +1254,6 @@ label.form-help{
 
 
 /*---toggle styles --*/
-h2.active {
-   background-image:url(down-arrow.png) !important;
-}
 h2.trigger {
     border: solid 1px #c2c4c6;
 
@@ -1369,14 +1261,8 @@ h2.trigger {
     -webkit-box-shadow: 3px 3px 3px #888;
     box-shadow: 3px 3px 3px #888;
 
-    padding: 0;
-    background-color: #e9e9e9;
-    background-image:url(up-arrow.png);
-    background-repeat:no-repeat;
-    background-position:5px center;
-    padding-left: 30px;
-    padding-bottom:0px !important;
-    margin-bottom:0px !important;
+    background: #e9e9e9 no-repeat 5px center;
+    padding: 0 0 0 30px;
     margin: 0;
     z-index: 1;
     cursor: pointer;
@@ -1388,11 +1274,8 @@ h2.trigger a {
     color: #000000;
     font-weight: normal;
     padding: 5px 5px;
-    outline-color: -moz-use-text-color;
-    outline-style: none;
-    outline-width: 0;
+    outline: -moz-use-text-color none 0;
     font-size: 0.7em;
-
 }
 
 .toggle_container {
@@ -1415,18 +1298,14 @@ label.error{
     padding-left:5px;
 }
 .loadingDialogBox{
-    border-top:solid 5px #88afbd;
-    border-bottom:solid 1px #88afbd;
-    border-left:solid 1px #88afbd;
-    border-right:solid 1px #88afbd;
+    border: 1px solid #88afbd;
+    border-top-width: 5px;
     padding:10px 5px 10px 35px;
     line-height:20px;
-    background:transparent url(loading-small.gif) no-repeat 10px 10px;
 }
 .something-wrong{
     background-color:#ffe886;
     border:solid 1px #c4ad4d;
-    border-bottom:solid 5px #c4ad4d;
     padding:5px;
     width:950px;
     margin:auto;
@@ -1435,9 +1314,6 @@ label.error{
 .something-wrong div.title{
     font-size:14px;
     font-weight: bold;
-}
-.something-wrong div.content{
-    font:11px;
 }
 .server-url-cell{
     padding-left:5px;

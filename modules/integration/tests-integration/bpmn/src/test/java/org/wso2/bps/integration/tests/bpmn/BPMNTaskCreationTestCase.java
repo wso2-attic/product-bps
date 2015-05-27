@@ -15,6 +15,7 @@
  */
 package org.wso2.bps.integration.tests.bpmn;
 
+import junit.framework.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.BeforeClass;
@@ -34,15 +35,12 @@ public class BPMNTaskCreationTestCase extends BPSMasterTest {
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-
-
         init();  //init master class
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
         BPMNDeployment[] bpmnDeployments = workflowServiceClient.getDeployments();
         if (bpmnDeployments != null) {
             deploymentCount = workflowServiceClient.getDeployments().length;
         }
-
         initialize();
     }
 
@@ -56,20 +54,28 @@ public class BPMNTaskCreationTestCase extends BPSMasterTest {
         uploadBPMNForTest("HelloApprove");
     }
 
-    @Test(groups = {"wso2.bps.task.create"}, description = "Hello Approve test case", priority = 1, singleThreaded = true)
-    public void createTask() throws Exception {
-
-        String processid = workflowServiceClient.getProcesses()[workflowServiceClient.getProcesses().length - 1].getProcessId();
-        workflowServiceClient.startProcess(processid);
-        log.info("BPMN Process:" + processid + " started ");
-        log.info("BPMN Process has:" + workflowServiceClient.getInstanceCount() + " instances ");
-
+    @Test(groups = {"wso2.bps.task.create"}, description = "Hello Approve test case", priority = 1, singleThreaded =
+            true)
+    public void createTask() {
+        String processId;
+        try {
+            processId = workflowServiceClient.getProcesses()[workflowServiceClient.getProcesses().length - 1]
+                    .getProcessId();
+            workflowServiceClient.startProcess(processId);
+            log.info("BPMN Process:" + processId + " started ");
+            log.info("BPMN Process has:" + workflowServiceClient.getInstanceCount() + " instances ");
+            Assert.assertTrue("Create task is successful", workflowServiceClient.getInstanceCount() > 0);
+        } catch (Exception ex) {
+            String errMsg = "Failed to create bpmn task in HelloApprove process ";
+            log.error(errMsg, ex);
+            Assert.fail(errMsg);
+        }
     }
 
     @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server", priority = 2, singleThreaded = true)
     public void removeArtifacts() throws Exception {
 
-//        workflowServiceClient.undeploy("HelloApprove");
+        workflowServiceClient.undeploy("HelloApprove");
         loginLogoutClient.logout();
     }
 }

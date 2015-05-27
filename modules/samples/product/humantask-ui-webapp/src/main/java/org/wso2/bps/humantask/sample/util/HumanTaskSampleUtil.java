@@ -22,6 +22,12 @@ import org.wso2.carbon.humantask.stub.ui.task.client.api.types.TPresentationSubj
 
 public class HumanTaskSampleUtil {
 
+    /**
+     * Returns the task presentation header
+     * @param pSub
+     * @param pName
+     * @return
+     */
 	public static String getTaskPresentationHeader(TPresentationSubject pSub,
 			TPresentationName pName) {
 		String presentationName = "";
