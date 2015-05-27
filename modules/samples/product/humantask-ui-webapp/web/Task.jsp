@@ -29,7 +29,6 @@
             }
             var taskForm = document.getElementById('TaskOperationForm');
             taskForm.submit();
-
         }
         createTaskOutput = function () {
             var outputVal = getCheckedRadio();
@@ -39,7 +38,6 @@
                 return '<sch:ClaimApprovalResponse xmlns:sch="http://www.example.com/claims/schema"><sch:approved>false</sch:approved></sch:ClaimApprovalResponse>';
             }
         };
-
         getCheckedRadio = function () {
             var radioButtons = document.getElementsByName("responseRadio");
             for (var x = 0; x < radioButtons.length; x++) {
@@ -51,9 +49,7 @@
         function submitSignOutForm() {
             var taskForm = document.getElementById('signOutForm');
             taskForm.submit();
-
         }
-
     </script>
 </head>
 <body>
@@ -72,7 +68,6 @@
                         </h6>
                     </form>
                 </div>
-
                 <div class="left-logo"></div>
                 <div class="middle-ad"></div>
             </div>
@@ -101,10 +96,8 @@
                                                 if (queryType == null) {
                                                     queryType = "assignedToMe";
                                                 }
-
                                                 TTaskAbstract task;
                                                 OMElement requestElement = null;
-
                                                 try {
                                                     task = taskAPIClient.loadTask(new URI(taskId));
                                                     requestElement = taskAPIClient
@@ -114,7 +107,6 @@
                                                     request.getRequestDispatcher("./Home.jsp?logout=true")
                                                             .forward(request, response);
                                                 }
-
                                                 String customerId = "";
                                                 String customerFirstName = "";
                                                 String customerLastName = "";
@@ -125,39 +117,32 @@
                                                 if (requestElement != null) {
                                                     OMElement customerElement = requestElement
                                                             .getFirstChildWithName(new QName(ns, "cust"));
-
                                                     if (customerElement != null) {
                                                         OMElement id = customerElement
                                                                 .getFirstChildWithName(new QName(ns, "id"));
                                                         if (id != null) {
                                                             customerId = id.getText();
                                                         }
-
                                                         OMElement fName = customerElement
                                                                 .getFirstChildWithName(new QName(ns, "firstname"));
                                                         if (fName != null) {
                                                             customerFirstName = fName.getText();
                                                         }
-
                                                         OMElement lName = customerElement
                                                                 .getFirstChildWithName(new QName(ns, "lastname"));
                                                         if (lName != null) {
                                                             customerLastName = lName.getText();
                                                         }
                                                     }
-
                                                     OMElement regionElement = requestElement
                                                             .getFirstChildWithName(new QName(ns, "region"));
 
                                                     if (regionElement != null) {
                                                         region = regionElement.getText();
                                                     }
-
                                                     OMElement amountElement = requestElement
                                                             .getFirstChildWithName(new QName(ns, "amount"));
-
                                                     if (amountElement != null) {
-
                                                         amount = amountElement.getText();
                                                     }
                                                 }
@@ -172,10 +157,8 @@
                                                             if (status.toUpperCase().equals("IN_PROGRESS")) {
                                                         %>
                                                         <td><a href="#" class="opbutton"
-                                                               onclick="submitTaskForm('stop')">Stop</a> <%
- 	} else if (status.toUpperCase().equals("RESERVED")) {
- %>
-
+                                                               onclick="submitTaskForm('stop')">Stop</a>
+                                                                <%} else if (status.toUpperCase().equals("RESERVED")) {%>
                                                         <td><a href="#" class="opbutton"
                                                                onclick="submitTaskForm('start')">Start</a></td>
                                                         <%
@@ -185,7 +168,7 @@
                                                 </table>
                                             </form>
                                             <table class="tableEvenRow" width="100%" align="center"
-                                                   >
+                                                    >
                                                 <tr>
                                                     <td><h3>Status</h3></td>
                                                     <td><%=status%>
@@ -216,7 +199,6 @@
                                                     <td><%=region%>
                                                     </td>
                                                 </tr>
-
                                             </table>
                                             <%
                                                 if (status.toUpperCase().equals("IN_PROGRESS")) {
@@ -224,12 +206,14 @@
                                             <h3>Approve</h3>
                                             <table align="center" class="main-table">
                                                 <tr>
-                                                    <td><label for="responseRadio1">Approve </label><input type="radio" name="responseRadio"
-                                                               id="responseRadio1" value="approve"/>
+                                                    <td><label for="responseRadio1">Approve </label><input type="radio"
+                                                                                                           name="responseRadio"
+                                                                                                           id="responseRadio1"
+                                                                                                           value="approve"/>
                                                         <label
-                                                            for="responseRadio2">Disapprove</label><input
-                                                            type="radio" name="responseRadio" id="responseRadio2"
-                                                            value="disapprove"/>
+                                                                for="responseRadio2">Disapprove</label><input
+                                                                type="radio" name="responseRadio" id="responseRadio2"
+                                                                value="disapprove"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -243,11 +227,11 @@
                                             } else if (status.toUpperCase().equals("COMPLETED")) {
                                                 String approved = "No Value Assigned";
 
-                                                OMElement responseElement=null;
+                                                OMElement responseElement = null;
                                                 try {
                                                     responseElement = taskAPIClient
                                                             .loadTaskOutput(new URI(taskId));
-                                                } catch (Exception ex){
+                                                } catch (Exception ex) {
                                                     request.getRequestDispatcher("./Home.jsp?logout=true")
                                                             .forward(request, response);
                                                 }
@@ -256,7 +240,6 @@
                                                     approved = responseElement.getFirstElement().getText();
                                                 }
                                             %>
-
                                             <table border="0" class="main-table">
                                                 <tr>
                                                     <td><h3>Approved :</h3></td>
@@ -267,8 +250,7 @@
                                             <%
                                                 }
                                             %>
-                                            <a href="./Home.jsp?queryType=<%=queryType%>">Back To
-                                                                                          Home</a> <br>
+                                            <a href="./Home.jsp?queryType=<%=queryType%>">Back To Home</a> <br>
                                         </div>
                                     </td>
                                 </tr>
@@ -279,7 +261,7 @@
                 </tr>
                 </tbody>
             </table>
-            </td>
+        </td>
         <td width="20%"></td>
     </tr>
     <tr>
@@ -288,7 +270,7 @@
                 <div class="footer-content">
                     <div class="copyright">
                         © 2005 -
-                        <p>2013 WSO2 Inc. All Rights Reserved.</p>
+                        <p>2015 WSO2 Inc. All Rights Reserved.</p>
                     </div>
                 </div>
             </div>

@@ -41,7 +41,7 @@
             <div id="header-div">
                 <div class="right-logo">
                     Signed-in as:
-                        <%=userName%>
+                    <%=userName%>
                     <form id="signOutForm" action="login" method="POST">
                         <input type="hidden" id="logout" name="logout" value=""/>
                         <h6>
@@ -91,7 +91,6 @@
                                             </table>
                                             <br>
                                                 <%
-
 																String pageNumber = request.getParameter("pageNumber");
 																int pageNumberInt = 0;
 
@@ -103,17 +102,13 @@
 																} catch (NumberFormatException ignored) {
 
 																}
-
 																String queryType = request.getParameter("queryType");
 																TTaskSimpleQueryResultSet taskResults = null;
-
 																try {
-
 																	TSimpleQueryInput queryInput = new TSimpleQueryInput();
 																	queryInput.setPageNumber(pageNumberInt);
 																	queryInput
 																			.setSimpleQueryCategory(TSimpleQueryCategory.ASSIGNED_TO_ME);
-
 																	if (queryType != null && !"".equals(queryType)) {
 																		if ("allTasks".equals(queryType)) {
 																			queryInput
@@ -201,7 +196,7 @@
             <div id="footer-div">
                 <div class="footer-content">
                     <div class="copyright" style="text-align: center">© 2005 -
-                                                                      2013 WSO2 Inc. All Rights Reserved.
+                                                                      2015 WSO2 Inc. All Rights Reserved.
                     </div>
                 </div>
             </div>
