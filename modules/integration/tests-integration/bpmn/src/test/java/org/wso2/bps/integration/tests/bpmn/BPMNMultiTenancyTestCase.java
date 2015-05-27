@@ -41,6 +41,12 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
     String domainKey2 = "abc.com";
     String userKey2 = "user2";
 
+    /**
+     * Initialise for tenant wso2.com
+     * @param:domainKey1
+     * @param:userKey1
+     * @throws Exception
+     */
     @BeforeClass(alwaysRun = true)
     public void createTenant() throws Exception {
         // initialize for tenant wso2.com
@@ -61,9 +67,17 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
         if (bpmnDeployments != null) {
             deploymentCount = workflowServiceClient.getDeployments().length;
         }
-
     }
 
+    /**
+     * Tenant abc.com trying to access BPMN artifact deployed by wso2.com
+     * 1.Log in as tenant wso2.com
+     * 2.Deploy BPMN artifacts from tenant wso2.com
+     * 3.Log in as tenant abc.com
+     * 4.Search for deployed instance in tenant abc.com
+     * 5.Check for same processId as deployed artifact.
+     * @throws Exception
+     */
     @Test(groups = {"wso2.bps.task.BPMNMultiTenancy"}, description = "Confirm BPMN Multi tenancy support test case",
             priority = 1, singleThreaded = true)
     public void confirmMultiTenancyForBPMNArtifact() throws Exception {
@@ -101,7 +115,6 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
                 "Artifact deployed by tenant" + domainKey1 + "can be accessed by tenant" + domainKey2);
     }
 
-
     public void deployArtifact() throws Exception {
         uploadBPMNForTest(packageName);
     }
@@ -110,7 +123,7 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
     public void removeArtifact() throws Exception {
         initialize(domainKey1, userKey1);
         workflowServiceClient.undeploy(packageName);
-        log.info("Successfully undeployed:" + packageName);
+        log.info("Successfully undeployed:"+ " " + packageName);
 
     }
 }
