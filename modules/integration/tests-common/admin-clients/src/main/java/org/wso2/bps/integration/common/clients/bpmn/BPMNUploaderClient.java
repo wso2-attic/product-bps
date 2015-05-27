@@ -48,9 +48,9 @@ public class BPMNUploaderClient {
 
     public boolean deployBPMN(String packageName, String dirPath)
             throws RemoteException, InterruptedException {
-        boolean success = false;
+
         deployPackage(packageName, dirPath, bpmnUploaderServiceStub);
-        return success;
+        return false;
     }
 
     private UploadedFileItem getUploadedFileItem(DataHandler dataHandler, String fileName,

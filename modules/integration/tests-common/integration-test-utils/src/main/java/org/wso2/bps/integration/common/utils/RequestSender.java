@@ -130,8 +130,8 @@ public class RequestSender {
                 throw new Exception(serviceUrl + " service is not found");
             }
             try {
-                Thread.sleep(500);
                 serviceTimeOut++;
+                Thread.sleep(500);
             } catch (InterruptedException ignored) {
             }
         }
@@ -159,7 +159,7 @@ public class RequestSender {
                     throw new XMLStreamException(e);
                 }
             } catch (AxisFault axisFault) {
-                axisFault.printStackTrace();
+                log.error("Error occurred while sending request.", axisFault);
                 if (!axisFault.getClass().getSimpleName().equals(expectedException)) {
                     throw new AxisFault(axisFault.getMessage());
                 }

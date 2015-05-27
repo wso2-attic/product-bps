@@ -30,7 +30,7 @@ import java.util.Properties;
  * Read mapper.properties file and load it's uiElements into Properties object.
  */
 public class UIElementMapper {
-    public static final Properties uiProperties = new Properties();
+    private static final Properties uiProperties = new Properties();
 
     private static final Log log = LogFactory.getLog(UIElementMapper.class);
     private static UIElementMapper instance;
@@ -52,11 +52,25 @@ public class UIElementMapper {
     }
 
     private static Properties setStream() throws IOException {
-        InputStream inputStream = UIElementMapper.class.getResourceAsStream("/mapper.properties");
-        if (inputStream.available() > 0) {
-            uiProperties.load(inputStream);
-            inputStream.close();
-            return uiProperties;
+        InputStream inputStream = null;
+        try {
+            inputStream = UIElementMapper.class.getResourceAsStream("/mapper.properties");
+            if (inputStream.available() > 0) {
+                uiProperties.load(inputStream);
+                return uiProperties;
+            }
+        } catch (IOException e) {
+            String errMsg = "Cannot read the steam";
+            log.error(errMsg, e);
+            throw new IOException(errMsg, e);
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                log.error("Couldn't close the input steam", e);
+            }
         }
         return null;
     }
