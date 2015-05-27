@@ -16,26 +16,26 @@
 
 package org.wso2.bps.integration.common.clients.bpmn;
 
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.methods.*;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.apache.commons.logging.Log;
-import org.wso2.carbon.bpmn.core.xsd.BPSException;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -199,8 +199,7 @@ public class ActivitiRestClient {
                                                + "\"}", ContentType.APPLICATION_JSON);
         httpPost.setEntity(params);
         HttpResponse response = httpClient.execute(httpPost);
-        String status = response.getStatusLine().toString();
-        return status;
+        return response.getStatusLine().toString();
     }
 
     /**
@@ -312,7 +311,7 @@ public class ActivitiRestClient {
     public String getSuspendedStateOfProcessInstanceByID(String processInstanceID)
             throws IOException, JSONException {
         String url = serviceURL + "runtime/process-instances/" + processInstanceID;
-        String responseData = "";
+        String responseData;
         DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
@@ -335,11 +334,10 @@ public class ActivitiRestClient {
             throws IOException, JSONException {
         String url = serviceURL + "runtime/process-instances/"
                      + processInstanceId + "/variables/" + variable;
-        String responseData = "";
         DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
-        responseData = EntityUtils.toString(response.getEntity());
+        String responseData = EntityUtils.toString(response.getEntity());
         JSONObject resObj = new JSONObject(responseData);
         String status = response.getStatusLine().toString();
         String name = resObj.getString("name");
@@ -373,11 +371,10 @@ public class ActivitiRestClient {
      */
     public String getDelegationsStateByTaskId(String taskID) throws IOException, JSONException {
         String url = serviceURL + "runtime/tasks/" + taskID;
-        String responseData = "";
         DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
-        responseData = EntityUtils.toString(response.getEntity());
+        String responseData = EntityUtils.toString(response.getEntity());
         JSONObject resObj = new JSONObject(responseData);
         return resObj.getString("delegationState");
     }
@@ -410,11 +407,10 @@ public class ActivitiRestClient {
      */
     public String getAssigneeByTaskId(String taskID) throws IOException, JSONException {
         String url = serviceURL + "runtime/tasks/" + taskID;
-        String responseData = "";
         DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
-        responseData = EntityUtils.toString(response.getEntity());
+        String responseData = EntityUtils.toString(response.getEntity());
         JSONObject resObj = new JSONObject(responseData);
         return resObj.getString("assignee");
     }
@@ -431,11 +427,10 @@ public class ActivitiRestClient {
     public String getCommentByTaskIdAndCommentId(String taskID, String commentID)
             throws IOException, JSONException {
         String url = serviceURL + "runtime/tasks/" + taskID + "/comments/" + commentID;
-        String responseData = "";
         DefaultHttpClient httpClient = getHttpClient();
         HttpGet httpget = new HttpGet(url);
         HttpResponse response = httpClient.execute(httpget);
-        responseData = EntityUtils.toString(response.getEntity());
+        String responseData = EntityUtils.toString(response.getEntity());
         JSONObject resObj = new JSONObject(responseData);
         return resObj.getString("message");
     }

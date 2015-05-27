@@ -162,7 +162,7 @@ public class BpelInstanceManagementClient {
 
     public void deleteAllInstances() throws InstanceManagementException, RemoteException {
         log.info("Deleting all the instances");
-        int deletedInstanceCount = instanceManagementServiceStub.deleteInstances(" ", true);
+        instanceManagementServiceStub.deleteInstances(" ", true);
         listInstances(0);
     }
 
@@ -205,10 +205,11 @@ public class BpelInstanceManagementClient {
                     String varName = variable.getSelf().getName();
                     if (varName.equals(variableName)) {
                         isVariableFound = true;
-                        String varValue = "";
+                        StringBuffer tempValueBuffer = new StringBuffer();
                         for (OMElement varElement : variable.getValue().getExtraElement()) {
-                            varValue += varElement.toString();
+                            tempValueBuffer.append(varElement.toString());
                         }
+                        String varValue = tempValueBuffer.toString();
                         if (!varValue.contains(expectedVarValue)) {
                             Assert.fail("Incorrect Test Result: " + varValue +
                                     " Expected" + expectedVarValue + "in the result");

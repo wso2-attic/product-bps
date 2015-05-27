@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *  Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  *  WSO2 Inc. licenses this file to you under the Apache License,
  *  Version 2.0 (the "License"); you may not use this file except
@@ -17,106 +17,69 @@
  */
 package org.wso2.bps.humantask.sample.manager;
 
-import java.io.IOException;
+import org.apache.axis2.databinding.types.URI;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.wso2.bps.humantask.sample.clients.HumanTaskClientAPIServiceClient;
+import org.wso2.bps.humantask.sample.util.HumanTaskSampleConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.stream.XMLStreamException;
-
-import org.apache.axis2.databinding.types.URI;
-import org.wso2.carbon.humantask.stub.ui.task.client.api.IllegalAccessFault;
-import org.wso2.carbon.humantask.stub.ui.task.client.api.IllegalArgumentFault;
-import org.wso2.carbon.humantask.stub.ui.task.client.api.IllegalOperationFault;
-import org.wso2.carbon.humantask.stub.ui.task.client.api.IllegalStateFault;
+import java.io.IOException;
 
 public class TaskManager extends HttpServlet {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1534302868383827750L;
+    /**
+     * This class was introduced to perform task operations based on request.
+     */
+    private static Log log = LogFactory.getLog(TaskManager.class);
 
-	/**
-	 * 
-	 */
+    /**
+     * Perform the task operations
+     */
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
 
-	protected void doPost(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
+        String backEndUrl = this.getServletContext().getInitParameter(HumanTaskSampleConstants.BACKEND_SERVER_URL);
+        String sessionCookie = (String) req.getSession().getAttribute(HumanTaskSampleConstants.SESSION_COOKIE);
+        HumanTaskClientAPIServiceClient humanTaskClientAPIServiceClient = new HumanTaskClientAPIServiceClient
+                (sessionCookie, backEndUrl + HumanTaskSampleConstants.SERVICE_URL, null);
+        String operation = req.getParameter("operation");
+        String taskID = req.getParameter("taskID");
 
-		String operation = req.getParameter("operation");
-		String taskID = req.getParameter("taskID");
-		System.out.println(operation);
-		System.out.println(taskID);
-		if (operation.equals("start")) {
-			try {
-				LoginManager.taskAPIClient.start(new URI(taskID));
-			} catch (IllegalStateFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalOperationFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        if (log.isDebugEnabled()) {
+            log.debug("Perform the task operation " + operation + " on Task ID " + taskID);
+        }
+        if (operation.equals("start")) {
+            try {
+                humanTaskClientAPIServiceClient.start(new URI(taskID));
+            } catch (Exception ex) {
+                String errMsg = "Failed to start the task";
+                log.error(errMsg, ex);
+            }
+            req.getRequestDispatcher("Task.jsp?queryType=assignedToMe&taskId=" + taskID).forward(req, resp);
 
-			req.getRequestDispatcher(
-					"Task.jsp?queryType=assignedToMe&taskId=" + taskID)
-					.forward(req, resp);
-		} else if (operation.equals("complete")) {
+        } else if (operation.equals("complete")) {
+            String payload = req.getParameter("payload");
+            try {
+                humanTaskClientAPIServiceClient.complete(new URI(taskID), payload);
+            } catch (Exception ex) {
+                String errMsg = "Failed to complete the task";
+                log.error(errMsg, ex);
+            }
+            req.getRequestDispatcher("/Home.jsp?queryType=assignedToMe&pageNumber=0").forward(req, resp);
 
-			String payload = req.getParameter("payload");
-			System.out.println(payload);
-			try {
-				LoginManager.taskAPIClient.complete(new URI(taskID), payload);
-			} catch (IllegalAccessFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalStateFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalOperationFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (XMLStreamException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        } else if (operation.equals("stop")) {
+            try {
+                humanTaskClientAPIServiceClient.stop(new URI(taskID));
+            } catch (Exception ex) {
+                String errMsg = "Failed to stop the task";
+                log.error(errMsg, ex);
+            }
+            req.getRequestDispatcher("Task.jsp?queryType=assignedToMe&taskId=" + taskID).forward(req, resp);
 
-			req.getRequestDispatcher(
-					"/Home.jsp?queryType=assignedToMe&pageNumber=0").forward(
-					req, resp);
-		} else if (operation.equals("stop")) {
-			try {
-				LoginManager.taskAPIClient.stop(new URI(taskID));
-			} catch (IllegalStateFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalOperationFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessFault e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			req.getRequestDispatcher(
-					"Task.jsp?queryType=assignedToMe&taskId=" + taskID)
-					.forward(req, resp);
-
-		}
-
-	}
+        }
+    }
 }

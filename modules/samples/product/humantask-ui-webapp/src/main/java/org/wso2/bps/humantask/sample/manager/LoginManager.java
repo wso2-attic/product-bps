@@ -17,88 +17,82 @@
  */
 package org.wso2.bps.humantask.sample.manager;
 
-import java.io.IOException;
-import java.util.Properties;
+import org.apache.axis2.context.ServiceContext;
+import org.apache.axis2.transport.http.HTTPConstants;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.wso2.bps.humantask.sample.util.HumanTaskSampleConstants;
+import org.wso2.carbon.authenticator.stub.AuthenticationAdminStub;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.axis2.context.ConfigurationContext;
-import org.apache.axis2.context.ServiceContext;
-import org.apache.axis2.transport.http.HTTPConstants;
-import org.wso2.bps.humantask.sample.clients.HumanTaskClientAPIServiceClient;
-import org.wso2.bps.humantask.sample.clients.LoginAdminServiceClient;
+import java.io.IOException;
 
 public class LoginManager extends HttpServlet {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9221378012392594537L;
-	public static HumanTaskClientAPIServiceClient taskAPIClient;
-	public static LoginAdminServiceClient login ;
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+    /**
+     * Servlet will manage the user login
+     */
+    private static Log log = LogFactory.getLog(LoginManager.class);
 
-		Properties prop = new Properties();
 
-		try {
-			
-			String logout= req.getParameter("logout");
-			if(logout!=null){
-				LoginManager.login.logOut();
-				req.getRequestDispatcher("/Login.jsp").forward(req, resp);
-				return;
-				
-			}
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String userName = null, userPassword = null;
+        ServletContext servletContext = this.getServletContext();
+        String backendServerURL = servletContext.getInitParameter(HumanTaskSampleConstants.BACKEND_SERVER_URL);
 
-			// getting configuration properties
-			prop.load(getClass().getClassLoader().getResourceAsStream(
-					"org/wso2/bps/humantask/sample/config.properties"));
+        // set the required system properties
+        System.setProperty("javax.net.ssl.trustStore", servletContext
+                .getInitParameter(HumanTaskSampleConstants.CLIENT_TRUST_STORE_PATH).trim());
+        System.setProperty("javax.net.ssl.trustStorePassword", servletContext
+                .getInitParameter(HumanTaskSampleConstants.CLIENT_TRUST_STORE_PASSWORD).trim());
+        System.setProperty("javax.net.ssl.trustStoreType", servletContext
+                .getInitParameter(HumanTaskSampleConstants.CLIENT_TRUST_STORE_TYPE).trim());
+        try {
+            AuthenticationAdminStub authenticationAdminStub = new AuthenticationAdminStub(backendServerURL +
+                                                                                          HumanTaskSampleConstants
+                                                                                                  .SERVICE_URL +
+                                                                                          HumanTaskSampleConstants
+                                                                                                  .AUTHENTICATION_ADMIN_SERVICE_URL);
+            // handles logout
+            String logout = req.getParameter("logout");
+            if (logout != null) {
+                authenticationAdminStub.logout();
+                req.getRequestDispatcher("/Login.jsp").forward(req, resp);
+                return;
+            }
+            if (req.getParameter("userName") != null) {
+                userName = req.getParameter("userName").trim();
+            }
+            if (req.getParameter("userPassword") != null) {
+                userPassword = req.getParameter("userPassword").trim();
+            }
+            // login to server with given user name and password
+            if (authenticationAdminStub.login(userName, userPassword, HumanTaskSampleConstants.HOSTNAME)) {
+                ServiceContext serviceContext = authenticationAdminStub._getServiceClient().getLastOperationContext()
+                        .getServiceContext();
+                String sessionCookie = (String) serviceContext.getProperty(HTTPConstants.COOKIE_STRING);
+                HttpSession session = req.getSession();
+                session.setAttribute(HumanTaskSampleConstants.USERNAME, userName);
+                session.setAttribute(HumanTaskSampleConstants.SESSION_COOKIE, sessionCookie);
+                req.getRequestDispatcher("/Home.jsp?queryType=assignedToMe&pageNumber=0").forward(req, resp);
 
-			String BACK_END_URL = prop.getProperty("BACK_END_URL");
-			String BPS_JKS_PATH = prop.getProperty("BPS_JKS_PATH");
-			String userName = req.getParameter("userName").trim();
-			String userPassword = req.getParameter("userPassword").trim();
+            } else {
+                log.warn(userName + " login failed.");
+                req.setAttribute("message", "Please enter a valid user name and a password.");
+                req.getRequestDispatcher("/Login.jsp").forward(req, resp);
+            }
 
-			System.setProperty("javax.net.ssl.trustStore", BPS_JKS_PATH);
-			System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
-			System.setProperty("javax.net.ssl.trustStoreType", "JKS");
+        } catch (Exception e) {
+            log.error("Failed to retrieve the user session ", e);
+            req.setAttribute(HumanTaskSampleConstants.MESSAGE, e);
+            req.getRequestDispatcher("/Login.jsp").forward(req, resp);
+        }
 
-			// login to server with given user name and password
-			login = new LoginAdminServiceClient(BACK_END_URL);
-			ServiceContext serviceContext = login.authenticate(userName,
-					userPassword);
-			String sessionCookie = (String) serviceContext
-					.getProperty(HTTPConstants.COOKIE_STRING);
-			System.out.println(sessionCookie);
-			ConfigurationContext configContext = serviceContext
-					.getConfigurationContext();
-			if (sessionCookie == null) {
-				System.out.println("Login failed.");
-				req.setAttribute("message",
-						"Please enter a valid user name and a password.");
-				req.getRequestDispatcher("/Login.jsp").forward(req, resp);
-				return;
-			}
+    }
 
-			HttpSession session = req.getSession();
-			taskAPIClient = new HumanTaskClientAPIServiceClient(sessionCookie,
-					BACK_END_URL + "/services/", configContext);
-			
-			session.setAttribute("USER_NAME", userName);
-			req.getRequestDispatcher(
-					"/Home.jsp?queryType=assignedToMe&pageNumber=0").forward(
-					req, resp);
-		} catch (Exception e) {
-
-			System.out.println(e);
-			req.setAttribute("message", e);
-			req.getRequestDispatcher("/Login.jsp").forward(req, resp);
-		}
-
-	}
 }
