@@ -123,7 +123,7 @@ public class BPMNMultiTenancyTestCase extends BPSMasterTest {
     public void removeArtifact() throws Exception {
         initialize(domainKey1, userKey1);
         workflowServiceClient.undeploy(packageName);
-        log.info("Successfully undeployed:"+ " " + packageName);
+        log.info("Successfully undeployed: " + packageName);
 
     }
 }
