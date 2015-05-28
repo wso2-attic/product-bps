@@ -18,6 +18,7 @@ package org.wso2.bps.integration.tests.bpmn;
 import junit.framework.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpmn.WorkflowServiceClient;
@@ -72,7 +73,7 @@ public class BPMNTaskCreationTestCase extends BPSMasterTest {
         }
     }
 
-    @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server", priority = 2, singleThreaded = true)
+    @AfterClass(alwaysRun = true)
     public void removeArtifacts() throws Exception {
 
         workflowServiceClient.undeploy("HelloApprove");
