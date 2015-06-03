@@ -255,7 +255,7 @@ public class ServiceAdminClient {
             }
         }
         if (faultyService == null) {
-            throw new RuntimeException("Service not found in faulty service list " + serviceName);
+            throw new RuntimeException("Service not found in faulty service list " + faultyService);
         }
         return faultyService;
     }

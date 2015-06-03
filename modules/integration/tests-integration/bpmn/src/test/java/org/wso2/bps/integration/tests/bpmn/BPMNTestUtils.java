@@ -28,27 +28,22 @@ public class BPMNTestUtils {
     BPMN does not expose any service to check deployment is done.
     So we are using deployment count to check completeness of process deployment
     */
-    public static void waitForProcessDeployment(WorkflowServiceClient workflowServiceClient, String bpmnPackageName,
-                                                int previousDeploymentCount) throws Exception {
+    public static void waitForProcessDeployment(WorkflowServiceClient workflowServiceClient, String bpmnPackageName, int previousDeploymentCount) throws Exception {
         int serviceTimeOut = 0;
         while (true) {
-            if (workflowServiceClient.getDeployments() != null && workflowServiceClient.getDeployments().length >
-                                                                  previousDeploymentCount) {
+            if (workflowServiceClient.getDeployments() != null && workflowServiceClient.getDeployments().length > previousDeploymentCount) {
                 return;
             }
             if (serviceTimeOut == 0) {
                 log.info("Waiting for BPMN package" + bpmnPackageName + " to deploy.");
-            } else if (serviceTimeOut > BPMNTestConstants.PROCESS_DEPLOYMENT_MAX_RETRY_COUNT) {
-                String errMsg = bpmnPackageName + " package is not found";
-                log.error(errMsg);
-                throw new Exception(errMsg);
+            } else if (serviceTimeOut > 200) {
+                log.error("Time out");
+                throw new Exception(bpmnPackageName + " package is not found");
             }
             try {
+                Thread.sleep(500);
                 serviceTimeOut++;
-                Thread.sleep(BPMNTestConstants.PROCESS_DEPLOYMENT_WAIT_TIME_PER_RETRY);
-            } catch (InterruptedException e) {
-                //Log the interrupt exception and wait for process deployment until timeout
-                log.error("Error while waiting for process deployment " + e);
+            } catch (InterruptedException ignored) {
             }
         }
     }

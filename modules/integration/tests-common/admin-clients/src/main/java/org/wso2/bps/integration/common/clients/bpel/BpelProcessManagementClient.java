@@ -73,16 +73,17 @@ public class BpelProcessManagementClient {
     public String getProcessId(String packageName)
             throws RemoteException, ProcessManagementException {
         String processId = null;
+        final String processFilter = "name}}";
+        final String processListOrderBy = "-deployed";
         String[] processList = processManagementServiceStub.getAllProcesses("y");
-        if (processList != null) {
-            if (processList.length == 0) {
-                throw new AssertionError("Process list cannot be empty");
-            } else {
-                for (String id : processList) {
-                    if (id.contains(packageName + "-")) {
-                        processId = id;
-                    }
-                }
+        if (processList != null && processList.length == 0) {
+            throw new AssertionError("Process list cannot be empty");
+        }
+        boolean processFound = false;
+        for (String id : processList) {
+            if (id.contains(packageName + "-")) {
+                processFound = true;
+                processId = id;
             }
         }
         return processId;
