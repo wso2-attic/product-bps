@@ -23,7 +23,6 @@ import org.wso2.bps.integration.common.clients.AuthenticateStubUtil;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNDeployment;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNInstance;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNProcess;
-import org.wso2.carbon.bpmn.stub.BPMNDeploymentServiceBPSExceptionException;
 import org.wso2.carbon.bpmn.stub.BPMNDeploymentServiceStub;
 import org.wso2.carbon.bpmn.stub.BPMNInstanceServiceStub;
 import org.wso2.carbon.utils.xml.XMLPrettyPrinter;
@@ -34,7 +33,6 @@ import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,28 +119,14 @@ public class WorkflowServiceClient {
     }
 
     public String getProcessDiagram(String processId) throws Exception {
-
-        String dataUri = null;
-        ByteArrayOutputStream baos = null;
-        try {
-            String imageString = deploymentServiceStub.getProcessDiagram(processId);
-            BufferedImage bufferedImage = decodeToImage(imageString);
-            baos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", baos);
-        } catch (Exception e) {
-            throw new IOException("Failed to get the process diagram", e);
-        } finally {
-            try {
-                if (baos != null) {
-                    baos.flush();
-                    dataUri = "data:image/png;base64," + DatatypeConverter.printBase64Binary(baos.toByteArray());
-                    baos.close();
-
-                }
-            } catch (IOException e) {
-                log.error("Exception occurred when closing the stream", e);
-            }
-        }
+        String imageString = deploymentServiceStub.getProcessDiagram(processId);
+        BufferedImage bufferedImage = decodeToImage(imageString);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", baos);
+        baos.flush();
+        String dataUri = "data:image/png;base64," +
+                DatatypeConverter.printBase64Binary(baos.toByteArray());
+        baos.close();
         return dataUri;
     }
 
@@ -160,22 +144,18 @@ public class WorkflowServiceClient {
         deploymentServiceStub.undeploy(deploymentName);
     }
 
-    private BufferedImage decodeToImage(String imageString) throws IOException {
+    private BufferedImage decodeToImage(String imageString) {
 
         BufferedImage image = null;
-        ByteArrayInputStream bis = null;
         byte[] imageByte;
         try {
             BASE64Decoder decoder = new BASE64Decoder();
             imageByte = decoder.decodeBuffer(imageString);
-            bis = new ByteArrayInputStream(imageByte);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
-        } catch (IOException e) {
-            throw new IOException("Failed to decode string to image", e);
-        } finally {
-            if (bis != null) {
-                bis.close();
-            }
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return image;
     }
