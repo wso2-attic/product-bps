@@ -44,7 +44,7 @@ public class ProcessInstanceTestCase extends BPSMasterTest {
      */
     @Test(groups = {"wso2.bps.test.processInstance"}, description = "Process Instance Test",
           priority = 2, singleThreaded = true)
-    public void ProcessInstanceTests() throws Exception {
+    public void processInstanceTests() throws Exception {
         init();
         ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().
                 get("http"), bpsServer.getInstance().getHosts().get("default"));

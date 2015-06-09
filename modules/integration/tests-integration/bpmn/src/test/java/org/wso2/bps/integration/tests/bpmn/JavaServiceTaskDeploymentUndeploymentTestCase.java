@@ -46,7 +46,7 @@ public class JavaServiceTaskDeploymentUndeploymentTestCase extends BPSMasterTest
     //Setting up the enviroment to place the java class files in the respective folder so the server
     //can pick it up when executing the service task
     @BeforeClass
-    public void EnvSetup() throws Exception {
+    public void envSetup() throws Exception {
         init();
         final String artifactLocation = FrameworkPathUtil.getSystemResourceLocation() + File
                 .separator

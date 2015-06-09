@@ -39,8 +39,8 @@
             <class name="org.wso2.bps.integration.tests.bpmn.BPMNTaskCreationTestCase" />
             <class name="org.wso2.bps.integration.tests.bpmn.ProcessInstanceTestCase" />
             <class name="org.wso2.bps.integration.tests.bpmn.UserTaskTestCase" />
-            <class name="org.wso2.bps.integration.tests.bpmn.DeployUnDeployBPMNPackageTestCase" />
-            <class name="org.wso2.bps.integration.tests.bpmn.DeployUnDeployInvalidBPMNPackageTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.ValidBPMNPackageDeploymentTestCase" />
+            <class name="org.wso2.bps.integration.tests.bpmn.InvalidBPMNPackageDeploymentTestCase" />
             <class name="org.wso2.bps.integration.tests.bpmn.JavaServiceTaskDeploymentUndeploymentTestCase" />
             <class name="org.wso2.bps.integration.tests.bpmn.BPMNCappDeploymentTestCase" />
             <class name="org.wso2.bps.integration.tests.bpmn.BPMNMultiTenancyTestCase" />
