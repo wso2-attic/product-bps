@@ -32,9 +32,9 @@ import java.io.IOException;
 /**
  * This class tests the deployment and undeployment of bpmn package.
  */
-public class DeployUnDeployBPMNPackageTestCase extends BPSMasterTest {
+public class ValidBPMNPackageDeploymentTestCase extends BPSMasterTest {
 
-    private static final Log log = LogFactory.getLog(DeployUnDeployBPMNPackageTestCase.class);
+    private static final Log log = LogFactory.getLog(ValidBPMNPackageDeploymentTestCase.class);
 
     /**
      * In the following method we deploy and undeploy a bpmn package

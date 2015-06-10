@@ -38,7 +38,7 @@ public class UserTaskTestCase extends BPSMasterTest {
 
     @Test(groups = {"wso2.bps.test.usertasks"}, description = "User Task Test", priority = 1,
           singleThreaded = true)
-    public void UserTaskTestCase() throws Exception {
+    public void userTaskTest() throws Exception {
         init();
         ActivitiRestClient tester = new ActivitiRestClient(bpsServer.getInstance().getPorts().
                 get(BPMNTestConstants.HTTP), bpsServer.getInstance().getHosts().get

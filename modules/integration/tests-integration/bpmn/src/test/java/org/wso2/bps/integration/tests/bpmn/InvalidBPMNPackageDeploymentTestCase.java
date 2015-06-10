@@ -32,9 +32,9 @@ import java.io.IOException;
 /**
  * This class will test how gracefully the server will handle invalid bpmn package.
  */
-public class DeployUnDeployInvalidBPMNPackageTestCase extends BPSMasterTest {
+public class InvalidBPMNPackageDeploymentTestCase extends BPSMasterTest {
 
-    private static final Log log = LogFactory.getLog(DeployUnDeployInvalidBPMNPackageTestCase
+    private static final Log log = LogFactory.getLog(InvalidBPMNPackageDeploymentTestCase
                                                              .class);
 
     /**
