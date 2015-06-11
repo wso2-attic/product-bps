@@ -49,10 +49,10 @@ import java.io.IOException;
 public class ActivitiRestClient {
 
     private static final Log log = LogFactory.getLog(ActivitiRestClient.class);
-    private final static String username = "admin";
-    private final static String password = "admin";
-    private final static String userClaim = "paul";
-    private final static String userDelegate = "will";
+    private final static String USERNAME = "admin";
+    private final static String PASSWORD = "admin";
+    private final static String USER_CLAIM = "paul";
+    private final static String USER_DELEGATE = "will";
     private final static String NOT_AVAILABLE = "Not Available";
     private final static String AVAILABLE = "Available";
     private final static String ID = "id";
@@ -470,7 +470,7 @@ public class ActivitiRestClient {
         DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"action\" : \"claim\"," +
-                                               "\"assignee\" :\"" + userClaim + "\"}",
+                                               "\"assignee\" :\"" + USER_CLAIM + "\"}",
                                                ContentType.APPLICATION_JSON);
         httpPost.setEntity(params);
         HttpResponse response = httpClient.execute(httpPost);
@@ -489,7 +489,7 @@ public class ActivitiRestClient {
         DefaultHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
         StringEntity params = new StringEntity("{\"action\" : \"delegate\"," +
-                                               "\"assignee\" :\"" + userDelegate + "\"}",
+                                               "\"assignee\" :\"" + USER_DELEGATE + "\"}",
                                                ContentType.APPLICATION_JSON);
         httpPost.setEntity(params);
         HttpResponse response;
@@ -554,7 +554,7 @@ public class ActivitiRestClient {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         httpClient.getCredentialsProvider().setCredentials
                 (new AuthScope(target.getHostName(), target.getPort()),
-                 new UsernamePasswordCredentials(username, password));
+                 new UsernamePasswordCredentials(USERNAME, PASSWORD));
         return httpClient;
     }
 }
