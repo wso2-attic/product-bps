@@ -337,7 +337,20 @@
                                 <!--  Copying BPMN sample -->
                                 <zip destfile="target/samples/bpmn/HelloWorld.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
- 				
+                                <zip destfile="target/samples/bpmn/DeliveryScriptBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/DeliveryScriptBPMN"/>
+                                <zip destfile="target/samples/bpmn/LoanProcessBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/LoanProcessBPMN"/>
+                                <zip destfile="target/samples/bpmn/OrderBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderBPMN"/>
+				<zip destfile="target/samples/bpmn/PerformCalculationBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/PerformCalculationBPMN"/>
+                                <zip destfile="target/samples/bpmn/SubProcessBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/SubProcessBPMN"/>
+                                <zip destfile="target/samples/bpmn/VacationRequestBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestBPMN"/>
+
+
 				<concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">
 				org.restlet.level=SEVERE</concat>
                                 <echo message="######### Copying Samples Services are temporary skipped###########"/>
