@@ -39,6 +39,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * This Class contains methods which uses the BPMN Rest Services to carryout BPMN Task
@@ -59,12 +61,12 @@ public class ActivitiRestClient {
     private final static String NAME = "name";
     private int port;
     private String hostname = "";
-    private String serviceURL = "";
+    private URL serviceURL;
 
-    public ActivitiRestClient(String portM, String hostnameM) {
+    public ActivitiRestClient(String portM, String hostnameM) throws MalformedURLException {
         port = Integer.parseInt(portM);
         hostname = hostnameM;
-        serviceURL = "http://" + hostnameM + ":" + portM + "/bpmn/";
+        serviceURL = new URL("http",hostname,port,"/bpmn/");
     }
 
 
