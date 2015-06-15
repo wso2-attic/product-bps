@@ -291,7 +291,7 @@
 
                                 <!--9 Jaggery -->
                                 <featureArtifactDef>
-                                    org.jaggeryjs:org.jaggeryjs.server.feature:${jaggeryjs.server.version}
+                                    org.jaggeryjs:org.jaggeryjs.feature:${jaggeryjs.server.version}
                                 </featureArtifactDef>
 
                                 <featureArtifactDef>
@@ -614,7 +614,7 @@
 
                                 <!-- 9 Jaggery -->
                                 <feature>
-                                    <id>org.jaggeryjs.server.feature.group</id>
+                                    <id>org.jaggeryjs.feature.group</id>
                                     <version>${jaggeryjs.server.version}</version>
                                 </feature>
 
@@ -909,7 +909,7 @@
 
                                 <!--9 Jaggery -->
                                 <feature>
-                                    <id>org.jaggeryjs.server.feature.group</id>
+                                    <id>org.jaggeryjs.feature.group</id>
                                     <version>${jaggeryjs.server.version}</version>
                                 </feature>
                                 <feature>
