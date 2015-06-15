@@ -66,7 +66,7 @@ public class ActivitiRestClient {
     public ActivitiRestClient(String portM, String hostnameM) throws MalformedURLException {
         port = Integer.parseInt(portM);
         hostname = hostnameM;
-        serviceURL = new URL("http",hostname,port,"/bpmn/");
+        serviceURL = new URL("http", hostname, port, "/bpmn/");
     }
 
 
