@@ -268,12 +268,12 @@
         </fileSet>
 	
         <!-- copy the landing page webapp -->
-        <fileSet>
+        <!--fileSet>
             <directory>lib/home</directory>
             <outputDirectory>
                 ${pom.artifactId}-${pom.version}/repository/deployment/server/webapps/STRATOS_ROOT
             </outputDirectory>
-        </fileSet>
+        </fileSet-->
 
         <!-- Copy BPEL Client request property files -->
         <fileSet>
@@ -281,7 +281,7 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/client/resources</outputDirectory>
         </fileSet>
  	
-<!-- Copy Jaggery Modules-->
+        <!-- Copy Jaggery Modules-->
         <fileSet>
             <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/modules</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/modules</outputDirectory>
