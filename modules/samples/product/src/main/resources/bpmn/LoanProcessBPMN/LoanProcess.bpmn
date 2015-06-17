@@ -4,8 +4,8 @@
     <startEvent id="startevent1" name="Start"></startEvent>
     <userTask id="usertask1" name="Fill Application" activiti:assignee="kermit">
       <extensionElements>
-        <activiti:formProperty id="income" name="Income " type="double" variable="income"></activiti:formProperty>
-        <activiti:formProperty id="loanAmount" name="Loan Amount" type="double" variable="loanAmount"></activiti:formProperty>
+        <activiti:formProperty id="income" name="Income " type="long" variable="income"></activiti:formProperty>
+        <activiti:formProperty id="loanAmount" name="Loan Amount" type="long" variable="loanAmount"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
@@ -13,15 +13,15 @@
     <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="exclusivegateway1"></sequenceFlow>
     <userTask id="usertask2" name="Review Application" activiti:assignee="kermit">
       <extensionElements>
-        <activiti:formProperty id="loanAmount" name="Loan Amount " type="double" variable="loanAmount" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="loanAmount" name="Loan Amount " type="long" variable="loanAmount" writable="false"></activiti:formProperty>
         <activiti:formProperty id="comments" name="Additional Comments" type="string" variable="comments"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="usertask2"></sequenceFlow>
     <userTask id="usertask3" name="Revise Amount" activiti:assignee="kermit">
       <extensionElements>
-        <activiti:formProperty id="loanAmount" name="Previous Requested Amount " type="double" variable="loanAmount" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="revisedAmount" name="Revised Amount" type="double" variable="revisedAmount"></activiti:formProperty>
+        <activiti:formProperty id="loanAmount" name="Previous Requested Amount " type="long" variable="loanAmount" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="revisedAmount" name="Revised Amount" type="long" variable="revisedAmount"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="usertask3">

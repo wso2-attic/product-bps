@@ -5,22 +5,20 @@
     <userTask id="usertask1" name="Send vacation request" activiti:assignee="kermit">
       <extensionElements>
         <activiti:formProperty id="name" name="Name" type="string" variable="name"></activiti:formProperty>
-        <activiti:formProperty id="NumberOfDays" name="Number Of Days" type="double" variable="NumberOfDays"></activiti:formProperty>
+        <activiti:formProperty id="NumberOfDays" name="Number Of Days" type="long" variable="NumberOfDays"></activiti:formProperty>
         <activiti:formProperty id="reason" name="Reason for vacation request" type="string" variable="reason"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
     <userTask id="usertask2" name="Accept vacation request" activiti:assignee="kermit">
       <extensionElements>
-        <activiti:formProperty id="Name" name="Name" type="string" variable="Name" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="NumberOfDays" name="Number Of Days " type="double" variable="NumberOfDays" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="Name of user" name="Name" type="string" variable="name" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="NumberOfDays" name="Number Of Days " type="long" variable="NumberOfDays" writable="false"></activiti:formProperty>
         <activiti:formProperty id="reason" name="Reason" type="string" variable="reason"></activiti:formProperty>
         <activiti:formProperty id="comments" name="Comments " type="string" variable="comments"></activiti:formProperty>
-        <activiti:formProperty id="approve" name="Approve Request" type="enum" variable="approve">
+        <activiti:formProperty id="approve" name="Confirm Request" type="enum" variable="approve">
           <activiti:value id="true" name="approve"></activiti:value>
-        </activiti:formProperty>
-        <activiti:formProperty id="reject" name="Reject" type="enum" variable="reject">
-          <activiti:value id="false" name="reject"></activiti:value>
+           <activiti:value id="false" name="reject"></activiti:value>
         </activiti:formProperty>
       </extensionElements>
     </userTask>
