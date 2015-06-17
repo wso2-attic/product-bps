@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1434526139049" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
-  <process id="FilterScriptProcess" isClosed="false" isExecutable="true" name="FilterScriptProcess" processType="None">
+  <process id="FilterScriptProcess" isExecutable="true" name="FilterScriptProcess" processType="None">
     <startEvent id="startevent1" name="Start"/>
-    <userTask activiti:assignee="kermit" activiti:exclusive="true" id="usertask1" name="Issue order request">
+    <userTask activiti:assignee="kermit" id="usertask1" name="Issue order request">
       <extensionElements>
         <activiti:formProperty id="name" name="Name" type="string" variable="name"/>
         <activiti:formProperty id="orderId" name="Order Id" type="long" variable="orderId"/>
@@ -20,7 +20,7 @@
     <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="scripttask1"/>
     <exclusiveGateway default="localDelivery" gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway"/>
     <sequenceFlow id="flow3" sourceRef="scripttask1" targetRef="exclusivegateway1"/>
-    <userTask activiti:assignee="kermit" activiti:exclusive="true" id="usertask2" name="Send to shipping delivery">
+    <userTask activiti:assignee="kermit"id="usertask2" name="Send to shipping delivery">
       <extensionElements>
         <activiti:formProperty id="name" name="Name" type="string" variable="name" writable="false"/>
         <activiti:formProperty id="orderId" name="Order Id" type="long" variable="orderId" writable="false"/>
@@ -29,7 +29,7 @@
     <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="usertask2">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${orderSummary=="This is a shipping delivery"}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:assignee="kermit" activiti:exclusive="true" id="usertask3" name="Send to local delivery">
+    <userTask activiti:assignee="kermit" id="usertask3" name="Send to local delivery">
       <extensionElements>
         <activiti:formProperty id="name" name="Name" type="string" variable="name" writable="false"/>
         <activiti:formProperty id="orderId" name="Order Id" type="long" variable="orderId" writable="false"/>
