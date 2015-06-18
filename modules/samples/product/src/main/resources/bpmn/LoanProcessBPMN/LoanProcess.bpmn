@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
   <process id="LoanProcess" name="Loan Process" isExecutable="true">
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <userTask id="usertask1" name="Fill Application" activiti:assignee="kermit">
+    <startEvent id="startevent1" name="Start" activiti:initiator="clerk">
       <extensionElements>
         <activiti:formProperty id="income" name="Income " type="long" variable="income"></activiti:formProperty>
         <activiti:formProperty id="loanAmount" name="Loan Amount" type="long" variable="loanAmount"></activiti:formProperty>
       </extensionElements>
-    </userTask>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
+    </startEvent>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" default="flow3"></exclusiveGateway>
-    <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="exclusivegateway1"></sequenceFlow>
-    <userTask id="usertask2" name="Review Application" activiti:assignee="kermit">
+    <userTask id="usertask2" name="Review Application" activiti:assignee="manager">
       <extensionElements>
         <activiti:formProperty id="loanAmount" name="Loan Amount " type="long" variable="loanAmount" writable="false"></activiti:formProperty>
         <activiti:formProperty id="comments" name="Additional Comments" type="string" variable="comments"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="usertask2"></sequenceFlow>
-    <userTask id="usertask3" name="Revise Amount" activiti:assignee="kermit">
+    <userTask id="usertask3" name="Revise Amount" activiti:assignee="clerk">
+    <Documentation>
+     Your loan request was invalidated against the policy. Please review and resend.
+     </Documentation>
       <extensionElements>
         <activiti:formProperty id="loanAmount" name="Previous Requested Amount " type="long" variable="loanAmount" writable="false"></activiti:formProperty>
         <activiti:formProperty id="revisedAmount" name="Revised Amount" type="long" variable="revisedAmount"></activiti:formProperty>
@@ -29,18 +29,25 @@
     </sequenceFlow>
     <endEvent id="endevent2" name="End"></endEvent>
     <sequenceFlow id="flow6" sourceRef="usertask2" targetRef="endevent2"></sequenceFlow>
-    <userTask id="usertask4" name="Submit For Approval " activiti:assignee="kermit"></userTask>
+    <userTask id="usertask4" name="Submit For Approval " activiti:assignee="manager">
+      <extensionElements>
+        <activiti:formProperty id="NewLoanAmount" name="Revised Loan Amount" type="long" variable="revisedAmount"></activiti:formProperty>
+        <activiti:formProperty id="userIncome" name="Income" type="long" variable="income"></activiti:formProperty>
+        <activiti:formProperty id="approveRequest" name="Confirmation" type="enum" variable="confirmation">
+          <activiti:value id="true" name="approve"></activiti:value>
+          <activiti:value id="false" name="reject"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
     <sequenceFlow id="flow7" sourceRef="usertask3" targetRef="usertask4"></sequenceFlow>
     <endEvent id="endevent3" name="End"></endEvent>
     <sequenceFlow id="flow8" sourceRef="usertask4" targetRef="endevent3"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="startevent1" targetRef="exclusivegateway1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_LoanProcess">
     <bpmndi:BPMNPlane bpmnElement="LoanProcess" id="BPMNPlane_LoanProcess">
       <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
         <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="140.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
-        <omgdc:Bounds height="55.0" width="105.0" x="130.0" y="130.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
         <omgdc:Bounds height="40.0" width="40.0" x="280.0" y="138.0"></omgdc:Bounds>
@@ -60,14 +67,6 @@
       <bpmndi:BPMNShape bpmnElement="endevent3" id="BPMNShape_endevent3">
         <omgdc:Bounds height="35.0" width="35.0" x="630.0" y="60.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="85.0" y="157.0"></omgdi:waypoint>
-        <omgdi:waypoint x="130.0" y="157.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="235.0" y="157.0"></omgdi:waypoint>
-        <omgdi:waypoint x="280.0" y="158.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
         <omgdi:waypoint x="300.0" y="178.0"></omgdi:waypoint>
         <omgdi:waypoint x="299.0" y="216.0"></omgdi:waypoint>
@@ -90,6 +89,10 @@
       <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
         <omgdi:waypoint x="585.0" y="77.0"></omgdi:waypoint>
         <omgdi:waypoint x="630.0" y="77.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="85.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="158.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
