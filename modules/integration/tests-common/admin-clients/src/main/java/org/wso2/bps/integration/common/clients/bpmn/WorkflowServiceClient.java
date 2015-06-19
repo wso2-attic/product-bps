@@ -23,7 +23,6 @@ import org.wso2.bps.integration.common.clients.AuthenticateStubUtil;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNDeployment;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNInstance;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNProcess;
-import org.wso2.carbon.bpmn.stub.BPMNDeploymentServiceBPSExceptionException;
 import org.wso2.carbon.bpmn.stub.BPMNDeploymentServiceStub;
 import org.wso2.carbon.bpmn.stub.BPMNInstanceServiceStub;
 import org.wso2.carbon.utils.xml.XMLPrettyPrinter;
