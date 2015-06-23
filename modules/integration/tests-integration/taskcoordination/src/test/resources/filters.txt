@@ -1,5 +1,6 @@
 -*.stub*
 -*.stub_
+-*.stub_4.0.0
 -*.stub-
 -org.eclipse.*
 -*.equinox.*
@@ -16,3 +17,7 @@
 -*startup*
 -org.oasisOpen*
 -org.w3*
+**\wsPolicy\**\*.class
+**\schemaorg_apache_xmlbeans\**\*.class
+**\xmldsig\**\*.class
+**\oasisOpen\**\*.class
