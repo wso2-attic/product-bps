@@ -175,6 +175,12 @@
                 <groupId>org.apache.axis2.wso2</groupId>
                 <artifactId>axis2</artifactId>
                 <version>${axis2.osgi.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-codec.wso2</groupId>
+                        <artifactId>commons-codec</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.business-process</groupId>
@@ -240,6 +246,12 @@
                 <groupId>org.wso2.carbon.commons</groupId>
                 <artifactId>org.wso2.carbon.user.mgt.stub</artifactId>
                 <version>${carbon.commons.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-codec.wso2</groupId>
+                        <artifactId>commons-codec</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
@@ -394,11 +406,6 @@
                 <version>${jruby.version}</version>
             </dependency>
             <dependency>
-                <groupId>emma</groupId>
-                <artifactId>emma</artifactId>
-                <version>${emma.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>SecVerifier</artifactId>
                 <version>${carbon.kernel.version}</version>
@@ -415,7 +422,11 @@
                 <artifactId>org.wso2.carbon.bpmn.stub</artifactId>
                 <version>${carbon.business-process.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>${jacoco.agent.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.wso2.bps</groupId>
                 <artifactId>org.wso2.bps.multitenancy.styles</artifactId>
@@ -431,25 +442,31 @@
                 <artifactId>org.wso2.bps.multitenancy.login.ui</artifactId>
                 <version>${bps.version}</version>
             </dependency>
-	    <dependency>
+            <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>4.2.5</version>
-		        <!-- scope>test</scope -->
-	    </dependency>
-	    <dependency>
-		        <groupId>org.apache.httpcomponents</groupId>
-		        <artifactId>httpmime</artifactId>
-		        <version>4.3.6</version>
-			    <!-- scope>test</scope -->
-	    </dependency>
-	    <dependency>
-		        <groupId>org.json</groupId>
-		        <artifactId>json</artifactId>
-		        <version>20080701</version>
-		        <!-- scope>test</scope -->
-	    </dependency>
+                <!-- scope>test</scope -->
+            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.wso2.apache.httpcomponents</groupId>-->
+                <!--<artifactId>httpclient</artifactId>-->
+                <!--<version>${httpcomponents.wso2.version}</version>-->
+            <!--</dependency>-->
 
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>4.3.6</version>
+                <!-- scope>test</scope -->
+            </dependency>
+            <!---->
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20080701</version>
+                <!-- scope>test</scope -->
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -626,9 +643,11 @@
         <!-- Carbon Deployment Version -->
         <carbon.deployment.version>4.4.1</carbon.deployment.version>
 
-        <carbon.automationutils.version>4.3.0</carbon.automationutils.version>
+        <carbon.automationutils.version>4.4.1</carbon.automationutils.version>
 
-        <carbon.automation.version>4.3.1</carbon.automation.version>
+        <carbon.automation.version>4.4.1</carbon.automation.version>
+
+        <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
 
         <orbit.version.ode>1.3.5-wso2v13</orbit.version.ode>
 
@@ -643,6 +662,7 @@
         <rampart.version>1.6.1-wso2v14</rampart.version>
         <rampart.mar.version>1.6.1-wso2v14</rampart.mar.version>
         <rampart.osgi.version>1.6.1.wso2v14</rampart.osgi.version>
+        <httpcomponents.wso2.version>4.3.1.wso2v1</httpcomponents.wso2.version>
 
         <bouncycastle.version>132</bouncycastle.version>
         <version.commons.logging>1.1.1</version.commons.logging>
@@ -688,15 +708,14 @@
         <test.framework.version>4.3.1</test.framework.version>
 
         <groovy.version>1.1-rc-1</groovy.version>
-        <emma.version>2.1.5320</emma.version>
         <jruby.version>1.3.0</jruby.version>
 
         <!-- jaggery -->
         <process.feature.version>1.0.0</process.feature.version>
         <carbon.feature.version>1.1.0</carbon.feature.version>
         <jaggeryjs.server.version>0.10.1</jaggeryjs.server.version>
-	
-	<project.scm.id>wso2-scm-server</project.scm.id>
+
+        <project.scm.id>wso2-scm-server</project.scm.id>
     </properties>
 
     <mailingLists>
@@ -750,18 +769,18 @@
         </plugins>
         <pluginManagement>
             <plugins>
-		<plugin>
-                	<groupId>org.apache.maven.plugins</groupId>
-                	<artifactId>maven-release-plugin</artifactId>
-                	<configuration>
-                    		<preparationGoals>clean install</preparationGoals>
-                    		<autoVersionSubmodules>true</autoVersionSubmodules>
-                	</configuration>
-            	</plugin>
-            	<plugin>
-                	<groupId>org.apache.maven.plugins</groupId>
-                	<artifactId>maven-deploy-plugin</artifactId>
-            	</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <preparationGoals>clean install</preparationGoals>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-scr-plugin</artifactId>

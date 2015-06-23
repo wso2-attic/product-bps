@@ -17,10 +17,7 @@
 -*startup*
 -org.oasisOpen*
 -org.w3*
-#-org.wso2.carbon.bpel.b4p*
--schemaorg_apache*
--org.wso2.carbon.bpel.skeleton*
--org.wso2.carbon.bpel.b4p*
--org.wso2.carbon.humantask.skeleton*
-
-
+**\wsPolicy\**\*.class
+**\schemaorg_apache_xmlbeans\**\*.class
+**\xmldsig\**\*.class
+**\oasisOpen\**\*.class
