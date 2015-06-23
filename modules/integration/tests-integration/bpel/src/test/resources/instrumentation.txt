@@ -3,7 +3,7 @@ org.wso2.carbon.bpel.deployer
 org.wso2.carbon.bpel.cluster.notifier
 org.wso2.carbon.bpel.ui
 org.wso2.carbon.bpel.b4p
-org.wso2.carbon.bpel.bam.publisher
+org.wso2.carbon.bpel.analytics.publisher
 org.wso2.carbon.humantask
 org.wso2.carbon.humantask.deployer
 org.wso2.carbon.humantask.ui

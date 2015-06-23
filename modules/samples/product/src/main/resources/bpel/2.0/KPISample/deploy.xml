@@ -7,8 +7,8 @@
     <provide partnerLink="client">
       <service name="samples.bps.wso2.org:KPISampleProcess" port="KPISampleProcessPort"/>
     </provide>
-    <bamServerProfiles>
-    	<profile name="BAMServerProfile" location="file:BAMServerProfile.xml"/>
-    </bamServerProfiles>
+    <analyticsServerProfiles>
+    	<profile name="AnalyticsServerProfile" location="file:AnalyticsServerProfile.xml"/>
+    </analyticsServerProfiles>
   </process>
 </deploy>
