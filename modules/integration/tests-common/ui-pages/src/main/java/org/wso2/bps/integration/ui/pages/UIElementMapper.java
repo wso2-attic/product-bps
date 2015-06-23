@@ -31,7 +31,6 @@ import java.util.Properties;
  */
 public class UIElementMapper {
     private static final Properties uiProperties = new Properties();
-
     private static final Log log = LogFactory.getLog(UIElementMapper.class);
     private static UIElementMapper instance;
 
