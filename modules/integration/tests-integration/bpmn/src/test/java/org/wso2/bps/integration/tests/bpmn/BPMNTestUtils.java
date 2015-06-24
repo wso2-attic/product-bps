@@ -31,6 +31,7 @@ public class BPMNTestUtils {
     public static void waitForProcessDeployment(WorkflowServiceClient workflowServiceClient, String bpmnPackageName,
                                                 int previousDeploymentCount) throws Exception {
         int serviceTimeOut = 0;
+
         while (true) {
             if (workflowServiceClient.getDeployments() != null && workflowServiceClient.getDeployments().length >
                                                                   previousDeploymentCount) {

@@ -17,3 +17,7 @@
 -*startup*
 -org.oasisOpen*
 -org.w3*
+**\wsPolicy\**\*.class
+**\schemaorg_apache_xmlbeans\**\*.class
+**\xmldsig\**\*.class
+**\oasisOpen\**\*.class
