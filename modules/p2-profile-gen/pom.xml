@@ -114,7 +114,7 @@
                                     org.wso2.carbon.business-process:org.wso2.carbon.bpel.ui.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
-                                    org.wso2.carbon.business-process:org.wso2.carbon.bpel.bam.publisher.feature:${carbon.business-process.version}
+                                    org.wso2.carbon.business-process:org.wso2.carbon.bpel.analytics.publisher.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
                                     org.wso2.carbon.business-process:org.wso2.carbon.bpmn.feature:${carbon.business-process.version}
@@ -387,7 +387,7 @@
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.bpel.bam.publisher.feature.group</id>
+                                    <id>org.wso2.carbon.bpel.analytics.publisher.feature.group</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>
@@ -682,7 +682,7 @@
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.bpel.bam.publisher.feature.group</id>
+                                    <id>org.wso2.carbon.bpel.analytics.publisher.feature.group</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                                 <feature>

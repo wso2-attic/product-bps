@@ -137,7 +137,7 @@
         </bpel:assign>
         <bpel:extensionActivity xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
         	xmlns:bam="http://wso2.org/bps/monitoring/publisher">
-	    	<bam:publish bamServerProfile="BAMServerProfile" streamName="org.wso2.bam.phone.retail.store.kpi" version="1.0.0" nickName="kpistore"/>
+	    	<bam:publish analyticsServerProfile="AnalyticsServerProfile" streamName="org.wso2.bam.phone.retail.store.kpi" version="1.0.0" nickName="kpistore"/>
 		</bpel:extensionActivity>
         <bpel:reply name="replyOutput" 
                partnerLink="client"

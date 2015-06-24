@@ -112,7 +112,7 @@
             </includes>
         </fileSet>
 
-        <!-- Copy bam.xml -->
+        <!-- Copy analytics.xml -->
 
         <fileSet>
             <directory>
@@ -120,7 +120,7 @@
             </directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/etc</outputDirectory>
             <includes>
-                <include>**/bam.xml</include>
+                <include>**/analytics.xml</include>
             </includes>
         </fileSet>
 
