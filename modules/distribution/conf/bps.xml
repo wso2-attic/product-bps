@@ -161,4 +161,7 @@
         <!--<tns:BpelInstanceDeletionLimit>1000</tns:BpelInstanceDeletionLimit>-->
     </tns:BpelUI>
 
+    <!--Timeout for the BPEL Transaction Manager-->
+    <!--<tns:TransactionManagerTimeout></tns:TransactionManagerTimeout>-->
+
 </tns:WSO2BPS>
