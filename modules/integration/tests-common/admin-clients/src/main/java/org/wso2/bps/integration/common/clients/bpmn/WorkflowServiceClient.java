@@ -156,6 +156,8 @@ public class WorkflowServiceClient {
     }
 
     public void undeploy(String deploymentName) throws Exception {
+
+        Thread.sleep(2000);
         deploymentServiceStub.undeploy(deploymentName);
     }
 
