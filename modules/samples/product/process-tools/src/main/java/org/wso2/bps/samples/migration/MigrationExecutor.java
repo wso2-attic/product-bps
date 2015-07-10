@@ -16,7 +16,11 @@
 package org.wso2.bps.samples.migration;
 
 
+import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
 import org.apache.commons.io.FilenameUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.wso2.bps.samples.migration.db.DBQuery;
 import org.wso2.bps.samples.migration.deployment.ArchiveBasedHumanTaskDeploymentUnitBuilder;
 import org.wso2.bps.samples.migration.utils.MigrationToolUtil;
@@ -24,14 +28,18 @@ import org.wso2.carbon.humantask.TTask;
 import org.wso2.carbon.humantask.core.HumanTaskConstants;
 import org.wso2.carbon.humantask.core.deployment.HumanTaskDeploymentUnit;
 import org.wso2.carbon.humantask.core.utils.HumanTaskStoreUtils;
+import org.xml.sax.SAXException;
 
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.Date;
-import java.util.Properties;
 import java.util.TimeZone;
 
 
@@ -45,8 +53,7 @@ public class MigrationExecutor {
     //DB query builder according to DB type
     private static DBQuery query;
     private static String BPS_HOME;
-    private static Properties dataSourceProp;
-    private static Properties configProp;
+    static String databaseURL = null;
 
     //Main method
     public static void main(String[] args) {
@@ -63,22 +70,18 @@ public class MigrationExecutor {
 
             //Get BPS HOME from bin directory
             BPS_HOME = System.getProperty("carbon.home");
-            //Load properties
-            String propertyFileName = BPS_HOME + File.separator + "repository" + File.separator + "conf" + File.separator + "datasources.properties";
-            dataSourceProp = MigrationToolUtil.getPropertyFile(propertyFileName);
-
-            System.out.println("Using datasources.properties file at :" + propertyFileName);
 
             //Set time zone for oracle
             TimeZone.setDefault(TimeZone.getTimeZone(System.getProperty("user.timezone")));
 
             //Repository Paths
-            String superTenantRepoPath = BPS_HOME + File.separator + "repository" + File.separator + "deployment" + File.separator + "server" + File.separator + "humantasks";
+            String superTenantRepoPath = BPS_HOME + File.separator + "repository" + File.separator + "deployment" +
+                    File.separator + "server" + File.separator + "humantasks";
             String tenantsRepoPath = BPS_HOME + File.separator + "repository" + File.separator + "tenants";
             System.out.println("SUPER TENANT REPOSITORY PATH:" + superTenantRepoPath);
             System.out.println("TENANTS REPOSITORY PATH:" + tenantsRepoPath);
 
-            query = new DBQuery(dataSourceProp);
+            query = new DBQuery(databaseURL);
 
             //Check DB schemas Exist
             if (!versionDBSchemasExists()) {
@@ -102,22 +105,60 @@ public class MigrationExecutor {
 
     /**
      * Create DB connection
-     *
-     * @param prop
-     * @throws Exception
+     * @return Connection
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws ClassNotFoundException
+     * @throws SQLException
      */
-    private static Connection getDBConnection(Properties prop) throws Exception {
-        String databaseURL = prop.getProperty("synapse.datasources.bpsds.url");
-        String databaseUsername = prop.getProperty("synapse.datasources.bpsds.username");
-        String databasePassword = prop.getProperty("synapse.datasources.bpsds.password");
-        Class.forName(prop.getProperty("synapse.datasources.bpsds.driverClassName"));
+    private static Connection getDBConnection() throws ParserConfigurationException, IOException, SAXException,
+            ClassNotFoundException, SQLException {
+        String databaseUsername = null;
+        String databasePassword = null;
+        String databaseDriver = null;
+        boolean dbConfigFound = false;
+        String configPath;
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            configPath = System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" +
+                    File.separator + "datasources" + File.separator + "bps-datasources.xml";
+        } else {
+            configPath = System.getProperty("carbon.home") + File.separator + ".." + File.separator + "repository" +
+                    File.separator + "conf" + File.separator + "datasources" + File.separator + "bps-datasources.xml";
+        }
+        System.out.println("Using datasource config file at :" + configPath);
+        File elementXmlFile = new File(configPath);
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        dbFactory.setIgnoringComments(true);
+        dbFactory.setIgnoringElementContentWhitespace(true);
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document document = dBuilder.parse(elementXmlFile);
+        document.getDocumentElement().normalize();
+        NodeList datasourceList = document.getDocumentElement().getElementsByTagName("datasource");
+        for (int i = 0; i < datasourceList.getLength(); i++) {
+            Node datasource = datasourceList.item(i);
+            String dbName = ((DeferredElementImpl) datasource).getElementsByTagName("name").item(0).getTextContent();
+            if(dbName.equals("BPS_DS")){
+                databaseURL = document.getDocumentElement().getElementsByTagName("url").item(i).getTextContent().split(";")[0];
+                databaseDriver = document.getDocumentElement().getElementsByTagName("driverClassName").item(i).getTextContent();
+                databaseUsername = document.getDocumentElement().getElementsByTagName("username").item(i).getTextContent();
+                databasePassword = document.getDocumentElement().getElementsByTagName("password").item(i).getTextContent();
+                dbConfigFound = true;
+                break;
+            }
+        }
+        if(!dbConfigFound){
+            System.out.println("ERROR: DB configurations not found or invalid!");
+            System.exit(0);
+        }
+        Class.forName(databaseDriver);
         return DriverManager.getConnection(databaseURL, databaseUsername, databasePassword);
     }
 
     //Check DB changes were exist
     private static boolean versionDBSchemasExists() throws Exception {
         try {
-            Connection conn = getDBConnection(dataSourceProp);
+            Connection conn = getDBConnection();
             conn.setAutoCommit(false);
             ResultSet resultList = null;
             Statement stmt = null;
@@ -174,7 +215,7 @@ public class MigrationExecutor {
     private static boolean migrateDB() throws Exception {
         System.out.println("Alteration to current DB schemas...");
         System.out.println("==========================================");
-        Connection conn = getDBConnection(dataSourceProp);
+        Connection conn = getDBConnection();
         conn.setAutoCommit(false);
         try {
 
@@ -272,7 +313,7 @@ public class MigrationExecutor {
      */
     private static void migrateHumanTasks(File archiveFile, int tenantId) throws Exception {
 
-        Connection conn = getDBConnection(dataSourceProp);
+        Connection conn = getDBConnection();
         conn.setAutoCommit(false);
         String md5sum = HumanTaskStoreUtils.getMD5Checksum(archiveFile);
         String packageName = FilenameUtils.removeExtension(archiveFile.getName());
@@ -341,7 +382,7 @@ public class MigrationExecutor {
      * @throws Exception
      */
     private static long getNextVersion() throws Exception {
-        Connection conn = getDBConnection(dataSourceProp);
+        Connection conn = getDBConnection();
         conn.setAutoCommit(false);
         ResultSet resultList = null;
         Statement stmt = null;
@@ -377,7 +418,7 @@ public class MigrationExecutor {
     }
 
     private static long getNextDeploymentID() throws Exception {
-        Connection conn = getDBConnection(dataSourceProp);
+        Connection conn = getDBConnection();
         conn.setAutoCommit(false);
         ResultSet resultList = null;
         Statement stmt = null;
@@ -418,7 +459,7 @@ public class MigrationExecutor {
      */
     private static void setVersion() throws Exception {
 
-        Connection conn = getDBConnection(dataSourceProp);
+        Connection conn = getDBConnection();
         conn.setAutoCommit(false);
         try {
             conn.createStatement().execute(query.getUPDATE_VERSION());

@@ -17,7 +17,6 @@ package org.wso2.bps.samples.migration.db;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 
 /**
  * Class used to trigger the relevant SQL query according to the DB type
@@ -47,10 +46,10 @@ public class DBQuery {
     private String ALTER_TASK_VERSION;
 
     //Initialize queries for Operation with constructor
-    public DBQuery(Properties prop) {
+    public DBQuery(String databaseURL) {
 
         //Get the database type using the database url configured in the properties file
-        databaseType = prop.getProperty("synapse.datasources.bpsds.url").split(":")[1].trim();
+        databaseType = databaseURL.split(":")[1].trim();
         INSERT_VERSION = "INSERT INTO HT_VERSIONS(id,TASK_VERSION) VALUES(1,0)";
         UPDATE_VERSION = " UPDATE HT_VERSIONS SET TASK_VERSION=TASK_VERSION+1";
         VERSION = "SELECT TASK_VERSION from HT_VERSIONS";

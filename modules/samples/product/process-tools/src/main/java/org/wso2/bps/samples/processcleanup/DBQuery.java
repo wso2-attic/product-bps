@@ -17,6 +17,7 @@ package org.wso2.bps.samples.processcleanup;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Properties;
 
@@ -49,17 +50,19 @@ public class DBQuery {
             System.setProperty("carbon.home", file.getCanonicalFile().toString());
 
             if (System.getProperty("os.name").startsWith("Windows")) {
-                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
+                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + "repository" +
+                        File.separator + "conf" + File.separator + "process-cleanup.properties"));
             } else {
-                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
+                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + ".." + File.separator +
+                        "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
         }
 
         //Get the database type using the database url configured in the properties file
-        String databaseType = prop.getProperty("database.url").split(":")[1];
+        String databaseType = CleanupExecutor.databaseURL.split(":")[1];
 
         //for mysql, oracle and sqlserver the query is same
         if (databaseType.equals("mysql") || databaseType.equals("oracle") || databaseType.equals("sqlserver")) {

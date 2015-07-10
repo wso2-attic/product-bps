@@ -15,10 +15,16 @@
  */
 package org.wso2.bps.samples.processcleanup;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
 import java.sql.*;
 import java.util.*;
 
@@ -27,6 +33,7 @@ public class CleanupExecutor {
     //DB query builder according to DB type
     private static DBQuery query = new DBQuery();
     private static HashMap<String, List<String>> map;
+    static String databaseURL = null;
 
     //Get user configurations from processCleanup.properties file
     private static String getProperty(String property) throws Exception {
@@ -35,20 +42,65 @@ public class CleanupExecutor {
         System.setProperty("carbon.home", file.getCanonicalFile().toString());
 
         if (System.getProperty("os.name").startsWith("Windows")) {
-            prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
+            prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + "repository" +
+                    File.separator + "conf" + File.separator + "process-cleanup.properties"));
         } else {
-            prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
+            prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + ".." + File.separator +
+                    "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
         }
         return prop.getProperty(property);
 
     }
 
-    //Create DB connection
-    private static Connection getDBConnection() throws Exception {
-        String databaseURL = getProperty("database.url");
-        String databaseUsername = getProperty("database.username");
-        String databasePassword = getProperty("database.password");
-        Class.forName(getProperty("database.driver"));
+    /**
+     * Create DB connection
+     * @return Connection
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    private static Connection getDBConnection() throws ParserConfigurationException, IOException, SAXException,
+            ClassNotFoundException, SQLException {
+        String databaseUsername = null;
+        String databasePassword = null;
+        String databaseDriver = null;
+        boolean dbConfigFound = false;
+        String configPath;
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            configPath = System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" +
+                    File.separator + "datasources" + File.separator + "bps-datasources.xml";
+        } else {
+            configPath = System.getProperty("carbon.home") + File.separator + ".." + File.separator + "repository" +
+                    File.separator + "conf" + File.separator + "datasources" + File.separator + "bps-datasources.xml";
+        }
+        System.out.println("Using datasource config file at :" + configPath);
+        File elementXmlFile = new File(configPath);
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        dbFactory.setIgnoringComments(true);
+        dbFactory.setIgnoringElementContentWhitespace(true);
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document document = dBuilder.parse(elementXmlFile);
+        document.getDocumentElement().normalize();
+        NodeList datasourceList = document.getDocumentElement().getElementsByTagName("datasource");
+        for (int i = 0; i < datasourceList.getLength(); i++) {
+            Node datasource = datasourceList.item(i);
+            String dbName = ((DeferredElementImpl) datasource).getElementsByTagName("name").item(0).getTextContent();
+            if(dbName.equals("BPS_DS")){
+                databaseURL = document.getDocumentElement().getElementsByTagName("url").item(i).getTextContent().split(";")[0];
+                databaseDriver = document.getDocumentElement().getElementsByTagName("driverClassName").item(i).getTextContent();
+                databaseUsername = document.getDocumentElement().getElementsByTagName("username").item(i).getTextContent();
+                databasePassword = document.getDocumentElement().getElementsByTagName("password").item(i).getTextContent();
+                dbConfigFound = true;
+                break;
+            }
+        }
+        if(!dbConfigFound){
+            System.out.println("ERROR: DB configurations not found or invalid!");
+            System.exit(0);
+        }
+        Class.forName(databaseDriver);
         return DriverManager.getConnection(databaseURL, databaseUsername, databasePassword);
     }
 
