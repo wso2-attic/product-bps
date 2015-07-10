@@ -57,8 +57,6 @@ public class MigrationExecutor {
 
     //Main method
     public static void main(String[] args) {
-
-
         try {
             System.out.println("Initialize Migration...");
             System.out.println("==========================================");
@@ -70,7 +68,8 @@ public class MigrationExecutor {
 
             //Get BPS HOME from bin directory
             BPS_HOME = System.getProperty("carbon.home");
-
+            //Load properties
+            initializeDBConnection();
             //Set time zone for oracle
             TimeZone.setDefault(TimeZone.getTimeZone(System.getProperty("user.timezone")));
 
@@ -112,7 +111,7 @@ public class MigrationExecutor {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    private static Connection getDBConnection() throws ParserConfigurationException, IOException, SAXException,
+    private static Connection initializeDBConnection() throws ParserConfigurationException, IOException, SAXException,
             ClassNotFoundException, SQLException {
         String databaseUsername = null;
         String databasePassword = null;
@@ -143,12 +142,13 @@ public class MigrationExecutor {
                 databaseDriver = document.getDocumentElement().getElementsByTagName("driverClassName").item(i).getTextContent();
                 databaseUsername = document.getDocumentElement().getElementsByTagName("username").item(i).getTextContent();
                 databasePassword = document.getDocumentElement().getElementsByTagName("password").item(i).getTextContent();
+
                 dbConfigFound = true;
                 break;
             }
         }
         if(!dbConfigFound){
-            System.out.println("ERROR: DB configurations not found or invalid!");
+            System.out.println("DB configurations not found or invalid!");
             System.exit(0);
         }
         Class.forName(databaseDriver);
@@ -158,7 +158,7 @@ public class MigrationExecutor {
     //Check DB changes were exist
     private static boolean versionDBSchemasExists() throws Exception {
         try {
-            Connection conn = getDBConnection();
+            Connection conn = initializeDBConnection();
             conn.setAutoCommit(false);
             ResultSet resultList = null;
             Statement stmt = null;
@@ -215,7 +215,7 @@ public class MigrationExecutor {
     private static boolean migrateDB() throws Exception {
         System.out.println("Alteration to current DB schemas...");
         System.out.println("==========================================");
-        Connection conn = getDBConnection();
+        Connection conn = initializeDBConnection();
         conn.setAutoCommit(false);
         try {
 
@@ -313,7 +313,7 @@ public class MigrationExecutor {
      */
     private static void migrateHumanTasks(File archiveFile, int tenantId) throws Exception {
 
-        Connection conn = getDBConnection();
+        Connection conn = initializeDBConnection();
         conn.setAutoCommit(false);
         String md5sum = HumanTaskStoreUtils.getMD5Checksum(archiveFile);
         String packageName = FilenameUtils.removeExtension(archiveFile.getName());
@@ -382,7 +382,7 @@ public class MigrationExecutor {
      * @throws Exception
      */
     private static long getNextVersion() throws Exception {
-        Connection conn = getDBConnection();
+        Connection conn = initializeDBConnection();
         conn.setAutoCommit(false);
         ResultSet resultList = null;
         Statement stmt = null;
@@ -418,7 +418,7 @@ public class MigrationExecutor {
     }
 
     private static long getNextDeploymentID() throws Exception {
-        Connection conn = getDBConnection();
+        Connection conn = initializeDBConnection();
         conn.setAutoCommit(false);
         ResultSet resultList = null;
         Statement stmt = null;
@@ -459,7 +459,7 @@ public class MigrationExecutor {
      */
     private static void setVersion() throws Exception {
 
-        Connection conn = getDBConnection();
+        Connection conn = initializeDBConnection();
         conn.setAutoCommit(false);
         try {
             conn.createStatement().execute(query.getUPDATE_VERSION());

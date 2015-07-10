@@ -22,7 +22,7 @@ import java.util.Date;
  * Class used to trigger the relevant SQL query according to the DB type
  */
 public class DBQuery {
-    private String databaseType;
+    String databaseURL;
     //DB queries for each operation
 
     //Insert queries
@@ -47,9 +47,8 @@ public class DBQuery {
 
     //Initialize queries for Operation with constructor
     public DBQuery(String databaseURL) {
-
+        this.databaseURL = databaseURL;
         //Get the database type using the database url configured in the properties file
-        databaseType = databaseURL.split(":")[1].trim();
         INSERT_VERSION = "INSERT INTO HT_VERSIONS(id,TASK_VERSION) VALUES(1,0)";
         UPDATE_VERSION = " UPDATE HT_VERSIONS SET TASK_VERSION=TASK_VERSION+1";
         VERSION = "SELECT TASK_VERSION from HT_VERSIONS";
@@ -59,13 +58,13 @@ public class DBQuery {
         ALTER_TASK_DEF_NAME = "ALTER TABLE HT_TASK ADD COLUMN TASK_DEF_NAME VARCHAR(255) ";
         ALTER_TASK_VERSION = "ALTER TABLE HT_TASK ADD COLUMN TASK_VERSION BIGINT";
 
-        if (databaseType.equals("mysql") || databaseType.equals("sqlserver")) {
+        if (databaseURL.contains("mysql") || databaseURL.contains("sqlserver")) {
 
             HT_DEPLOYMENT_UNIT = "CREATE TABLE HT_DEPLOYMENT_UNIT(id BIGINT NOT NULL, CHECKSUM VARCHAR(255)NOT NULL, " + "DEPLOYED_ON DATETIME, DEPLOY_DIR VARCHAR(255) NOT NULL, NAME VARCHAR(255) NOT NULL, " + "PACKAGE_NAME VARCHAR(255) NOT NULL, STATUS VARCHAR(255) NOT NULL, TENANT_ID BIGINT NOT NULL," + " VERSION BIGINT NOT NULL, PRIMARY KEY (id))";
             HT_VERSIONS = "CREATE TABLE HT_VERSIONS (id BIGINT NOT NULL, TASK_VERSION BIGINT NOT NULL, " +
                     "PRIMARY KEY (id))";
 
-        } else if (databaseType.equals("oracle")) {
+        } else if (databaseURL.contains("oracle")) {
 
             HT_DEPLOYMENT_UNIT = "CREATE TABLE HT_DEPLOYMENT_UNIT (id NUMBER NOT NULL, CHECKSUM VARCHAR2(255) NOT NULL, " + "DEPLOYED_ON TIMESTAMP, DEPLOY_DIR VARCHAR2(255) NOT NULL, NAME VARCHAR2(255) NOT NULL, " + "PACKAGE_NAME VARCHAR2(255) NOT NULL, STATUS VARCHAR2(255) NOT NULL, TENANT_ID NUMBER NOT NULL, VERSION NUMBER NOT NULL, PRIMARY KEY (id))";
             HT_VERSIONS = "CREATE TABLE HT_VERSIONS (id NUMBER NOT NULL, TASK_VERSION NUMBER NOT NULL, PRIMARY KEY (id)) ";
@@ -73,17 +72,17 @@ public class DBQuery {
             ALTER_PACKAGE_NAME = "ALTER TABLE HT_TASK ADD PACKAGE_NAME VARCHAR(255) ";
             ALTER_TASK_DEF_NAME = "ALTER TABLE HT_TASK ADD TASK_DEF_NAME VARCHAR(255)";
 
-        } else if (databaseType.equals("h2")) {
+        } else if (databaseURL.contains("h2")) {
 
             HT_DEPLOYMENT_UNIT = "CREATE TABLE HT_DEPLOYMENT_UNIT (id BIGINT NOT NULL, CHECKSUM VARCHAR(255) NOT NULL, DEPLOYED_ON TIMESTAMP, DEPLOY_DIR VARCHAR(255) NOT NULL, NAME VARCHAR(255) NOT NULL, PACKAGE_NAME VARCHAR(255) NOT NULL, STATUS VARCHAR(255) NOT NULL, TENANT_ID BIGINT NOT NULL, VERSION BIGINT NOT NULL, PRIMARY KEY (id))";
             HT_VERSIONS = "CREATE TABLE HT_VERSIONS (id BIGINT NOT NULL, TASK_VERSION BIGINT NOT NULL, PRIMARY KEY (id))";
 
-        } else if (databaseType.equals("postgresql")) {
+        } else if (databaseURL.contains("postgresql")) {
 
             HT_DEPLOYMENT_UNIT = "CREATE TABLE HT_DEPLOYMENT_UNIT (id BIGINT NOT NULL, CHECKSUM VARCHAR(255) NOT NULL, DEPLOYED_ON TIMESTAMP, DEPLOY_DIR VARCHAR(255) NOT NULL, NAME VARCHAR(255) NOT NULL, PACKAGE_NAME VARCHAR(255) NOT NULL, STATUS VARCHAR(255) NOT NULL, TENANT_ID BIGINT NOT NULL, VERSION BIGINT NOT NULL, PRIMARY KEY (id))";
             HT_VERSIONS = "CREATE TABLE HT_VERSIONS (id BIGINT NOT NULL, TASK_VERSION BIGINT NOT NULL, PRIMARY KEY (id))";
 
-        } else if (databaseType.equals("derby")) {
+        } else if (databaseURL.contains("derby")) {
 
             HT_DEPLOYMENT_UNIT = "CREATE TABLE HT_DEPLOYMENT_UNIT(id BIGINT NOT NULL, CHECKSUM VARCHAR(255) NOT NULL, DEPLOYED_ON TIMESTAMP, DEPLOY_DIR VARCHAR(255) NOT NULL, NAME VARCHAR(255) NOT NULL, PACKAGE_NAME VARCHAR(255) NOT NULL, STATUS VARCHAR(255) NOT NULL, TENANT_ID BIGINT NOT NULL, VERSION BIGINT NOT NULL, PRIMARY KEY (id))";
             HT_VERSIONS = "CREATE TABLE HT_VERSIONS(id BIGINT NOT NULL,TASK_VERSION BIGINT NOT NULL, PRIMARY KEY (id))";
@@ -137,7 +136,7 @@ public class DBQuery {
     public String getINSERT_DEPLOYMENT_UNIT(long id, String checkSum, Date deployOn, String deployPath,
                                             String name,
                                             String packageName, int tenantID, long version) {
-        if (databaseType.equals("oracle")) {
+        if (databaseURL.contains("oracle")) {
             setINSERT_DEPLOYMENT_UNIT("INSERT INTO HT_DEPLOYMENT_UNIT VALUES(" + id + ",'" + checkSum + "'," +
                     "sysdate,'" + deployPath + "'," +
                     "" + "'" + name + "'," +

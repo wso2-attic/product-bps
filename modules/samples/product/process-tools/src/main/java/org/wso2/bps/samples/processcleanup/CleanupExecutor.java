@@ -15,7 +15,7 @@
  */
 package org.wso2.bps.samples.processcleanup;
 
-import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
+import org.apache.xerces.dom.DeferredElementImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -30,26 +30,18 @@ import java.util.*;
 
 // The main class
 public class CleanupExecutor {
-    //DB query builder according to DB type
-    private static DBQuery query = new DBQuery();
     private static HashMap<String, List<String>> map;
     static String databaseURL = null;
+    static String bpsHome = null;
+    //DB query builder according to DB type
+    private static DBQuery query;
 
     //Get user configurations from processCleanup.properties file
     private static String getProperty(String property) throws Exception {
         Properties prop = new Properties();
-        File file = new File("." + File.separator);
-        System.setProperty("carbon.home", file.getCanonicalFile().toString());
-
-        if (System.getProperty("os.name").startsWith("Windows")) {
-            prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + "repository" +
-                    File.separator + "conf" + File.separator + "process-cleanup.properties"));
-        } else {
-            prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + ".." + File.separator +
-                    "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
-        }
+        String configPath = bpsHome + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties";
+        prop.load(new FileInputStream(configPath));
         return prop.getProperty(property);
-
     }
 
     /**
@@ -61,20 +53,23 @@ public class CleanupExecutor {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    private static Connection getDBConnection() throws ParserConfigurationException, IOException, SAXException,
+    private static Connection initializeDBConnection() throws ParserConfigurationException, IOException, SAXException,
             ClassNotFoundException, SQLException {
         String databaseUsername = null;
         String databasePassword = null;
         String databaseDriver = null;
         boolean dbConfigFound = false;
-        String configPath;
-        if (System.getProperty("os.name").startsWith("Windows")) {
-            configPath = System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" +
-                    File.separator + "datasources" + File.separator + "bps-datasources.xml";
-        } else {
-            configPath = System.getProperty("carbon.home") + File.separator + ".." + File.separator + "repository" +
-                    File.separator + "conf" + File.separator + "datasources" + File.separator + "bps-datasources.xml";
+        String carbon = System.getProperty("carbon.home");
+        String path[] = carbon.split(File.separator);
+        bpsHome = "";
+        for (int i = 0; i < path.length; i++) {
+            bpsHome = bpsHome + path[i] + File.separator;
+            if(path[i].contains("wso2bps")){
+                break;
+            }
         }
+        String configPath = bpsHome + "repository" + File.separator + "conf" + File.separator + "datasources" +
+                File.separator + "bps-datasources.xml";
         System.out.println("Using datasource config file at :" + configPath);
         File elementXmlFile = new File(configPath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -144,7 +139,7 @@ public class CleanupExecutor {
 
     //Registry and DB cleanup process
     private static boolean deletePackages(String packageName) throws Exception {
-        Connection conn = getDBConnection();
+        Connection conn = initializeDBConnection();
         conn.setAutoCommit(false);
         String clientTrustStorePath = getProperty("clientTrustStorePath");
         String trustStorePassword = getProperty("clientTrustStorePassword");
@@ -219,7 +214,7 @@ public class CleanupExecutor {
 
     //Using the search query gets all deletable package list
     private static HashMap<String, List<String>> getDeletablePackageList(String name) throws Exception {
-        Statement stmt = getDBConnection().createStatement();
+        Statement stmt = initializeDBConnection().createStatement();
         String filters = getFilters();
         String sql;
         if(name != null){
@@ -296,6 +291,10 @@ public class CleanupExecutor {
     }
 
     public static void main(String[] args) throws Exception {
+        File file = new File("." + File.separator);
+        System.setProperty("carbon.home", file.getCanonicalFile().toString());
+        initializeDBConnection();
+        query = new DBQuery(databaseURL, bpsHome);
         TimeZone.setDefault(TimeZone.getTimeZone(getProperty("user.timezone")));
         System.out.println("\n=============ATTENTION=================\n" +
                 "This tool deletes selected process versions and optionally all corresponding process instances.\n" +

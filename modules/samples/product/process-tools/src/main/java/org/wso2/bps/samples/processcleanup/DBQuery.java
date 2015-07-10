@@ -42,30 +42,19 @@ public class DBQuery {
     private String STORE_DU;
     private String STORE_PROCESS;
 
-    DBQuery() {
+    DBQuery(String databaseURL, String bpsHome) {
         Properties prop = new Properties();
 
         try {
-            File file = new File("." + File.separator);
-            System.setProperty("carbon.home", file.getCanonicalFile().toString());
-
-            if (System.getProperty("os.name").startsWith("Windows")) {
-                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + "repository" +
-                        File.separator + "conf" + File.separator + "process-cleanup.properties"));
-            } else {
-                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + ".." + File.separator +
-                        "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
-            }
+            String configPath = bpsHome + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties";
+            prop.load(new FileInputStream(configPath));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
         }
 
-        //Get the database type using the database url configured in the properties file
-        String databaseType = CleanupExecutor.databaseURL.split(":")[1];
-
         //for mysql, oracle and sqlserver the query is same
-        if (databaseType.equals("mysql") || databaseType.equals("oracle") || databaseType.equals("sqlserver")) {
+        if (databaseURL.contains("mysql") || databaseURL.contains("oracle") || databaseURL.contains("sqlserver")) {
 
             SEARCH = "select distinct(s.PID) as PROCESS_ID, o.ID, s.VERSION, s.DU\n" +
                     "from STORE_PROCESS s left join ODE_PROCESS o\n" +
@@ -97,7 +86,7 @@ public class DBQuery {
             STORE_DU = "delete from STORE_DU where NAME=\"{0}\"";
             STORE_PROCESS = "delete from STORE_PROCESS where DU=\"{0}\"";
 
-        } else if (databaseType.equals("h2")) {
+        } else if (databaseURL.contains("h2")) {
             //todo: need to update the queries for H2 DB type
             System.out.println("H2 not yet supported.");
             System.exit(0);
