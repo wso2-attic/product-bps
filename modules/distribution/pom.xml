@@ -327,6 +327,8 @@
 
                                 <zip destfile="target/samples/humantask/ClaimsApprovalTask.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/humantask/ClaimsApprovalTask"/>
+                                <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithHTRenderings.zip"
+                                     basedir="${basedir}/../samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithHTRenderings"/>
                                 <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithMultipleDomains.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/humantask/ClaimsApprovalTaskWithMultipleDomains"/>
                                 <zip destfile="target/samples/humantask/ClaimsApprovalTaskWithDeadline.zip"
