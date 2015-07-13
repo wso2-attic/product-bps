@@ -16,7 +16,7 @@
 package org.wso2.bps.samples.migration;
 
 
-import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
+import org.apache.xerces.dom.DeferredElementImpl;
 import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -117,14 +117,8 @@ public class MigrationExecutor {
         String databasePassword = null;
         String databaseDriver = null;
         boolean dbConfigFound = false;
-        String configPath;
-        if (System.getProperty("os.name").startsWith("Windows")) {
-            configPath = System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" +
+        String configPath = System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" +
                     File.separator + "datasources" + File.separator + "bps-datasources.xml";
-        } else {
-            configPath = System.getProperty("carbon.home") + File.separator + ".." + File.separator + "repository" +
-                    File.separator + "conf" + File.separator + "datasources" + File.separator + "bps-datasources.xml";
-        }
         System.out.println("Using datasource config file at :" + configPath);
         File elementXmlFile = new File(configPath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
