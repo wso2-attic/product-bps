@@ -1,5 +1,5 @@
 IF (OBJECT_ID('cleanInstance') IS NOT NULL)
-  DROP PROCEDURE cleanInstance
+  DROP PROCEDURE cleanInstance;
 GO
 IF (OBJECT_ID('TEMP_CLEANUP') IS NOT NULL)
   DROP TABLE TEMP_CLEANUP;
@@ -15,7 +15,7 @@ GO
 CREATE PROCEDURE cleanInstance
 AS
 BEGIN
-	PRINT ' Start deleting instance data with instance ids ' 
+	PRINT ' Start deleting instance data with instance ids ';
 	BEGIN TRANSACTION;
 	DELETE FROM ODE_EVENT WHERE INSTANCE_ID IN (SELECT ID FROM TEMP_CLEANUP);
   	DELETE FROM ODE_CORSET_PROP WHERE CORRSET_ID IN (SELECT cs.CORRELATION_SET_ID FROM ODE_CORRELATION_SET cs WHERE cs.SCOPE_ID IN (SELECT os.SCOPE_ID FROM ODE_SCOPE os WHERE	 os.PROCESS_INSTANCE_ID IN (SELECT ID FROM TEMP_CLEANUP)));
@@ -30,7 +30,14 @@ BEGIN
   	DELETE FROM ODE_MESSAGE_ROUTE WHERE PROCESS_INSTANCE_ID IN (SELECT ID FROM TEMP_CLEANUP);
   	DELETE FROM ODE_PROCESS_INSTANCE WHERE ID IN (SELECT ID FROM TEMP_CLEANUP);
 	COMMIT;
-	PRINT ' End deleting instance data with instance ids'
+	PRINT ' End deleting instance data with instance ids ';
+END
+GO
+
+BEGIN
+  PRINT (' Starting cleanInstance procedure ');
+  EXEC cleanInstance;
+  PRINT (' Ending cleanInstance procedure '); 
 END
 GO
 
@@ -47,7 +54,7 @@ GO
 CREATE PROCEDURE cleanTaskInstance
 AS
 BEGIN
-	PRINT ' Start deleting task instance data with instance ids ' 
+	PRINT ' Start deleting task instance data with instance ids '; 
 	BEGIN TRANSACTION;
 	DELETE FROM HT_DEADLINE WHERE TASK_ID IN (SELECT ID FROM TEMP_CLEANUP);
 	DELETE FROM HT_EVENT WHERE HT_EVENT.TASK_ID IN (SELECT ID FROM TEMP_CLEANUP);
@@ -60,7 +67,7 @@ BEGIN
 	DELETE FROM HT_TASK_COMMENT WHERE TASK_ID IN(SELECT ID FROM TEMP_CLEANUP);
 	DELETE FROM HT_TASK WHERE ID IN(SELECT ID FROM TEMP_CLEANUP);
 	COMMIT;
-	PRINT ' End deleting task instance data with instance ids'
+	PRINT ' End deleting task instance data with instance ids ';
 END
 GO
 
