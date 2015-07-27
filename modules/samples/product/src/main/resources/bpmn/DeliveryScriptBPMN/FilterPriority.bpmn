@@ -12,13 +12,13 @@
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow2" sourceRef="scripttask1" targetRef="exclusivegateway1"></sequenceFlow>
     <userTask id="usertask2" name="Send to shipping delivery" activiti:assignee="customer">
-      <documentation>${userName} your order is a shipping delivery.Therefore shipping charges will be included.</documentation>
+      <documentation>${name} your order is a shipping delivery.Therefore shipping charges will be included.</documentation>
     </userTask>
     <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="usertask2">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${orderSummary=="This is a shipping delivery"}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="usertask3" name="Send to local delivery" activiti:assignee="customer">
-      <documentation>${userName} Your order is a local delivery.Therefore no shipping charges.</documentation>
+      <documentation>${name} Your order is a local delivery.Therefore no shipping charges.</documentation>
     </userTask>
     <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="usertask3"></sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
