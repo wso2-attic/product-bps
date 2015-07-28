@@ -351,6 +351,8 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestBPMN"/>
 				<zip destfile="target/samples/bpmn/CallActivityBPMN.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/CallActivityBPMN"/>
+				<zip destfile="target/samples/bpmn/ManualTaskTestBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/ManualTaskTestBPMN"/>
 
 				<concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">
 				org.restlet.level=SEVERE</concat>
