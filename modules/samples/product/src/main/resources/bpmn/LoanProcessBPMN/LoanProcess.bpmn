@@ -16,9 +16,6 @@
     </userTask>
     <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="usertask2"></sequenceFlow>
     <userTask id="usertask3" name="Revise Amount" activiti:assignee="clerk">
-    <Documentation>
-     Your loan request was invalidated against the policy. Please review and resend.
-     </Documentation>
       <extensionElements>
         <activiti:formProperty id="loanAmount" name="Previous Requested Amount " type="long" variable="loanAmount" writable="false"></activiti:formProperty>
         <activiti:formProperty id="revisedAmount" name="Revised Amount" type="long" variable="revisedAmount"></activiti:formProperty>
