@@ -40,7 +40,7 @@ public class BPMNDataPublisherTestCase extends BPSMasterTest {
 			throws Exception {
 		AnalyticsTable analyticsTable =
 				persistenceClient.getAnalyticsTable(PROCESS_INSTANCE_TABLE, STREAM_VERSION);
-		Assert.assertEquals(analyticsTable.getAnalyticsTableRecords().length, 5,
+		Assert.assertEquals(analyticsTable.getAnalyticsTableRecords().length, 8,
 		                    "Table column count is wrong");
 		Assert.assertEquals(analyticsTable.getPersist(), true, "Table persistence state is wrong");
 	}
@@ -49,7 +49,7 @@ public class BPMNDataPublisherTestCase extends BPSMasterTest {
 			throws Exception {
 		AnalyticsTable analyticsTable =
 				persistenceClient.getAnalyticsTable(TASK_INSTANCE_TABLE, STREAM_VERSION);
-		Assert.assertEquals(analyticsTable.getAnalyticsTableRecords().length, 6,
+		Assert.assertEquals(analyticsTable.getAnalyticsTableRecords().length, 8,
 		                    "Table column count is wrong");
 		Assert.assertEquals(analyticsTable.getPersist(), true, "Table persistence state is wrong");
 	}
