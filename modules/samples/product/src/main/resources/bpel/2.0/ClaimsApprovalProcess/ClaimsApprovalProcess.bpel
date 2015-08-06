@@ -139,7 +139,7 @@
                     <b4p:peopleActivity name="TestTASKPeopleActivity"
                                         inputVariable="b4pInput"
                                         outputVariable="b4pOutput"
-                                        isSkipable="no">
+                                        isSkipable="yes">
                         <b4p:remoteTask partnerLink="b4pPartnerLink"
                                         operation="approve"
                                         responseOperation="approvalResponse">
