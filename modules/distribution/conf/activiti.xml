@@ -15,4 +15,8 @@
 
     </bean>
 
+    <bean id="bpmnDataPublisherConfiguration">
+        <property name="activation" value="false"/>
+    </bean>
+
 </beans>
