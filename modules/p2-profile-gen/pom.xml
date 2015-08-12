@@ -149,9 +149,9 @@
 
 
                                 <!--3 Carbon Deployment -->
-                                <featureArtifactDef>
+                                <!--featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.bam.service.agent.feature:${carbon.deployment.version}
-                                </featureArtifactDef>
+                                </featureArtifactDef-->
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.service.mgt.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
@@ -429,10 +429,10 @@
                                 </feature>
 
                                 <!--3 Carbon Deployment -->
-                                <feature>
+                                <!--feature>
                                     <id>org.wso2.carbon.bam.service.agent.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
-                                </feature>
+                                </feature-->
                                 <feature>
                                     <id>org.wso2.carbon.service.mgt.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
@@ -728,10 +728,10 @@
                                     <id>org.wso2.carbon.module.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
-                                <feature>
+                                <!--feature>
                                     <id>org.wso2.carbon.bam.service.agent.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
-                                </feature>
+                                </feature-->
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
