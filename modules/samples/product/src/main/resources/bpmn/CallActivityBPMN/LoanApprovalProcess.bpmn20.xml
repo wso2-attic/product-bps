@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="callActivityTest" name="Call Activity Test" isExecutable="true">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.wso2.org/samples">
+  <process id="callActivity" name="CallActivitiSample" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
-    <userTask id="enterDetails" name="Enter Credit Details" activiti:assignee="admin" activiti:candidateGroups="admin">
+    <userTask id="ObtainCreditInformation" name="ObtainCreditInformation" activiti:assignee="admin" activiti:candidateGroups="admin">
       <extensionElements>
         <activiti:formProperty id="customerName" name="Customer Name" type="string"></activiti:formProperty>
         <activiti:formProperty id="salary" name="Salary" type="long"></activiti:formProperty>
       </extensionElements>
     </userTask>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="enterDetails"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="ObtainCreditInformation"></sequenceFlow>
     <callActivity id="callActivity_1" name="Call activity" calledElement="loanCheck_1">
       <extensionElements>
         <activiti:in source="salary" target="salary"></activiti:in>
         <activiti:out source="status" target="loanStatus"></activiti:out>
       </extensionElements>
     </callActivity>
-    <sequenceFlow id="flow2" sourceRef="enterDetails" targetRef="callActivity_1"></sequenceFlow>
-    <userTask id="statusOfLoan" name="Status Of  Loan" activiti:assignee="admin" activiti:candidateGroups="admin">
+    <sequenceFlow id="flow2" sourceRef="ObtainCreditInformation" targetRef="callActivity_1"></sequenceFlow>
+    <userTask id="statusOfLoan" name="Loan Status" activiti:assignee="admin" activiti:candidateGroups="admin">
       <extensionElements>
         <activiti:formProperty id="customerName" name="Customer Name" type="string"></activiti:formProperty>
         <activiti:formProperty id="salary" name="Salary" type="long"></activiti:formProperty>
@@ -27,12 +27,12 @@
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow4" sourceRef="statusOfLoan" targetRef="endevent1"></sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_callActivityTest">
-    <bpmndi:BPMNPlane bpmnElement="callActivityTest" id="BPMNPlane_callActivityTest">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_callActivity">
+    <bpmndi:BPMNPlane bpmnElement="callActivity" id="BPMNPlane_callActivity">
       <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
         <omgdc:Bounds height="35.0" width="35.0" x="140.0" y="160.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="enterDetails" id="BPMNShape_enterDetails">
+      <bpmndi:BPMNShape bpmnElement="ObtainCreditInformation" id="BPMNShape_ObtainCreditInformation">
         <omgdc:Bounds height="55.0" width="105.0" x="230.0" y="150.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="callActivity_1" id="BPMNShape_callActivity_1">

@@ -614,7 +614,7 @@
 
         <bps.version>3.5.0-SNAPSHOT</bps.version>
 
-        <carbon.kernel.version>4.4.0</carbon.kernel.version>
+        <carbon.kernel.version>4.4.1</carbon.kernel.version>
 
         <eclipse.version>3.2.0</eclipse.version>
         <servlet-api.version>2.4</servlet-api.version>
@@ -624,7 +624,7 @@
         <carbon.identity.version>4.5.2</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
-        <carbon.registry.version>4.4.3</carbon.registry.version>
+        <carbon.registry.version>4.4.5</carbon.registry.version>
 
         <!-- Carbon Business Process Version -->
         <carbon.business-process.version>4.4.3-SNAPSHOT</carbon.business-process.version>
@@ -635,7 +635,7 @@
         <carbon.analytics-common.version>1.0.0</carbon.analytics-common.version>
 
         <!-- Carbon Commons Version -->
-        <carbon.commons.version>4.4.3</carbon.commons.version>
+        <carbon.commons.version>4.4.4</carbon.commons.version>
 
         <!-- Carbon Multitenancy Version -->
         <carbon.multitenancy.version>4.4.1</carbon.multitenancy.version>
