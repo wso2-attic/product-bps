@@ -17,8 +17,8 @@
         <activiti:formProperty id="status" name="Status" type="string" default="Loan has been approved"></activiti:formProperty>
       </extensionElements>
     </userTask>
-    <sequenceFlow id="flow3" sourceRef="exclusivegateway3" targetRef="loanApproved">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${salary>100000}]]></conditionExpression>
+    <sequenceFlow id="flow3" name="Salary &gt; 10000" sourceRef="exclusivegateway3" targetRef="loanApproved">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${salary>10000}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="loanRejected" name="Loan Rejected" activiti:assignee="admin" activiti:candidateGroups="admin">
       <documentation>Loan has been rejected</documentation>
@@ -26,7 +26,7 @@
         <activiti:formProperty id="status" name="Status" type="string" default="Loan has been rejected"></activiti:formProperty>
       </extensionElements>
     </userTask>
-    <sequenceFlow id="flow4" sourceRef="exclusivegateway3" targetRef="loanRejected"></sequenceFlow>
+    <sequenceFlow id="flow4" name="Salary &lt;=10000" sourceRef="exclusivegateway3" targetRef="loanRejected"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="loanApproved" targetRef="endevent1"></sequenceFlow>
     <endEvent id="endevent2" name="End"></endEvent>
     <sequenceFlow id="flow6" sourceRef="loanRejected" targetRef="endevent2"></sequenceFlow>
@@ -65,10 +65,16 @@
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
         <omgdi:waypoint x="380.0" y="157.0"></omgdi:waypoint>
         <omgdi:waypoint x="460.0" y="105.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="390.0" y="157.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
         <omgdi:waypoint x="380.0" y="197.0"></omgdi:waypoint>
         <omgdi:waypoint x="472.0" y="246.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="390.0" y="197.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
         <omgdi:waypoint x="513.0" y="77.0"></omgdi:waypoint>
