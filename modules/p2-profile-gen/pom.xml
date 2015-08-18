@@ -309,6 +309,9 @@
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.event.output.adapter.sms.server.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
+				<!-- 11 Secure Vault -->
+				<featureArtifactDef>org.wso2.ciphertool:org.wso2.ciphertool.feature:${cipher.tool.version}</featureArtifactDef>
+
                                 <featureArtifactDef>
                                     org.wso2.carbon.registry:org.wso2.carbon.registry.contentsearch.feature:${carbon.registry.version}
                                 </featureArtifactDef>
@@ -633,6 +636,12 @@
                                     <id>org.wso2.carbon.event.output.adapter.sms.server.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+				<!-- 11 Secure Vault -->
+				<feature>
+					<id>org.wso2.ciphertool.feature.group</id>
+					<version>${cipher.tool.version}</version>
+				</feature>
+
                                 <feature>
                                     <id>org.wso2.carbon.registry.contentsearch.feature.group</id>
                                     <version>${carbon.registry.version}</version>
@@ -923,6 +932,7 @@
                                     <id>org.wso2.carbon.event.output.adapter.sms.server.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+
                                 <feature>
                                     <id>org.wso2.carbon.registry.contentsearch.feature.group</id>
                                     <version>${carbon.registry.version}</version>
