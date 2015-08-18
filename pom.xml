@@ -621,7 +621,7 @@
         <spring.version>2.5.1.wso2v1</spring.version>
 
         <!-- Carbon Identity Version -->
-        <carbon.identity.version>4.5.2</carbon.identity.version>
+        <carbon.identity.version>4.5.4</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
         <carbon.registry.version>4.4.5</carbon.registry.version>
@@ -638,7 +638,7 @@
         <carbon.commons.version>4.4.4</carbon.commons.version>
 
         <!-- Carbon Multitenancy Version -->
-        <carbon.multitenancy.version>4.4.1</carbon.multitenancy.version>
+        <carbon.multitenancy.version>4.4.2</carbon.multitenancy.version>
 
         <!-- Carbon Deployment Version -->
         <carbon.deployment.version>4.4.1</carbon.deployment.version>
