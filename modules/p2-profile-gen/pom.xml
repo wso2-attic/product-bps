@@ -262,7 +262,7 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.mgt.core.feature:${carbon.multitenancy.version}
                                 </featureArtifactDef>
-                                <featureArtifactDef>
+                               <featureArtifactDef>
                                     org.wso2.carbon.multitenancy:org.wso2.carbon.tenant.mgt.server.feature:${carbon.multitenancy.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
