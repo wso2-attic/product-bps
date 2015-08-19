@@ -305,9 +305,15 @@
             <version>1.4.0.wso2v1</version>
         </dependency>
         <dependency>
-	<groupId>commons-codec</groupId>
-	<artifactId>commons-codec</artifactId>
-	<version>1.9</version>
-</dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.das</groupId>
+            <artifactId>org.wso2.das.integration.common.clients</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 </project>
