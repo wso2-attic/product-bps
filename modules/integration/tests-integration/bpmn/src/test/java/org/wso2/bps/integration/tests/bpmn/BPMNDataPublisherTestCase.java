@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+Uncomment when testing bpmn data publisher, commented our since we cannot have a dependency on snapshot of another repo
 package org.wso2.bps.integration.tests.bpmn;
 
 import org.apache.commons.logging.Log;
@@ -24,10 +26,11 @@ import org.wso2.bps.integration.common.utils.BPSMasterTest;
 import org.wso2.carbon.analytics.stream.persistence.stub.dto.AnalyticsTable;
 import org.wso2.das.integration.common.clients.AnalyticsWebServiceClient;
 import org.wso2.das.integration.common.clients.EventStreamPersistenceClient;
-
+*/
 /**
  * This class is used to test BPMN data publisher
  */
+/*
 public class BPMNDataPublisherTestCase extends BPSMasterTest {
 	private static final Log log = LogFactory.getLog(BPMNDataPublisherTestCase.class);
 	private AnalyticsWebServiceClient webServiceClient;
@@ -84,4 +87,4 @@ public class BPMNDataPublisherTestCase extends BPSMasterTest {
 	}
 }
 
-
+*/
