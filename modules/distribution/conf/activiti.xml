@@ -16,7 +16,7 @@
     </bean>
 
     <bean id="bpmnDataPublisherConfiguration">
-        <property name="activation" value="false"/>
+        <property name="dataPublishingEnabled" value="false"/>
     </bean>
 
     <bean id="restClientConfiguration">
