@@ -309,11 +309,12 @@
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
         </dependency>
-        <dependency>
+	<!-- Uncomment this when running integration test for bpmn data publisher, Commenting since its has a snapshot dependency-->
+        <!--dependency>
             <groupId>org.wso2.das</groupId>
             <artifactId>org.wso2.das.integration.common.clients</artifactId>
             <version>3.0.0-SNAPSHOT</version>
-        </dependency>
+        </dependency-->
 
     </dependencies>
 </project>
