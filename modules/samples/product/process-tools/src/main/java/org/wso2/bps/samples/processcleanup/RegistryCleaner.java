@@ -54,7 +54,6 @@ public class RegistryCleaner {
             option.setManageSession(true);
             option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, login());
             resourceAdminServiceStub._getServiceClient().getOptions().setTimeOutInMilliSeconds(600000);
-
             resourceAdminServiceStub.delete(regPath);
 
         } catch (Exception e) {

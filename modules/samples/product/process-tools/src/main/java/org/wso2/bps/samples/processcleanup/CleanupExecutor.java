@@ -149,10 +149,12 @@ public class CleanupExecutor {
 
         //DB cleanup happens if the Registry cleaned successfully
         boolean regCleanSuccess = RegistryCleaner.deleteRegistry(regPath, clientTrustStorePath, trustStorePassword, trustStoreType);
+
         if (regCleanSuccess) {
             List<String> processList = map.get(packageName);
             try {
                 if(getProperty("delete.instances").toLowerCase().equals("true")){
+                    System.out.println("delete.instances: true");
                     cleanProcessInstances(processList, conn);
                 }
                 for (String id : processList) {
