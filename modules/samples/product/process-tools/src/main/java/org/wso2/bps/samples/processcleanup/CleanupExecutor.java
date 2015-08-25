@@ -60,7 +60,6 @@ public class CleanupExecutor {
         String databaseDriver = null;
         boolean dbConfigFound = false;
         String carbon = System.getProperty("carbon.home");
-        System.out.println(carbon);
         String path[] = carbon.split(File.separator);
         bpsHome = "";
         for (int i = 0; i < path.length; i++) {
