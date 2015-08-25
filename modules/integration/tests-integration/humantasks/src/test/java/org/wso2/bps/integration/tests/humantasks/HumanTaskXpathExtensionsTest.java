@@ -55,6 +55,10 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
     private RequestSender requestSender;
     private URI taskID = null;
 
+    /**
+     * Setup the test environment.
+     * @throws Exception
+     */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
         init();  //init master class
@@ -104,6 +108,10 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
 
     }
 
+    /**
+     * Initialize the test by deploying required artifacts.
+     * @throws Exception
+     */
     @BeforeGroups(groups = { "wso2.bps.task.people.assignment" })
     protected void initialize() throws Exception {
         log.info("Initializing HumanTask task creation Test...");
@@ -121,6 +129,7 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
      * deployArtifact() test1 sample Generic Human Roles. potentialOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:owners
      * businessAdministrators - htd:union(htd:getInput("ClaimApprovalRequest")/test10:cust/test10:globleAdmins,htd:getInput("ClaimApprovalRequest")/test10:cust/test10:regionalAdmins)
      * excludedOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:excludedOwners
+     * @throws Exception
      */
     public void deployArtifact() throws Exception {
         final String artifactLocation =
@@ -130,6 +139,10 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
         uploadHumanTaskForTest(HumanTaskTestConstants.CLAIMS_APPROVAL_PACKAGE_ORG_ENTITY_NAME, artifactLocation);
     }
 
+    /**
+     * Add required user roles to the test server
+     * @throws Exception
+     */
     private void addRoles() throws Exception {
         String[] rc1 = new String[] { HumanTaskTestConstants.CLERK1_USER, HumanTaskTestConstants.CLERK2_USER,
                 HumanTaskTestConstants.CLERK3_USER };
@@ -152,6 +165,10 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
                 new String[] { "/permission/admin/login", "/permission/admin/manage/humantask" }, false);
     }
 
+    /**
+     * Create a new human task
+     * @throws Exception
+     */
     private void createTask() throws Exception {
         String soapBody =
                 "<sch:ClaimApprovalData xmlns:sch=\"http://www.example.com/claims/schema\" xmlns:ns=\"http://docs.oasis-open.org/ns/bpel4people/ws-humantask/types/200803\">\n"
@@ -352,6 +369,10 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
 
     }
 
+    /**
+     * Clenup the test environment after the test.
+     * @throws Exception
+     */
     @AfterClass(groups = { "wso2.bps.task.clean" }, description = "Clean up server")
     public void cleanTestEnvironment()
             throws Exception {
