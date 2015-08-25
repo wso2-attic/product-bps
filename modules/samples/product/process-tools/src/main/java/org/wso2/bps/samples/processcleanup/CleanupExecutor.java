@@ -60,6 +60,7 @@ public class CleanupExecutor {
         String databaseDriver = null;
         boolean dbConfigFound = false;
         String carbon = System.getProperty("carbon.home");
+        System.out.println(carbon);
         String path[] = carbon.split(File.separator);
         bpsHome = "";
         for (int i = 0; i < path.length; i++) {
@@ -145,16 +146,15 @@ public class CleanupExecutor {
         String trustStorePassword = getProperty("clientTrustStorePassword");
         String trustStoreType = getProperty("clientTrustStoreType");
         System.out.println("Deleting package:" + packageName);
-        String regPath = "/_system/config/bpel/packages/" + packageName.split("-\\d*$")[0] + "/versions/" + packageName;
+        String regPath = "/_system/config/bpel/packages/";
 
         //DB cleanup happens if the Registry cleaned successfully
-        boolean regCleanSuccess = RegistryCleaner.deleteRegistry(regPath, clientTrustStorePath, trustStorePassword, trustStoreType);
+        boolean regCleanSuccess = RegistryCleaner.deleteRegistry(regPath, packageName, clientTrustStorePath, trustStorePassword, trustStoreType);
 
         if (regCleanSuccess) {
             List<String> processList = map.get(packageName);
             try {
                 if(getProperty("delete.instances").toLowerCase().equals("true")){
-                    System.out.println("delete.instances: true");
                     cleanProcessInstances(processList, conn);
                 }
                 for (String id : processList) {

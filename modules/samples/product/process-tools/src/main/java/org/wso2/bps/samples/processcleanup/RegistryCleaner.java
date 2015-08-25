@@ -21,6 +21,9 @@ import org.apache.axis2.context.ServiceContext;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.wso2.carbon.authenticator.stub.AuthenticationAdminStub;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceStub;
+import org.wso2.carbon.registry.resource.stub.beans.xsd.ContentBean;
+import org.wso2.carbon.registry.resource.stub.beans.xsd.VersionsBean;
+import org.wso2.carbon.registry.resource.stub.common.xsd.ResourceData;
 import org.wso2.carbon.utils.NetworkUtils;
 
 import java.io.File;
@@ -32,7 +35,7 @@ public class RegistryCleaner {
     private static Properties prop = new Properties();
 
     //Cleans the registry at the regPath location
-    public static boolean deleteRegistry(String regPath, String clientTrustStorePath, String trustStorePassword, String trustStoreType) {
+    public static boolean deleteRegistry(String regPath, String packageName, String clientTrustStorePath, String trustStorePassword, String trustStoreType) {
         ResourceAdminServiceStub resourceAdminServiceStub;
         setKeyStore(clientTrustStorePath, trustStorePassword, trustStoreType);
 
@@ -53,14 +56,30 @@ public class RegistryCleaner {
             Options option = client.getOptions();
             option.setManageSession(true);
             option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, login());
-            resourceAdminServiceStub._getServiceClient().getOptions().setTimeOutInMilliSeconds(600000);
-            resourceAdminServiceStub.delete(regPath);
+            resourceAdminServiceStub._getServiceClient().getOptions().setTimeOutInMilliSeconds(
+		            600000);
 
+            String regPathAppend = regPath + packageName.split("-\\d*$")[0];
+            String regPathVersionsAppend = regPathAppend + "/versions/";
+            int count = resourceAdminServiceStub.getCollectionContent(regPathVersionsAppend).getChildCount();
+            System.out.println( "number of deployment units of " + packageName.split("-\\d*$")[0] + " : " + count);
+
+            //if the number of deployment units of the given package exceed one, then removes the relevant deployment unit from the path that it exists.
+            if(count > 1){
+                System.out.println("Package removed from " + regPathVersionsAppend + packageName);
+                resourceAdminServiceStub.delete(regPathVersionsAppend + packageName);
+                return true;
+            }
+            //if the number of deployment units of the given package equals to one, then removes it from /_system/config/bpel/packages/<package>
+            else if(count == 1){
+                System.out.println("Package removed from " + regPathAppend);
+                resourceAdminServiceStub.delete(regPathAppend);
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return false;
     }
 
     //Setup key store according to the processCleanup.properties
@@ -89,7 +108,7 @@ public class RegistryCleaner {
         authenticationAdminStub.login(userName, password, hostName);
 
         ServiceContext serviceContext = authenticationAdminStub.
-                _getServiceClient().getLastOperationContext().getServiceContext();
+		                                                               _getServiceClient().getLastOperationContext().getServiceContext();
 
         return (String) serviceContext.getProperty(HTTPConstants.COOKIE_STRING);
     }
