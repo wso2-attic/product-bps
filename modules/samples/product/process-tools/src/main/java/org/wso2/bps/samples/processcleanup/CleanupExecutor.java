@@ -27,11 +27,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The main class
  */
 public class CleanupExecutor {
+	private final static Logger log = Logger.getLogger(CleanupExecutor.class.getName());
+
 	private static HashMap<String, List<String>> map;
 	static String databaseURL = null;
 	static String bpsHome = null;
@@ -84,7 +88,6 @@ public class CleanupExecutor {
 				bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
 				File.separator + CleanupConstants.DATASOURCES +
 				File.separator + CleanupConstants.BPS_DATASOURCES;
-		System.out.println("Using datasource config file at :" + configPath);
 		File elementXmlFile = new File(configPath);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		dbFactory.setIgnoringComments(true);
@@ -117,7 +120,7 @@ public class CleanupExecutor {
 			}
 		}
 		if (!dbConfigFound) {
-			System.out.println("ERROR: DB configurations not found or invalid!");
+			log.info("ERROR: DB configurations not found or invalid!");
 			System.exit(0);
 		}
 		Class.forName(databaseDriver);
@@ -204,9 +207,8 @@ public class CleanupExecutor {
 				System.out.println("Database Cleaning Success!!");
 				return true;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, e.getMessage(), e);
 				conn.rollback();
-				System.out.println("Database Cleaning Unsuccessful!! (DB error)");
 			} finally {
 				if (conn != null) {
 					conn.close();
@@ -255,7 +257,7 @@ public class CleanupExecutor {
 			}
 			System.out.println();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.log(Level.SEVERE, e.getMessage(), e);
 			throw new SQLException(e);
 		}
 	}
@@ -319,11 +321,8 @@ public class CleanupExecutor {
 		//Get user inputs
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		do {
-			System.out.println();
-			System.out.println(message);
-
+			System.out.println("\n" + message);
 			String input = br.readLine();
-
 			try {
 				//Creates the list of options entered by user
 				if (input.contains(",") && !input.contains(",,")) {
@@ -349,7 +348,7 @@ public class CleanupExecutor {
 				}
 
 			} catch (Exception e) {
-				System.out.println("Invalid Input!");
+				log.log(Level.SEVERE, e.getMessage(), e);
 			}
 		} while (!valid);
 		return userInputs;
@@ -436,7 +435,7 @@ public class CleanupExecutor {
 					}
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.log(Level.SEVERE, e.getMessage(), e);
 				}
 				break;
 		}
