@@ -54,9 +54,11 @@ public class DBQuery {
         }
 
         //for mysql, oracle and sqlserver the query is same
-        if (databaseURL.contains("mysql") || databaseURL.contains("oracle") || databaseURL.contains("sqlserver")) {
+        if (databaseURL.contains("mysql") || databaseURL.contains("oracle") || databaseURL.contains("sqlserver") || databaseURL.contains("postgresql")) {
 
-            SEARCH = "select distinct(s.PID) as PROCESS_ID, o.ID, s.VERSION, s.DU\n" +
+            SEARCH = "select distinct(s.PID) as PROCESS_ID, " +
+                     "case when o.ID is null then \"-1\" else o.ID end as ID" +
+                     ", s.VERSION, s.DU\n" +
                     "from STORE_PROCESS s left join ODE_PROCESS o\n" +
                     "on s.PID = o.PROCESS_ID\n" +
                     "where s.STATE != \"ACTIVE\" {0}\n" +
@@ -83,6 +85,7 @@ public class DBQuery {
             ODE_PROCESS_INSTANCE = "DELETE FROM ODE_PROCESS_INSTANCE WHERE ID = \"{0}\"";
 
             ODE_PROCESS = "delete from ODE_PROCESS where id = \"{0}\"";
+
             STORE_DU = "delete from STORE_DU where NAME=\"{0}\"";
             STORE_PROCESS = "delete from STORE_PROCESS where DU=\"{0}\"";
 
