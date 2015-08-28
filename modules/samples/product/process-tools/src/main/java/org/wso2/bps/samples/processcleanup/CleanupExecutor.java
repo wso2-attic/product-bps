@@ -38,7 +38,13 @@ public class CleanupExecutor {
 	//DB query builder according to DB type
 	private static DBQuery query;
 
-	//Get user configurations from processCleanup.properties file
+	/**
+	 * Get user configurations from processCleanup.properties file
+	 *
+	 * @param property property
+	 * @return property
+	 * @throws Exception
+	 */
 	private static String getProperty(String property) throws Exception {
 		Properties prop = new Properties();
 		String configPath =
