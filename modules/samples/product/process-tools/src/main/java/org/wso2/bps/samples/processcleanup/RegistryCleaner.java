@@ -21,9 +21,6 @@ import org.apache.axis2.context.ServiceContext;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.wso2.carbon.authenticator.stub.AuthenticationAdminStub;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceStub;
-import org.wso2.carbon.registry.resource.stub.beans.xsd.ContentBean;
-import org.wso2.carbon.registry.resource.stub.beans.xsd.VersionsBean;
-import org.wso2.carbon.registry.resource.stub.common.xsd.ResourceData;
 import org.wso2.carbon.utils.NetworkUtils;
 
 import java.io.File;
