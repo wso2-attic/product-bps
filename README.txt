@@ -5,7 +5,7 @@ Welcome to the WSO2 BPS @product.version@ release
 
 WSO2 Business Process Server (BPS) is an easy-to-use open source
 business process server that executes business processes written using
-BPMN standard and WS-BPEL standard. It is powered by Activiti BPMN Engine
+BPMN standard as well as WS-BPEL standard. It is powered by Activiti BPMN Engine
 and Apache ODE BPEL Engine. It provides a complete Web-based graphical 
 console to deploy, manage and view processes in addition to managing 
 and viewing process instances.
@@ -38,8 +38,7 @@ Key Features
   exact requirements, by removing certain features or by adding new
   optional features.
 * Performance improvements in XPath evaluations.
-* Improved BPS home page.
-* Process Monitoring support with WSO2 Business Activity Monitor.
+* Process Monitoring support with WSO2 Data Analytics Server.
 * JMX Monitoring
 
 New Features In This Release
@@ -88,13 +87,9 @@ For more details, see the Installation Guide
 System Requirements
 -------------------
 
-1. Minimum memory - 1GB
-2. Processor      - Pentium 800MHz or equivalent at minimum
+1. Minimum memory - 4GB
+2. Processor      - 3GHz Dual­core Xeon/Opteron (or latest)
 3. The Management Console requires full Javascript enablement of the Web browser
-   NOTE:
-     On Windows Server 2003, it is not allowed to go below the medium security
-     level in Internet Explorer 6.x.
-
  
 
 WSO2 BPS @product.version@ distribution directory structure
@@ -217,6 +212,6 @@ Crypto Notice
    Apache ODE       : http://ode.apache.org/
 
 --------------------------------------------------------------------------------
-(c) Copyright 2014 WSO2 Inc.
+(c) Copyright 2015 WSO2 Inc.
 
 
