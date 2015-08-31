@@ -119,11 +119,11 @@
                 </htd:description>
                 <htd:description xml:lang="en-US" contentType="text/html">
                     <![CDATA[
-          <p>
-            Approve this claim following corporate guideline
-            <b>#4711.0815/7</b>
-          </p>
-          ]]>
+                      <p>
+                        Approve this claim following corporate guideline
+                        <b>#4711.0815/7</b>
+                      </p>
+                    ]]>
                 </htd:description>
                 <htd:description xml:lang="de-DE" contentType="text/plain">
                     Genehmigen Sie diese Schadensforderung entsprechend
@@ -131,13 +131,13 @@
                 </htd:description>
                 <htd:description xml:lang="de-DE" contentType="text/html">
                     <![CDATA[
-          <p>
-            Genehmigen Sie diese Schadensforderung entsprechend
-            Richtlinie
-            <b>Nr. 4711.0815/7</b>
-            ...
-          </p>
-          ]]>
+                      <p>
+                        Genehmigen Sie diese Schadensforderung entsprechend
+                        Richtlinie
+                        <b>Nr. 4711.0815/7</b>
+                        ...
+                      </p>
+                    ]]>
                 </htd:description>
             </htd:presentationElements>
         </htd:task>
