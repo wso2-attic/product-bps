@@ -10,14 +10,9 @@ and Apache ODE BPEL Engine. It provides a complete Web-based graphical
 console to deploy, manage and view processes in addition to managing 
 and viewing process instances.
 
-WSO2 BPS is developed on top of the WSO2 Carbon platform and all the
-existing capabilities of Enterprise Service Bus(ESB) and Application 
-Server(AS) can be applied to business processes. For example securing 
-business processes and throttling requests to business processes.
- 
-
 Key Features
 ------------
+
 * Deploying Business Processes written in compliance with WS-BPEL 2.0 Standard and BPEL4WS 1.1 standard.
 * Deploying Business Processes written in compliance with a frequently used subset of BPMN 2.0 standard.
 * Support for Human Interactions in BPEL Processes with WS-Human Task and BPEL4People.
@@ -55,6 +50,7 @@ New Features In This Release
 * BPMN user task form generation support
 * Customizable Web Application for WS-Human Tasks
 * Human Task UI form generation support
+* BPMN runtime statistics publishing support
 * Performance Improvements
 * Many UI Enhanancements
 * Reporting dashboards for BPMN and Human Tasks
