@@ -5,9 +5,10 @@ Welcome to the WSO2 BPS @product.version@ release
 
 WSO2 Business Process Server (BPS) is an easy-to-use open source
 business process server that executes business processes written using
-the WS-BPEL standard. It is powered by Apache ODE and provides a
-complete Web-based graphical console to deploy, manage and view
-processes in addition to managing and viewing process instances.
+BPMN standard and WS-BPEL standard. It is powered by Activiti BPMN Engine
+and Apache ODE BPEL Engine. It provides a complete Web-based graphical 
+console to deploy, manage and view processes in addition to managing 
+and viewing process instances.
 
 WSO2 BPS is developed on top of the WSO2 Carbon platform and all the
 existing capabilities of Enterprise Service Bus(ESB) and Application 
@@ -18,21 +19,19 @@ business processes and throttling requests to business processes.
 Key Features
 ------------
 * Deploying Business Processes written in compliance with WS-BPEL 2.0 Standard and BPEL4WS 1.1 standard.
+* Deploying Business Processes written in compliance with a frequently used subset of BPMN 2.0 standard.
 * Support for Human Interactions in BPEL Processes with WS-Human Task and BPEL4People.
-* Managing BPEL packages, processes and process instances.
-* BPEL Extensions and XPath extensions support.
+* Managing BPMN / BPEL packages, processes and process instances.
+* BPEL Extensions and XPath extensions and BPMN Extensions support.
 * Instance recovery (Only supports 'Invoke' activity) support through management console.
-* OpenJPA based Data Access Layer For BPEL and Human Tasks.
-* WS-Security support for external services.
-* WS-Security support for business processes.
+* WS-Security support for external services exposed by BPEL / Humantasks.
 * Support for HumanTask Coordination.
 * Human Task Versioning.
 * Clustering support for high availability.
-* BPEL Package hot update which facilitate Versioning of BPEL Packages.
+* BPEL/BPMN Package hot update which facilitate Versioning of BPEL Packages.
 * BPEL deployment descriptor editor.
 * E4X based data manipulation support for BPEL assignments.
-* Ability to configure external data base system as the BPEL engine's persistence storage.
-* Caching support for business processes.
+* Ability to configure external data base system as the BPEL/BPMN engine's persistence storage.
 * Throttling support for business processes.
 * Transport management.
 * Internationalized web based management console.
@@ -51,12 +50,14 @@ Key Features
 New Features In This Release
 ----------------------------
 
-* WS-Human Task Versioning.
-* Caching support for people queries.
-* Command line process cleanup tool to remove RETIRED versions of bpel process.
-* Migration tool to move from BPS 3.0.0 to BPS 3.2.0 and BPS 3.1.0 to BPS 3.2.0. 
-* Instance View Performance Improvements.
-* New BPS UI.
+* BPMN Support
+* Customizable Web Application for Viewing/Managaging BPMN Processes and Tasks
+* BPMN user task form generation support
+* Customizable Web Application for WS-Human Tasks
+* Human Task UI form generation support
+* Performance Improvements
+* Many UI Enhanancements
+* Reporting dashboards for BPMN and Human Tasks
 * Many other bug fixes.
 
 Issues Fixed In This Release
