@@ -16,7 +16,7 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<process name="CleanUpTest1"
+<process name="CleanUpSample"
     targetNamespace="http://ode/bpel/unit-test" 
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
@@ -26,18 +26,18 @@
     queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
     expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
 
-  <import location="CleanUpTest1.wsdl"
+  <import location="CleanUpSample.wsdl"
      namespace="http://ode/bpel/unit-test.wsdl"
      importType="http://schemas.xmlsoap.org/wsdl/" />
 
    <partnerLinks>
-      <partnerLink name="cleanUpTest1PartnerLink" 
-         partnerLinkType="test:CleanUpTest1PartnerLinkType" 
+      <partnerLink name="cleanUpSamplePartnerLink"
+         partnerLinkType="test:CleanUpSamplePartnerLinkType"
          myRole="me" />
    </partnerLinks>
     
    <variables>
-     <variable name="myVar" messageType="test:CleanUpTest1Message"/>
+     <variable name="myVar" messageType="test:CleanUpSampleMessage"/>
      <variable name="tmpVar" type="xsd:string"/>
      <variable name="tmpDate" type="xsd:dateTime"/>
    </variables>
@@ -45,9 +45,9 @@
    <sequence>   
        <receive 
           name="start"
-          partnerLink="cleanUpTest1PartnerLink"
-          portType="test:CleanUpTest1PortType"
-          operation="cleanUpTest1"
+          partnerLink="cleanUpSamplePartnerLink"
+          portType="test:CleanUpSamplePortType"
+          operation="cleanUpSample"
           variable="myVar"
           createInstance="yes"/>
 
@@ -62,9 +62,9 @@
          </copy>
       </assign>
        <reply name="end"  
-              partnerLink="cleanUpTest1PartnerLink"
-              portType="test:CleanUpTest1PortType" 
-              operation="cleanUpTest1"
+              partnerLink="cleanUpSamplePartnerLink"
+              portType="test:CleanUpSamplePortType"
+              operation="cleanUpSample"
               variable="myVar"/>
    </sequence>
 </process>

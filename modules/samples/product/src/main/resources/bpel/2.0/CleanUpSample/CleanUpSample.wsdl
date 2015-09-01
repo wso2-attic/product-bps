@@ -28,20 +28,20 @@
     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
     
-    <wsdl:message name="CleanUpTest1Message">
+    <wsdl:message name="CleanUpSampleMessage">
         <wsdl:part name="TestPart" type="xsd:string"/>
     </wsdl:message>
     
-    <wsdl:portType name="CleanUpTest1PortType">
-        <wsdl:operation name="cleanUpTest1">
-            <wsdl:input message="tns:CleanUpTest1Message" name="TestIn"/>
-            <wsdl:output message="tns:CleanUpTest1Message" name="TestOut"/>
+    <wsdl:portType name="CleanUpSamplePortType">
+        <wsdl:operation name="cleanUpSample">
+            <wsdl:input message="tns:CleanUpSampleMessage" name="TestIn"/>
+            <wsdl:output message="tns:CleanUpSampleMessage" name="TestOut"/>
         </wsdl:operation>    
     </wsdl:portType>
     
-     <wsdl:binding name="CleanUpTest1SoapBinding" type="tns:CleanUpTest1PortType">
+     <wsdl:binding name="CleanUpSampleSoapBinding" type="tns:CleanUpSamplePortType">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <wsdl:operation name="cleanUpTest1">
+        <wsdl:operation name="cleanUpSample">
             <soap:operation soapAction="" style="rpc"/>
             <wsdl:input>
                 <soap:body
@@ -55,9 +55,9 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name="CleanUpTest1Service">
-		<wsdl:port name="CleanUpTest1Port" binding="tns:CleanUpTest1SoapBinding">
-     		<soap:address location="http://localhost:9763/services/CleanUpTest1Service"/>
+    <wsdl:service name="CleanUpSampleService">
+		<wsdl:port name="CleanUpSamplePort" binding="tns:CleanUpSampleSoapBinding">
+     		<soap:address location="http://localhost:9763/services/CleanUpSampleService"/>
 		</wsdl:port>
 		<!--port name="LoanServicePort" binding="tns:LoanServiceBinding">
             <soap:address location="https://localhost:9443/services/LoanService"/>
@@ -68,9 +68,9 @@
 
     </wsdl:service>
     
-   <plnk:partnerLinkType name="CleanUpTest1PartnerLinkType">
-       <plnk:role name="me" portType="tns:CleanUpTest1PortType"/>
-       <plnk:role name="you" portType="tns:CleanUpTest1PortType"/>
+   <plnk:partnerLinkType name="CleanUpSamplePartnerLinkType">
+       <plnk:role name="me" portType="tns:CleanUpSamplePortType"/>
+       <plnk:role name="you" portType="tns:CleanUpSamplePortType"/>
    </plnk:partnerLinkType>
 </wsdl:definitions>
 
