@@ -232,12 +232,12 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AttachmentHandlingProcess"/>
                                 <zip destfile="target/samples/bpel/CreditRating.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CreditRating"/>
-                                <zip destfile="target/samples/bpel/CleanUpTest1.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CleanUpTest1"/>
+                                <zip destfile="target/samples/bpel/CleanUpSample.zip"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CleanUpSample"/>
                                 <zip destfile="target/samples/bpel/FlexibleAssign.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/FlexibleAssign"/>
-                                <zip destfile="target/samples/bpel/helloHeaderTest.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/helloHeaderTest"/>
+                                <zip destfile="target/samples/bpel/helloHeaderSample.zip"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/helloHeaderSample"/>
                                 <zip destfile="target/samples/bpel/HelloWorld2.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/HelloWorld2"/>
                                 <zip destfile="target/samples/bpel/MyRoleMexTestProcess.zip"
@@ -358,8 +358,8 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestBPMN"/>
 				<zip destfile="target/samples/bpmn/CallActivityBPMN.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/CallActivityBPMN"/>
-				<zip destfile="target/samples/bpmn/ManualTaskTestBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/ManualTaskTestBPMN"/>
+				<zip destfile="target/samples/bpmn/ManualTaskBPMN.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/ManualTaskBPMN"/>
 
 				<concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">
 				org.restlet.level=SEVERE</concat>
