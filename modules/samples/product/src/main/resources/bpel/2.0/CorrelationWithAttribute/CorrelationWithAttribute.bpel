@@ -7,8 +7,6 @@
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
          xmlns:ns="http://www.example.org/callback/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-
-
     <!-- Import the client WSDL into bpel file -->
     <bpel:import namespace="http://www.example.org/callback/" location="callback.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"></bpel:import>
     <bpel:import location="CorrelationWithAttributeArtifacts.wsdl" namespace="http://wso2.org/bps/sample" 
@@ -31,7 +29,6 @@
     <!-- VARIABLES                                                         -->
     <!-- List of messages and XML documents used within this BPEL process  -->
     <!-- ================================================================= -->
-
 
     <bpel:variables>
         <!-- Reference to the message passed as input during initiation -->
