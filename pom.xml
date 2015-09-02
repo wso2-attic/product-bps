@@ -652,7 +652,7 @@
 
         <carbon.automationutils.version>4.4.1</carbon.automationutils.version>
 
-        <carbon.automation.version>4.4.3-SNAPSHOT</carbon.automation.version>
+        <carbon.automation.version>4.4.2</carbon.automation.version>
 
         <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
 
