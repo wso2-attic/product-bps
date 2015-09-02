@@ -23,6 +23,7 @@
 
 	<process name="pns:HelloWorld2">
 		<active>true</active>
+		<process-events generate="all"/>
 		<provide partnerLink="helloPartnerLink">
 			<service name="wns:HelloService" port="HelloPort"/>
 		</provide>
