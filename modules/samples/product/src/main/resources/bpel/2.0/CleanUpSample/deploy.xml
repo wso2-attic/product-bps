@@ -19,10 +19,10 @@
 <deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03"
 	xmlns:pns="http://ode/bpel/unit-test" 
 	xmlns:wns="http://ode/bpel/unit-test.wsdl">
-	<process name="pns:CleanUpTest1">
+	<process name="pns:CleanUpSample">
 		<active>true</active>
-		<provide partnerLink="cleanUpTest1PartnerLink">
-			<service name="wns:CleanUpTest1Service" port="CleanUpTest1Port"/>
+		<provide partnerLink="cleanUpSamplePartnerLink">
+			<service name="wns:CleanUpSampleService" port="CleanUpSamplePort"/>
 		</provide>
 		
 	        <cleanup on="always"> 

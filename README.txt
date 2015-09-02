@@ -23,29 +23,34 @@ Key Features
 * Support for HumanTask Coordination.
 * Human Task Versioning.
 * Clustering support for high availability.
-* BPEL/BPMN Package hot update which facilitate Versioning of BPEL Packages.
+* BPEL / BPMN Package hot update which facilitate Versioning of Packages.
 * BPEL deployment descriptor editor.
 * E4X based data manipulation support for BPEL assignments.
-* Ability to configure external data base system as the BPEL/BPMN engine's persistence storage.
-* Throttling support for business processes.
+* Ability to configure external data base system as the BPEL / BPMN engine's persistence storage.
 * Transport management.
 * Internationalized web based management console.
 * System monitoring.
+* Comprehensive REST API for managing bpmn processes / tasks.
 * Try-it for business processes.
 * SOAP Message Tracing.
 * End-point configuration mechanism based on WSO2 Unified Endpoints.
 * Customizable server - You can customize the BPS to fit into your
   exact requirements, by removing certain features or by adding new
   optional features.
-* Performance improvements in XPath evaluations.
 * Process Monitoring support with WSO2 Data Analytics Server.
 * JMX Monitoring
+* Comprehensive and customizable web application for managing human tasks.
+* Comprehensive and customizable web application for managing bpmn instances and user tasks.
+* Human Task UI Form Generation support
+* Ability to publish statistics to WSO2 Data Analytics server for analysis
+* Reporting dashboards
+
 
 New Features In This Release
 ----------------------------
 
 * BPMN Support
-* Customizable Web Application for Viewing/Managaging BPMN Processes and Tasks
+* Customizable Web Application for Viewing / Managaging BPMN Processes and Tasks
 * BPMN user task form generation support
 * Customizable Web Application for WS-Human Tasks
 * Human Task UI form generation support
@@ -59,16 +64,17 @@ Issues Fixed In This Release
 ----------------------------
 
 * WSO2 BPS related components of the WSO2 Carbon Platform -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11711
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12382
 
 
 Known Issues
 -----------
 
 * WS-Human Task implementation does not support sub tasks and lean tasks.
-        BPEL4People only supports remote tasks and remote notification creation.
+* BPEL4People only supports remote tasks and remote notification creation.
+
 * For a complete list of features to be implemented please refer the list of known issues -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11712
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12383
 
 
 Installation & Running
