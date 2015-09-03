@@ -342,6 +342,12 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.automation</groupId>
+                <artifactId>org.wso2.carbon.automation.core</artifactId>
+                <version>${carbon.automation.core.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.automation</groupId>
                 <artifactId>org.wso2.carbon.automation.extensions</artifactId>
                 <version>${carbon.automation.version}</version>
                 <scope>test</scope>
@@ -653,6 +659,8 @@
         <carbon.automationutils.version>4.4.1</carbon.automationutils.version>
 
         <carbon.automation.version>4.4.2</carbon.automation.version>
+
+        <carbon.automation.core.version>4.2.0</carbon.automation.core.version>
 
         <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
 
