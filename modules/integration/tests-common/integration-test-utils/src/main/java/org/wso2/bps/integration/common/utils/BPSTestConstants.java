@@ -41,4 +41,6 @@ public class BPSTestConstants {
     public final static String CLAIMS_APPROVAL_PROCESS = "ClaimsApprovalProcess";
     public final static String CLAIMS_APPROVAL_TASK = "ClaimsApprovalTask";
 
+    public final static String DIR_POLICY = "policy";
+
 }

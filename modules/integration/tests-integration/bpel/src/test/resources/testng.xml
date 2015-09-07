@@ -9,6 +9,7 @@
             <package name="org.wso2.bps.integration.tests.bpel.bpelmanagement"/>
             <!--<package name="org.wso2.bps.integration.tests.bpel.stucturedactivities"/>-->
             <package name="org.wso2.bps.integration.tests.bpel.upload"/>
+            <package name="org.wso2.bps.integration.tests.bpel.security"/>
         </packages>
     </test>
 
