@@ -32,6 +32,7 @@
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/services/echo/**</exclude>
                 <exclude>**/repository/services/version/**</exclude>
+		<exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/pom.xml</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/README*</exclude>
@@ -547,6 +548,13 @@
             <destName>secret-conf.properties</destName>
             <filtered>true</filtered>
         </file>
+	 <file>
+            <source>conf/wso2carbon-version.txt</source>
+            <outputDirectory>wso2bps-${pom.version}/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
     </files>
 
 </assembly>
