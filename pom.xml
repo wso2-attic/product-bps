@@ -370,12 +370,6 @@
                 <version>${carbon.automationutils.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.automationutils</groupId>
-                <artifactId>org.wso2.carbon.integration.common.utils</artifactId>
-                <version>${carbon.automationutils.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.wso2.bps</groupId>
                 <artifactId>org.wso2.bps.integration.common.clients</artifactId>
                 <version>${bps.version}</version>
@@ -434,31 +428,11 @@
                 <version>${jacoco.agent.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.bps.multitenancy.styles</artifactId>
-                <version>${bps.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.bps.multitenancy.dashboard.ui</artifactId>
-                <version>${bps.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.bps</groupId>
-                <artifactId>org.wso2.bps.multitenancy.login.ui</artifactId>
-                <version>${bps.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>4.2.5</version>
                 <!-- scope>test</scope -->
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.wso2.apache.httpcomponents</groupId>-->
-                <!--<artifactId>httpclient</artifactId>-->
-                <!--<version>${httpcomponents.wso2.version}</version>-->
-            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -634,7 +608,7 @@
         <spring.version>3.2.9.wso2v1</spring.version>
 
         <!-- Carbon Identity Version -->
-        <carbon.identity.version>4.5.5</carbon.identity.version>
+        <carbon.identity.version>4.5.6</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
         <carbon.registry.version>4.4.5</carbon.registry.version>
@@ -674,9 +648,9 @@
         <imp.pkg.version.h2.engine>[1.2.140.wso2v3, 2)</imp.pkg.version.h2.engine>
 
 
-        <rampart.version>1.6.1-wso2v14</rampart.version>
-        <rampart.mar.version>1.6.1-wso2v14</rampart.mar.version>
-        <rampart.osgi.version>1.6.1.wso2v14</rampart.osgi.version>
+        <rampart.version>1.6.1-wso2v16</rampart.version>
+        <rampart.mar.version>1.6.1-wso2v16</rampart.mar.version>
+        <rampart.osgi.version>1.6.1.wso2v16</rampart.osgi.version>
         <httpcomponents.wso2.version>4.3.1.wso2v1</httpcomponents.wso2.version>
 
         <bouncycastle.version>132</bouncycastle.version>
