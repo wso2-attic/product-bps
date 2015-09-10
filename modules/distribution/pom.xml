@@ -399,24 +399,24 @@
                                 <!--  Copying BPMN sample -->
                                 <zip destfile="target/samples/bpmn/HelloWorld.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
-                                <zip destfile="target/samples/bpmn/DeliveryScriptBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/DeliveryScriptBPMN"/>
-                                <zip destfile="target/samples/bpmn/LoanProcessBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/LoanProcessBPMN"/>
-                                <zip destfile="target/samples/bpmn/OrderBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderBPMN"/>
-				                <zip destfile="target/samples/bpmn/PerformCalculationBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/PerformCalculationBPMN"/>
-                                <zip destfile="target/samples/bpmn/SubProcessBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/SubProcessBPMN"/>
-                                <zip destfile="target/samples/bpmn/VacationRequestBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestBPMN"/>
-				                <zip destfile="target/samples/bpmn/CallActivityBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/CallActivityBPMN"/>
-				                <zip destfile="target/samples/bpmn/ManualTaskBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/ManualTaskBPMN"/>
-				                <zip destfile="target/samples/bpmn/ReceiveTaskBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/ReceiveTaskBPMN"/>
+                                <zip destfile="target/samples/bpmn/OrderDeliveryProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderDeliveryProcess"/>
+                                <zip destfile="target/samples/bpmn/LoanApprovalProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/LoanApprovalProcess"/>
+                                <zip destfile="target/samples/bpmn/OrderApprovalProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderApprovalProcess"/>
+				                <zip destfile="target/samples/bpmn/SimpleCalculator.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator"/>
+                                <zip destfile="target/samples/bpmn/TrainTicketValidationProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/TrainTicketValidationProcess"/>
+                                <zip destfile="target/samples/bpmn/VacationRequestProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestProcess"/>
+				                <zip destfile="target/samples/bpmn/CreditApprovalProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/CreditApprovalProcess"/>
+				                <zip destfile="target/samples/bpmn/PizzaOrderProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/PizzaOrderProcess"/>
+				                <zip destfile="target/samples/bpmn/BuyProduct.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/BuyProduct"/>
                             </tasks>
                         </configuration>
                     </execution>
