@@ -32,7 +32,11 @@
                 <exclude>**/services/sample01.aar</exclude>
                 <exclude>**/services/echo/**</exclude>
                 <exclude>**/repository/services/version/**</exclude>
-		<exclude>**/wso2carbon-version.txt</exclude>
+                <exclude>**/repository/conf/tomcat/web.xml</exclude>
+                <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
+                <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
+                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
+		        <exclude>**/wso2carbon-version.txt</exclude>
                 <exclude>**/pom.xml</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/README*</exclude>
@@ -423,6 +427,38 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/datasources/</outputDirectory>
             <fileMode>644</fileMode>
         </file>
+
+
+        <!-- copying security check configs -->
+
+
+        <file>
+            <source>../../modules/distribution/conf/webapp-mode/WEB-INF/web.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/webapp-mode/WEB-INF/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>../../modules/distribution/conf/tomcat/catalina-server.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/tomcat/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+       <file>
+           <source>../../modules/distribution/conf/tomcat/web.xml</source>
+           <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/tomcat/</outputDirectory>
+           <filtered>true</filtered>
+           <fileMode>644</fileMode>
+       </file>
+
+       <file>
+           <source>../../modules/distribution/conf/tomcat/carbon/WEB-INF/web.xml</source>
+           <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/tomcat/carbon/WEB-INF/</outputDirectory>
+           <fileMode>644</fileMode>
+       </file>
+
 
         <!-- Copying ODE and Activiti H2 Database-->
         <file>
