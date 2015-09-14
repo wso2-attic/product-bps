@@ -476,14 +476,10 @@
 
     <session-config>
         <session-timeout>30</session-timeout>
-    </session-config>
-
-    <session-config>
         <cookie-config>
             <secure>true</secure>
         </cookie-config>
     </session-config>
-
 
     <!-- ===================== Default MIME Type Mappings =================== -->
     <!-- When serving static resources, Tomcat will automatically generate    -->

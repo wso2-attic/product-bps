@@ -112,12 +112,9 @@
 
      <session-config>
         <session-timeout>15</session-timeout>
-    </session-config>
-
-    <session-config>
-        <cookie-config>
-            <secure>true</secure>
-        </cookie-config>
+         <cookie-config>
+             <secure>true</secure>
+         </cookie-config>
     </session-config>
 
 </web-app>
