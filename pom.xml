@@ -619,7 +619,7 @@
         <!--Carbon Event Processing Version-->
         <!--carbon.event-processing.version>2.0.4-SNAPSHOT</carbon.event-processing.version-->
 
-        <carbon.analytics-common.version>5.0.0</carbon.analytics-common.version>
+        <carbon.analytics-common.version>1.0.0</carbon.analytics-common.version>
 
         <!-- Carbon Commons Version -->
         <carbon.commons.version>4.4.7</carbon.commons.version>
