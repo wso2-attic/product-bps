@@ -104,4 +104,5 @@ fi
 -classpath "$CARBON_CLASSPATH" \
 -Djava.io.tmpdir="$CARBON_HOME/tmp" \
 -Djava.endorsed.dirs="$CARBON_HOME/lib/endorsed":"$JAVA_HOME/jre/lib/endorsed":"$JAVA_HOME/lib/endorsed" \
+-Dcarbon.home="$CARBON_HOME" \
 org.wso2.bps.samples.processcleanup.CleanupExecutor $*

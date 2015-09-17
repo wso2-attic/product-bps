@@ -75,15 +75,13 @@ public class CleanupExecutor {
 		String databasePassword = null;
 		String databaseDriver = null;
 		boolean dbConfigFound = false;
-		String carbon = System.getProperty(CleanupConstants.CARBON_HOME);
-		String path[] = carbon.split(File.separator);
-		bpsHome = "";
-		for (int i = 0; i < path.length; i++) {
-			bpsHome = bpsHome + path[i] + File.separator;
-			if (path[i].contains(CleanupConstants.WSO2_BPS)) {
-				break;
-			}
-		}
+        bpsHome = System.getProperty(CleanupConstants.CARBON_HOME);
+
+        if (!(bpsHome.endsWith(File.separator))) {
+            bpsHome += File.separator;
+        }
+        System.out.println("Processcleanuptool startup - BPS HOME DIRECTORY : " + bpsHome);
+
 		String configPath =
 				bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
 				File.separator + CleanupConstants.DATASOURCES +
@@ -361,8 +359,6 @@ public class CleanupExecutor {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		File file = new File("." + File.separator);
-		System.setProperty(CleanupConstants.CARBON_HOME, file.getCanonicalFile().toString());
 		initializeDBConnection();
 		query = new DBQuery(databaseURL, bpsHome);
 		TimeZone.setDefault(TimeZone.getTimeZone(getProperty(CleanupConstants.TIME_ZONE)));
