@@ -116,7 +116,7 @@
                                 <featureArtifactDef>
                                     org.wso2.carbon.business-process:org.wso2.carbon.bpel.analytics.publisher.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
- 				<featureArtifactDef>
+ 				                <featureArtifactDef>
                                     org.wso2.carbon.business-process:org.wso2.carbon.bpmn.analytics.publisher.feature:${carbon.business-process.version}
                                 </featureArtifactDef>
                                 <featureArtifactDef>
@@ -314,6 +314,9 @@
 
                                 <featureArtifactDef>
                                     org.wso2.carbon.registry:org.wso2.carbon.registry.contentsearch.feature:${carbon.registry.version}
+                                </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.apache.axis2.transport:org.apache.axis2.transport.jms.feature:${axis2.transports.version}
                                 </featureArtifactDef>
 
                             </featureArtifacts>
@@ -635,6 +638,10 @@
                                 <feature>
                                     <id>org.wso2.carbon.event.output.adapter.sms.server.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.apache.axis2.transport.jms.feature.group</id>
+                                    <version>${axis2.transports.version}</version>
                                 </feature>
 				<!-- 11 Secure Vault -->
 				<feature>
