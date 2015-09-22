@@ -5,74 +5,76 @@ Welcome to the WSO2 BPS @product.version@ release
 
 WSO2 Business Process Server (BPS) is an easy-to-use open source
 business process server that executes business processes written using
-the WS-BPEL standard. It is powered by Apache ODE and provides a
-complete Web-based graphical console to deploy, manage and view
-processes in addition to managing and viewing process instances.
-
-WSO2 BPS is developed on top of the WSO2 Carbon platform and all the
-existing capabilities of Enterprise Service Bus(ESB) and Application 
-Server(AS) can be applied to business processes. For example securing 
-business processes and throttling requests to business processes.
- 
+BPMN standard as well as WS-BPEL standard. It is powered by Activiti BPMN Engine
+and Apache ODE BPEL Engine. It provides a complete Web-based graphical 
+console to deploy, manage and view processes in addition to managing 
+and viewing process instances.
 
 Key Features
 ------------
+
 * Deploying Business Processes written in compliance with WS-BPEL 2.0 Standard and BPEL4WS 1.1 standard.
+* Deploying Business Processes written in compliance with a frequently used subset of BPMN 2.0 standard.
 * Support for Human Interactions in BPEL Processes with WS-Human Task and BPEL4People.
-* Managing BPEL packages, processes and process instances.
-* BPEL Extensions and XPath extensions support.
+* Managing BPMN / BPEL packages, processes and process instances.
+* BPEL Extensions and XPath extensions and BPMN Extensions support.
 * Instance recovery (Only supports 'Invoke' activity) support through management console.
-* OpenJPA based Data Access Layer For BPEL and Human Tasks.
-* WS-Security support for external services.
-* WS-Security support for business processes.
+* WS-Security support for external services exposed by BPEL / Humantasks.
 * Support for HumanTask Coordination.
 * Human Task Versioning.
 * Clustering support for high availability.
-* BPEL Package hot update which facilitate Versioning of BPEL Packages.
+* BPEL / BPMN Package hot update which facilitate Versioning of Packages.
 * BPEL deployment descriptor editor.
 * E4X based data manipulation support for BPEL assignments.
-* Ability to configure external data base system as the BPEL engine's persistence storage.
-* Caching support for business processes.
-* Throttling support for business processes.
+* Ability to configure external data base system as the BPEL / BPMN engine's persistence storage.
 * Transport management.
 * Internationalized web based management console.
 * System monitoring.
+* Comprehensive REST API for managing bpmn processes / tasks.
 * Try-it for business processes.
 * SOAP Message Tracing.
 * End-point configuration mechanism based on WSO2 Unified Endpoints.
 * Customizable server - You can customize the BPS to fit into your
   exact requirements, by removing certain features or by adding new
   optional features.
-* Performance improvements in XPath evaluations.
-* Improved BPS home page.
-* Process Monitoring support with WSO2 Business Activity Monitor.
+* Process Monitoring support with WSO2 Data Analytics Server.
 * JMX Monitoring
+* Comprehensive and customizable web application for managing human tasks.
+* Comprehensive and customizable web application for managing bpmn instances and user tasks.
+* Human Task UI Form Generation support
+* Ability to publish statistics to WSO2 Data Analytics server for analysis
+* Reporting dashboards
+
 
 New Features In This Release
 ----------------------------
 
-* WS-Human Task Versioning.
-* Caching support for people queries.
-* Command line process cleanup tool to remove RETIRED versions of bpel process.
-* Migration tool to move from BPS 3.0.0 to BPS 3.2.0 and BPS 3.1.0 to BPS 3.2.0. 
-* Instance View Performance Improvements.
-* New BPS UI.
+* BPMN Support
+* Customizable Web Application for Viewing / Managaging BPMN Processes and Tasks
+* BPMN user task form generation support
+* Customizable Web Application for WS-Human Tasks
+* Human Task UI form generation support
+* BPMN runtime statistics publishing support
+* Performance Improvements
+* Many UI Enhanancements
+* Reporting dashboards for BPMN and Human Tasks
 * Many other bug fixes.
 
 Issues Fixed In This Release
 ----------------------------
 
 * WSO2 BPS related components of the WSO2 Carbon Platform -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11711
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12382
 
 
 Known Issues
 -----------
 
 * WS-Human Task implementation does not support sub tasks and lean tasks.
-        BPEL4People only supports remote tasks and remote notification creation.
+* BPEL4People only supports remote tasks and remote notification creation.
+
 * For a complete list of features to be implemented please refer the list of known issues -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=11712
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12383
 
 
 Installation & Running
@@ -91,13 +93,9 @@ For more details, see the Installation Guide
 System Requirements
 -------------------
 
-1. Minimum memory - 1GB
-2. Processor      - Pentium 800MHz or equivalent at minimum
+1. Minimum memory - 4GB
+2. Processor      - 3GHz Dual­core Xeon/Opteron (or latest)
 3. The Management Console requires full Javascript enablement of the Web browser
-   NOTE:
-     On Windows Server 2003, it is not allowed to go below the medium security
-     level in Internet Explorer 6.x.
-
  
 
 WSO2 BPS @product.version@ distribution directory structure
@@ -220,6 +218,6 @@ Crypto Notice
    Apache ODE       : http://ode.apache.org/
 
 --------------------------------------------------------------------------------
-(c) Copyright 2014 WSO2 Inc.
+(c) Copyright 2015 WSO2 Inc.
 
 

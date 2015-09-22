@@ -197,19 +197,74 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>create-ode-database</id>
+                        <id>extract-docs-from-components</id>
                         <phase>package</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <tasks>
-                                <!-- commenting "GetAllRolesOfUserEnabled" property to fix
-                               https://wso2.org/jira/browse/IDENTITY-3489 -->
-                                <replace
-                                        file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/user-mgt.xml"
-                                        token="&lt;Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property&gt;"
-                                        value="&lt;!--Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property--&gt;"/>
+                                <property name="tempdir" value="target/docs-temp"/>
+                                <mkdir dir="${tempdir}"/>
+                                <unzip dest="${tempdir}">
+                                    <fileset dir="target">
+                                        <include
+                                                name="${project.artifactId}-${project.version}.zip"/>
+                                    </fileset>
+                                </unzip>
+                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components"
+                                      overwrite="true">
+                                    <fileset
+                                            dir="${tempdir}/${project.artifactId}-${project.version}/repository/components">
+                                    </fileset>
+                                </copy>
+                                <delete file="target/${project.artifactId}-${project.version}.zip"/>
+                                <delete dir="${tempdir}"/>
+                                <mkdir dir="${tempdir}"/>
+                                <unzip dest="${tempdir}">
+                                    <fileset
+                                            dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
+                                        <include name="*.ui*.jar"/>
+                                    </fileset>
+                                </unzip>
+                                <move todir="${tempdir}/web/" includeemptydirs="false">
+                                    <fileset dir="${tempdir}/web/">
+                                        <exclude name="**/yui/**"/>
+                                        <exclude name="**/ajax/**"/>
+                                        <exclude name="**/WEB-INF/**"/>
+                                        <include name="**/*.html"/>
+                                    </fileset>
+                                    <mapper type="glob" from="*.html" to="*.xml"/>
+                                </move>
+                                <mkdir dir="src/site/xdoc"/>
+                                <copy todir="src/site/xdoc" overwrite="false"
+                                      includeemptydirs="false">
+                                    <fileset dir="${tempdir}/web">
+                                        <exclude name="**/yui/**"/>
+                                        <exclude name="**/ajax/**"/>
+                                        <exclude name="**/WEB-INF/**"/>
+                                        <exclude name="**/*.html"/>
+                                        <exclude name="**/*.js"/>
+                                        <exclude name="**/*.jsp"/>
+                                        <exclude name="**/*.xsl"/>
+                                        <exclude name="**/codepress.xml"/>
+                                        <exclude name="**/template.xml"/>
+                                        <exclude name="*.*"/>
+                                    </fileset>
+                                </copy>
+                                <delete dir="${tempdir}"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-samples</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+
 
                                 <echo message="######## Creating BPEL / HumanTask Archives. #########"/>
                                 <property name="tempdir" value="target/samples"/>
@@ -232,12 +287,12 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/AttachmentHandlingProcess"/>
                                 <zip destfile="target/samples/bpel/CreditRating.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CreditRating"/>
-                                <zip destfile="target/samples/bpel/CleanUpTest1.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CleanUpTest1"/>
+                                <zip destfile="target/samples/bpel/CleanUpSample.zip"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CleanUpSample"/>
                                 <zip destfile="target/samples/bpel/FlexibleAssign.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/FlexibleAssign"/>
-                                <zip destfile="target/samples/bpel/helloHeaderTest.zip"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/helloHeaderTest"/>
+                                <zip destfile="target/samples/bpel/helloHeaderSample.zip"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/helloHeaderSample"/>
                                 <zip destfile="target/samples/bpel/HelloWorld2.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/HelloWorld2"/>
                                 <zip destfile="target/samples/bpel/MyRoleMexTestProcess.zip"
@@ -274,7 +329,7 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/ComposeUrl"/>
                                 <zip destfile="target/samples/bpel/CorrelationUnique.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CorrelationUnique"/>
-				<zip destfile="target/samples/bpel/CorrelationWithAttribute.zip"
+				                <zip destfile="target/samples/bpel/CorrelationWithAttribute.zip"
                                       basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/CorrelationWithAttribute"/>
                                 <zip destfile="target/samples/bpel/E4XDirect.zip"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpel/2.0/E4XDirect"/>
@@ -344,124 +399,51 @@
                                 <!--  Copying BPMN sample -->
                                 <zip destfile="target/samples/bpmn/HelloWorld.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
-                                <zip destfile="target/samples/bpmn/DeliveryScriptBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/DeliveryScriptBPMN"/>
-                                <zip destfile="target/samples/bpmn/LoanProcessBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/LoanProcessBPMN"/>
-                                <zip destfile="target/samples/bpmn/OrderBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderBPMN"/>
-				<zip destfile="target/samples/bpmn/PerformCalculationBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/PerformCalculationBPMN"/>
-                                <zip destfile="target/samples/bpmn/SubProcessBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/SubProcessBPMN"/>
-                                <zip destfile="target/samples/bpmn/VacationRequestBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestBPMN"/>
-				<zip destfile="target/samples/bpmn/CallActivityBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/CallActivityBPMN"/>
-				<zip destfile="target/samples/bpmn/ManualTaskTestBPMN.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/ManualTaskTestBPMN"/>
-
-				<concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">
-				org.restlet.level=SEVERE</concat>
-                                <echo message="######### Copying Samples Services are temporary skipped###########"/>
-                                
-                                <!-- Commenting h2 database generation, since we are copying h2 databases from feature -->
-                                <!--<path id="h2.classpath">-->
-                                    <!--<path refid="maven.compile.classpath"/>-->
-                                <!--</path>-->
-
-                                <!--<echo-->
-                                        <!--message="########### Create BPS Database ##############"/>-->
-                                <!--<sql-->
-                                        <!--driver="org.h2.Driver"-->
-                                        <!--url="jdbc:h2:${basedir}/target/database/jpadb;create=true"-->
-                                        <!--userid="wso2carbon" password="wso2carbon" autocommit="true"-->
-                                        <!--onerror="continue">-->
-                                    <!--<classpath>-->
-                                        <!--<path refid="h2.classpath"/>-->
-                                    <!--</classpath>-->
-                                    <!--<fileset-->
-                                            <!--file="${basedir}/sql/h2.sql"/>-->
-                                <!--</sql>-->
-
-                                <!--<echo-->
-                                        <!--message="##################### END ############################"/>-->
+                                <zip destfile="target/samples/bpmn/OrderDeliveryProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderDeliveryProcess"/>
+                                <zip destfile="target/samples/bpmn/LoanApprovalProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/LoanApprovalProcess"/>
+                                <zip destfile="target/samples/bpmn/OrderApprovalProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderApprovalProcess"/>
+				                <zip destfile="target/samples/bpmn/SimpleCalculator.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator"/>
+                                <zip destfile="target/samples/bpmn/TrainTicketValidationProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/TrainTicketValidationProcess"/>
+                                <zip destfile="target/samples/bpmn/VacationRequestProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestProcess"/>
+				                <zip destfile="target/samples/bpmn/CreditApprovalProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/CreditApprovalProcess"/>
+				                <zip destfile="target/samples/bpmn/PizzaOrderProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/PizzaOrderProcess"/>
+				                <zip destfile="target/samples/bpmn/BuyProduct.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/BuyProduct"/>
                             </tasks>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>extract-docs-from-components</id>
+                        <id>fix-config-issues</id>
                         <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
                         <configuration>
                             <tasks>
-                                <property name="tempdir" value="target/docs-temp"/>
-                                <mkdir dir="${tempdir}"/>
-                                <unzip dest="${tempdir}">
-                                    <fileset dir="target">
-                                        <include
-                                                name="${project.artifactId}-${project.version}.zip"/>
-                                    </fileset>
-                                </unzip>
-                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components"
-                                      overwrite="true">
-                                    <fileset
-                                            dir="${tempdir}/${project.artifactId}-${project.version}/repository/components">
-                                    </fileset>
-                                </copy>
-                                <delete file="target/${project.artifactId}-${project.version}.zip"/>
-                                <delete dir="${tempdir}"/>
-                                <mkdir dir="${tempdir}"/>
-                                <unzip dest="${tempdir}">
-                                    <fileset
-                                            dir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/">
-                                        <include name="*.ui*.jar"/>
-                                    </fileset>
-                                </unzip>
-                                <move todir="${tempdir}/web/" includeemptydirs="false">
-                                    <fileset dir="${tempdir}/web/">
-                                        <exclude name="**/yui/**"/>
-                                        <exclude name="**/ajax/**"/>
-                                        <exclude name="**/WEB-INF/**"/>
-                                        <include name="**/*.html"/>
-                                    </fileset>
-                                    <mapper type="glob" from="*.html" to="*.xml"/>
-                                </move>
-                                <mkdir dir="src/site/xdoc"/>
-                                <copy todir="src/site/xdoc" overwrite="false"
-                                      includeemptydirs="false">
-                                    <fileset dir="${tempdir}/web">
-                                        <exclude name="**/yui/**"/>
-                                        <exclude name="**/ajax/**"/>
-                                        <exclude name="**/WEB-INF/**"/>
-                                        <exclude name="**/*.html"/>
-                                        <exclude name="**/*.js"/>
-                                        <exclude name="**/*.jsp"/>
-                                        <exclude name="**/*.xsl"/>
-                                        <exclude name="**/codepress.xml"/>
-                                        <exclude name="**/template.xml"/>
-                                        <exclude name="*.*"/>
-                                    </fileset>
-                                </copy>
-                                <!--<copy todir="src/site" overwrite="false" includeemptydirs="false">-->
-                                    <!--<fileset dir="../../docs">-->
-                                        <!--<exclude name="**/user-mgt-actdir.xml"/>-->
-                                        <!--<exclude name="**/user-mgt-jdbc.xml"/>-->
-                                        <!--<exclude name="**/user-mgt-ldap.xml"/>-->
-                                    <!--</fileset>-->
-                                <!--</copy>-->
-                                <!--<copy todir="target/site/" overwrite="false"-->
-                                      <!--includeemptydirs="false">-->
-                                    <!--<fileset dir="src/site/xdoc/">-->
-                                        <!--<include name="**/images/*.*"/>-->
-                                    <!--</fileset>-->
-                                <!--</copy>-->
-                                <delete dir="${tempdir}"/>
+                                <!-- commenting "GetAllRolesOfUserEnabled" property to fix
+                              https://wso2.org/jira/browse/IDENTITY-3489 -->
+                                <replace
+                                        file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/user-mgt.xml"
+                                        token="&lt;Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property&gt;"
+                                        value="&lt;!--Property name=&quot;GetAllRolesOfUserEnabled&quot;&gt;true&lt;/Property--&gt;"/>
+                                <!-- Move IS UI to configure menu -->
+                                <property name="tempdir2" value="target/identity-ui" />
+                                <mkdir dir="${tempdir2}" />
+                                <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.account.mgt.menu.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
+                                <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
+                                <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.account.mgt.menu.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
+                                <concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">org.restlet.level=SEVERE</concat>
 
                             </tasks>
                         </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
                     </execution>
 
                     <execution>
@@ -479,6 +461,7 @@
                                 <delete file="target/${project.artifactId}-${project.version}.jar"/>
                                 <delete dir="target/sources"/>
                                 <delete dir="target/site"/>
+                                <delete dir="target/identity-ui"/>
                                 <delete dir="target/database"/>
                                 <delete dir="target/bpmn-explorer"/>
                                 <delete dir="src/site"/>

@@ -27,71 +27,122 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-//Class to delete relevant versions from Registry
+/**
+ * Class to delete relevant versions from Registry
+ */
 public class RegistryCleaner {
-    private static Properties prop = new Properties();
+	private static Properties prop = new Properties();
 
-    //Cleans the registry at the regPath location
-    public static boolean deleteRegistry(String regPath, String clientTrustStorePath, String trustStorePassword, String trustStoreType) {
-        ResourceAdminServiceStub resourceAdminServiceStub;
-        setKeyStore(clientTrustStorePath, trustStorePassword, trustStoreType);
+	/**
+	 * Cleans the registry at the regPath location
+	 *
+	 * @param regPath              registry path for the given package
+	 * @param packageName          given package name
+	 * @param clientTrustStorePath client trust store path
+	 * @param trustStorePassword   client trust store password
+	 * @param trustStoreType       trust store type
+	 * @return true if the given package is removed from the carbon registry
+	 */
+	public static boolean deleteRegistry(String regPath, String packageName,
+	                                     String clientTrustStorePath, String trustStorePassword,
+	                                     String trustStoreType) {
+		ResourceAdminServiceStub resourceAdminServiceStub;
+		setKeyStore(clientTrustStorePath, trustStorePassword, trustStoreType);
 
-        try {
-            File file = new File("." + File.separator);
-            System.setProperty("carbon.home", file.getCanonicalFile().toString());
+		try {
+			File file = new File("." + File.separator);
+			System.setProperty(CleanupConstants.CARBON_HOME, file.getCanonicalFile().toString());
 
-            if (System.getProperty("os.name").startsWith("Windows")) {
-                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
-            } else {
-                prop.load(new FileInputStream(System.getProperty("carbon.home") + File.separator + ".." + File.separator + "repository" + File.separator + "conf" + File.separator + "process-cleanup.properties"));
-            }
+			if (System.getProperty(CleanupConstants.OS_NAME).startsWith(CleanupConstants.WINDOWS)) {
+				prop.load(new FileInputStream(
+						System.getProperty(CleanupConstants.CARBON_HOME) + File.separator +
+						CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
+						File.separator + CleanupConstants.CLEANUP_PROPERTIES));
+			} else {
+				prop.load(new FileInputStream(
+						System.getProperty(CleanupConstants.CARBON_HOME) +
+						File.separator + CleanupConstants.REPOSITORY + File.separator +
+						CleanupConstants.CONF + File.separator +
+						CleanupConstants.CLEANUP_PROPERTIES));
+			}
 
-            String resourceAdminServiceURL = prop.getProperty("tenant.context") + "/services/ResourceAdminService";
+			String resourceAdminServiceURL = prop.getProperty(CleanupConstants.TENANT_CONTEXT) +
+			                                 CleanupConstants.RESOURCE_ADMIN_SERVICE_PATH;
 
-            resourceAdminServiceStub = new ResourceAdminServiceStub(resourceAdminServiceURL);
-            ServiceClient client = resourceAdminServiceStub._getServiceClient();
-            Options option = client.getOptions();
-            option.setManageSession(true);
-            option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING, login());
-            resourceAdminServiceStub._getServiceClient().getOptions().setTimeOutInMilliSeconds(600000);
+			resourceAdminServiceStub = new ResourceAdminServiceStub(resourceAdminServiceURL);
+			ServiceClient client = resourceAdminServiceStub._getServiceClient();
+			Options option = client.getOptions();
+			option.setManageSession(true);
+			option.setProperty(org.apache.axis2.transport.http.HTTPConstants.COOKIE_STRING,
+			                   login());
+			resourceAdminServiceStub._getServiceClient().getOptions()
+			                        .setTimeOutInMilliSeconds(CleanupConstants.TIME_OUT_MILLS);
 
-            resourceAdminServiceStub.delete(regPath);
+			String regPathAppend = regPath + packageName.split("-\\d*$")[0];
+			String regPathVersionsAppend = regPathAppend + CleanupConstants.VERSIONS_PATH;
+			int count = resourceAdminServiceStub.getCollectionContent(regPathVersionsAppend)
+			                                    .getChildCount();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+			/* if the number of deployment units of the given package exceed one, then removes the
+			   relevant deployment unit from the path that it exists. */
+			if (count > 1) {
+				resourceAdminServiceStub.delete(regPathVersionsAppend + packageName);
+				return true;
+			}
+			/* if the number of deployment units of the given package equals to one, then removes
+			   it from /_system/config/bpel/packages/<package> */
+			else if (count == 1) {
+				resourceAdminServiceStub.delete(regPathAppend);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
-    //Setup key store according to the processCleanup.properties
-    private static void setKeyStore(String clientTrustStorePath, String trustStorePassword, String trustStoreType) {
+	/**
+	 * Setup key store according to the processCleanup.properties
+	 *
+	 * @param clientTrustStorePath client trust store path
+	 * @param trustStorePassword   trust store password
+	 * @param trustStoreType       trust store type
+	 */
+	private static void setKeyStore(String clientTrustStorePath, String trustStorePassword,
+	                                String trustStoreType) {
+		System.setProperty(CleanupConstants.JAVAX_SSL_TRUST_STORE, clientTrustStorePath);
+		System.setProperty(CleanupConstants.JAVAX_SSL_TRUST_STORE_PASSWORD, trustStorePassword);
+		System.setProperty(CleanupConstants.JAVAX_SSL_TRUST_STORE_TYPE, trustStoreType);
+	}
 
-        System.setProperty("javax.net.ssl.trustStore", clientTrustStorePath);
-        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
-        System.setProperty("javax.net.ssl.trustStoreType", trustStoreType);
-    }
+	/**
+	 * Creates the login session BPS login
+	 *
+	 * @return cookie
+	 * @throws Exception
+	 */
+	public static String login() throws Exception {
 
-    //Creates the login session BPS login
-    public static String login() throws Exception {
+		AuthenticationAdminStub authenticationAdminStub;
+		String authenticationAdminServiceURL = prop.getProperty(CleanupConstants.TENANT_CONTEXT) +
+		                                       CleanupConstants.SERVICE_AUTHENTICATION_ADMIN_PATH;
+		authenticationAdminStub = new AuthenticationAdminStub(authenticationAdminServiceURL);
 
-        AuthenticationAdminStub authenticationAdminStub;
-        String authenticationAdminServiceURL = prop.getProperty("tenant.context") + "/services/AuthenticationAdmin";
-        authenticationAdminStub = new AuthenticationAdminStub(authenticationAdminServiceURL);
+		ServiceClient client = authenticationAdminStub._getServiceClient();
+		Options options = client.getOptions();
+		options.setManageSession(true);
 
-        ServiceClient client = authenticationAdminStub._getServiceClient();
-        Options options = client.getOptions();
-        options.setManageSession(true);
+		String userName = prop.getProperty(CleanupConstants.BPS_USER_NAME);
+		String password = prop.getProperty(CleanupConstants.BPS_PASSWORD);
+		String hostName = NetworkUtils.getLocalHostname();
 
-        String userName = prop.getProperty("wso2.bps.username");
-        String password = prop.getProperty("wso2.bps.password");
-        String hostName = NetworkUtils.getLocalHostname();
+		authenticationAdminStub.login(userName, password, hostName);
 
-        authenticationAdminStub.login(userName, password, hostName);
+		ServiceContext serviceContext = authenticationAdminStub.
+				                                                       _getServiceClient()
+		                                                       .getLastOperationContext()
+		                                                       .getServiceContext();
 
-        ServiceContext serviceContext = authenticationAdminStub.
-                _getServiceClient().getLastOperationContext().getServiceContext();
-
-        return (String) serviceContext.getProperty(HTTPConstants.COOKIE_STRING);
-    }
+		return (String) serviceContext.getProperty(HTTPConstants.COOKIE_STRING);
+	}
 }

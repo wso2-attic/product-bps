@@ -7,7 +7,7 @@
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
          xmlns:ns="http://www.example.org/callback/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-    <!-- Import the client WSDL -->
+    <!-- Import the client WSDL into bpel file -->
     <bpel:import namespace="http://www.example.org/callback/" location="callback.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"></bpel:import>
     <bpel:import location="CorrelationWithAttributeArtifacts.wsdl" namespace="http://wso2.org/bps/sample" 
 	        importType="http://schemas.xmlsoap.org/wsdl/" />
@@ -28,7 +28,8 @@
     <!-- ================================================================= -->         
     <!-- VARIABLES                                                         -->
     <!-- List of messages and XML documents used within this BPEL process  -->
-    <!-- ================================================================= -->         
+    <!-- ================================================================= -->
+
     <bpel:variables>
         <!-- Reference to the message passed as input during initiation -->
         <bpel:variable name="input"
@@ -70,6 +71,7 @@
                 <bpel:correlation set="myCorrelationSet" initiate="no"></bpel:correlation>
             </bpel:correlations>
         </bpel:receive>
+
         <bpel:assign validate="no" name="Assign">            
             <bpel:copy>
                 <bpel:from>
@@ -81,6 +83,7 @@
                 </bpel:from>
                 <bpel:to variable="CPLResponse" part="parameters"></bpel:to>
             </bpel:copy>
+
             <bpel:copy>
                 <bpel:from part="parameters" variable="CPLRequest">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">

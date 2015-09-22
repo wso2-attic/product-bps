@@ -24,4 +24,9 @@
         <property name="maxConnectionsPerRoute" value="200"/>
     </bean>
 
+    <bean id="activitiInstanceDeleteConfig">
+        <property name="maxCount" value="1000"/>
+    </bean>
+
+
 </beans>

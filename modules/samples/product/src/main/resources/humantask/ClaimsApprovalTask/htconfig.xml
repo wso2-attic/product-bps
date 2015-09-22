@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- ~ Copyright (c) WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~ Copyright (c) 2015 WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -15,19 +15,19 @@
  ~ limitations under the License.
 -->
 <hic:HTDeploymentConfig xmlns:hic="http://wso2.org/ht/schema/deployment/config"
-	xmlns:claim="http://www.example.com/claims/"
-	xmlns:claimtask="http://www.example.com">
-	<hic:task name="claimtask:ApproveClaim">
-		<hic:publish>
-			<hic:service name="claim:ClaimService" port="ClaimPort" />
-		</hic:publish>
-		<hic:callback>
-			<hic:service name="claim:ClaimServiceCB" port="ClaimPortCB" />
-		</hic:callback>
-	</hic:task>
-	<hic:notification name="claimtask:ClaimApprovalReminder">
-		<hic:publish>
-			<hic:service name="claim:ClaimReminderService" port="ClaimReminderPort" />
-		</hic:publish>
-	</hic:notification>
+                        xmlns:claim="http://www.example.com/claims/"
+                        xmlns:claimtask="http://www.example.com">
+    <hic:task name="claimtask:ApproveClaim">
+        <hic:publish>
+            <hic:service name="claim:ClaimService" port="ClaimPort"/>
+        </hic:publish>
+        <hic:callback>
+            <hic:service name="claim:ClaimServiceCB" port="ClaimPortCB"/>
+        </hic:callback>
+    </hic:task>
+    <hic:notification name="claimtask:ClaimApprovalReminder">
+        <hic:publish>
+            <hic:service name="claim:ClaimReminderService" port="ClaimReminderPort"/>
+        </hic:publish>
+    </hic:notification>
 </hic:HTDeploymentConfig>
