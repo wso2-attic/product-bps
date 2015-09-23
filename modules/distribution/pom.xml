@@ -400,7 +400,7 @@
                                 <!-- copy compiled jar of SimpleCalculator sample from target-->
                                 <copy todir="target/samples/bpmn/SimpleCalculator">
                                     <fileset dir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator/target/jar">
-                                        <include name ="**/*.jar"/>
+                                        <include name ="NumberAdder.jar"/>
                                     </fileset>
                                 </copy>
                                 <!-- copy readme file of SimpleCalculator sample-->
@@ -482,7 +482,6 @@
                                 <delete dir="target/database"/>
                                 <delete dir="target/bpmn-explorer"/>
                                 <delete dir="src/site"/>
-                                <delete dir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator/target"/>
                             </tasks>
                         </configuration>
                         <goals>
