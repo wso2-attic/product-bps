@@ -1,47 +1,83 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.wso2.bps.bpmn.examples</groupId>
-  <artifactId>number-adder-sample</artifactId>
-  <version>1.0.0</version>
-  <packaging>jar</packaging>
-  <name>WSO2 BPS Samples</name>
-  <properties>
-    <activiti-version>5.14</activiti-version>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>org.activiti</groupId>
-      <artifactId>activiti-engine</artifactId>
-      <version>${activiti-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.activiti</groupId>
-      <artifactId>activiti-spring</artifactId>
-      <version>${activiti-version}</version>
-    </dependency>
-  </dependencies>
-	 <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-	       <version>2.3.2</version>
-        <configuration>
-	         <source>1.6</source>
-	         <target>1.6</target>
-	       </configuration>
-	     </plugin>
-	     <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <inherited>true</inherited>
-        <configuration>
-	         <classpathContainers>
-	           <classpathContainer>org.eclipse.jdt.USER_LIBRARY/Activiti Designer Extensions</classpathContainer>
-	         </classpathContainers>
-	       </configuration>
-	     </plugin>
-    </plugins>
-	 </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wso2.bps.bpmn.examples</groupId>
+    <artifactId>number-adder-sample</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>WSO2 BPS Samples</name>
+    <properties>
+        <activiti-version>5.14</activiti-version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+            <version>${activiti-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring</artifactId>
+            <version>${activiti-version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>1.7</version>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-jar</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <dependencyfilesets prefix="mydeps." />
+                                <property name="build.compiler" value="extJavac" />
+                                <property name="classdir" value="target/class" />
+                                <property name="jardir" value="target/jar" />
+                                <property name="project" value="NumberAdder" />
+                                <property name="main-class" value="performCalculationBPMN.NumberAdder" />
+                                <mkdir dir="${classdir}" />
+                                <path id="build.classpath">
+                                    <fileset refid="mydeps.maven.project.dependencies" />
+                                </path>
+                                <javac srcdir="${basedir}" destdir="${classdir}" classpathref="build.classpath">
+                                    <!--compilerarg value="-Xlint:unchecked"/-->
+                                </javac>
+                                <mkdir dir="${jardir}" />
+                                <jar destfile="${jardir}/${project}.jar" basedir="${classdir}">
+                                    <manifest>
+                                        <attribute name="Main-Class" value="${main-class}" />
+                                    </manifest>
+                                </jar>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <classpathContainers>
+                        <classpathContainer>org.eclipse.jdt.USER_LIBRARY/Activiti Designer Extensions</classpathContainer>
+                    </classpathContainers>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
