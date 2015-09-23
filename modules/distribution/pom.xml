@@ -397,6 +397,25 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint"/>
 
                                 <!--  Copying BPMN sample -->
+                                <!-- copy compiled jar of SimpleCalculator sample from target-->
+                                <!--copy todir="target/samples/bpmn/SimpleCalculator">
+                                    <fileset dir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator/target/jar">
+                                        <include name ="NumberAdder.jar"/>
+                                    </fileset>
+                                </copy-->
+                                <!-- copy readme file of SimpleCalculator sample-->
+                                <!--copy todir="target/samples/bpmn/SimpleCalculator">
+                                    <fileset dir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator/">
+                                        <include name ="README.txt"/>
+                                        <exclude name ="**/*.bpmn"/>
+                                        <exclude name="pom.xml" />
+                                        <exclude name ="**/*.java"/>
+                                        <exclude name="**/target/**" />
+                                    </fileset>
+                                </copy-->
+
+                                <zip destfile="target/samples/bpmn/SimpleCalculator/SimpleCalculator.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator"/>
                                 <zip destfile="target/samples/bpmn/HelloWorld.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
                                 <zip destfile="target/samples/bpmn/OrderDeliveryProcess.bar"
@@ -405,8 +424,6 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/LoanApprovalProcess"/>
                                 <zip destfile="target/samples/bpmn/OrderApprovalProcess.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderApprovalProcess"/>
-				                <zip destfile="target/samples/bpmn/SimpleCalculator.bar"
-                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator"/>
                                 <zip destfile="target/samples/bpmn/TrainTicketValidationProcess.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/TrainTicketValidationProcess"/>
                                 <zip destfile="target/samples/bpmn/VacationRequestProcess.bar"
