@@ -41,7 +41,7 @@
         <module>process-tools</module>
         <module>bpel-property-reader</module>
         <module>humantask-ui-webapp</module>
-        <module>src/main/resources/bpmn/SimpleCalculator</module>
+        <!--module>src/main/resources/bpmn/SimpleCalculator</module-->
     </modules>
 
 </project>
