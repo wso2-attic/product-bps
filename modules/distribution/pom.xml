@@ -397,24 +397,14 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/humantask/HTWithServiceDescriptorANDUnifiedEndpoint"/>
 
                                 <!--  Copying BPMN sample -->
-                                <!-- copy compiled jar of SimpleCalculator sample from target-->
-                                <!--copy todir="target/samples/bpmn/SimpleCalculator">
-                                    <fileset dir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator/target/jar">
-                                        <include name ="NumberAdder.jar"/>
+                                <!-- copy compiled jars of Service tasks target-->
+                                <copy todir="target/wso2carbon-core-${carbon.kernel.version}/repository/components/lib">
+                                    <fileset dir="${basedir}/../samples/product/bpmn-sample-jars/target">
+                                        <include name ="**/*.jar"/>
                                     </fileset>
-                                </copy-->
-                                <!-- copy readme file of SimpleCalculator sample-->
-                                <!--copy todir="target/samples/bpmn/SimpleCalculator">
-                                    <fileset dir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator/">
-                                        <include name ="README.txt"/>
-                                        <exclude name ="**/*.bpmn"/>
-                                        <exclude name="pom.xml" />
-                                        <exclude name ="**/*.java"/>
-                                        <exclude name="**/target/**" />
-                                    </fileset>
-                                </copy-->
-
-                                <zip destfile="target/samples/bpmn/SimpleCalculator/SimpleCalculator.bar"
+                                </copy>
+                                
+                                <zip destfile="target/samples/bpmn/SimpleCalculator.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/SimpleCalculator"/>
                                 <zip destfile="target/samples/bpmn/HelloWorld.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/HelloWorld"/>
