@@ -462,13 +462,21 @@
         </dependencies>
     </dependencyManagement>
 
-    <scm>
+<!--    <scm>
         <connection>scm:svn:https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/bps/
         </connection>
         <developerConnection>
             scm:svn:https://svn.wso2.org/repos/wso2/carbon/platform/trunk/products/bps/
         </developerConnection>
+    </scm>-->
+
+    <scm>
+        <connection>scm:git:https://github.com/wso2/product-bps.git</connection>
+        <developerConnection>scm:git:https://github.com/wso2/product-bps.git</developerConnection>
+        <url>https://github.com/wso2/product-bps.git</url>
+        <tag>HEAD</tag>
     </scm>
+
 
     <repositories>
         <!-- Before adding ANYTHING in here, please start a discussion on the dev list.
@@ -777,9 +785,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
-	            <configuration>
-			    <skip>true</skip>
-		    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
