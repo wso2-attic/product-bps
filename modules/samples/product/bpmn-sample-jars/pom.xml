@@ -6,9 +6,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wso2.bps</groupId>
+    <!--groupId>org.wso2.bps</groupId-->
     <artifactId>bpmn-sample-jars</artifactId>
-    <version>1.0.0</version>
+    <!--version>1.0.0</version-->
     <packaging>jar</packaging>
     <name>WSO2 BPS Samples</name>
     <dependencies>
