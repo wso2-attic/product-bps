@@ -103,10 +103,5 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <properties>
-        <axis2.osgi.version.range>[1.6.1.wso2v11, 1.7.0)</axis2.osgi.version.range>
-    </properties>
-
 </project>
 
