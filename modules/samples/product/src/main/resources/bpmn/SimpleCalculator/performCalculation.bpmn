@@ -7,7 +7,7 @@
         <activiti:formProperty id="number2" name="Enter number 2" type="long" variable="number2"></activiti:formProperty>
       </extensionElements>
     </startEvent>
-    <serviceTask id="servicetask1" name="Add numbers" activiti:class="performCalculationBPMN.NumberAdder"></serviceTask>
+    <serviceTask id="servicetask1" name="Add numbers" activiti:class="calculator.NumberAdder"></serviceTask>
     <userTask id="usertask2" name="Confirm answer" activiti:assignee="clerk">
       <extensionElements>
         <activiti:formProperty id="result" name="Result" type="long" variable="result" writable="false"></activiti:formProperty>
