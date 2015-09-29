@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.wso2.bps</groupId>
         <artifactId>sample-services</artifactId>
-        <version>3.5.0</version>
+        <version>3.5.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>CreditRatingService</artifactId>
@@ -52,8 +52,7 @@
                         <configuration>
                             <tasks>
                                 <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
-                                    <arg line="-uri src/org/wso2/bps/samples/creditrating/META-INF/CreditRatingService.wsdl -uw -ss -sd -o . -p org.wso2.bps.samples.creditrating
-                                    -ns2p http://wso2.org/bps/samples/loan_process/schema=org.wso2.bps.samples.creditrating.types,http://wso2.org/bps/samples/CreditRating=org.wso2.bps.samples.creditrating" />
+                                    <arg line="-uri src/org/wso2/bps/samples/creditrating/META-INF/CreditRatingService.wsdl -uw -ss -sd -o . -p org.wso2.bps.samples.creditrating -ns2p http://wso2.org/bps/samples/loan_process/schema=org.wso2.bps.samples.creditrating.types,http://wso2.org/bps/samples/CreditRating=org.wso2.bps.samples.creditrating" />
                                     <classpath refid="maven.dependency.classpath" />
                                     <classpath refid="maven.compile.classpath" />
                                     <classpath refid="maven.runtime.classpath" />
