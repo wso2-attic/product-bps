@@ -41,8 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Integration test for human task Xpath functions:concat(), concatWithDelimiter(), leastFrequentOccurence(),
- * mostFrequentOccurence(), voteOnString(),and(), or(), vote(),max(), min(), avg(), sum()
+ * Integration test for human task Xpath functions:concat(), concatWithDelimiter(), leastFrequentOccurrence(),
+ * mostFrequentOccurrence(), voteOnString(),and(), or(), vote(),max(), min(), avg(), sum()
  * Test deploys artifacts from test6 folder and they depends on ClaimService service.
  */
 public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
@@ -261,7 +261,7 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
     }
 
     /**
-     * Test the Human task Xpath string functions - concat(),concatWithDelimiter();mostFrequentOccurence(),leastFrequentOccurence()
+     * Test the Human task Xpath string functions - concat(),concatWithDelimiter();mostFrequentOccurrence(),leastFrequentOccurrence()
      * @throws Exception
      */
     @Test(groups = {
@@ -274,19 +274,19 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
         Assert.assertTrue(humanTask.getPresentationSubject().getTPresentationSubject().contains("name1 name2 name3"),
                 "concatWithDelimiter() method test, should contain name1 name2 name3");
 
-        //happy scenario for mostFrequentOccurence()
+        //happy scenario for mostFrequentOccurrence()
         Assert.assertTrue(humanTask.getPresentationSubject().getTPresentationSubject().contains("LK"),
-                "mostFrequentOccurence() test, should contain LK");
+                "mostFrequentOccurrence() test, should contain LK");
         //when there is a tie, empty is returned
         Assert.assertFalse(humanTask.getPresentationSubject().getTPresentationSubject().contains("arr_DK") || humanTask
                         .getPresentationSubject().getTPresentationSubject().contains("arr_LK") || humanTask
                         .getPresentationSubject().getTPresentationSubject().contains("arr_UK") || humanTask
                         .getPresentationSubject().getTPresentationSubject().contains("arr_US"),
-                "mostFrequentOccurence() test, should not contain any arr_* since a tie");
+                "mostFrequentOccurrence() test, should not contain any arr_* since a tie");
 
-        //happy scenario for leastFrequentOccurence()
+        //happy scenario for leastFrequentOccurrence()
         Assert.assertTrue(humanTask.getPresentationDescription().getTPresentationDescription().contains("arr_SW"),
-                "leastFrequentOccurence() test, should contain arr_US");
+                "leastFrequentOccurrence() test, should contain arr_US");
         //when there is a tie empty is returned
         Assert.assertFalse(
                 humanTask.getPresentationDescription().getTPresentationDescription().contains("LK") || humanTask
@@ -294,11 +294,11 @@ public class HumanTaskXpathExtensionsTest extends BPSMasterTest {
                         .getPresentationDescription().getTPresentationDescription().contains("IN") || humanTask
                         .getPresentationDescription().getTPresentationDescription().contains("DK") || humanTask
                         .getPresentationDescription().getTPresentationDescription().contains("US"),
-                "leastFrequentOccurence() test, should not contain any region since a tie");
+                "leastFrequentOccurrence() test, should not contain any region since a tie");
 
         //voteOnString with 40%, has only 33%
         Assert.assertFalse(humanTask.getPresentationSubject().getTPresentationSubject().contains("vote40_LK"),
-                "vote() should not return highest occurance LK, since low percentage");
+                "vote() should not return highest occurrence LK, since low percentage");
         //vote on 20%
         Assert.assertTrue(humanTask.getPresentationSubject().getTPresentationSubject().contains("vote20_LK"),
                 "vote() should return LK");
