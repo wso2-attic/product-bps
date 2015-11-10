@@ -15,6 +15,8 @@
  */
 package org.wso2.bps.samples.processcleanup;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.dom.DeferredElementImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -27,14 +29,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The main class
  */
 public class CleanupExecutor {
-	private final static Logger log = Logger.getLogger(CleanupExecutor.class.getName());
+	private final static Log log = LogFactory.getLog(CleanupExecutor.class);
 
 	private static HashMap<String, List<String>> map;
 	static String databaseURL = null;
@@ -205,7 +205,8 @@ public class CleanupExecutor {
 				System.out.println("Database Cleaning Success!!");
 				return true;
 			} catch (SQLException e) {
-				log.log(Level.SEVERE, e.getMessage(), e);
+				String errMsg = "Database cleaning exception.";
+				log.error(errMsg, e);
 				conn.rollback();
 			} finally {
 				if (conn != null) {
@@ -255,7 +256,8 @@ public class CleanupExecutor {
 			}
 			System.out.println();
 		} catch (SQLException e) {
-			log.log(Level.SEVERE, e.getMessage(), e);
+			String errMsg = "Process instance clean exception.";
+			log.error(errMsg, e);
 			throw new SQLException(e);
 		}
 	}
@@ -346,7 +348,8 @@ public class CleanupExecutor {
 				}
 
 			} catch (Exception e) {
-				log.log(Level.SEVERE, e.getMessage(), e);
+				String errMsg = "Valid user input exception.";
+				log.error(errMsg, e);
 			}
 		} while (!valid);
 		return userInputs;
@@ -431,7 +434,8 @@ public class CleanupExecutor {
 					}
 
 				} catch (Exception e) {
-					log.log(Level.SEVERE, e.getMessage(), e);
+					String errMsg = "Process deletion exception.";
+					log.error(errMsg, e);
 				}
 				break;
 		}
