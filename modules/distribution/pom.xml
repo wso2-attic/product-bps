@@ -118,14 +118,6 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
                                 </artifactItem>
-                         <!--       <artifactItem>
-                                    <groupId>org.wso2.carbon.business-process</groupId>
-                                    <artifactId>org.wso2.carbon.business-process.bpmn.rest</artifactId>
-                                    <version>${carbon.business-process.version}</version>
-                                    <type>war</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>-->
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -139,7 +131,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.wso2.carbon.business-process</groupId>
-                                    <artifactId>org.wso2.carbon.business-process.bpmn.rest</artifactId>
+                                    <artifactId>org.wso2.carbon.bpmn.rest</artifactId>
                                     <version>${carbon.business-process.version}</version>
                                     <type>war</type>
                                     <overWrite>true</overWrite>
