@@ -715,9 +715,10 @@
         <!-- jaggery -->
         <process.feature.version>1.4.0</process.feature.version>
         <carbon.feature.version>1.4.0</carbon.feature.version>
+        <i18n.feature.version>1.4.0</i18n.feature.version>
         <jaggeryjs.server.version>0.11.0</jaggeryjs.server.version>
 
-	<org.activiti.wso2.version>5.16.3.wso2v2</org.activiti.wso2.version>
+	<org.activiti.wso2.version>5.19.0.wso2v1</org.activiti.wso2.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
     </properties>
 
