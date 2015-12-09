@@ -296,6 +296,9 @@
                                 <featureArtifactDef>
                                     org.jaggeryjs.modules:carbon.feature:${carbon.feature.version}
                                 </featureArtifactDef>
+                                <featureArtifactDef>
+                                    org.jaggeryjs.modules:i18n.feature:${i18n.feature.version}
+                                </featureArtifactDef>
 
                                 <!--10 Analytics Common -->
                                 <featureArtifactDef>
@@ -630,6 +633,10 @@
                                     <id>org.jaggeryjs.modules.carbon.feature.group</id>
                                     <version>${carbon.feature.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.i18n.feature.group</id>
+                                    <version>${i18n.feature.version}</version>
+                                </feature>
 
                                 <!-- 10 Analytics Common -->
                                 <feature>
@@ -930,6 +937,10 @@
                                 <feature>
                                     <id>org.jaggeryjs.modules.carbon.feature.group</id>
                                     <version>${carbon.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.jaggeryjs.modules.i18n.feature.group</id>
+                                    <version>${i18n.feature.version}</version>
                                 </feature>
 
                                 <!-- 10 Carbon Analytics Common -->

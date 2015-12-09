@@ -118,7 +118,26 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
                                 </artifactItem>
-
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-war</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.wso2.carbon.business-process</groupId>
+                                    <artifactId>org.wso2.carbon.bpmn.rest</artifactId>
+                                    <version>${carbon.business-process.version}</version>
+                                    <type>war</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target</outputDirectory>
+                                    <destFileName>bpmn.war</destFileName>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -364,7 +383,7 @@
                                 <unzip src="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.account.mgt.menu.ui_${carbon.identity.version}.jar" dest="${tempdir2}" />
                                 <replace file="${tempdir2}/META-INF/component.xml" token="&lt;parent-menu&gt;identity_menu&lt;/parent-menu&gt;" value="&lt;parent-menu&gt;configure_menu&lt;/parent-menu&gt;" />
                                 <zip destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/components/plugins/org.wso2.carbon.identity.account.mgt.menu.ui_${carbon.identity.version}.jar" basedir="${tempdir2}" />
-                                <concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">org.restlet.level=SEVERE</concat>
+                                <concat destfile="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/etc/logging-bridge.properties" append="true" fixlastline="true">org.apache.cxf.transport.servlet.level=SEVERE</concat>
 
                             </tasks>
                         </configuration>
@@ -391,6 +410,7 @@
                                 <delete dir="target/identity-ui" />
                                 <delete dir="target/database" />
                                 <delete dir="target/bpmn-explorer" />
+                                <delete dir="target/bpmn.war" />
                                 <delete dir="src/site" />
                             </tasks>
                         </configuration>
