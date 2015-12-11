@@ -46,6 +46,37 @@
             <artifactId>rampart</artifactId>
             <type>mar</type>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-dv</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf.xjc-utils</groupId>
+            <artifactId>cxf-xjc-runtime</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-ts</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-boolean</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-bug671</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
 	<dependency>
         <groupId>org.wso2.carbon.business-process</groupId>
          <artifactId>org.wso2.carbon.bpmn.humantaskweb</artifactId>
@@ -410,7 +441,8 @@
                                 <delete dir="target/identity-ui" />
                                 <delete dir="target/database" />
                                 <delete dir="target/bpmn-explorer" />
-                                <delete dir="target/bpmn.war" />
+                                <delete dir="target/humantask-explorer" />
+                                <delete file="target/bpmn.war" />
                                 <delete dir="src/site" />
                             </tasks>
                         </configuration>
