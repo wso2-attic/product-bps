@@ -118,7 +118,7 @@ public class CleanupExecutor {
 			}
 		}
 		if (!dbConfigFound) {
-			log.info("ERROR: DB configurations not found or invalid!");
+			log.error("DB configurations not found or invalid!");
 			System.exit(0);
 		}
 		Class.forName(databaseDriver);
