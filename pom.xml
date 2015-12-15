@@ -517,27 +517,6 @@
             </releases>
         </repository>
 
-        <!-- TODO REMOVE THIS-->
-        <repository>
-            <id>wso2.staging</id>
-            <name>WSO2 Staging Repository</name>
-            <url>http://maven.wso2.org/nexus/content/repositories/orgwso2carbon-168/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-        </repository>
-        <repository>
-            <id>wso2.staging2</id>
-            <name>WSO2 Staging Repository</name>
-            <url>http://maven.wso2.org/nexus/content/repositories/orgwso2carbonidentity-165/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -634,14 +613,14 @@
 
         <bps.version>3.5.1-SNAPSHOT</bps.version>
 
-        <carbon.kernel.version>4.4.3</carbon.kernel.version>
+        <carbon.kernel.version>4.4.2</carbon.kernel.version>
 
         <eclipse.version>3.2.0</eclipse.version>
         <servlet-api.version>2.4</servlet-api.version>
         <spring.version>3.2.9.wso2v1</spring.version>
 
         <!-- Carbon Identity Version -->
-        <carbon.identity.version>5.0.3</carbon.identity.version>
+        <carbon.identity.version>5.0.2</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
         <carbon.registry.version>4.4.8</carbon.registry.version>
@@ -671,7 +650,7 @@
 
         <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
 
-        <orbit.version.ode>1.3.5-wso2v16-SNAPSHOT</orbit.version.ode>
+        <orbit.version.ode>1.3.5-wso2v15</orbit.version.ode>
 
         <!-- H2 Database Engine       -->
         <h2.engine.version>1.2.140.wso2v3</h2.engine.version>
@@ -696,13 +675,13 @@
         <carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
 
         <!-- Apache Axis2 -->
-        <version.axis2>1.6.1-wso2v16</version.axis2>
+        <version.axis2>1.6.1-wso2v12</version.axis2>
         <axis2.aar.maven.plugin.version>1.6.2</axis2.aar.maven.plugin.version>
-        <orbit.version.axis2>1.6.1.wso2v16</orbit.version.axis2>
-        <exp.pkg.version.axis2>1.6.1.wso2v16</exp.pkg.version.axis2>
-        <imp.pkg.version.axis2>[1.6.1.wso2v16, 1.7.0)</imp.pkg.version.axis2>
-        <axis2.osgi.version>1.6.1.wso2v16</axis2.osgi.version>
-        <axis2.osgi.version.range>[1.6.1.wso2v16, 1.7.0)</axis2.osgi.version.range>
+        <orbit.version.axis2>1.6.1.wso2v12</orbit.version.axis2>
+        <exp.pkg.version.axis2>1.6.1.wso2v12</exp.pkg.version.axis2>
+        <imp.pkg.version.axis2>[1.6.1.wso2v12, 1.7.0)</imp.pkg.version.axis2>
+        <axis2.osgi.version>1.6.1.wso2v12</axis2.osgi.version>
+        <axis2.osgi.version.range>[1.6.1.wso2v12, 1.7.0)</axis2.osgi.version.range>
         <axis2.transports.version>1.1.1-wso2v1</axis2.transports.version>
 
         <!-- Apache Axiom -->
