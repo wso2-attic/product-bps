@@ -208,7 +208,13 @@
         </fileSet>
 -->
 
-
+        <fileSet>
+            <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/lib/runtimes</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/lib/runtimes/</outputDirectory>
+            <includes>
+                <include>*/**</include>
+            </includes>
+        </fileSet>
         <fileSet>
             <directory>../../modules/samples/product/sample-utils/src/main/scripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/axis2Server</outputDirectory>
@@ -469,6 +475,29 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/tomcat/context.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/tomcat/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/tomcat/webapp-classloading.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/tomcat/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/tomcat/webapp-classloading-environments.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/tomcat/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+
+
 
        <file>
            <source>../../modules/distribution/conf/tomcat/web.xml</source>
