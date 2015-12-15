@@ -116,7 +116,11 @@ public class DBQuery {
 		}
 	}
 
-	//formats the String with the process name and returns the delete query
+	/**
+	 * formats the String with the process name and returns the delete query
+	 * @param name process name
+	 * @return a sql query
+	 */
 	public String deleteFromStoreProcess(String name) {
 		String sql = MessageFormat.format(STORE_PROCESS, name);
 		return sql.replaceAll("\"", "'");
