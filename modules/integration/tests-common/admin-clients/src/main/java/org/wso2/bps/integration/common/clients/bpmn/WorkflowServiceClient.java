@@ -180,4 +180,8 @@ public class WorkflowServiceClient {
         }
         return image;
     }
+
+    public BPMNInstanceServiceStub getInstanceServiceStub() {
+        return instanceServiceStub;
+    }
 }
