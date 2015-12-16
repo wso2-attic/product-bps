@@ -49,6 +49,6 @@
         <module>tests-patches/bpel</module>
         <module>tests-integration/taskcoordination</module>
         <!--module>tests-ui-integration</module-->
-        <module>tests-integration/reports</module>
+        <!--<module>tests-integration/reports</module>-->
     </modules>
 </project>
