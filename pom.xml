@@ -613,14 +613,14 @@
 
         <bps.version>3.5.1-SNAPSHOT</bps.version>
 
-        <carbon.kernel.version>4.4.2</carbon.kernel.version>
+        <carbon.kernel.version>4.4.3</carbon.kernel.version>
 
         <eclipse.version>3.2.0</eclipse.version>
         <servlet-api.version>2.4</servlet-api.version>
         <spring.version>3.2.9.wso2v1</spring.version>
 
         <!-- Carbon Identity Version -->
-        <carbon.identity.version>5.0.2</carbon.identity.version>
+        <carbon.identity.version>5.0.3</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
         <carbon.registry.version>4.4.8</carbon.registry.version>
