@@ -1,5 +1,5 @@
 /*
-*Copyright (c) 2005-2013, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+*Copyright (c) 2005-2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 *WSO2 Inc. licenses this file to you under the Apache License,
 *Version 2.0 (the "License"); you may not use this file except
@@ -43,13 +43,25 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This test case test followings scenarios.
+ * - PeopleAssignment.
+ * - Expression Based People Assignment.
+ * - Literal Based People Assignment.
+ * - Excluded Owner
+ * - Xpath functions.
+ * - Union
+ * - Except
+ * - intersect
+ */
 public class HumanTaskPeopleAssignment extends BPSMasterTest {
 
     private static final Log log = LogFactory.getLog(HumanTaskPeopleAssignment.class);
     //Test Automation API Clients
-    private HumanTaskClientApiClient clerk1Client, clerk2Client, clerk3Client, manager1Client, manager3Client;
-    private HumanTaskPackageManagementClient humanTaskPackageManagementClient;
-    private UserManagementClient userManagementClient;
+    private HumanTaskClientApiClient clerk1Client, clerk2Client, clerk3Client, clerk4Client, clerk5Client, clerk6Client,
+		    manager1Client, manager2Client, manager3Client;
+	private HumanTaskPackageManagementClient humanTaskPackageManagementClient;
+	private UserManagementClient userManagementClient;
     private RequestSender requestSender;
     private URI taskID = null;
 
@@ -86,6 +98,30 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
 
         clerk3Client = new HumanTaskClientApiClient(backEndUrl, clerk3SessionCookie);
 
+	    //initialize HT Client API for Clerk4 user
+	    AutomationContext clerk4AutomationContext =
+			    new AutomationContext("BPS", "bpsServerInstance0001", FrameworkConstants.SUPER_TENANT_KEY, "clerk4");
+	    LoginLogoutClient clerk4LoginLogoutClient = new LoginLogoutClient(clerk4AutomationContext);
+	    String clerk4SessionCookie = clerk4LoginLogoutClient.login();
+
+	    clerk4Client = new HumanTaskClientApiClient(backEndUrl, clerk4SessionCookie);
+
+	    //initialize HT Client API for Clerk5 user
+	    AutomationContext clerk5AutomationContext =
+			    new AutomationContext("BPS", "bpsServerInstance0001", FrameworkConstants.SUPER_TENANT_KEY, "clerk5");
+	    LoginLogoutClient clerk5LoginLogoutClient = new LoginLogoutClient(clerk5AutomationContext);
+	    String clerk5SessionCookie = clerk5LoginLogoutClient.login();
+
+	    clerk5Client = new HumanTaskClientApiClient(backEndUrl, clerk5SessionCookie);
+
+	    //initialize HT Client API for Clerk6 user
+	    AutomationContext clerk6AutomationContext =
+			    new AutomationContext("BPS", "bpsServerInstance0001", FrameworkConstants.SUPER_TENANT_KEY, "clerk6");
+	    LoginLogoutClient clerk6LoginLogoutClient = new LoginLogoutClient(clerk6AutomationContext);
+	    String clerk6SessionCookie = clerk6LoginLogoutClient.login();
+
+	    clerk6Client = new HumanTaskClientApiClient(backEndUrl, clerk6SessionCookie);
+
         //initialize HT Client API for Manager1 user
         AutomationContext manager1AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
                 FrameworkConstants.SUPER_TENANT_KEY, "manager1");
@@ -93,9 +129,15 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
         String manager1SessionCookie = manager1LoginLogoutClient.login();
         manager1Client = new HumanTaskClientApiClient(backEndUrl, manager1SessionCookie);
 
+	    //initialize HT Client API for Manager2 user
+	    AutomationContext manager2AutomationContext =
+			    new AutomationContext("BPS", "bpsServerInstance0001", FrameworkConstants.SUPER_TENANT_KEY, "manager2");
+	    LoginLogoutClient manager2LoginLogoutClient = new LoginLogoutClient(manager2AutomationContext);
+	    String manager2SessionCookie = manager2LoginLogoutClient.login();
+	    manager2Client = new HumanTaskClientApiClient(backEndUrl, manager2SessionCookie);
 
-        //initialize HT Client API for Manager3 user
-        AutomationContext manager3AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
+	    //initialize HT Client API for Manager3 user
+	    AutomationContext manager3AutomationContext = new AutomationContext("BPS", "bpsServerInstance0001",
                 FrameworkConstants.SUPER_TENANT_KEY, "manager3");
         LoginLogoutClient manager3LoginLogoutClient = new LoginLogoutClient(manager3AutomationContext);
         String manager3SessionCookie = manager3LoginLogoutClient.login();
@@ -114,7 +156,8 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
     }
 
     /**
-     * deployArtifact() test1 sample Generic Human Roles. potentialOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:owners
+     * deployArtifact() test1 sample Generic Human Roles.
+     * potentialOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:owners
      * businessAdministrators - htd:union(htd:getInput("ClaimApprovalRequest")/test10:cust/test10:globleAdmins,htd:getInput("ClaimApprovalRequest")/test10:cust/test10:regionalAdmins)
      * excludedOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:excludedOwners
      */
@@ -172,8 +215,8 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
                         "         </sch:cust>\n" +
                         "         <sch:amount>2500</sch:amount>\n" +
                         "         <sch:region>lk</sch:region>\n" +
-                        "         <sch:priority>7</sch:priority>\n" +
-                        "      </sch:ClaimApprovalData>";
+                "         <sch:priority>9</sch:priority>\n" +
+                "      </sch:ClaimApprovalData>";
         String operation = "approve";
         String serviceName = "ClaimService";
         List<String> expectedOutput = new ArrayList<String>();
@@ -257,15 +300,12 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
         clerk3Client.claim(this.taskID);
     }
 
-    //TODO test for viewing task
-
-    @Test(groups = {"wso2.bps.task.xpath.union"}, description = "Test Xpath operation -Union", priority = 10, singleThreaded = true)
-    public void testUnion() throws Exception {
+	@Test(groups = { "wso2.bps.task.xpath" }, description = "Test Xpath operation -Union", priority = 10,
+			singleThreaded = true)
+	public void testUnion() throws Exception {
         // All 3 manager users should able to perform administrative task.
 
         //Login As manager1 user
-        loginLogoutClient.logout();
-
         TPriority tPriority = new TPriority();
         tPriority.setTPriority(BigInteger.valueOf(2));
         manager1Client.setPriority(taskID, tPriority);
@@ -286,8 +326,236 @@ public class HumanTaskPeopleAssignment extends BPSMasterTest {
         Assert.assertEquals(newPriority1Int2, 3, "The new priority should be 3 after the set priority operation");
     }
 
-    @Test(groups = {"wso2.bps.task.clean"}, description = "Clean up server", priority = 100, singleThreaded = true)
-    public void cleanTestEnvironment() throws Exception {
+	/**
+	 * deployArtifact() test2 artifact. Sample Generic Human Roles.
+	 * potentialOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:owners
+	 * businessAdministrators - htd:except(htd:getInput("ClaimApprovalRequest")/test10:cust/test10:globleAdmins,htd:getInput("ClaimApprovalRequest")/test10:cust/test10:regionalAdmins)
+	 * excludedOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:excludedOwners
+	 */
+	@Test(groups = { "wso2.bps.task.xpath" }, description = "Deploy and Create Except HumanTask", priority = 20,
+			singleThreaded = true)
+	public void deployAndCreateExceptHumanTask() throws Exception {
+
+		final String artifactLocation =
+				FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS + File.separator +
+				BPSTestConstants.DIR_HUMAN_TASK + File.separator + HumanTaskTestConstants.DIR_PEOPLE_ASSIGNMENT +
+				File.separator + "test2";
+		uploadHumanTaskForTest(HumanTaskTestConstants.CLAIMS_APPROVAL_PACKAGE_ORG_ENTITY_NAME, artifactLocation);
+		Thread.sleep(30000); // Wait for new version of task deploy.
+		createTask(); // create task
+		TSimpleQueryInput queryInput = new TSimpleQueryInput();
+		queryInput.setPageNumber(0);
+		queryInput.setSimpleQueryCategory(TSimpleQueryCategory.ALL_TASKS);
+
+		//Login As Clerk1 user
+		TTaskSimpleQueryResultSet taskResults = clerk1Client.simpleQuery(queryInput);
+		TTaskSimpleQueryResultRow[] rows = taskResults.getRow();
+		TTaskSimpleQueryResultRow b4pTask = null;
+		Assert.assertNotNull(rows, "No tasks found. Task creation has failed. ");
+		// looking for the latest task
+		for (TTaskSimpleQueryResultRow row : rows) {
+			if (b4pTask == null) {
+				b4pTask = row;
+			} else {
+				if (Long.parseLong(b4pTask.getId().toString()) < Long.parseLong(row.getId().toString())) {
+					b4pTask = row;
+				}
+			}
+		}
+
+		// Validating Task
+		Assert.assertNotNull(b4pTask, "Task creation has failed");
+		Assert.assertNotEquals(b4pTask.getId().toString(), this.taskID.toString(), "Task creation failed.");
+		this.taskID = b4pTask.getId();
+	}
+
+	@Test(groups = { "wso2.bps.task.xpath" }, description = "Test Xpath operation -Except", priority = 21,
+			singleThreaded = true)
+	public void testExcept() throws Exception {
+		// Only Manager1 able to change the priority.
+		final int newPriority = 7;
+		TPriority tPriority = new TPriority();
+		TTaskAbstract taskAfterPriorityChange1;
+
+		tPriority.setTPriority(BigInteger.valueOf(newPriority));
+		//Login As manager3 user
+		manager1Client.setPriority(taskID, tPriority);
+		taskAfterPriorityChange1 = manager1Client.loadTask(taskID);
+		TPriority prio2 = taskAfterPriorityChange1.getPriority();
+		int newPriority1Int2 = prio2.getTPriority().intValue();
+		Assert.assertEquals(newPriority1Int2, newPriority,
+		                    "The new priority should change after setPriority operation.");
+
+	}
+
+	@Test(groups = { "wso2.bps.task.xpath" }, description = "Test Xpath operation - Except negative case",
+			priority = 21,
+			singleThreaded = true, expectedExceptions = AxisFault.class)
+	public void testExceptNegative() throws Exception {
+		// Only Manager1 able to change the priority.
+		final int newPriority = 8;
+		TPriority tPriority = new TPriority();
+		TTaskAbstract taskAfterPriorityChange1;
+
+		tPriority.setTPriority(BigInteger.valueOf(newPriority));
+		//Login As manager3 user
+		manager3Client.setPriority(taskID, tPriority);
+		taskAfterPriorityChange1 = manager3Client.loadTask(taskID);
+		TPriority prio2 = taskAfterPriorityChange1.getPriority();
+		int newPriority1Int2 = prio2.getTPriority().intValue();
+		Assert.assertNotEquals(newPriority1Int2, newPriority, "Task priority should not changed.");
+
+	}
+
+	/**
+	 * deployArtifact() test3 artifact. Sample Generic Human Roles.
+	 * potentialOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:owners
+	 * businessAdministrators - htd:intersect(htd:getInput("ClaimApprovalRequest")/test10:cust/test10:globleAdmins,htd:getInput("ClaimApprovalRequest")/test10:cust/test10:regionalAdmins)
+	 * excludedOwners - htd:getInput("ClaimApprovalRequest")/test10:cust/test10:excludedOwners
+	 */
+	@Test(groups = { "wso2.bps.task.xpath" }, description = "Deploy and Create Except HumanTask", priority = 30,
+			singleThreaded = true)
+	public void deployAndCreateIntersectHumanTask() throws Exception {
+
+		final String artifactLocation =
+				FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS + File.separator +
+				BPSTestConstants.DIR_HUMAN_TASK + File.separator + HumanTaskTestConstants.DIR_PEOPLE_ASSIGNMENT +
+				File.separator + "test3";
+		uploadHumanTaskForTest(HumanTaskTestConstants.CLAIMS_APPROVAL_PACKAGE_ORG_ENTITY_NAME, artifactLocation);
+		Thread.sleep(30000); // Wait for new version of task deploy.
+		createTask(); // create task
+		TSimpleQueryInput queryInput = new TSimpleQueryInput();
+		queryInput.setPageNumber(0);
+		queryInput.setSimpleQueryCategory(TSimpleQueryCategory.ALL_TASKS);
+
+		//Login As Clerk1 user
+		TTaskSimpleQueryResultSet taskResults = clerk1Client.simpleQuery(queryInput);
+		TTaskSimpleQueryResultRow[] rows = taskResults.getRow();
+		TTaskSimpleQueryResultRow b4pTask = null;
+		Assert.assertNotNull(rows, "No tasks found. Task creation has failed. ");
+		// looking for the latest task
+		for (TTaskSimpleQueryResultRow row : rows) {
+			if (b4pTask == null) {
+				b4pTask = row;
+			} else {
+				if (Long.parseLong(b4pTask.getId().toString()) < Long.parseLong(row.getId().toString())) {
+					b4pTask = row;
+				}
+			}
+		}
+
+		// Validating Task
+		Assert.assertNotNull(b4pTask, "Task creation has failed");
+		Assert.assertNotEquals(b4pTask.getId().toString(), this.taskID.toString(), "Task creation failed.");
+		this.taskID = b4pTask.getId();
+	}
+
+	@Test(groups = { "wso2.bps.task.xpath" }, description = "Test Xpath operation - Intersect", priority = 31,
+			singleThreaded = true)
+	public void testIntersect() throws Exception {
+		// Only Manager 2 able to change the priority.
+		final int newPriority = 8;
+		TPriority tPriority = new TPriority();
+		TTaskAbstract taskAfterPriorityChange1;
+
+		tPriority.setTPriority(BigInteger.valueOf(newPriority));
+		//Login As manager2 user
+		manager2Client.setPriority(taskID, tPriority);
+		taskAfterPriorityChange1 = manager2Client.loadTask(taskID);
+		TPriority prio2 = taskAfterPriorityChange1.getPriority();
+		int newPriority1Int2 = prio2.getTPriority().intValue();
+		Assert.assertEquals(newPriority1Int2, newPriority,
+		                    "The new priority should change after setPriority operation.");
+
+	}
+
+	@Test(groups = { "wso2.bps.task.xpath" }, description = "Test Xpath operation - Intersect Negative test case",
+			priority = 32,
+			singleThreaded = true, expectedExceptions = AxisFault.class)
+	public void testIntersectNegative() throws Exception {
+		// Only Manager1 able to change the priority.
+		final int newPriority = 7;
+		TPriority tPriority = new TPriority();
+		TTaskAbstract taskAfterPriorityChange1;
+
+		tPriority.setTPriority(BigInteger.valueOf(newPriority));
+		//Login As manager3 user
+		manager3Client.setPriority(taskID, tPriority);
+		taskAfterPriorityChange1 = manager3Client.loadTask(taskID);
+		TPriority prio2 = taskAfterPriorityChange1.getPriority();
+		int newPriority1Int2 = prio2.getTPriority().intValue();
+		Assert.assertNotEquals(newPriority1Int2, newPriority, "Task priority should not changed.");
+
+	}
+
+	/**
+	 * deployArtifact() test4 artifact.
+	 * Potential owners :
+	 * <htt:user>clerk1</htt:user>
+	 * <htt:user>clerk2</htt:user>
+	 * <htt:user>clerk3</htt:user>
+	 * <htt:group>regionalClerksRole2</htt:group>
+	 */
+	@Test(groups = { "wso2.bps.task.literal" }, description = "Deploy and Create Literal based HumanTask",
+			priority = 40, singleThreaded = true)
+	public void deployAndCreateLiteralBasedHumanTask() throws Exception {
+
+		final String artifactLocation =
+				FrameworkPathUtil.getSystemResourceLocation() + BPSTestConstants.DIR_ARTIFACTS + File.separator +
+				BPSTestConstants.DIR_HUMAN_TASK + File.separator + HumanTaskTestConstants.DIR_PEOPLE_ASSIGNMENT +
+				File.separator + "test4";
+		uploadHumanTaskForTest(HumanTaskTestConstants.CLAIMS_APPROVAL_PACKAGE_ORG_ENTITY_NAME, artifactLocation);
+		Thread.sleep(30000); // Wait for new version of task deploy.
+		createTask(); // create task
+		TSimpleQueryInput queryInput = new TSimpleQueryInput();
+		queryInput.setPageNumber(0);
+		queryInput.setSimpleQueryCategory(TSimpleQueryCategory.ALL_TASKS);
+
+		//Login As Clerk1 user
+		TTaskSimpleQueryResultSet taskResults = clerk1Client.simpleQuery(queryInput);
+		TTaskSimpleQueryResultRow[] rows = taskResults.getRow();
+		TTaskSimpleQueryResultRow b4pTask = null;
+		Assert.assertNotNull(rows, "No tasks found. Task creation has failed. ");
+		// looking for the latest task
+		for (TTaskSimpleQueryResultRow row : rows) {
+			if (b4pTask == null) {
+				b4pTask = row;
+			} else {
+				if (Long.parseLong(b4pTask.getId().toString()) < Long.parseLong(row.getId().toString())) {
+					b4pTask = row;
+				}
+			}
+		}
+
+		// Validating Task
+		Assert.assertNotNull(b4pTask, "Task creation has failed");
+		Assert.assertNotEquals(b4pTask.getId().toString(), this.taskID.toString(), "Task creation failed.");
+		this.taskID = b4pTask.getId();
+	}
+
+	@Test(groups = { "wso2.bps.task.literal" }, description = "Perform humanTask",
+			priority = 41, singleThreaded = true, expectedExceptions = AxisFault.class)
+	public void testLiteralBasedPeopleAssignment() throws Exception {
+		// clerk1, clerk2, clerk4, clerk5 users will able to work on task. Clerk3 will be a excluded used.
+		boolean failed = false;
+		try {
+			clerk1Client.start(taskID);
+			clerk1Client.release(taskID);
+			clerk2Client.start(taskID);
+			clerk2Client.release(taskID);
+			clerk4Client.start(taskID);
+			clerk4Client.release(taskID);
+			clerk5Client.start(taskID);
+			clerk5Client.release(taskID);
+		} catch (Exception e) {
+			failed = true;
+		}
+		Assert.assertTrue(!failed, "Expected users can't perform task");
+		clerk6Client.start(taskID);
+	}
+
+	@Test(groups = { "wso2.bps.task.clean" }, description = "Clean up server", priority = 100, singleThreaded = true)
+	public void cleanTestEnvironment() throws Exception {
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE_2);
         userManagementClient.deleteRole(HumanTaskTestConstants.REGIONAL_CLERKS_ROLE_3);
