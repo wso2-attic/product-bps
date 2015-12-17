@@ -611,7 +611,7 @@
 
     <properties>
 
-        <bps.version>3.5.1-SNAPSHOT</bps.version>
+        <bps.version>3.5.1-beta</bps.version>
 
         <carbon.kernel.version>4.4.3</carbon.kernel.version>
 
@@ -626,7 +626,7 @@
         <carbon.registry.version>4.4.8</carbon.registry.version>
 
         <!-- Carbon Business Process Version -->
-        <carbon.business-process.version>4.4.5-SNAPSHOT</carbon.business-process.version>
+        <carbon.business-process.version>4.4.5-beta</carbon.business-process.version>
 
         <!--Carbon Event Processing Version-->
         <!--carbon.event-processing.version>2.0.4-SNAPSHOT</carbon.event-processing.version-->
