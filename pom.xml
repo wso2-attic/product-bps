@@ -644,11 +644,11 @@
 
         <carbon.automationutils.version>4.4.2</carbon.automationutils.version>
 
-        <carbon.automation.version>4.4.2</carbon.automation.version>
+        <carbon.automation.version>4.4.3</carbon.automation.version>
 
         <carbon.automation.core.version>4.2.0</carbon.automation.core.version>
 
-        <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
+        <jacoco.agent.version>0.7.5.201505241946</jacoco.agent.version>
 
         <orbit.version.ode>1.3.5-wso2v15</orbit.version.ode>
 
