@@ -334,6 +334,19 @@
             </includes>
         </fileSet>
 
+        <!-- Metrics -->
+        <fileSet>
+            <directory>
+                ../p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics/
+            </directory>
+            <outputDirectory>wso2bps-${pom.version}/dbscripts/metrics</outputDirectory>
+            <includes>
+                <include>**/*.sql</include>
+            </includes>
+            <fileMode>644</fileMode>
+            <directoryMode>775</directoryMode>
+        </fileSet>
+
     </fileSets>
 
     <!-- Copy BAM Files -->
@@ -637,12 +650,36 @@
             <destName>secret-conf.properties</destName>
             <filtered>true</filtered>
         </file>
-	 <file>
+	    <file>
             <source>conf/wso2carbon-version.txt</source>
             <outputDirectory>wso2bps-${pom.version}/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+        <!-- Metrics -->
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/metrics.properties</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/</outputDirectory>
+            <filtered>false</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/metrics.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/</outputDirectory>
+            <filtered>false</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/datasources/metrics-datasources.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/datasources/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/database/WSO2METRICS_DB.h2.db</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/database/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
 
     </files>
 
