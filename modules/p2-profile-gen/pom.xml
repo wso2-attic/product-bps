@@ -318,17 +318,17 @@
                                     org.wso2.carbon.analytics-common:org.wso2.carbon.databridge.datapublisher.feature:${carbon.analytics-common.version}
                                 </featureArtifactDef>
 
-                                <!-- 11 Secure Vault -->
+                                <!--11 Secure Vault -->
                                 <featureArtifactDef>
                                     org.wso2.ciphertool:org.wso2.ciphertool.feature:${cipher.tool.version}
                                 </featureArtifactDef>
 
-                                <!-- AS runtime feature -->
+                                <!--12 AS runtime feature -->
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.as.runtimes.cxf.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
 
-                                <!--Application Management Feature list -->
+                                <!--13 Application Management Feature list -->
                                 <featureArtifactDef>
                                     org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
@@ -336,7 +336,12 @@
                                     org.wso2.carbon.deployment:org.wso2.carbon.webapp.mgt.server.feature:${carbon.deployment.version}
                                 </featureArtifactDef>
 
+                                <!--14 Carbon metrics -->
+                                <featureArtifactDef>
+                                    org.wso2.carbon.metrics:org.wso2.carbon.metrics.feature:${carbon.metrics.version}
+                                </featureArtifactDef>
 
+                                <!-- Others -->
                                 <featureArtifactDef>
                                     org.wso2.carbon.registry:org.wso2.carbon.registry.contentsearch.feature:${carbon.registry.version}
                                 </featureArtifactDef>
@@ -540,22 +545,6 @@
                                     <id>org.wso2.carbon.soaptracer.feature.group</id>
                                     <version>${carbon.commons.version}</version>
                                 </feature>
-                                <!--feature>
-                                    <id>org.wso2.carbon.databridge.datapublisher.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.databridge.agent.thrift.server.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.databridge.commons.thrift.server.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.databridge.commons.server.feature.group</id>
-                                    <version>${carbon.commons.version}</version>
-                                </feature-->
                                 <feature>
                                     <id>org.wso2.carbon.message.flows.feature.group</id>
                                     <version>${carbon.commons.version}</version>
@@ -682,31 +671,39 @@
                                     <id>org.wso2.carbon.databridge.datapublisher.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.apache.axis2.transport.jms.feature.group</id>
-                                    <version>${axis2.transports.version}</version>
-                                </feature>
+
                                 <!-- 11 Secure Vault -->
                                 <feature>
                                     <id>org.wso2.ciphertool.feature.group</id>
                                     <version>${cipher.tool.version}</version>
                                 </feature>
 
-                                <!-- as-runtimes-->
+                                <!-- 12 AS runtime -->
                                 <feature>
                                     <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
 
-                                <!--Application Management Features-->
+                                <!-- 13 Application Management Features-->
                                 <feature>
                                     <id>org.wso2.carbon.webapp.mgt.server.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
 
+                                <!--14 Carbon metrics -->
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
+
+                                <!-- Others -->
                                 <feature>
                                     <id>org.wso2.carbon.registry.contentsearch.feature.group</id>
                                     <version>${carbon.registry.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.apache.axis2.transport.jms.feature.group</id>
+                                    <version>${axis2.transports.version}</version>
                                 </feature>
                             </features>
                         </configuration>
@@ -1008,13 +1005,19 @@
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
 
-                                <!-- as-runtimes-->
+                                <!-- 12 AS runtime-->
                                 <feature>
                                     <id>org.wso2.carbon.as.runtimes.cxf.feature.group</id>
                                     <version>${carbon.deployment.version}</version>
                                 </feature>
 
+                                <!--14 Carbon metrics -->
+                                <feature>
+                                    <id>org.wso2.carbon.metrics.feature.group</id>
+                                    <version>${carbon.metrics.version}</version>
+                                </feature>
 
+                                <!-- Others -->
                                 <feature>
                                     <id>org.wso2.carbon.registry.contentsearch.feature.group</id>
                                     <version>${carbon.registry.version}</version>

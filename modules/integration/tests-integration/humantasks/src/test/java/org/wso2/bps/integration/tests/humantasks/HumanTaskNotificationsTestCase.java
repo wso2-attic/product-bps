@@ -105,7 +105,7 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
     }
 
     /**
-     * Update content in humantask.xml/axis2_client.xml & restart server
+     * Update content in humantask.xml/output-event-adapters.xml & restart server
      *
      * @throws Exception
      */
@@ -119,10 +119,9 @@ public class HumanTaskNotificationsTestCase extends BPSMasterTest {
                 + HumanTaskTestConstants.HUMANTASK_XML);
         serverConfigurationManager.applyConfiguration(humantaskConfigNew, humantaskConfigOriginal, true, false);
         //Adding new config file for axis2_client.xml
-        File humanTaskAxis2ClientConfigNew = new File(artifactLocation + HumanTaskTestConstants.AXIS2_CLIENT);
-        File humanTaskAxis2ClientConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + HumanTaskTestConstants.DIR_AXIS2
-                + File.separator + HumanTaskTestConstants.AXIS2_CLIENT);
-        serverConfigurationManager.applyConfiguration(humanTaskAxis2ClientConfigNew, humanTaskAxis2ClientConfigOriginal, true, true);
+        File outputEventAdapterConfigNew = new File(artifactLocation + HumanTaskTestConstants.OUTPUT_EVENT_ADAPTERS_XML);
+        File outputEventAdapterConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator + HumanTaskTestConstants.OUTPUT_EVENT_ADAPTERS_XML);
+        serverConfigurationManager.applyConfiguration(outputEventAdapterConfigNew, outputEventAdapterConfigOriginal, true, true);
     }
 
     public void deployArtifact() throws Exception {

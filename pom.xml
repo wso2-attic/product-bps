@@ -620,7 +620,7 @@
         <spring.version>3.2.9.wso2v1</spring.version>
 
         <!-- Carbon Identity Version -->
-        <carbon.identity.version>5.0.3</carbon.identity.version>
+        <carbon.identity.version>5.0.7</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
         <carbon.registry.version>4.4.8</carbon.registry.version>
@@ -644,11 +644,13 @@
 
         <carbon.automationutils.version>4.4.2</carbon.automationutils.version>
 
-        <carbon.automation.version>4.4.2</carbon.automation.version>
+        <carbon.automation.version>4.4.3</carbon.automation.version>
 
         <carbon.automation.core.version>4.2.0</carbon.automation.core.version>
 
-        <jacoco.agent.version>0.7.4.201502262128</jacoco.agent.version>
+        <carbon.metrics.version>1.2.0</carbon.metrics.version>
+
+        <jacoco.agent.version>0.7.5.201505241946</jacoco.agent.version>
 
         <orbit.version.ode>1.3.5-wso2v15</orbit.version.ode>
 

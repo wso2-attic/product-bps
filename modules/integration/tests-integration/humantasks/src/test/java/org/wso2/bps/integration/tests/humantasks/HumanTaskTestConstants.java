@@ -69,7 +69,6 @@ public final class HumanTaskTestConstants {
     public final static String DIR_ARTIFACTS = "artifacts";
     public final static String DIR_CONFIG = "config";
     public final static String DIR_EMAIL = "email";
-    public final static String AXIS2_CLIENT = "axis2_client.xml";
-    public final static String DIR_AXIS2 = "axis2";
+    public final static String OUTPUT_EVENT_ADAPTERS_XML = "output-event-adapters.xml";
     public final static String HUMANTASK_XML = "humantask.xml";
 }
