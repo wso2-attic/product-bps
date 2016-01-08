@@ -100,8 +100,10 @@
             <includes>
                 <include>**/stratos.xml</include>
                 <include>**/multitenancy-packages.xml</include>
-		<include>**/usage-throttling-agent-config.xml</include>
-		<include>**/cloud-services-desc.xml</include>
+		        <include>**/usage-throttling-agent-config.xml</include>
+		        <include>**/cloud-services-desc.xml</include>
+                <include>**/eula.xml</include>
+                <include>**/tenant-mgt.xml</include>
             </includes>
         </fileSet>
 
@@ -112,8 +114,9 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/security
             </outputDirectory>
             <includes>
-                <include>**/krb5.conf</include>
-                <include>**/jaas.conf</include>
+<!--                <include>**/krb5.conf</include>
+                <include>**/jaas.conf</include>-->
+                <include>**/sso-sp-config.properties</include>
             </includes>
         </fileSet>
 
@@ -135,7 +138,7 @@
             </directory>
            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf/data-bridge/</outputDirectory>
             <includes>
-               <include>**/thrift-agent-config.xml</include>
+               <include>**/data-agent-config.xml</include>
             </includes>
         </fileSet>
 
@@ -329,6 +332,19 @@
             <includes>
                 <include>**/tenant-mgt.xml</include>
             </includes>
+        </fileSet>
+
+        <!-- Metrics -->
+        <fileSet>
+            <directory>
+                ../p2-profile/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics/
+            </directory>
+            <outputDirectory>wso2bps-${pom.version}/dbscripts/metrics</outputDirectory>
+            <includes>
+                <include>**/*.sql</include>
+            </includes>
+            <fileMode>644</fileMode>
+            <directoryMode>775</directoryMode>
         </fileSet>
 
     </fileSets>
@@ -634,12 +650,36 @@
             <destName>secret-conf.properties</destName>
             <filtered>true</filtered>
         </file>
-	 <file>
+	    <file>
             <source>conf/wso2carbon-version.txt</source>
             <outputDirectory>wso2bps-${pom.version}/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+        <!-- Metrics -->
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/metrics.properties</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/</outputDirectory>
+            <filtered>false</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/metrics.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/</outputDirectory>
+            <filtered>false</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/datasources/metrics-datasources.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/datasources/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/database/WSO2METRICS_DB.h2.db</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/database/</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
 
     </files>
 

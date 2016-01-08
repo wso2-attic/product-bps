@@ -104,11 +104,9 @@ public class SecurityWithServiceDescriptorTest extends BPSMasterTest implements 
 		System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
 
 		System.out.println(CarbonUtils.getCarbonHome());
-		ConfigurationContext ctx =
-				ConfigurationContextFactory.createConfigurationContextFromFileSystem(
-						CarbonUtils.getCarbonHome() +
-						File.separator + "repository" + File.separator + "deployment" +
-                         File.separator + "client", null);
+		ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem(
+								   CarbonUtils.getCarbonHome() + File.separator + "repository" +
+								   File.separator + "deployment" + File.separator + "client", null);
 		ServiceClient sc = new ServiceClient(ctx, null);
 		sc.engageModule("addressing");
 		sc.engageModule("rampart");
