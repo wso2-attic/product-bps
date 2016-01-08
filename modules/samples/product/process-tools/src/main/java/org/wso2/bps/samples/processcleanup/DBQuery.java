@@ -15,6 +15,9 @@
  */
 package org.wso2.bps.samples.processcleanup;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +28,7 @@ import java.util.Properties;
  * Class used to trigger the relevant SQL query according to the DB type
  */
 public class DBQuery {
+	private static final Log log = LogFactory.getLog(DBQuery.class);
 
 	private String ODE_PARTNER_LINK;
 	private String ODE_SCOPE;
@@ -53,7 +57,7 @@ public class DBQuery {
 					File.separator + CleanupConstants.CLEANUP_PROPERTIES;
 			prop.load(new FileInputStream(configPath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Configuration path error.", e);
 			System.exit(0);
 		}
 
