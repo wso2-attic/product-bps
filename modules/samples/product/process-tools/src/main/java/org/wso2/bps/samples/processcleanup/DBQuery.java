@@ -52,9 +52,8 @@ public class DBQuery {
 		Properties prop = new Properties();
 
 		try {
-			String configPath =
-					bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
-					File.separator + CleanupConstants.CLEANUP_PROPERTIES;
+			String configPath = bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
+								File.separator + CleanupConstants.CLEANUP_PROPERTIES;
 			prop.load(new FileInputStream(configPath));
 		} catch (IOException e) {
 			log.error("Configuration path error.", e);
