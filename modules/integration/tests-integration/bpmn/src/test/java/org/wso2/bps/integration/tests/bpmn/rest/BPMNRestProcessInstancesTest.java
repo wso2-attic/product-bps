@@ -13,7 +13,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package org.wso2.bps.integration.tests.bpmn.rest;
+ */
+package org.wso2.bps.integration.tests.bpmn.rest;
 
 import junit.framework.Assert;
 import org.apache.http.HttpResponse;
@@ -41,7 +42,11 @@ public class BPMNRestProcessInstancesTest extends BPSMasterTest{
         workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
         loginLogoutClient.login();
         uploadBPMNForTest("ProcessInstanceResourceTest");
-        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "ProcessInstanceResourceTest", 0);
+        int deploymentCount = 0;
+        if (workflowServiceClient.getDeployments() != null) {
+            deploymentCount = workflowServiceClient.getDeployments().length;
+        }
+        BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "ProcessInstanceResourceTest", deploymentCount);
     }
 
     @AfterTest
@@ -49,7 +54,8 @@ public class BPMNRestProcessInstancesTest extends BPSMasterTest{
         workflowServiceClient.undeploy("ProcessInstanceResourceTest");
     }
 
-    @Test
+    @Test(groups = {"wso2.bps.bpmn.rest"}, description = "get process instances", priority = 1, singleThreaded =
+            true)
     public void testGetProcessInstances() throws Exception {
         BPMNProcess[] bpmnProcesses = workflowServiceClient.getProcesses();
         BPMNInstanceServiceStub bpmnInstanceServiceStub = workflowServiceClient.getInstanceServiceStub();
@@ -93,7 +99,8 @@ public class BPMNRestProcessInstancesTest extends BPSMasterTest{
 
     }
 
-    @Test
+    @Test(groups = {"wso2.bps.bpmn.rest"}, description = "start process instances", priority = 1, singleThreaded =
+            true)
     public void testStartProcessInstances() throws Exception {
         BPMNProcess[] bpmnProcesses = workflowServiceClient.getProcesses();
         String payloadString = "{\n" + "\"processDefinitionId\":\"" + bpmnProcesses[0].getProcessId() + "\","
@@ -108,7 +115,8 @@ public class BPMNRestProcessInstancesTest extends BPSMasterTest{
         Assert.assertTrue("runtime/process-instances POST test", result.contains("myBusinessKey"));
     }
 
-    @Test
+    @Test(groups = {"wso2.bps.bpmn.rest"}, description = "get instance resources", priority = 1, singleThreaded =
+            true)
     public void testGetInstanceResources() throws Exception {
         //get the process id using local key
         String processId = null;
@@ -131,9 +139,9 @@ public class BPMNRestProcessInstancesTest extends BPSMasterTest{
         Assert.assertEquals("runtime/process-instances/{instanceId}/identitykinks test", 0, ((JSONArray)jsonObject.get("data")).length());
 
         //add identityLink
-        String userRTequest = "{" + "\"userId\":\"kermit\"," + "\"type\":\"participant\"" + "}";
+        String userRequest = "{" + "\"user\":\"kermit\"," + "\"type\":\"participant\"" + "}";
         result = BPMNTestUtils.postRequest(
-                backEndUrl + instanceUrl + "/" + bpmnInstances[0].getInstanceId() + "/identitylinks", new JSONObject(userRTequest));
+                backEndUrl + instanceUrl + "/" + bpmnInstances[0].getInstanceId() + "/identitylinks", new JSONObject(userRequest));
         //should return 201 response
         Assert.assertEquals("POST runtime/process-instances/{instanceId}/identitykinks test", 201, result.getStatusLine().getStatusCode());
 
@@ -143,15 +151,18 @@ public class BPMNRestProcessInstancesTest extends BPSMasterTest{
         jsonObject = new JSONObject(resultStr);
         Assert.assertEquals("runtime/process-instances/{instanceId}/identitylinks test", "kermit", ((JSONObject)((JSONArray)jsonObject.get("data")).get(0)).getString("user"));
 
-        result = BPMNTestUtils.deleteRequest(backEndUrl + instanceUrl + "/" + bpmnInstances[0].getInstanceId() + "/identitylinks/users/kermit/participant");
-        Assert.assertEquals("runtime/process-instances/{instanceId}/identitylinks test", 204, result.getStatusLine().getStatusCode());
+        result = BPMNTestUtils.getRequestResponse(backEndUrl + instanceUrl + "/" + bpmnInstances[0].getInstanceId()
+                + "/identitylinks/users/kermit/participant");
+        Assert.assertEquals("runtime/process-instances//{processInstanceId}/identitylinks/users/{identityId}/{type} test", 200, result.getStatusLine().getStatusCode());
 
         //remove identity
         result = BPMNTestUtils.deleteRequest(backEndUrl + instanceUrl + "/" + bpmnInstances[0].getInstanceId() + "/identitylinks/users/kermit/participant");
         Assert.assertEquals("runtime/process-instances/{instanceId}/identitylinks test", 204, result.getStatusLine().getStatusCode());
+
     }
 
-    @Test
+    @Test(groups = {"wso2.bps.bpmn.rest"}, description = "update instance resources", priority = 1, singleThreaded =
+            true)
     public void testUpdateInstanceResources() throws Exception {
         //activate or suspend process tests
         //try to activate none existing resource
