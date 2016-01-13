@@ -63,11 +63,11 @@ public class RegistryCleaner {
 						CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
 						File.separator + CleanupConstants.CLEANUP_PROPERTIES));
 			} else {
-				prop.load(new FileInputStream(
-						System.getProperty(CleanupConstants.CARBON_HOME) +
-						File.separator + CleanupConstants.REPOSITORY + File.separator +
-						CleanupConstants.CONF + File.separator +
-						CleanupConstants.CLEANUP_PROPERTIES));
+				prop.load(new FileInputStream(System.getProperty(CleanupConstants.CARBON_HOME) +
+				                              File.separator + CleanupConstants.REPOSITORY +
+				                              File.separator +
+				                              CleanupConstants.CONF + File.separator +
+				                              CleanupConstants.CLEANUP_PROPERTIES));
 			}
 
 			String resourceAdminServiceURL = prop.getProperty(CleanupConstants.TENANT_CONTEXT) +
