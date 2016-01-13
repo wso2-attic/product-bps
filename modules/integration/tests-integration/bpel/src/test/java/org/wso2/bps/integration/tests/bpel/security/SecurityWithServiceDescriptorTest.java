@@ -58,7 +58,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
-public class SecurityWithServiceDescriptorTest extends BPSMasterTest implements CallbackHandler{
+public class SecurityWithServiceDescriptorTest extends BPSMasterTest implements CallbackHandler {
 
 	private static final Log log = LogFactory.getLog(SecurityWithServiceDescriptorTest.class);
 
@@ -69,7 +69,6 @@ public class SecurityWithServiceDescriptorTest extends BPSMasterTest implements 
 
 	RequestSender requestSender;
 
-
 	public void setEnvironment() throws Exception {
 		init();
 		bpelPackageManagementClient = new BpelPackageManagementClient(backEndUrl, sessionCookie);
@@ -78,25 +77,27 @@ public class SecurityWithServiceDescriptorTest extends BPSMasterTest implements 
 		requestSender = new RequestSender();
 	}
 
-	@BeforeClass(alwaysRun = true)
-	public void deployArtifact()
-			throws Exception{
+	@BeforeClass(alwaysRun = true) public void deployArtifact() throws Exception {
 		setEnvironment();
 		uploadBpelForTest("SecuredWithServiceDescriptorProcess");
 	}
 
-	@Test(groups = {"wso2.bps", "wso2.bps.security"}, description = "BPEL security test scenario - secure BPEL process with service.xml file")
-	public void securityWithServiceDescriptorTest() throws Exception {
+	@Test(groups = { "wso2.bps",
+	                 "wso2.bps.security" }, description = "BPEL security test scenario - secure BPEL process with service.xml file") public void securityWithServiceDescriptorTest()
+			throws Exception {
 		requestSender.waitForProcessDeployment(backEndUrl + "SWSDPService");
 		ProductConstant.init();
 
-		String securityPolicyPath = ProductConstant.SYSTEM_TEST_RESOURCE_LOCATION + BPSTestConstants.DIR_ARTIFACTS
-		                            + File.separator + BPSTestConstants.DIR_POLICY + File.separator + "utpolicy.xml";
+		String securityPolicyPath =
+				ProductConstant.SYSTEM_TEST_RESOURCE_LOCATION + BPSTestConstants.DIR_ARTIFACTS +
+				File.separator + BPSTestConstants.DIR_POLICY + File.separator + "utpolicy.xml";
 
 		String endpointHttpS = "https://localhost:9743/services/SWSDPService";
 
-		String trustStore = CarbonUtils.getCarbonHome() + File.separator + "repository" + File.separator + "resources" +
-		                    File.separator + "security" + File.separator + "wso2carbon.jks";
+		String trustStore =
+				CarbonUtils.getCarbonHome() + File.separator + "repository" + File.separator +
+				"resources" +
+				File.separator + "security" + File.separator + "wso2carbon.jks";
 		String clientKey = trustStore;
 		OMElement result;
 
@@ -106,15 +107,15 @@ public class SecurityWithServiceDescriptorTest extends BPSMasterTest implements 
 		if (log.isDebugEnabled()) {
 			log.debug(CarbonUtils.getCarbonHome());
 		}
-		ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem(
-								   CarbonUtils.getCarbonHome() + File.separator + "repository" +
-								   File.separator + "deployment" + File.separator + "client", null);
+		ConfigurationContext ctx = ConfigurationContextFactory
+				.createConfigurationContextFromFileSystem(
+						CarbonUtils.getCarbonHome() + File.separator + "repository" +
+						File.separator + "deployment" + File.separator + "client", null);
 		ServiceClient sc = new ServiceClient(ctx, null);
 		sc.engageModule("addressing");
 		sc.engageModule("rampart");
 
 		Options opts = new Options();
-
 
 		opts.setTo(new EndpointReference(endpointHttpS));
 		log.info(endpointHttpS);
@@ -125,22 +126,24 @@ public class SecurityWithServiceDescriptorTest extends BPSMasterTest implements 
 		opts.setProperty(RampartMessageData.KEY_RAMPART_POLICY,
 		                 loadPolicy(securityPolicyPath, clientKey, "admin"));
 		sc.setOptions(opts);
-		result = sc.sendReceive(AXIOMUtil.stringToOM("<p:swsdp xmlns:p=\"http://wso2.org/bpel/sample.wsdl\">\n" +
-		                                             "      <TestPart>ww</TestPart>\n" +
-		                                             "   </p:swsdp>"));
+		result = sc.sendReceive(
+				AXIOMUtil.stringToOM("<p:swsdp xmlns:p=\"http://wso2.org/bpel/sample.wsdl\">\n" +
+				                     "      <TestPart>ww</TestPart>\n" +
+				                     "   </p:swsdp>"));
 		log.info(result.getFirstElement().getText());
 		Assert.assertFalse("Incorrect Test Result: " + result.toString(),
 		                   !result.toString().contains("ww World"));
 	}
 
-	@AfterClass(alwaysRun = true)
-	public void cleanup() throws PackageManagementException, InterruptedException, RemoteException,
-	                             LogoutAuthenticationExceptionException {
+	@AfterClass(alwaysRun = true) public void cleanup()
+			throws PackageManagementException, InterruptedException, RemoteException,
+			       LogoutAuthenticationExceptionException {
 		bpelPackageManagementClient.undeployBPEL("SecuredWithServiceDescriptorProcess");
 		this.loginLogoutClient.logout();
 	}
 
-	private static Policy loadPolicy(String xmlPath, String clientKey, String userName) throws Exception {
+	private static Policy loadPolicy(String xmlPath, String clientKey, String userName)
+			throws Exception {
 
 		StAXOMBuilder builder = new StAXOMBuilder(xmlPath);
 		Policy policy = PolicyEngine.getPolicy(builder.getDocumentElement());
