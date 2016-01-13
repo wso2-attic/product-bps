@@ -142,10 +142,9 @@ public class RegistryCleaner {
 
 		authenticationAdminStub.login(userName, password, hostName);
 
-		ServiceContext serviceContext = authenticationAdminStub.
-				                                                       _getServiceClient()
-		                                                       .getLastOperationContext()
-		                                                       .getServiceContext();
+		ServiceContext serviceContext =
+				authenticationAdminStub._getServiceClient().getLastOperationContext()
+				                       .getServiceContext();
 
 		return (String) serviceContext.getProperty(HTTPConstants.COOKIE_STRING);
 	}
