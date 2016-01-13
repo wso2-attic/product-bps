@@ -57,7 +57,7 @@ public class DBQuery {
 			prop.load(new FileInputStream(configPath));
 		} catch (IOException e) {
 			log.error("Configuration path error.", e);
-			System.exit(0);
+			System.exit(1);
 		}
 
 		//for mysql, oracle and sqlserver the query is same
