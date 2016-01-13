@@ -31,7 +31,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * The main class
+ * CleanupExecutor class is used to delete the retired processes from the database
  */
 public class CleanupExecutor {
 	private final static Log log = LogFactory.getLog(CleanupExecutor.class);

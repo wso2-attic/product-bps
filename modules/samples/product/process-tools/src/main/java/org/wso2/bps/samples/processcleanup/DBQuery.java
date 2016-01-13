@@ -15,6 +15,9 @@
  */
 package org.wso2.bps.samples.processcleanup;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +28,7 @@ import java.util.Properties;
  * Class used to trigger the relevant SQL query according to the DB type
  */
 public class DBQuery {
+	private static final Log log = LogFactory.getLog(DBQuery.class);
 
 	private String ODE_PARTNER_LINK;
 	private String ODE_SCOPE;
@@ -48,13 +52,12 @@ public class DBQuery {
 		Properties prop = new Properties();
 
 		try {
-			String configPath =
-					bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
-					File.separator + CleanupConstants.CLEANUP_PROPERTIES;
+			String configPath = bpsHome + CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
+								File.separator + CleanupConstants.CLEANUP_PROPERTIES;
 			prop.load(new FileInputStream(configPath));
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
+			log.error("Configuration path error.", e);
+			System.exit(1);
 		}
 
 		//for mysql, oracle and sqlserver the query is same

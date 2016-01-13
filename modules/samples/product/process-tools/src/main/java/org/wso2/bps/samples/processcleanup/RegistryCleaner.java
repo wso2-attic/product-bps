@@ -19,6 +19,8 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.ServiceContext;
 import org.apache.axis2.transport.http.HTTPConstants;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.authenticator.stub.AuthenticationAdminStub;
 import org.wso2.carbon.registry.resource.stub.ResourceAdminServiceStub;
 import org.wso2.carbon.utils.NetworkUtils;
@@ -31,6 +33,8 @@ import java.util.Properties;
  * Class to delete relevant versions from Registry
  */
 public class RegistryCleaner {
+	private static final Log log = LogFactory.getLog(RegistryCleaner.class);
+
 	private static Properties prop = new Properties();
 
 	/**
@@ -59,11 +63,11 @@ public class RegistryCleaner {
 						CleanupConstants.REPOSITORY + File.separator + CleanupConstants.CONF +
 						File.separator + CleanupConstants.CLEANUP_PROPERTIES));
 			} else {
-				prop.load(new FileInputStream(
-						System.getProperty(CleanupConstants.CARBON_HOME) +
-						File.separator + CleanupConstants.REPOSITORY + File.separator +
-						CleanupConstants.CONF + File.separator +
-						CleanupConstants.CLEANUP_PROPERTIES));
+				prop.load(new FileInputStream(System.getProperty(CleanupConstants.CARBON_HOME) +
+				                              File.separator + CleanupConstants.REPOSITORY +
+				                              File.separator +
+				                              CleanupConstants.CONF + File.separator +
+				                              CleanupConstants.CLEANUP_PROPERTIES));
 			}
 
 			String resourceAdminServiceURL = prop.getProperty(CleanupConstants.TENANT_CONTEXT) +
@@ -96,7 +100,7 @@ public class RegistryCleaner {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Error occurred while cleaning the registry.", e);
 		}
 		return false;
 	}
@@ -138,10 +142,9 @@ public class RegistryCleaner {
 
 		authenticationAdminStub.login(userName, password, hostName);
 
-		ServiceContext serviceContext = authenticationAdminStub.
-				                                                       _getServiceClient()
-		                                                       .getLastOperationContext()
-		                                                       .getServiceContext();
+		ServiceContext serviceContext =
+				authenticationAdminStub._getServiceClient().getLastOperationContext()
+				                       .getServiceContext();
 
 		return (String) serviceContext.getProperty(HTTPConstants.COOKIE_STRING);
 	}
