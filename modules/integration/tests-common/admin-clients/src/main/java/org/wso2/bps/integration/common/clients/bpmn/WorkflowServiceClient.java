@@ -24,6 +24,7 @@ import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNDeployment;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNInstance;
 import org.wso2.carbon.bpmn.core.mgt.model.xsd.BPMNProcess;
 import org.wso2.carbon.bpmn.stub.BPMNDeploymentServiceStub;
+import org.wso2.carbon.bpmn.stub.BPMNInstanceServiceBPSFaultException;
 import org.wso2.carbon.bpmn.stub.BPMNInstanceServiceStub;
 import org.wso2.carbon.utils.xml.XMLPrettyPrinter;
 import sun.misc.BASE64Decoder;
@@ -35,6 +36,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +96,17 @@ public class WorkflowServiceClient {
             }
         }
         return null;
+    }
+
+    public List<BPMNInstance> getProcessInstancesByProcessId(String processId)
+            throws RemoteException, BPMNInstanceServiceBPSFaultException {
+        List<BPMNInstance> instanceList = new ArrayList<>();
+        for (BPMNInstance instance : instanceServiceStub.getProcessInstances()) {
+            if (instance.getProcessId().equals(processId)) {
+                instanceList.add(instance);
+            }
+        }
+        return instanceList;
     }
 
     public void deleteProcessInstance(String instanceID) throws Exception {
@@ -179,5 +192,9 @@ public class WorkflowServiceClient {
             }
         }
         return image;
+    }
+
+    public BPMNInstanceServiceStub getInstanceServiceStub() {
+        return instanceServiceStub;
     }
 }
