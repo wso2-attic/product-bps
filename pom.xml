@@ -623,7 +623,7 @@
         <carbon.identity.version>5.0.7</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
-        <carbon.registry.version>4.4.8</carbon.registry.version>
+        <carbon.registry.version>4.4.9</carbon.registry.version>
 
         <!-- Carbon Business Process Version -->
         <carbon.business-process.version>4.4.5-SNAPSHOT</carbon.business-process.version>
