@@ -49,7 +49,7 @@ Key Features
 New Features In This Release
 ----------------------------
 
-* BPMN rest api improvments.
+* BPMN rest api improvements.
 * Many other bug fixes.
 
 Issues Fixed In This Release
