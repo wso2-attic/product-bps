@@ -1,5 +1,5 @@
 WSO2 Business Process Server (BPS)
-Copyright (c) 2005 - 2012 WSO2 Inc
+Copyright (c) 2016 WSO2 Inc
 
    =========================================================================
    ==  NOTICE file corresponding to the section 4 d of                    ==
@@ -18,7 +18,7 @@ See the LICENSE file for details.
 
 COPYRIGHT NOTICES
 
-Copyright (c) 2005-2012, WSO2 Inc. (http://wso2.com). All Rights Reserved.
+Copyright (c) 2016, WSO2 Inc. (http://wso2.com). All Rights Reserved.
 
 * WSO2 BPS binary is bundled with:
  jaxen-1.1.1.jar

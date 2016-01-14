@@ -49,22 +49,14 @@ Key Features
 New Features In This Release
 ----------------------------
 
-* BPMN Support
-* Customizable Web Application for Viewing / Managaging BPMN Processes and Tasks
-* BPMN user task form generation support
-* Customizable Web Application for WS-Human Tasks
-* Human Task UI form generation support
-* BPMN runtime statistics publishing support
-* Performance Improvements
-* Many UI Enhanancements
-* Reporting dashboards for BPMN and Human Tasks
+* BPMN rest api improvments.
 * Many other bug fixes.
 
 Issues Fixed In This Release
 ----------------------------
 
 * WSO2 BPS related components of the WSO2 Carbon Platform -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12382
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12625
 
 
 Known Issues
@@ -74,7 +66,7 @@ Known Issues
 * BPEL4People only supports remote tasks and remote notification creation.
 
 * For a complete list of features to be implemented please refer the list of known issues -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12383
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12626
 
 
 Installation & Running
@@ -218,6 +210,6 @@ Crypto Notice
    Apache ODE       : http://ode.apache.org/
 
 --------------------------------------------------------------------------------
-(c) Copyright 2015 WSO2 Inc.
+(c) Copyright 2016 WSO2 Inc.
 
 
