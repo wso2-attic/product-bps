@@ -41,6 +41,7 @@ public class BPMNTestConstants {
 
     public static final int PROCESS_DEPLOYMENT_MAX_RETRY_COUNT = 200;
     public static final int PROCESS_DEPLOYMENT_WAIT_TIME_PER_RETRY = 500;
+    public static final String ACTIVITI_CONFIGURATION_FILE_NAME = "activiti.xml";
 
 
 }
