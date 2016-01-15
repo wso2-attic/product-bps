@@ -610,7 +610,7 @@
 
 
     <properties>
-
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <bps.version>3.5.1-SNAPSHOT</bps.version>
 
         <carbon.kernel.version>4.4.3</carbon.kernel.version>
