@@ -506,6 +506,7 @@ slf4j.log4j12_1.6.1.jar                                                         
 slf4j.log4j12_1.7.12.jar                                                        bundle         mit       1288
 slf4j.log4j12_1.7.13.jar                                                        bundle         mit       1605
 soa.model.core_1.5.0.wso2v3.jar                                                 bundle         apache2   4705
+soa.model.core_1.5.0.wso2v4.jar                                                 bundle         apache2   7087
 solr_5.2.1.wso2v1.jar                                                           bundle         apache2   4384
 spatial4j_0.4.1.wso2v1.jar                                                      bundle         apache2   4045
 spring-aop-3.0.7.RELEASE.jar                                                    bundle         apache2   279
