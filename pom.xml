@@ -35,6 +35,13 @@
     <description>WSO2 Business Process Server Parent Pom</description>
     <url>http://wso2.com/products/business-process-server/</url>
 
+    <scm>
+        <url>https://github.com/wso2/product-bps.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/product-bps.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/product-bps.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
     <licenses>
         <license>
             <name>Apache License Version 2.0</name>
