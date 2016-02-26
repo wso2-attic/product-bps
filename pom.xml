@@ -21,7 +21,7 @@
     <groupId>org.wso2.bps</groupId>
     <artifactId>wso2bps-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.6.0-SNAPSHOT</version>
+    <version>3.5.1-SNAPSHOT</version>
     <name>WSO2 BPS - Parent</name>
     <url>http://wso2.org/projects/bps/java</url>
     <description>WSO2 Business Process Server</description>
@@ -621,7 +621,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <bps.version>3.6.0-SNAPSHOT</bps.version>
+        <bps.version>3.5.1-SNAPSHOT</bps.version>
 
         <carbon.kernel.version>4.4.4</carbon.kernel.version>
 

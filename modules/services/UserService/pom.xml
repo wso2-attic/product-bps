@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.wso2.bps</groupId>
         <artifactId>sample-services</artifactId>
-        <version>3.6.0-SNAPSHOT</version>
+        <version>3.5.1-SNAPSHOT</version>
     </parent>
     <artifactId>UserService</artifactId>
     <packaging>war</packaging>
