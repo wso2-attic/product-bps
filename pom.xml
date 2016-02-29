@@ -21,7 +21,7 @@
     <groupId>org.wso2.bps</groupId>
     <artifactId>wso2bps-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.5.1-SNAPSHOT</version>
+    <version>3.5.1</version>
     <name>WSO2 BPS - Parent</name>
     <url>http://wso2.org/projects/bps/java</url>
     <description>WSO2 Business Process Server</description>
@@ -621,7 +621,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <bps.version>3.5.1-SNAPSHOT</bps.version>
+        <bps.version>${project.version}</bps.version>
 
         <carbon.kernel.version>4.4.4</carbon.kernel.version>
 
@@ -633,7 +633,7 @@
         <carbon.identity.version>5.0.8</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
-        <carbon.registry.version>4.5.1</carbon.registry.version>
+        <carbon.registry.version>4.5.2</carbon.registry.version>
 
         <!-- Carbon Business Process Version -->
         <carbon.business-process.version>4.4.7</carbon.business-process.version>
@@ -644,7 +644,7 @@
         <carbon.analytics-common.version>5.0.6</carbon.analytics-common.version>
 
         <!-- Carbon Commons Version -->
-        <carbon.commons.version>4.5.1</carbon.commons.version>
+        <carbon.commons.version>4.5.2</carbon.commons.version>
 
         <!-- Carbon Multitenancy Version -->
         <carbon.multitenancy.version>4.5.1</carbon.multitenancy.version>
