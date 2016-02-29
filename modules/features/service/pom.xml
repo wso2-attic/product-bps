@@ -20,13 +20,13 @@
     <parent>
         <groupId>org.wso2.bps</groupId>
     	<artifactId>wso2bps-features-parent</artifactId>
-        <version>3.5.1</version>
+        <version>3.5.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>wso2bps-multitenancy-features</artifactId>
-    <version>3.5.1</version>
+    <version>3.5.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 BPS - Tenant Dashboard Features Aggregator Module</name>
     <url>http://wso2.org</url>
