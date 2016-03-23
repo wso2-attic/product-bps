@@ -65,6 +65,11 @@
             <artifactId>org.wso2.carbon.jndi.feature</artifactId>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.business-process</groupId>
+            <artifactId>org.wso2.carbon.bpmn.server.feature</artifactId>
+            <type>zip</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -130,6 +135,11 @@
                                     <id>org.wso2.carbon.jndi.feature</id>
                                     <version>${carbon.jndi.feature.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpmn.server.feature</id>
+                                    <version>${carbon.business-process.version}</version>
+                                </feature>
+
                             </features>
                         </configuration>
                     </execution>
@@ -197,6 +207,10 @@
                                 <feature>
                                     <id>org.wso2.carbon.jndi.feature</id>
                                     <version>${carbon.jndi.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.bpmn.server.feature</id>
+                                    <version>${carbon.business-process.version}</version>
                                 </feature>
                             </features>
                         </configuration>
