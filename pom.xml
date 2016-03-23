@@ -35,6 +35,13 @@
     <description>WSO2 Business Process Server Parent Pom</description>
     <url>http://wso2.com/products/business-process-server/</url>
 
+    <scm>
+        <url>https://github.com/wso2/product-bps.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/product-bps.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/product-bps.git</connection>
+        <tag>HEAD</tag>
+    </scm>
+
     <licenses>
         <license>
             <name>Apache License Version 2.0</name>
@@ -389,7 +396,7 @@
         <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
         <carbon.jndi.feature.version>1.0.0-SNAPSHOT</carbon.jndi.feature.version>
         <!-- MSFJ Dependencies-->
-        <msf4j.version>1.0.0-SNAPSHOT</msf4j.version>
+        <msf4j.version>1.0.0</msf4j.version>
 
         <!-- Carbon Transport & Carbon Messaging Dependencies Start -->
 
