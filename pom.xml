@@ -328,6 +328,12 @@
             <!-- Platform Dependencies End -->
 
             <!-- Carbon Business Process Dependencies Start -->
+            <dependency>
+                <groupId>org.wso2.carbon.business-process</groupId>
+                <artifactId>org.wso2.carbon.bpmn.server.feature</artifactId>
+                <version>${carbon.business-process.version}</version>
+                <type>zip</type>
+            </dependency>
 
             <!-- Carbon Business Process Dependencies End -->
 
@@ -377,6 +383,7 @@
         <carbon.feature.plugin.version>2.0.0</carbon.feature.plugin.version>
 
         <!-- Carbon Business Process Dependencies -->
+        <carbon.business-process.version>5.0.0-SNAPSHOT</carbon.business-process.version>
 
         <!-- Platform Dependencies -->
         <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
