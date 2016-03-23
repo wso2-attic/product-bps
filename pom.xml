@@ -396,7 +396,7 @@
         <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
         <carbon.jndi.feature.version>1.0.0-SNAPSHOT</carbon.jndi.feature.version>
         <!-- MSFJ Dependencies-->
-        <msf4j.version>1.0.0-SNAPSHOT</msf4j.version>
+        <msf4j.version>1.0.0</msf4j.version>
 
         <!-- Carbon Transport & Carbon Messaging Dependencies Start -->
 
