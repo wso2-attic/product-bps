@@ -67,7 +67,7 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.business-process</groupId>
-            <artifactId>org.wso2.carbon.bpmn.server.feature</artifactId>
+            <artifactId>org.wso2.carbon.bpmn.feature</artifactId>
             <type>zip</type>
         </dependency>
     </dependencies>
@@ -136,7 +136,7 @@
                                     <version>${carbon.jndi.feature.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.bpmn.server.feature</id>
+                                    <id>org.wso2.carbon.bpmn.feature</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
 
@@ -189,11 +189,11 @@
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
                                 <feature>
-                                    <id>org.wso2.carbon.core.server.feature.group</id>
+                                    <id>org.wso2.carbon.core.server</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.core.runtime.feature.group</id>
+                                    <id>org.wso2.carbon.core.runtime</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
@@ -201,15 +201,15 @@
                                     <version>${msf4j.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.datasource.core.feature</id>
+                                    <id>org.wso2.carbon.datasource.core</id>
                                     <version>${carbon.datasource.core.feature.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.jndi.feature</id>
+                                    <id>org.wso2.carbon.jndi</id>
                                     <version>${carbon.jndi.feature.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.bpmn.server.feature</id>
+                                    <id>org.wso2.carbon.bpmn</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
                             </features>
