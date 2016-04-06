@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
-        <version>2</version>
+        <version>3</version>
         <relativePath/>
     </parent>
 
@@ -35,12 +35,9 @@
     <description>WSO2 Business Process Server Parent Pom</description>
     <url>http://wso2.com/products/business-process-server/</url>
 
-    <scm>
-        <url>https://github.com/wso2/product-bps.git</url>
-        <developerConnection>scm:git:https://github.com/wso2/product-bps.git</developerConnection>
-        <connection>scm:git:https://github.com/wso2/product-bps.git</connection>
-        <tag>HEAD</tag>
-    </scm>
+    <prerequisites>
+        <maven>3.0.0</maven>
+    </prerequisites>
 
     <licenses>
         <license>
@@ -48,6 +45,13 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
+
+    <scm>
+        <url>https://github.com/wso2/product-bps.git</url>
+        <developerConnection>scm:git:https://github.com/wso2/product-bps.git</developerConnection>
+        <connection>scm:git:https://github.com/wso2/product-bps.git</connection>
+        <tag>HEAD</tag>
+    </scm>
 
     <organization>
         <name>WSO2 Inc</name>
@@ -61,64 +65,25 @@
 
     <mailingLists>
         <mailingList>
-            <name>WSO2 Users' list</name>
-            <post>mailto:user@wso2.org</post>
-            <archive>http://wso2.markmail.org/search/+list:org%2Ewso2%2Euser</archive>
-            <subscribe>mailto:dev-request@wso2.org?subject=subscribe</subscribe>
-            <unsubscribe>mailto:dev-request@wso2.org?subject=unsubscribe</unsubscribe>
-        </mailingList>
-        <mailingList>
-            <name>WSO2 Developers' List</name>
-            <post>mailto:dev@wso2.org</post>
-            <archive>http://wso2.markmail.org/search/+list:org%2Ewso2%2Edev</archive>
-            <subscribe>mailto:user-request@wso2.org?subject=subscribe</subscribe>
-            <unsubscribe>mailto:user-request@wso2.org?subject=unsubscribe</unsubscribe>
+            <name>WSO2 Dev List</name>
+            <subscribe>dev-request@wso2.org</subscribe>
+            <unsubscribe>dev-request@wso2.org</unsubscribe>
+            <post>dev@wso2.org</post>
+            <archive>http://mail.wso2.org/mailarchive/dev/</archive>
         </mailingList>
     </mailingLists>
 
-    <prerequisites>
-        <maven>3.0.0</maven>
-    </prerequisites>
-
-    <modules>
-        <module>product</module>
-    </modules>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>wso2.releases</id>
-            <name>WSO2 internal Repository</name>
-            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>wso2.snapshots</id>
-            <name>Apache Snapshot Repository</name>
-            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-        <pluginRepository>
-            <id>wso2-nexus</id>
-            <name>WSO2 internal Repository</name>
-            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>product</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <build>
         <extensions>
@@ -130,160 +95,15 @@
         </extensions>
         <plugins>
             <plugin>
-                <groupId>org.jvnet.maven.incrementalbuild</groupId>
-                <artifactId>incremental-build-plugin</artifactId>
-                <version>${maven.incrementalbuild.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>incremental-build</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${maven.checkstyleplugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
-                            <configuration>
-                                <configLocation>
-                                    https://raw.githubusercontent.com/wso2/code-quality-tools/master/checkstyle/checkstyle.xml
-                                </configLocation>
-                                <suppressionsLocation>
-                                    https://raw.githubusercontent.com/wso2/code-quality-tools/master/checkstyle/suppressions.xml
-                                </suppressionsLocation>
-                                <encoding>UTF-8</encoding>
-                                <consoleOutput>true</consoleOutput>
-                                <failsOnError>true</failsOnError>
-                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                            </configuration>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>${maven.findbugsplugin.version}</version>
-                    <configuration>
-                        <effort>Max</effort>
-                        <threshold>Low</threshold>
-                        <xmlOutput>true</xmlOutput>
-                        <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>analyze-compile</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven.compilerplugin.version}</version>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <configuration>
-                        <preparationGoals>clean install</preparationGoals>
-                        <autoVersionSubmodules>false</autoVersionSubmodules>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-scr-plugin</artifactId>
-                    <version>${maven.scrplugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>generate-scr-scrdescriptor</id>
-                            <goals>
-                                <goal>scr</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>maven-bundle-plugin</artifactId>
-                    <version>${maven.bundleplugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <obrRepository>NONE</obrRepository>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven.javadocplugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>docs</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>javadoc</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven.surefireplugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${maven.jacocoplugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven.sourceplugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven.assemblyplugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${maven.gpgplugin.version}</version>
-                </plugin>
-
-            </plugins>
-        </pluginManagement>
     </build>
 
     <dependencyManagement>
@@ -337,7 +157,7 @@
             <!-- Carbon Business Process Dependencies Start -->
             <dependency>
                 <groupId>org.wso2.carbon.business-process</groupId>
-                <artifactId>org.wso2.carbon.bpmn.server.feature</artifactId>
+                <artifactId>org.wso2.carbon.bpmn.feature</artifactId>
                 <version>${carbon.business-process.version}</version>
                 <type>zip</type>
             </dependency>
@@ -366,21 +186,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Maven plugins -->
-        <maven.wagon.ssh.version>2.6</maven.wagon.ssh.version>
-        <maven.incrementalbuild.version>1.3</maven.incrementalbuild.version>
-        <maven.checkstyleplugin.version>2.16</maven.checkstyleplugin.version>
-        <maven.findbugsplugin.version>3.0.2</maven.findbugsplugin.version>
-        <maven.compilerplugin.version>3.3</maven.compilerplugin.version>
-        <maven.scrplugin.version>1.7.2</maven.scrplugin.version>
-        <maven.bundleplugin.version>2.3.7</maven.bundleplugin.version>
-        <maven.javadocplugin.version>2.10.3</maven.javadocplugin.version>
-        <maven.surefireplugin.version>2.14.1</maven.surefireplugin.version>
-        <maven.jacocoplugin.version>0.7.1.201405082137</maven.jacocoplugin.version>
-        <maven.sourceplugin.version>2.2.1</maven.sourceplugin.version>
-        <maven.assemblyplugin.version>2.4</maven.assemblyplugin.version>
-        <maven.gpgplugin.version>1.5</maven.gpgplugin.version>
-
 
         <!-- Kernel Dependencies -->
         <carbon.kernel.version>5.0.0</carbon.kernel.version>
