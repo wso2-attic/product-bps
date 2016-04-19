@@ -175,7 +175,18 @@
 
 
             <!-- Carbon Transport & Carbon Messaging Dependencies Start -->
-
+            <dependency>
+                <groupId>org.wso2.carbon.messaging</groupId>
+                <artifactId>org.wso2.carbon.messaging.feature</artifactId>
+                <version>${carbon.messaging.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.transport</groupId>
+                <artifactId>org.wso2.carbon.transport.http.netty.feature</artifactId>
+                <version>${org.wso2.carbon.transport.http.netty.version}</version>
+                <type>zip</type>
+            </dependency>
             <!-- Carbon Transport & Carbon Messaging Dependencies END -->
 
 
@@ -188,7 +199,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Kernel Dependencies -->
-        <carbon.kernel.version>5.0.0</carbon.kernel.version>
+        <carbon.kernel.version>5.1.0-SNAPSHOT</carbon.kernel.version>
         <carbon.kernel.version.range>[5.0,6)</carbon.kernel.version.range>
         <osgi.api.version>6.0.0</osgi.api.version>
 
@@ -201,10 +212,11 @@
         <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
         <carbon.jndi.feature.version>1.0.0-SNAPSHOT</carbon.jndi.feature.version>
         <!-- MSFJ Dependencies-->
-        <msf4j.version>1.0.0</msf4j.version>
+        <msf4j.version>1.1.0-SNAPSHOT</msf4j.version>
 
         <!-- Carbon Transport & Carbon Messaging Dependencies Start -->
-
+        <carbon.messaging.version>1.0.2</carbon.messaging.version>
+        <org.wso2.carbon.transport.http.netty.version>2.0.1</org.wso2.carbon.transport.http.netty.version>
         <!-- Test dependencies -->
 
 

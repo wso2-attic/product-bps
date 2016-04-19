@@ -70,6 +70,16 @@
             <artifactId>org.wso2.carbon.bpmn.feature</artifactId>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.messaging</groupId>
+            <artifactId>org.wso2.carbon.messaging.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.transport</groupId>
+            <artifactId>org.wso2.carbon.transport.http.netty.feature</artifactId>
+            <type>zip</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -94,7 +104,6 @@
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>target</outputDirectory>
-                                    <excludes>**/conf/osgi/launch.properties</excludes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -139,7 +148,14 @@
                                     <id>org.wso2.carbon.bpmn.feature</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
-
+                                <feature>
+                                    <id>org.wso2.carbon.transport.http.netty.feature</id>
+                                    <version>${org.wso2.carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.messaging.feature</id>
+                                    <version>${carbon.messaging.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -211,6 +227,14 @@
                                 <feature>
                                     <id>org.wso2.carbon.bpmn</id>
                                     <version>${carbon.business-process.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.transport.http.netty.feature</id>
+                                    <version>${org.wso2.carbon.transport.http.netty.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.messaging.feature</id>
+                                    <version>${carbon.messaging.version}</version>
                                 </feature>
                             </features>
                         </configuration>
