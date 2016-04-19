@@ -52,14 +52,13 @@
             <directoryMode>755</directoryMode>
         </fileSet>
 
+        <!-- Resources Directory -->
         <fileSet>
-            <directory>carbon-home/conf/osgi</directory>
-            <outputDirectory>conf/osgi</outputDirectory>
+            <directory>carbon-home/resources</directory>
+            <outputDirectory>resources</outputDirectory>
             <fileMode>644</fileMode>
             <directoryMode>755</directoryMode>
         </fileSet>
-
-
 
         <!-- Deployment Directory -->
         <fileSet>
