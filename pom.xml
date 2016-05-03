@@ -158,6 +158,12 @@
                 <version>${carbon.deployment.feature.version}</version>
                 <type>zip</type>
             </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.security.caas</groupId>
+                <artifactId>org.wso2.carbon.security.caas.feature</artifactId>
+                <version>${carbon.security.caas.feature.version}</version>
+                <type>zip</type>
+            </dependency>
             <!-- Platform Dependencies End -->
 
             <!-- Carbon Business Process Dependencies Start -->
@@ -218,6 +224,7 @@
         <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
         <carbon.jndi.feature.version>1.0.0-SNAPSHOT</carbon.jndi.feature.version>
         <carbon.deployment.feature.version>5.0.0-SNAPSHOT</carbon.deployment.feature.version>
+        <carbon.security.caas.feature.version>1.0.0-m1</carbon.security.caas.feature.version>
         <!-- MSFJ Dependencies-->
         <msf4j.version>1.1.0-SNAPSHOT</msf4j.version>
 
