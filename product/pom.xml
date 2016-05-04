@@ -247,6 +247,10 @@
                                     <version>${carbon.deployment.feature.version}</version>
                                 </feature>
                                 <feature>
+                                    <id>org.wso2.carbon.security.caas.feature</id>
+                                    <version>${carbon.security.caas.feature.version}</version>
+                                </feature>
+                                <feature>
                                     <id>org.wso2.carbon.bpmn</id>
                                     <version>${carbon.business-process.version}</version>
                                 </feature>
