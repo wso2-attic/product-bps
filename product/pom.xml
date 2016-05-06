@@ -76,6 +76,11 @@
             <type>zip</type>
         </dependency>
         <dependency>
+            <groupId>org.wso2.carbon.security.userstore</groupId>
+            <artifactId>org.wso2.carbon.security.userstore.jdbc.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
             <groupId>org.wso2.carbon.business-process</groupId>
             <artifactId>org.wso2.carbon.bpmn.feature</artifactId>
             <type>zip</type>
@@ -161,6 +166,10 @@
                                 <feature>
                                     <id>org.wso2.carbon.security.caas.feature</id>
                                     <version>${carbon.security.caas.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.security.userstore.jdbc.feature</id>
+                                    <version>1.0.0-m1</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.bpmn.feature</id>
@@ -249,6 +258,10 @@
                                 <feature>
                                     <id>org.wso2.carbon.security.caas.feature</id>
                                     <version>${carbon.security.caas.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.security.userstore.jdbc.feature</id>
+                                    <version>1.0.0.m1</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.bpmn</id>
