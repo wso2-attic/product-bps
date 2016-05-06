@@ -67,7 +67,12 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.deployment</groupId>
-            <artifactId>org.wso2.carbon.deployment.feature</artifactId>
+            <artifactId>org.wso2.carbon.deployment.engine.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.deployment</groupId>
+            <artifactId>org.wso2.carbon.deployment.notifier.feature</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -160,7 +165,11 @@
                                     <version>${carbon.jndi.feature.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.deployment.feature</id>
+                                    <id>org.wso2.carbon.deployment.engine.feature</id>
+                                    <version>${carbon.deployment.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.notifier.feature</id>
                                     <version>${carbon.deployment.feature.version}</version>
                                 </feature>
                                 <feature>
@@ -252,7 +261,11 @@
                                     <version>${carbon.jndi.feature.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.deployment.feature</id>
+                                    <id>org.wso2.carbon.deployment.engine.feature</id>
+                                    <version>${carbon.deployment.feature.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.deployment.notifier.feature</id>
                                     <version>${carbon.deployment.feature.version}</version>
                                 </feature>
                                 <feature>

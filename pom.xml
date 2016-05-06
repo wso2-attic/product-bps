@@ -154,7 +154,13 @@
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.deployment</groupId>
-                <artifactId>org.wso2.carbon.deployment.feature</artifactId>
+                <artifactId>org.wso2.carbon.deployment.engine.feature</artifactId>
+                <version>${carbon.deployment.feature.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.deployment</groupId>
+                <artifactId>org.wso2.carbon.deployment.notifier.feature</artifactId>
                 <version>${carbon.deployment.feature.version}</version>
                 <type>zip</type>
             </dependency>
@@ -230,7 +236,7 @@
         <!-- Platform Dependencies -->
         <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
         <carbon.jndi.feature.version>1.0.0-SNAPSHOT</carbon.jndi.feature.version>
-        <carbon.deployment.feature.version>5.0.0-SNAPSHOT</carbon.deployment.feature.version>
+        <carbon.deployment.feature.version>5.0.0-alpha</carbon.deployment.feature.version>
         <carbon.security.caas.feature.version>1.0.0-m1</carbon.security.caas.feature.version>
         <carbon.security.userstore.jdbc.version>1.0.0-m1</carbon.security.userstore.jdbc.version>
         <!-- MSFJ Dependencies-->
