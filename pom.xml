@@ -237,8 +237,8 @@
         <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
         <carbon.jndi.feature.version>1.0.0-SNAPSHOT</carbon.jndi.feature.version>
         <carbon.deployment.feature.version>5.0.0-alpha</carbon.deployment.feature.version>
-        <carbon.security.caas.feature.version>1.0.0-m1</carbon.security.caas.feature.version>
-        <carbon.security.userstore.jdbc.version>1.0.0-m1</carbon.security.userstore.jdbc.version>
+        <carbon.security.caas.feature.version>1.0.0-SNAPSHOT</carbon.security.caas.feature.version>
+        <carbon.security.userstore.jdbc.version>1.0.0-SNAPSHOT</carbon.security.userstore.jdbc.version>
         <!-- MSFJ Dependencies-->
         <msf4j.version>1.1.0-SNAPSHOT</msf4j.version>
 
