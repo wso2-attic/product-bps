@@ -42,12 +42,12 @@
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.core.server.feature</artifactId>
+            <artifactId>org.wso2.carbon.kernel.feature</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.core.runtime.feature</artifactId>
+            <artifactId>org.wso2.carbon.runtime.feature</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -104,32 +104,33 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>1-unpack-p2-agent-distribution</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.wso2.carbon</groupId>
-                                    <artifactId>wso2carbon-kernel</artifactId>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<inherited>false</inherited>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>1-unpack-p2-agent-distribution</id>-->
+                        <!--<phase>test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>unpack</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<artifactItems>-->
+                                <!--<artifactItem>-->
+                                    <!--<groupId>org.wso2.carbon</groupId>-->
+                                    <!--<artifactId>wso2carbon-kernel</artifactId>-->
                                     <!--<version>${carbon.kernel.version}</version>-->
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>target</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                                    <!--<type>zip</type>-->
+                                    <!--<overWrite>true</overWrite>-->
+                                    <!--<outputDirectory>target</outputDirectory>-->
+                                    <!--<excludes>**/conf/osgi/launch.properties</excludes>-->
+                                <!--</artifactItem>-->
+                            <!--</artifactItems>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.wso2.carbon.maven</groupId>
                 <artifactId>carbon-feature-plugin</artifactId>
@@ -145,11 +146,11 @@
                             <targetRepository>file:${basedir}/target/p2-repo</targetRepository>
                             <features>
                                 <feature>
-                                    <id>org.wso2.carbon.core.server.feature</id>
+                                    <id>org.wso2.carbon.kernel.feature</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.core.runtime.feature</id>
+                                    <id>org.wso2.carbon.runtime.feature</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
@@ -241,11 +242,11 @@
                             <deleteOldProfileFiles>true</deleteOldProfileFiles>
                             <features>
                                 <feature>
-                                    <id>org.wso2.carbon.core.server</id>
+                                    <id>org.wso2.carbon.kernel.feature</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.core.runtime</id>
+                                    <id>org.wso2.carbon.runtime.feature</id>
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
@@ -253,11 +254,11 @@
                                     <version>${msf4j.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.datasource.core</id>
+                                    <id>org.wso2.carbon.datasource.core.feature</id>
                                     <version>${carbon.datasource.core.feature.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.jndi</id>
+                                    <id>org.wso2.carbon.jndi.feature</id>
                                     <version>${carbon.jndi.feature.version}</version>
                                 </feature>
                                 <feature>
@@ -300,12 +301,12 @@
                     <execution>
                         <phase>package</phase>
                         <configuration>
-                            <tasks>
-                                <replace dir="target/wso2carbon-kernel-${carbon.kernel.version}/osgi"
-                                         token="false" value="true">
+                            <target>
+                                <replace dir="target/wso2carbon-kernel-${carbon.kernel.version}/osgi" token="false"
+                                         value="true">
                                     <include name="**/bundles.info"/>
                                 </replace>
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -320,7 +321,6 @@
                                 <delete dir="target/dependency-maven-plugin-markers"/>
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart"/>
                                 <delete dir="target/p2-repo"/>
-                                <!-- Figure out a way to delete tmp.* files -->
                                 <delete file="target/tmp"/>
                                 <delete dir="target/wso2carbon-kernel-${carbon.kernel.version}"/>
                                 <delete dir="target/antrun"/>
