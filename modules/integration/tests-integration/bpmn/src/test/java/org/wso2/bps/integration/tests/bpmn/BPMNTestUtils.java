@@ -36,7 +36,6 @@ import org.json.JSONObject;
 import org.wso2.bps.integration.common.clients.bpmn.WorkflowServiceClient;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 public class BPMNTestUtils {
 
@@ -188,6 +187,24 @@ public class BPMNTestUtils {
      * @throws IOException
      */
     public static HttpResponse putRequest(String url, JSONObject payload) throws IOException {
+        String restUrl = getRestEndPoint(url);
+        HttpClient client = new DefaultHttpClient();
+        HttpPut put = new HttpPut(restUrl);
+        put.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
+        put.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
+        client.getConnectionManager().closeExpiredConnections();
+        HttpResponse response = client.execute(put);
+        return response;
+    }
+
+    /**
+     * Function to make http PUT request with JSONArray
+     * @param url
+     * @param payload
+     * @return
+     * @throws IOException
+     */
+    public static HttpResponse putRequest(String url, JSONArray payload) throws IOException {
         String restUrl = getRestEndPoint(url);
         HttpClient client = new DefaultHttpClient();
         HttpPut put = new HttpPut(restUrl);
