@@ -21,6 +21,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpmn.WorkflowServiceClient;
@@ -43,6 +44,11 @@ public class BPMNRestExecutionTest extends BPSMasterTest {
         loginLogoutClient.login();
         uploadBPMNForTest("ExecutionResourceTest");
         BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, "ExecutionResourceTest", 0);
+    }
+
+    @AfterTest (alwaysRun = true)
+    public void cleanServer () throws Exception {
+        workflowServiceClient.undeploy("ExecutionResourceTest");
     }
 
     @Test(groups = {"wso2.bps.bpmn.rest"}, description = "get executions", priority = 1, singleThreaded =
