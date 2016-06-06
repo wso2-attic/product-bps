@@ -234,9 +234,9 @@
         <carbon.business-process.version>5.0.0-SNAPSHOT</carbon.business-process.version>
 
         <!-- Platform Dependencies -->
-        <carbon.datasource.core.feature.version>1.0.0-SNAPSHOT</carbon.datasource.core.feature.version>
-        <carbon.jndi.feature.version>1.0.0-SNAPSHOT</carbon.jndi.feature.version>
-        <carbon.deployment.feature.version>5.0.0-SNAPSHOT</carbon.deployment.feature.version>
+        <carbon.datasource.core.feature.version>1.0.0</carbon.datasource.core.feature.version>
+        <carbon.jndi.feature.version>1.0.0</carbon.jndi.feature.version>
+        <carbon.deployment.feature.version>5.0.0</carbon.deployment.feature.version>
         <carbon.security.caas.feature.version>1.0.0-SNAPSHOT</carbon.security.caas.feature.version>
         <carbon.security.userstore.jdbc.feature.version>1.0.0-SNAPSHOT</carbon.security.userstore.jdbc.feature.version>
         <carbon.caching.feature.version>1.0.0</carbon.caching.feature.version>
@@ -244,7 +244,7 @@
         <msf4j.version>1.1.0-SNAPSHOT</msf4j.version>
 
         <!-- Carbon Transport & Carbon Messaging Dependencies Start -->
-        <carbon.messaging.version>1.0.3</carbon.messaging.version>
+        <carbon.messaging.version>1.0.4-SNAPSHOT</carbon.messaging.version>
         <org.wso2.carbon.transport.http.netty.version>2.1.1-SNAPSHOT</org.wso2.carbon.transport.http.netty.version>
         <!-- Test dependencies -->
 
