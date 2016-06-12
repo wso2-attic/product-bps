@@ -55,6 +55,7 @@ public class BPELBasicActivitiesTest extends BPSMasterTest {
             throws Exception {
         setEnvironment();
         uploadBpelForTest("TestIf");
+        requestSender.waitForProcessDeployment(backEndUrl + "TestIf");
         uploadBpelForTest("HelloWorld2");
         requestSender.waitForProcessDeployment(backEndUrl + "HelloService");
     }
