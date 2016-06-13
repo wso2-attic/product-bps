@@ -34,6 +34,8 @@
                 <exclude>**/*.ipr</exclude>
                 <exclude>**/*.iwr</exclude>
                 <exclude>**/*.eclipse</exclude>
+                <!-- Overwritten files -->
+                <exclude>**/netty-transports.yml</exclude>
             </excludes>
         </fileSet>
 
@@ -61,18 +63,6 @@
         </fileSet>
 
         <!-- Deployment Directory -->
-        <fileSet>
-            <directory>carbon-home/deployment/bpel</directory>
-            <outputDirectory>deployment/bpel</outputDirectory>
-            <fileMode>644</fileMode>
-            <directoryMode>755</directoryMode>
-        </fileSet>
-        <fileSet>
-            <directory>carbon-home/deployment/humantask</directory>
-            <outputDirectory>deployment/humantask</outputDirectory>
-            <fileMode>644</fileMode>
-            <directoryMode>755</directoryMode>
-        </fileSet>
         <fileSet>
             <directory>carbon-home/deployment/bpmn</directory>
             <outputDirectory>deployment/bpmn</outputDirectory>
@@ -112,6 +102,13 @@
         <file>
             <source>../README.txt</source>
             <outputDirectory></outputDirectory>
+            <fileMode>644</fileMode>
+            <filtered>false</filtered>
+        </file>
+        <!-- BPS Server specific overriding configs -->
+        <file>
+            <source>./carbon-home/conf/transports/netty-transports.yml</source>
+            <outputDirectory>conf/transports/</outputDirectory>
             <fileMode>644</fileMode>
             <filtered>false</filtered>
         </file>
