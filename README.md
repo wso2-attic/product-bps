@@ -1,6 +1,15 @@
 WSO2 Business Process Server 
 -----------------------------
 
+---
+
+|  Branch | Build Status |
+| :------------ |:-------------
+| master      | [![Build Status](https://wso2.org/jenkins/job/product-bps/badge/icon)](https://wso2.org/jenkins/job/product-bps) |
+
+
+---
+
 Welcome to the WSO2 BPS
 
 WSO2 Business Process Server (BPS) is an easy-to-use open source
