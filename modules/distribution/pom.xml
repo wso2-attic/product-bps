@@ -505,6 +505,10 @@
                                 </concat>
                                 <delete dir="${tempdir3}"/>
                                 <delete dir="${tempdir2}"/>
+                                <!-- Adding Default Hostname as localhost -->
+                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/carbon.xml"
+                                         token="&lt;!--HostName&gt;www.wso2.org&lt;/HostName--&gt;"
+                                         value="&lt;HostName&gt;localhost&lt;/HostName&gt;"/>
                             </tasks>
                         </configuration>
                         <goals>
