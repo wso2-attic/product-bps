@@ -35,7 +35,6 @@
                 <exclude>**/repository/conf/tomcat/web.xml</exclude>
                 <exclude>**/repository/conf/tomcat/catalina-server.xml</exclude>
                 <exclude>**/repository/conf/tomcat/carbon/WEB-INF/web.xml</exclude>
-                <exclude>**/webapp-mode/WEB-INF/web.xml</exclude>
                 <exclude>**/pom.xml</exclude>
                 <exclude>**/version.txt</exclude>
                 <exclude>**/README*</exclude>
@@ -91,7 +90,7 @@
             </includes>
         </fileSet>
 
-	    <fileSet>
+            <fileSet>
             <directory>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/multitenancy
             </directory>
@@ -99,8 +98,8 @@
             <includes>
                 <include>**/stratos.xml</include>
                 <include>**/multitenancy-packages.xml</include>
-		        <include>**/usage-throttling-agent-config.xml</include>
-		        <include>**/cloud-services-desc.xml</include>
+                <include>**/usage-throttling-agent-config.xml</include>
+                <include>**/cloud-services-desc.xml</include>
                 <include>**/eula.xml</include>
                 <include>**/tenant-mgt.xml</include>
             </includes>
@@ -177,7 +176,7 @@
         </fileSet>
 
 
- 	<!--  Copying BPMN Humantask Explorer Jaggery Application--> 
+    <!--  Copying BPMN Humantask Explorer Jaggery Application-->
         <fileSet>
             <directory>target/bpmn-explorer</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/jaggeryapps/bpmn-explorer</outputDirectory>
@@ -229,13 +228,13 @@
                 <include>axis2server.bat</include>
             </includes>
         </fileSet>
-	    <fileSet>
+        <fileSet>
             <directory>../../modules/samples/product/sample-utils/src/main/scripts</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
             <includes>
                 <include>bampwutil.sh</include>
             </includes>
-	    <fileMode>755</fileMode>
+        <fileMode>755</fileMode>
         </fileSet>
 
         <!-- Instance Clenup Scripts -->
@@ -251,7 +250,7 @@
             <includes>
                 <include>processcleanuptool.sh</include>
             </includes>
-	    <fileMode>755</fileMode>
+        <fileMode>755</fileMode>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/product/process-tools/scripts</directory>
@@ -260,7 +259,7 @@
                 <include>processcleanuptool.bat</include>
             </includes>
         </fileSet>
-       
+
         <fileSet>
             <directory>../../modules/samples/product/process-tools/src/main/resources</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
@@ -274,7 +273,7 @@
             <includes>
                 <include>taskmigrationtool.sh</include>
             </includes>
-	    <fileMode>755</fileMode>
+        <fileMode>755</fileMode>
         </fileSet>
         <fileSet>
             <directory>../../modules/samples/product/process-tools/scripts</directory>
@@ -300,7 +299,7 @@
             <directory>../../modules/distribution/sql/bpel/upgrade/300_350</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/300_350</outputDirectory>
         </fileSet>
-	
+
         <!-- copy the landing page webapp -->
         <!--fileSet>
             <directory>lib/home</directory>
@@ -314,7 +313,7 @@
             <directory>../../modules/samples/product/sample-client/src/main/resources/</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/samples/client/resources</outputDirectory>
         </fileSet>
- 	
+
         <!-- Copy Jaggery Modules-->
         <fileSet>
             <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/modules</directory>
@@ -484,12 +483,12 @@
         <!-- copying security check configs -->
 
 
-        <file>
-            <source>../../modules/distribution/conf/webapp-mode/WEB-INF/web.xml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/webapp-mode/WEB-INF/</outputDirectory>
-            <filtered>true</filtered>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>../../modules/distribution/conf/webapp-mode/WEB-INF/web.xml</source>-->
+            <!--<outputDirectory>${pom.artifactId}-${pom.version}/webapp-mode/WEB-INF/</outputDirectory>-->
+            <!--<filtered>true</filtered>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
 
         <file>
             <source>../../modules/distribution/conf/tomcat/catalina-server.xml</source>
