@@ -631,7 +631,7 @@
         <spring.version>3.2.9.wso2v1</spring.version>
 
         <!-- Carbon Identity Version -->
-        <carbon.identity.version>5.0.8</carbon.identity.version>
+        <carbon.identity.version>5.1.0</carbon.identity.version>
 
         <!-- Carbon Registry Version -->
         <carbon.registry.version>4.5.5-SNAPSHOT</carbon.registry.version>
@@ -730,7 +730,7 @@
         <process.feature.version>1.4.0</process.feature.version>
         <carbon.feature.version>1.4.0</carbon.feature.version>
         <i18n.feature.version>1.4.0</i18n.feature.version>
-        <jaggeryjs.server.version>0.12.3</jaggeryjs.server.version>
+        <jaggeryjs.server.version>0.12.6-SNAPSHOT</jaggeryjs.server.version>
 
         <org.activiti.wso2.version>5.19.0.wso2v2</org.activiti.wso2.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
