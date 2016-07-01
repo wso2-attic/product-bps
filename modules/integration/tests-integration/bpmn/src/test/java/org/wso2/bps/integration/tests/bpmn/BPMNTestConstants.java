@@ -43,5 +43,5 @@ public class BPMNTestConstants {
     public static final int PROCESS_DEPLOYMENT_WAIT_TIME_PER_RETRY = 500;
     public static final String ACTIVITI_CONFIGURATION_FILE_NAME = "activiti.xml";
 
-
+    public static final String DIR_CONFIG = "configs";
 }

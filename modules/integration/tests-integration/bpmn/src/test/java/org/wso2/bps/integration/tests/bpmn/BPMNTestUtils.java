@@ -42,6 +42,12 @@ public class BPMNTestUtils {
     private static final Log log = LogFactory.getLog(BPMNTestUtils.class);
     private static final String BACKEND_URL_SUFFIX = "services";
     private static final String BPMN_REST_URL_SUFFIX = "bpmn";
+    public static final String ADMIN = "admin";
+
+    private static HttpClient client;
+    private static HttpGet request;
+    private static HttpPost post;
+    private static HttpPut put;
 
 
     /**
@@ -96,8 +102,8 @@ public class BPMNTestUtils {
 
         String restUrl = getRestEndPoint(url);
         log.info("Sending HTTP GET request: " + restUrl);
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(restUrl);
+        client = new DefaultHttpClient();
+        request = new HttpGet(restUrl);
 
         request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
         client.getConnectionManager().closeExpiredConnections();
@@ -115,8 +121,8 @@ public class BPMNTestUtils {
 
         String restUrl = getRestEndPoint(url);
         log.info("Sending HTTP GET request: " + restUrl);
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(restUrl);
+        client = new DefaultHttpClient();
+        request = new HttpGet(restUrl);
 
         request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
         client.getConnectionManager().closeExpiredConnections();
@@ -132,31 +138,27 @@ public class BPMNTestUtils {
      * @throws IOException
      */
     public static HttpResponse postRequest(String url, JSONObject payload) throws IOException {
-        String restUrl = getRestEndPoint(url);
-        log.info("Sending HTTP POST request: " + restUrl);
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(restUrl);
-        post.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
-        post.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
-        client.getConnectionManager().closeExpiredConnections();
-        HttpResponse response = client.execute(post);
-        return response;
+        return doPost(url, payload, ADMIN, ADMIN);
     }
 
     /**
      * Returns response after the given POST request
      * @param url string url suffix to post the request
-     * @param payload request payload
+     * @param payloadArray request payload
      * @return HttpResponse for the post request
      * @throws IOException
      */
-    public static HttpResponse postRequest(String url, JSONArray payload) throws IOException, JSONException {
+    public static HttpResponse postRequest(String url, JSONArray payloadArray) throws IOException, JSONException {
+        return doPost(url, payloadArray, ADMIN, ADMIN);
+    }
+
+    public static HttpResponse doPost(String url, Object json, String user, String password) throws IOException {
         String restUrl = getRestEndPoint(url);
         log.info("Sending HTTP POST request: " + restUrl);
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(restUrl);
+        client = new DefaultHttpClient();
+        post = new HttpPost(restUrl);
         post.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
-        post.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
+        post.setEntity(new StringEntity(json.toString(), ContentType.APPLICATION_JSON));
         client.getConnectionManager().closeExpiredConnections();
         HttpResponse response = client.execute(post);
         return response;
@@ -187,14 +189,7 @@ public class BPMNTestUtils {
      * @throws IOException
      */
     public static HttpResponse putRequest(String url, JSONObject payload) throws IOException {
-        String restUrl = getRestEndPoint(url);
-        HttpClient client = new DefaultHttpClient();
-        HttpPut put = new HttpPut(restUrl);
-        put.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
-        put.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
-        client.getConnectionManager().closeExpiredConnections();
-        HttpResponse response = client.execute(put);
-        return response;
+        return doPut(url, payload, ADMIN, ADMIN);
     }
 
     /**
@@ -205,10 +200,14 @@ public class BPMNTestUtils {
      * @throws IOException
      */
     public static HttpResponse putRequest(String url, JSONArray payload) throws IOException {
+        return doPut(url, payload, ADMIN, ADMIN);
+    }
+
+    public static HttpResponse doPut(String url, Object payload, String user, String password) throws IOException {
         String restUrl = getRestEndPoint(url);
         HttpClient client = new DefaultHttpClient();
         HttpPut put = new HttpPut(restUrl);
-        put.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
+        put.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(user, password), "UTF-8", false));
         put.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
         client.getConnectionManager().closeExpiredConnections();
         HttpResponse response = client.execute(put);
