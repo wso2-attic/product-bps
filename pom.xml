@@ -732,7 +732,7 @@
         <i18n.feature.version>1.4.0</i18n.feature.version>
         <jaggeryjs.server.version>0.12.3</jaggeryjs.server.version>
 
-        <org.activiti.wso2.version>5.19.0.wso2v2</org.activiti.wso2.version>
+        <org.activiti.wso2.version>5.21.0.wso2v1</org.activiti.wso2.version>
         <project.scm.id>wso2-scm-server</project.scm.id>
     </properties>
 
