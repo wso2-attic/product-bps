@@ -21,14 +21,18 @@
 
         <!--<property name="postBpmnParseHandlers">
             <list>
-                <bean class="org.wso2.carbon.bpmn.extensions.substitution.UserTaskParseHandler" />
+                <bean class="org.wso2.carbon.bpmn.people.substitution.UserTaskParseHandler" />
             </list>
         </property>-->
 
     </bean>
 
-    <bean id="bpmnDataPublisherConfiguration">
+    <bean id="analyticsConfiguration">
         <property name="dataPublishingEnabled" value="false"/>
+        <property name="receiverURLSet" value="tcp://localhost:7612"/>
+        <property name="authURLSet" value="ssl://localhost:7712"/>
+        <property name="username" value="admin"/>
+        <property name="password" value="admin"/>
     </bean>
 
     <bean id="restClientConfiguration">
@@ -41,6 +45,7 @@
     </bean>
 
     <!--<bean id="userSubstitutionConfiguration">
+        <property name="enabled" value="true"></property>
         <property name="enableTransitivity" value="false"></property>
         <property name="activationInterval" value="60"></property>
     </bean>-->
