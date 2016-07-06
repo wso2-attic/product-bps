@@ -7,6 +7,9 @@
         <activiti:field name="serviceURL">
           <activiti:expression><![CDATA[https://localhost:9443/bpmn/repository/process-definitions/]]></activiti:expression>
         </activiti:field>
+        <!--activiti:field name="serviceRef">
+          <activiti:expression><![CDATA[conf:/bps/endpoint/restepr.epr]]></activiti:expression>
+        </activiti:field-->
         <activiti:field name="method">
           <activiti:string><![CDATA[GET]]></activiti:string>
         </activiti:field>
