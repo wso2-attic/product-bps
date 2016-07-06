@@ -66,9 +66,6 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
     @BeforeTest(alwaysRun = true)
     public void init() throws Exception {
         super.init();
-        loginLogoutClient.login();
-        userManagementClient = new UserManagementClient(backEndUrl, sessionCookie);
-        workflowServiceClient = new WorkflowServiceClient(backEndUrl, sessionCookie);
         serverConfigurationManager = new ServerConfigurationManager(bpsServer);
         updateConfigFiles();
         super.init();
@@ -93,7 +90,6 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         File activitiConfigOriginal = new File(FrameworkPathUtil.getCarbonServerConfLocation() + File.separator
                 + BPMNTestConstants.ACTIVITI_CONFIGURATION_FILE_NAME);
         serverConfigurationManager.applyConfiguration(activitiConfigNew, activitiConfigOriginal, true, true);
-
 
     }
 
@@ -152,6 +148,15 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         //updating a active existing substitute
         int result = updateSubstitute(USER3, USER2, null, null);
         Assert.assertEquals(result, HttpStatus.SC_OK, "Update active substitution record");
+        String getSubResult = BPMNTestUtils.getRequest(backEndUrl + SUBSTITUTE_URL + "/" +USER2);
+        JSONObject getSubJson = new JSONObject(getSubResult);
+        Assert.assertEquals(getSubJson.getString("substitute"), USER3, "Update active substitution record");
+        int user1TaskCount = findTasksWithGivenAssignee(USER1).getInt("total");
+        int user33taskCount = findTasksWithGivenAssignee(USER3).getInt("total");
+        startProcessInstance(USER2, "admin", "-1234"); // will create a task for user2
+        startProcessInstance(USER2, "admin", "-1234");
+        Assert.assertEquals(findTasksWithGivenAssignee(USER1).getInt("total"), user1TaskCount, "Future task Substitution after a update");
+        Assert.assertEquals(findTasksWithGivenAssignee(USER3).getInt("total"), user33taskCount + 2, "Future task Substitution after a update");
 
     }
 
