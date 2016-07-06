@@ -394,9 +394,11 @@
                                 <zip destfile="target/samples/bpmn/OrderApprovalProcess.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/OrderApprovalProcess" />
                                 <zip destfile="target/samples/bpmn/TrainTicketValidationProcess.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/TrainTicketValidationProcess" />
                                 <zip destfile="target/samples/bpmn/VacationRequestProcess.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/VacationRequestProcess" />
-				                <zip destfile="target/samples/bpmn/CreditApprovalProcess.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/CreditApprovalProcess" />
-				                <zip destfile="target/samples/bpmn/PizzaOrderProcess.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/PizzaOrderProcess" />
-				                <zip destfile="target/samples/bpmn/BuyProduct.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/BuyProduct" />
+		                <zip destfile="target/samples/bpmn/CreditApprovalProcess.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/CreditApprovalProcess" />
+		                <zip destfile="target/samples/bpmn/PizzaOrderProcess.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/PizzaOrderProcess" />
+		                <zip destfile="target/samples/bpmn/BuyProduct.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/BuyProduct" />
+		                <zip destfile="target/samples/bpmn/SoapClient.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/SoapClient" />
+		                <zip destfile="target/samples/bpmn/RestClient.bar" basedir="${basedir}/../samples/product/src/main/resources/bpmn/RestClient" />
                             </tasks>
                         </configuration>
                     </execution>
