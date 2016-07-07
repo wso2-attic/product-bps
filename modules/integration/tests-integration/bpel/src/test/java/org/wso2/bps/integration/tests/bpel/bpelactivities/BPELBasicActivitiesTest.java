@@ -32,9 +32,8 @@ import org.wso2.bps.integration.common.utils.RequestSender;
 import org.wso2.carbon.authenticator.stub.LogoutAuthenticationExceptionException;
 import org.wso2.carbon.bpel.stub.mgt.PackageManagementException;
 
-import javax.xml.stream.XMLStreamException;
-import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import javax.xml.stream.XMLStreamException;
 
 public class BPELBasicActivitiesTest extends BPSMasterTest {
 
@@ -56,22 +55,6 @@ public class BPELBasicActivitiesTest extends BPSMasterTest {
         setEnvironment();
         uploadBpelForTest("TestIf");
         requestSender.waitForProcessDeployment(backEndUrl + "TestIf");
-        uploadBpelForTest("HelloWorld2");
-        requestSender.waitForProcessDeployment(backEndUrl + "HelloService");
-    }
-
-    @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "Hello World test case", priority = 0)
-    public void helloWorld() throws InterruptedException, RemoteException, PackageManagementException, MalformedURLException, XMLStreamException {
-        String payLoad = " <p:hello xmlns:p=\"http://ode/bpel/unit-test.wsdl\">\n" +
-                "      <!--Exactly 1 occurrence--><TestPart>test</TestPart>\n" +
-                "   </p:hello>";
-
-        String operation = "hello";
-        String serviceName = "HelloService";
-        String expectedBefore = "World";
-        requestSender.assertRequest(backEndUrl + serviceName, operation, payLoad,
-                1, expectedBefore, true);
-
     }
 
     @Test(groups = {"wso2.bps", "wso2.bps.bpelactivities"}, description = "if true test case")
@@ -106,7 +89,6 @@ public class BPELBasicActivitiesTest extends BPSMasterTest {
     public void removeArtifacts()
             throws PackageManagementException, InterruptedException, RemoteException,
             LogoutAuthenticationExceptionException {
-        bpelPackageManagementClient.undeployBPEL("HelloWorld2");
         bpelPackageManagementClient.undeployBPEL("TestIf");
         this.loginLogoutClient.logout();
     }
