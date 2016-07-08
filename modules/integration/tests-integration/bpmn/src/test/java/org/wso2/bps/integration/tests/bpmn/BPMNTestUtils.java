@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import org.wso2.bps.integration.common.clients.bpmn.WorkflowServiceClient;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 public class BPMNTestUtils {
 
@@ -53,6 +54,7 @@ public class BPMNTestUtils {
     /**
      * BPMN does not expose any service to check deployment is done.
      * So we are using deployment count to check completeness of process deployment
+     *
      * @param workflowServiceClient
      * @param bpmnPackageName
      * @param previousDeploymentCount
@@ -64,7 +66,7 @@ public class BPMNTestUtils {
 
         while (true) {
             if (workflowServiceClient.getDeployments() != null && workflowServiceClient.getDeployments().length >
-                                                                  previousDeploymentCount) {
+                    previousDeploymentCount) {
                 return;
             }
             if (serviceTimeOut == 0) {
@@ -86,15 +88,17 @@ public class BPMNTestUtils {
 
     /**
      * Returns BPMN rest endpoint from bps backend url
+     *
      * @param backEndUrl
      * @return bpmnUrl
      */
     public static String getRestEndPoint(String backEndUrl) {
-        return backEndUrl.replaceFirst(BACKEND_URL_SUFFIX,BPMN_REST_URL_SUFFIX);
+        return backEndUrl.replaceFirst(BACKEND_URL_SUFFIX, BPMN_REST_URL_SUFFIX);
     }
 
     /**
      * Returns HTTP GET response entity string from given url using admin credentials
+     *
      * @param url request url suffix
      * @return HttpResponse from get request
      */
@@ -113,6 +117,7 @@ public class BPMNTestUtils {
 
     /**
      * Returns HTTP GET response from given url using admin credentials
+     *
      * @param url request url suffix
      * @return
      * @throws IOException
@@ -132,7 +137,8 @@ public class BPMNTestUtils {
 
     /**
      * Returns response after the given POST request
-     * @param url string url suffix to post the request
+     *
+     * @param url     string url suffix to post the request
      * @param payload request payload
      * @return HttpResponse for the post request
      * @throws IOException
@@ -144,7 +150,7 @@ public class BPMNTestUtils {
     /**
      * Returns response after the given POST request
      * @param url string url suffix to post the request
-     * @param payloadArray request payload
+     * @param payload request payload
      * @return HttpResponse for the post request
      * @throws IOException
      */
@@ -158,7 +164,7 @@ public class BPMNTestUtils {
         client = new DefaultHttpClient();
         post = new HttpPost(restUrl);
         post.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
-        post.setEntity(new StringEntity(json.toString(), ContentType.APPLICATION_JSON));
+        post.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
         client.getConnectionManager().closeExpiredConnections();
         HttpResponse response = client.execute(post);
         return response;
@@ -166,6 +172,7 @@ public class BPMNTestUtils {
 
     /**
      * Returns response after the given DELETE request
+     *
      * @param url string url suffix to delete the request
      * @return HttpResponse for the post request
      * @throws IOException
@@ -182,7 +189,6 @@ public class BPMNTestUtils {
     }
 
     /**
-     *
      * @param url
      * @param payload
      * @return
@@ -194,6 +200,7 @@ public class BPMNTestUtils {
 
     /**
      * Function to make http PUT request with JSONArray
+     *
      * @param url
      * @param payload
      * @return
