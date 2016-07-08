@@ -40,11 +40,10 @@ import java.nio.charset.Charset;
 
 public class BPMNTestUtils {
 
+    public static final String ADMIN = "admin";
     private static final Log log = LogFactory.getLog(BPMNTestUtils.class);
     private static final String BACKEND_URL_SUFFIX = "services";
     private static final String BPMN_REST_URL_SUFFIX = "bpmn";
-    public static final String ADMIN = "admin";
-
     private static HttpClient client;
     private static HttpGet request;
     private static HttpPost post;
@@ -109,7 +108,8 @@ public class BPMNTestUtils {
         client = new DefaultHttpClient();
         request = new HttpGet(restUrl);
 
-        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
+        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"),
+                Charset.defaultCharset().toString(), false));
         client.getConnectionManager().closeExpiredConnections();
         HttpResponse response = client.execute(request);
         return EntityUtils.toString(response.getEntity());
@@ -129,7 +129,8 @@ public class BPMNTestUtils {
         client = new DefaultHttpClient();
         request = new HttpGet(restUrl);
 
-        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
+        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"),
+                Charset.defaultCharset().toString(), false));
         client.getConnectionManager().closeExpiredConnections();
         HttpResponse response = client.execute(request);
         return response;
@@ -149,8 +150,9 @@ public class BPMNTestUtils {
 
     /**
      * Returns response after the given POST request
-     * @param url string url suffix to post the request
-     * @param payload request payload
+     *
+     * @param url          string url suffix to post the request
+     * @param payloadArray request payload
      * @return HttpResponse for the post request
      * @throws IOException
      */
@@ -163,8 +165,9 @@ public class BPMNTestUtils {
         log.info("Sending HTTP POST request: " + restUrl);
         client = new DefaultHttpClient();
         post = new HttpPost(restUrl);
-        post.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
-        post.setEntity(new StringEntity(payload.toString(), ContentType.APPLICATION_JSON));
+        post.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(user, password),
+                Charset.defaultCharset().toString(), false));
+        post.setEntity(new StringEntity(json.toString(), ContentType.APPLICATION_JSON));
         client.getConnectionManager().closeExpiredConnections();
         HttpResponse response = client.execute(post);
         return response;
@@ -182,7 +185,8 @@ public class BPMNTestUtils {
         log.info("Sending HTTP DELETE request: " + restUrl);
         HttpClient client = new DefaultHttpClient();
         HttpDelete delete = new HttpDelete(restUrl);
-        delete.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"), "UTF-8", false));
+        delete.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("admin", "admin"),
+                Charset.defaultCharset().toString(), false));
         client.getConnectionManager().closeExpiredConnections();
         HttpResponse response = client.execute(delete);
         return response;
