@@ -19,11 +19,11 @@
             </set>
         </property>
 
-        <!--<property name="postBpmnParseHandlers">
+        <property name="postBpmnParseHandlers">
             <list>
                 <bean class="org.wso2.carbon.bpmn.people.substitution.UserTaskParseHandler" />
             </list>
-        </property>-->
+        </property>
 
     </bean>
 
@@ -44,6 +44,12 @@
         <property name="maxCount" value="1000"/>
     </bean>
 
+    <!-- Uncomment following section to enable User substitution feature.
+        Leave the 'enabled' property "true" to enable substitution feature.
+        If you require to calculate transitive substitutes also, change the
+        'enableTransitivity' property value to "true".
+        Change the substitution activation time in minutes, by changing the 'activationInterval'
+        property value. A substitution will be functional/activated within this time limit. -->
     <!--<bean id="userSubstitutionConfiguration">
         <property name="enabled" value="true"></property>
         <property name="enableTransitivity" value="false"></property>
