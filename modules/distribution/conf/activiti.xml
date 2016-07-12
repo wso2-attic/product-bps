@@ -29,6 +29,7 @@
 
     <bean id="analyticsConfiguration">
         <property name="dataPublishingEnabled" value="false"/>
+        <property name="kpiDataPublishingEnabled" value="false"/>
         <property name="receiverURLSet" value="tcp://localhost:7612"/>
         <property name="authURLSet" value="ssl://localhost:7712"/>
         <property name="username" value="admin"/>
