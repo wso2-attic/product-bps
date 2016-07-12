@@ -467,6 +467,8 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/PizzaOrderProcess"/>
                                 <zip destfile="target/samples/bpmn/BuyProduct.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/BuyProduct"/>
+                                <zip destfile="target/samples/bpmn/UserTaskCreatorProcess.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/UserTaskCreatorProcess"/>
                             </tasks>
                         </configuration>
                     </execution>
