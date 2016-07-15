@@ -5,7 +5,7 @@
          suppressJoinFailure="yes"
          xmlns:tns="http://samples.bps.wso2.org"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-         xmlns:bam="http://wso2.org/bps/monitoring/publisher"
+         xmlns:das="http://wso2.org/bps/monitoring/publisher"
          xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://www.samples.wso2.org/bps/SalesData/">
          
 	<bpel:extensions>
@@ -136,8 +136,8 @@
             </bpel:copy>
         </bpel:assign>
         <bpel:extensionActivity xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-        	xmlns:bam="http://wso2.org/bps/monitoring/publisher">
-	    	<bam:publish analyticsServerProfile="AnalyticsServerProfile" streamName="org.wso2.bam.phone.retail.store.kpi" version="1.0.0" nickName="kpistore"/>
+        	xmlns:das="http://wso2.org/bps/monitoring/publisher">
+	    	<das:publish analyticsServerProfile="AnalyticsServerProfile" streamName="org.wso2.das.phone.retail.store.kpi" version="1.0.0" nickName="kpistore"/>
 		</bpel:extensionActivity>
         <bpel:reply name="replyOutput" 
                partnerLink="client"
