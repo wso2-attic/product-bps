@@ -54,11 +54,16 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
     private static final String USER1 = "testUser1";
     private static final String USER2 = "testUser2";
     private static final String USER3 = "testUser3";
+    private static final String USER4 = "testUser4";
+    private static final String USER5 = "testUser5";
+    private static final String USER6 = "testUser6";
+    private static final String USER7 = "testUser7";
     private static final String SUBSTTUTER_ROLE = "subRole"; //has substitute permission
     private static final String NON_SUB_ROLE = "nonSubRole"; //has login permission only
     public static final String SUBSTITUTION_PERMISSION_PATH = "/permission/admin/manage/bpmn/addSubstituteInfo";
     public static final String LOGIN_PERMISSION_PATH = "/permission/admin/login";
     public static final String PROCESS_NAME = "UserTaskProcess";
+    public static final String PROCESS_KEY = "userTaskProcess";
     public static final String SUBSTITUTE_URL = "runtime/substitutes";
 
     @BeforeTest(alwaysRun = true)
@@ -96,7 +101,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
     public void testAddSubstitute() throws Exception {
         addUser(USER1,new String[]{SUBSTTUTER_ROLE});
         addUser(USER2,new String[]{NON_SUB_ROLE});
-        loginLogoutClient.login();
+        addUser(USER4, new String[]{NON_SUB_ROLE});
         uploadBPMNForTest(PROCESS_NAME);
         BPMNTestUtils.waitForProcessDeployment(workflowServiceClient, PROCESS_NAME, 0);
         for (int i=0; i < 10; i++) {
@@ -112,7 +117,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         //check task reassignment. It may take time to reassign. Keep trying 5 times if total > 0,
         // if still false assertion fails
         JSONObject obj = findTasksWithGivenAssignee(USER2);
-        for (int i=0; i < 5; i++) {
+        for (int i=0; i < 10; i++) {
             if(obj.getInt("total") > 0) {
                 obj = findTasksWithGivenAssignee(USER2);
             } else {
@@ -135,16 +140,27 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         int user1TaskCount = findTasksWithGivenAssignee(USER1).getInt("total");
         startProcessInstance(USER2, "admin", "-1234"); // will create a task for user2
         //got to wait till task get assigned
-//        waitForTaskAssignments(user1TaskCount+1, USER1);
-//        Assert.assertTrue(user1TaskCount < findTasksWithGivenAssignee(USER1).getInt("total"), "Future task assignment to the substitute");
+        waitForTaskAssignments(user1TaskCount+1, USER1);
+        Assert.assertTrue(user1TaskCount < findTasksWithGivenAssignee(USER1).getInt("total"), "Future task assignment to the substitute");
         obj = findTasksWithGivenAssignee(USER2);
         Assert.assertEquals(obj.getInt("total"), 0, "Future task substitution");
+
+        startProcessInstance(USER4, "admin", "-1234");
+        //add substitute to be activated in future, this should be activated after the activation time,
+        // if not can activated immediately
+        long waitingTime = 90 * 1000;
+        addSubstituteUser(USER1, USER4, new DateTime(System.currentTimeMillis() + waitingTime),
+                new DateTime(System.currentTimeMillis() + 60 * 60 * 1000), null);
+        Thread.sleep(2 * 60 * 1000); // need to wait till activation time passed
+        //task should be assigned to user1, user4 should have no tasks
+        JSONObject user4TasksJson = findTasksWithGivenAssignee(USER4);
+        Assert.assertEquals(user4TasksJson.getInt("total"), 0, "Substitution activation by scheduler");
     }
 
     @Test(groups = {
             "wso2.bps.bpmn.substitution" }, description = "update substitute record", priority = 2, singleThreaded = true, dependsOnMethods = {"testAddSubstitute"})
     public void testUpdateSubstituteUser() throws IOException, JSONException {
-        addUser(USER3, new String[]{"admin"} );
+        addUser(USER3, new String[]{SUBSTTUTER_ROLE} );
         //updating a active existing substitute
         int result = updateSubstitute(USER3, USER2, null, null);
         Assert.assertEquals(result, HttpStatus.SC_OK, "Update active substitution record");
@@ -155,15 +171,31 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         int user3taskCount = findTasksWithGivenAssignee(USER3).getInt("total");
         startProcessInstance(USER2, "admin", "-1234"); // will create a task for user2
         startProcessInstance(USER2, "admin", "-1234");
-//        waitForTaskAssignments(user3taskCount+2, USER3);
+        waitForTaskAssignments(user3taskCount+2, USER3);
         Assert.assertEquals(findTasksWithGivenAssignee(USER1).getInt("total"), user1TaskCount, "Future task Substitution after a update");
-//        Assert.assertEquals(findTasksWithGivenAssignee(USER3).getInt("total"), user3taskCount + 2, "Future task Substitution after a update");
+        Assert.assertEquals(findTasksWithGivenAssignee(USER3).getInt("total"), user3taskCount + 2, "Future task Substitution after a update");
 
+    }
+
+    @Test(groups = {
+            "wso2.bps.bpmn.substitution" }, description = "Add substitute record with transitivity true", priority = 3, singleThreaded = true, dependsOnMethods = {"testAddSubstitute"})
+    public void testSubstituteTransitivity() throws IOException, JSONException {
+        addUser(USER5,new String[]{SUBSTTUTER_ROLE});
+        addUser(USER6,new String[]{SUBSTTUTER_ROLE});
+        addUser(USER7,new String[]{SUBSTTUTER_ROLE});
+        //user7 --> user6, user6 --> user5 ,
+        int userTaskCount = findTasksWithGivenAssignee(USER5).getInt("total");
+        addSubstituteUser(USER5, USER6, new DateTime(), new DateTime(System.currentTimeMillis() + (10*60*1000)), null);
+        addSubstituteUser(USER6, USER7, new DateTime(), new DateTime(System.currentTimeMillis() + (10*60*1000)), null);
+        startProcessInstance(USER7, "admin", "-1234");
+        waitForTaskAssignments(userTaskCount + 1, USER5);
+        //user4 should have new tasks
+        Assert.assertTrue(findTasksWithGivenAssignee(USER5).getInt("total") > userTaskCount, "Substitution transitivity");
     }
 
     //keep checking the task count for 5 times
     private void waitForTaskAssignments(int expectedCount, String user) throws IOException, JSONException {
-        for (int i=0; i < 5; i++) {
+        for (int i=0; i < 10; i++) {
             if (expectedCount == findTasksWithGivenAssignee(user).getInt("total")) {
                 break;
             }
@@ -219,7 +251,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         JSONObject payload = new JSONObject();
         payload.put("variables", varArray);
         payload.put("tenantId", tenantId);
-        payload.put("processDefinitionKey", PROCESS_NAME);
+        payload.put("processDefinitionKey", PROCESS_KEY);
 
         BPMNTestUtils.postRequest(backEndUrl + "runtime/process-instances", payload);
     }
