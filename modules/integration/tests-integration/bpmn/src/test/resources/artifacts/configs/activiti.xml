@@ -42,8 +42,8 @@
 
     <bean id="userSubstitutionConfiguration">
         <property name="enabled" value="true"></property>
-        <property name="enableTransitivity" value="false"></property>
-        <property name="activationInterval" value="60"></property>
+        <property name="enableTransitivity" value="true"></property>
+        <property name="activationInterval" value="1"></property>
     </bean>
 
 </beans>

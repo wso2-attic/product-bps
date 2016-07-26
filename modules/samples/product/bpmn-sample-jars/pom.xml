@@ -17,6 +17,11 @@
             <artifactId>activiti-all</artifactId>
             <version>${org.activiti.wso2.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.business-process</groupId>
+            <artifactId>org.wso2.carbon.bpmn</artifactId>
+            <version>${carbon.business-process.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
