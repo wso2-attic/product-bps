@@ -26,14 +26,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class processJsonVariable implements JavaDelegate {
 
-	@Override
-	public void execute(DelegateExecution exec) throws Exception {
-		System.out.println("Java Service Task Execution");
-		
-		//When we set native JS json variable within script task, we get it as JsonNode object
-		Object jsonJSVariable = exec.getVariable("jsonJSVar");
-		
-		System.out.println("jsonJSVariable type : " +jsonJSVariable.getClass());
+    @Override
+    public void execute(DelegateExecution exec) throws Exception {
+        System.out.println("Java Service Task Execution");
+
+        //When we set native JS json variable within script task, we get it as JsonNode object
+        Object jsonJSVariable = exec.getVariable("jsonJSVar");
+
+        System.out.println("jsonJSVariable type : " +jsonJSVariable.getClass());
 
         if (jsonJSVariable instanceof JsonNodeObject) {
             JsonNodeObject jObject = (JsonNodeObject) jsonJSVariable;
@@ -42,6 +42,6 @@ public class processJsonVariable implements JavaDelegate {
         } else {
             System.out.println("JSON variable not found");
         }
-	}
+    }
 
 }
