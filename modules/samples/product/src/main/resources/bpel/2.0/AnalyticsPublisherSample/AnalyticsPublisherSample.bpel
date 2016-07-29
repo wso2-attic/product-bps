@@ -80,8 +80,8 @@
 	    </bpel:copy>
         </bpel:assign>
         <bpel:extensionActivity xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-                        xmlns:bam="http://wso2.org/bps/monitoring/publisher">
-	    <bam:publish analyticsServerProfile="AnalyticsServerProfile" streamName="teststream" version="1.0.0"/>
+                        xmlns:analytics="http://wso2.org/bps/monitoring/publisher">
+	    <analytics:publish analyticsServerProfile="AnalyticsServerProfile" streamName="teststream" version="1.0.0"/>
 </bpel:extensionActivity>
         <bpel:reply name="replyOutput" partnerLink="client" portType="tns:AnalyticsPublisherSample" operation="process" variable="output" />
     </bpel:sequence>

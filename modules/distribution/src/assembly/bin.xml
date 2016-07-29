@@ -39,7 +39,7 @@
                 <exclude>**/version.txt</exclude>
                 <exclude>**/README*</exclude>
                 <exclude>**/carbon.xml</exclude>
-                <!--<exclude>**/axis2/*</exclude>-->
+                <exclude>**/axis2/*</exclude>
                 <exclude>**/dbscripts/**</exclude>
                 <exclude>**/INSTALL.txt</exclude>
                 <exclude>**/README.txt</exclude>
@@ -193,19 +193,6 @@
                 <include>bpmn.war</include>
             </includes>
         </fileSet>
-
-
-       <!-- <fileSet>
-            <directory>
-                ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/deployment/server/webapps
-            </directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/repository/deployment/server/webapps</outputDirectory>
-            <includes>
-                <include>oauth2.war</include>
-            </includes>
-        </fileSet>
--->
-
         <fileSet>
             <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/lib/runtimes</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/lib/runtimes/</outputDirectory>
@@ -300,14 +287,6 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/dbscripts/bps/bpel/upgrade/300_350</outputDirectory>
         </fileSet>
 
-        <!-- copy the landing page webapp -->
-        <!--fileSet>
-            <directory>lib/home</directory>
-            <outputDirectory>
-                ${pom.artifactId}-${pom.version}/repository/deployment/server/webapps/STRATOS_ROOT
-            </outputDirectory>
-        </fileSet-->
-
         <!-- Copy BPEL Client request property files -->
         <fileSet>
             <directory>../../modules/samples/product/sample-client/src/main/resources/</directory>
@@ -378,6 +357,25 @@
     </dependencySets>
 
     <files>
+
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/axis2/axis2.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/axis2/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/axis2/axis2_client.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/axis2/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/axis2/tenant-axis2.xml</source>
+            <outputDirectory>wso2bps-${pom.version}/repository/conf/axis2/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
 
         <file>
             <source>../../INSTALL.txt</source>
