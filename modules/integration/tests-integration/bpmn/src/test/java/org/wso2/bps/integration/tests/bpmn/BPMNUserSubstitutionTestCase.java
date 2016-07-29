@@ -60,7 +60,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
     private static final String USER7 = "testUser7";
     private static final String SUBSTTUTER_ROLE = "subRole"; //has substitute permission
     private static final String NON_SUB_ROLE = "nonSubRole"; //has login permission only
-    public static final String SUBSTITUTION_PERMISSION_PATH = "/permission/admin/manage/bpmn/addSubstituteInfo";
+    public static final String SUBSTITUTION_PERMISSION_PATH = "/permission/admin/manage/bpmn/substitute";
     public static final String LOGIN_PERMISSION_PATH = "/permission/admin/login";
     public static final String PROCESS_NAME = "UserTaskProcess";
     public static final String PROCESS_KEY = "userTaskProcess";
@@ -110,7 +110,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
 
         JSONObject existingTasks = findTasksWithGivenAssignee(USER2);
         //add substitute with no task list. user2 is unavailable for 1 hour from now
-        HttpResponse response = addSubstituteUser(USER1, USER2, new DateTime(), new DateTime(System.currentTimeMillis() + 60*60*1000), null);
+        HttpResponse response = addSubstituteUser(USER1, USER2, new DateTime(), new DateTime(System.currentTimeMillis() + 60*60*1000), null, USER1, USER1);
 
         Assert.assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_CREATED, "New substitute creation test");
 
@@ -150,7 +150,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         // if not can activated immediately
         long waitingTime = 90 * 1000;
         addSubstituteUser(USER1, USER4, new DateTime(System.currentTimeMillis() + waitingTime),
-                null , null);
+                null , null, USER1, USER1);
         String getSubResponse = getSubstitute(USER4);
         JSONObject jsonResponse = new JSONObject(getSubResponse);
         Assert.assertTrue("null".equals(jsonResponse.getString("endTime")), "Add sub with endTime null");
@@ -189,8 +189,8 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
         addUser(USER7,new String[]{SUBSTTUTER_ROLE});
         //user7 --> user6, user6 --> user5 ,
         int userTaskCount = findTasksWithGivenAssignee(USER5).getInt("total");
-        addSubstituteUser(USER5, USER6, new DateTime(), new DateTime(System.currentTimeMillis() + (10*60*1000)), null);
-        addSubstituteUser(USER6, USER7, new DateTime(), new DateTime(System.currentTimeMillis() + (10*60*1000)), null);
+        addSubstituteUser(USER5, USER6, new DateTime(), new DateTime(System.currentTimeMillis() + (10*60*1000)), null, USER5, USER5);
+        addSubstituteUser(USER6, USER7, new DateTime(), new DateTime(System.currentTimeMillis() + (10*60*1000)), null, USER5, USER5);
         startProcessInstance(USER7, "admin", "-1234");
         waitForTaskAssignments(userTaskCount + 1, USER5);
         //user4 should have new tasks
@@ -278,7 +278,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
      * @param end
      * @param taskList
      */
-    private HttpResponse addSubstituteUser(String substitute, String assignee, DateTime start, DateTime end, List<String> taskList)
+    private HttpResponse addSubstituteUser(String substitute, String assignee, DateTime start, DateTime end, List<String> taskList, String user, String password)
             throws JSONException, IOException {
         JSONObject payload = new JSONObject();
         if (assignee != null) {
@@ -305,7 +305,7 @@ public class BPMNUserSubstitutionTestCase extends BPSMasterTest {
             }
             payload.put("taskList", taskArray);
         }
-        HttpResponse response = BPMNTestUtils.postRequest(backEndUrl + SUBSTITUTE_URL, payload);
+        HttpResponse response = BPMNTestUtils.doPost(backEndUrl + SUBSTITUTE_URL, payload, user, password);
         return response;
     }
 

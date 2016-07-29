@@ -606,12 +606,12 @@
         <file>
             <source>../../modules/samples/product/src/main/scripts/wso2bps-samples.bat</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/bin</outputDirectory>
-            <fileMode>644</fileMode>
+            <fileMode>755</fileMode>
         </file>
         <file>
             <source>../../modules/samples/product/src/main/scripts/wso2bps-samples.sh</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/bin/</outputDirectory>
-            <fileMode>644</fileMode>
+            <fileMode>755</fileMode>
         </file>
         <!-- email event adapter usage-->
         <file>
