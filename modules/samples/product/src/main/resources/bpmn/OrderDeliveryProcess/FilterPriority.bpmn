@@ -3,9 +3,9 @@
   <process id="ScriptProcess" name="Script process" isExecutable="true">
     <startEvent id="startevent1" name="Start" activiti:initiator="customer">
       <extensionElements>
-        <activiti:formProperty id="name" name="Name" type="string" variable="name"></activiti:formProperty>
-        <activiti:formProperty id="orderId" name="Order Id" type="long" variable="orderId"></activiti:formProperty>
-        <activiti:formProperty id="orderSummary" name="Order Summary" type="string" variable="orderSummary"></activiti:formProperty>
+        <activiti:formProperty id="name" name="Name" type="string" variable="name" required="true"></activiti:formProperty>
+        <activiti:formProperty id="orderId" name="Order Id" type="long" variable="orderId" required="true"></activiti:formProperty>
+        <activiti:formProperty id="orderSummary" name="Order Summary" type="string" variable="orderSummary" required="true"></activiti:formProperty>
       </extensionElements>
     </startEvent>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="scripttask1"></sequenceFlow>
@@ -27,7 +27,7 @@
     <sequenceFlow id="flow6" sourceRef="usertask2" targetRef="endevent2"></sequenceFlow>
     <scriptTask id="scripttask1" name="Filter order summary" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>def searchString  = 'shipping'
-    def replacement = 'This is a shipping request'
+    def replacement = 'This is a shipping delivery'
 
     def filteredSummary = orderSummary.replaceAll(searchString, replacement)
             execution.setVariable('orderSummary', filteredSummary)</script>
