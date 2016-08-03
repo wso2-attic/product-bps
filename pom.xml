@@ -637,7 +637,7 @@
         <carbon.registry.version>4.5.5</carbon.registry.version>
 
         <!-- Carbon Business Process Version -->
-        <carbon.business-process.version>4.4.10-SNAPSHOT</carbon.business-process.version>
+        <carbon.business-process.version>4.4.10-beta</carbon.business-process.version>
 
         <!--Carbon Event Processing Version-->
         <!--carbon.event-processing.version>2.0.4-SNAPSHOT</carbon.event-processing.version-->
