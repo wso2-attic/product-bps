@@ -457,6 +457,12 @@
             <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
             <fileMode>644</fileMode>
         </file>
+        <file>
+            <source>../../modules/distribution/conf/bps-analytics.xml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/repository/conf</outputDirectory>
+            <fileMode>644</fileMode>
+        </file>
+
 
          <!-- copying edition.properties file -->
         <file>
