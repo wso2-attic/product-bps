@@ -473,6 +473,8 @@
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/XMLVariableTypeUsageProcess"/>
                                 <zip destfile="target/samples/bpmn/JSONVariableTypeUsageProcess.bar"
                                      basedir="${basedir}/../samples/product/src/main/resources/bpmn/JSONVariableTypeUsageProcess"/>
+                                <zip destfile="target/samples/bpmn/RestClient.bar"
+                                     basedir="${basedir}/../samples/product/src/main/resources/bpmn/RestClient"/>
                             </tasks>
                         </configuration>
                     </execution>
