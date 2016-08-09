@@ -196,12 +196,6 @@
                 <version>${msf4j.version}</version>
                 <type>zip</type>
             </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.metrics</groupId>
-                <artifactId>org.wso2.carbon.metrics.core.feature</artifactId>
-                <version>${carbon.metrics.version}</version>
-                <type>zip</type>
-            </dependency>
 
             <!-- MSF4J Dependencies END -->
 
@@ -253,7 +247,7 @@
         <!-- Carbon Transport & Carbon Messaging Dependencies Start -->
         <carbon.metrics.version>2.0.0</carbon.metrics.version>
         <carbon.messaging.version>1.0.4</carbon.messaging.version>
-        <org.wso2.carbon.transport.http.netty.version>2.1.1</org.wso2.carbon.transport.http.netty.version>
+        <org.wso2.carbon.transport.http.netty.version>2.1.2</org.wso2.carbon.transport.http.netty.version>
         <!-- Test dependencies -->
 
 
