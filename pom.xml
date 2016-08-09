@@ -199,7 +199,7 @@
             <dependency>
                 <groupId>org.wso2.carbon.metrics</groupId>
                 <artifactId>org.wso2.carbon.metrics.core.feature</artifactId>
-                <version>${carbon.metrics.version}}</version>
+                <version>${carbon.metrics.version}</version>
                 <type>zip</type>
             </dependency>
 
