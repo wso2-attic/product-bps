@@ -2,7 +2,7 @@ How to run this sample
 
 Deploy this sample in BPS. 
 
-In the BPS.xml , enable bam publisher extension as follows.
+In the BPS.xml , enable das analytics publisher extension as follows.
 
 <tns:ExtensionBundles>
      <tns:runtimes>
@@ -10,16 +10,12 @@ In the BPS.xml , enable bam publisher extension as follows.
      </tns:runtimes>
 </tns:ExtensionBundles>
 
-Analytics Server profile is configured to publish the received variable data to analytics server.
-You need to have analytics server up, and runing , inorder for the sample to work properly.
+Analytics Server profile is configured to publish the received variable data to analytics server. There you can specify the
+dataType ( STRING, INTEGER, LONG, DOUBLE, BOOL, FLOAT ) and the type of data being published ( META, PAYLOAD, CORRELATION ).
 
-This sample publishes the same data that is published by the KPI sample in analytics server. Hence the same
-toolbox can be used to visualise the data published.
+You need to have data analytics server up  runing , inorder for the sample to work properly.
 
-With enableLoadBalancing attribute in Connection element, you can define whether to use the LoadBalancing data
-publisher or Async data publisher. 
+In the sample, you need to configure the credentails for the Data Analytics Server. You can specify whether to use securePassword (encrypted )
+using the default keystore or use plain text passwords.
 
-When the enableLoadBalancing=false, it will use aysnc data publisher and it will only publish data to one analytics
-server. When enableLoadBalancing=true, you can publish data to multiple analytics servers in a round robin manner. For
-that scenario, you can configure mulitple analytics publishing urls in a comma separated manner.
-
+You can specify multiple das server urls and those will be used in a load balanced manner.  
