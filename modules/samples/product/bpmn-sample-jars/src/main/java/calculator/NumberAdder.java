@@ -24,9 +24,9 @@ public class NumberAdder implements JavaDelegate {
 
     public void execute(DelegateExecution execution) throws Exception {
 
-        int number1 = Integer.parseInt((String) execution.getVariable("number1"));
-        int number2 = Integer.parseInt((String) execution.getVariable("number2"));
-        int result = number1 + number2;
+        Long number1 = (Long) execution.getVariable("number1");
+        Long number2 = (Long) execution.getVariable("number2");
+        Long result = number1 + number2;
         execution.setVariable("result", "" + result);
 
     }
