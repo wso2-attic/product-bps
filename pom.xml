@@ -659,7 +659,7 @@
 
         <carbon.automation.core.version>4.2.0</carbon.automation.core.version>
 
-        <carbon.metrics.version>1.2.1</carbon.metrics.version>
+        <carbon.metrics.version>1.2.2</carbon.metrics.version>
 
         <jacoco.agent.version>0.7.5.201505241946</jacoco.agent.version>
 
