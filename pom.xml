@@ -624,7 +624,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <bps.version>3.6.0-SNAPSHOT</bps.version>
 
-        <carbon.kernel.version>4.4.7</carbon.kernel.version>
+        <carbon.kernel.version>4.4.8</carbon.kernel.version>
 
         <eclipse.version>3.2.0</eclipse.version>
         <servlet-api.version>2.4</servlet-api.version>
