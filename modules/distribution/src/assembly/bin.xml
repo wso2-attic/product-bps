@@ -312,7 +312,7 @@
         </fileSet>
 
         <!-- Metrics -->
-        <fileSet>
+        <!--fileSet>
             <directory>
                 ../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/metrics/
             </directory>
@@ -322,7 +322,7 @@
             </includes>
             <fileMode>644</fileMode>
             <directoryMode>775</directoryMode>
-        </fileSet>
+        </fileSet-->
         <!-- Identity SQLs -->
         <fileSet>
             <directory>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/dbscripts/identity</directory>
@@ -663,7 +663,7 @@
             <filtered>true</filtered>
         </file>
         <!-- Metrics -->
-        <file>
+        <!--file>
             <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/conf/metrics.properties</source>
             <outputDirectory>wso2bps-${pom.version}/repository/conf/</outputDirectory>
             <filtered>false</filtered>
@@ -684,7 +684,7 @@
             <source>../p2-profile-gen/target/wso2carbon-core-${carbon.kernel.version}/repository/database/WSO2METRICS_DB.h2.db</source>
             <outputDirectory>wso2bps-${pom.version}/repository/database/</outputDirectory>
             <fileMode>644</fileMode>
-        </file>
+        </file-->
 
 
     </files>
