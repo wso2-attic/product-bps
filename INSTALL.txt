@@ -67,8 +67,5 @@ System Requirements
 Running Samples
 =======================
 BPS samples are available at CARBON_HOME/repository/samples directory.
-
-The samples could be deployed with wso2bps-samples.sh script located in  CARBON_HOME/bin directory.
-Ex: Running the following command would deploy the HelloWorld2.zip sample file found in the samples
- folder.
-wso2bps-samples.sh -s HelloWorld2.zip
+You can copy the samples to relevant directories from the file system or upload 
+from the management console.
