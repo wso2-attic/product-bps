@@ -517,6 +517,9 @@
                                 <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/carbon.xml"
                                          token="&lt;!--HostName&gt;www.wso2.org&lt;/HostName--&gt;"
                                          value="&lt;HostName&gt;localhost&lt;/HostName&gt;"/>
+                                <replace file="target/wso2carbon-core-${carbon.kernel.version}/repository/conf/security/Owasp.CsrfGuard.Carbon.properties"
+                                         token="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*"
+                                         value="org.owasp.csrfguard.unprotected.Services=%servletContext%/services/*${line.separator}org.owasp.csrfguard.unprotected.TenantServices=^%servletContext%/t/.*/services/.*$${line.separator}org.owasp.csrfguard.unprotected.AttachmentServices=%servletContext%/fileupload/attachment-mgt${line.separator}org.owasp.csrfguard.unprotected.TenantAttachmentServices=^%servletContext%/t/.*/fileupload/attachment-mgt$" />
                             </tasks>
                         </configuration>
                         <goals>
