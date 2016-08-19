@@ -43,7 +43,13 @@ Key Features
 * Comprehensive and customizable web application for managing bpmn instances and user tasks.
 * Human Task UI Form Generation support
 * Ability to publish statistics to WSO2 Data Analytics server for analysis
-* Reporting dashboards
+* Reporting dashboards for BPMN
+* Data manipulation support for BPMN with json and xml
+* Human Task Editor with Developer Studio
+* BPMN Proces Instance Search/Monitoring capability
+* BPMN Task user substitution feature
+* Enhanced rest service invoker extension for BPMN 
+* SOAP service invoker extension for BPMN
 
 
 New Features In This Release
@@ -56,7 +62,7 @@ Issues Fixed In This Release
 ----------------------------
 
 * WSO2 BPS related components of the WSO2 Carbon Platform -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12625
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=13298
 
 
 Known Issues
@@ -66,7 +72,7 @@ Known Issues
 * BPEL4People only supports remote tasks and remote notification creation.
 
 * For a complete list of features to be implemented please refer the list of known issues -
-       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=12626
+       https://wso2.org/jira/secure/IssueNavigator.jspa?mode=hide&requestId=13299
 
 
 Installation & Running
@@ -207,7 +213,6 @@ Crypto Notice
    Apache WSS4J     : http://ws.apache.org/wss4j/
    Apache Santuario : http://santuario.apache.org/
    Bouncycastle     : http://www.bouncycastle.org/
-   Apache ODE       : http://ode.apache.org/
 
 --------------------------------------------------------------------------------
 (c) Copyright 2016 WSO2 Inc.
