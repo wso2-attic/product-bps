@@ -44,18 +44,24 @@ Key Features
 * Human Task UI Form Generation support
 * Ability to publish statistics to WSO2 Data Analytics server for analysis
 * Reporting dashboards for BPMN
-* Data manipulation support for BPMN with json and xml
+* Data manipulation support for BPMN with JSON and XML
 * Human Task Editor with Developer Studio
-* BPMN Proces Instance Search/Monitoring capability
+* BPMN Process Instance Search/Monitoring capability
 * BPMN Task user substitution feature
-* Enhanced rest service invoker extension for BPMN 
+* Enhanced rest service invoker extension for BPMN
 * SOAP service invoker extension for BPMN
 
 
 New Features In This Release
 ----------------------------
 
-* BPMN rest api improvements.
+* BPMN REST Api improvements.
+* Data manipulation support for BPMN with JSON and XML
+* Human Task Editor with Developer Studio
+* BPMN Process Instance Search/Monitoring capability
+* BPMN Task user substitution feature
+* Enhanced rest service invoker extension for BPMN
+* SOAP service invoker extension for BPMN
 * Many other bug fixes.
 
 Issues Fixed In This Release
