@@ -54,8 +54,6 @@ public class RegistryCleaner {
 		setKeyStore(clientTrustStorePath, trustStorePassword, trustStoreType);
 
 		try {
-			File file = new File("." + File.separator);
-			System.setProperty(CleanupConstants.CARBON_HOME, file.getCanonicalFile().toString());
 
 			if (System.getProperty(CleanupConstants.OS_NAME).startsWith(CleanupConstants.WINDOWS)) {
 				prop.load(new FileInputStream(
