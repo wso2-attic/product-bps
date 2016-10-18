@@ -48,6 +48,7 @@
             <class name="org.wso2.bps.integration.tests.bpmn.rest.BPMNRestDeploymentsTestCase" />
             <class name="org.wso2.bps.integration.tests.bpmn.rest.BPMNRestProcessInstancesTest" />
             <class name="org.wso2.bps.integration.tests.bpmn.rest.BPMNRestExecutionTest" />
+            <class name="org.wso2.bps.integration.tests.bpmn.rest.BPMNTaskQueryTestCase"/>
         </classes>
     </test>
 
