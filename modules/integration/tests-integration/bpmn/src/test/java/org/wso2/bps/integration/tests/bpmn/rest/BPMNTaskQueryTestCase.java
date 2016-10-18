@@ -19,11 +19,7 @@ package org.wso2.bps.integration.tests.bpmn.rest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,17 +29,12 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.wso2.bps.integration.common.clients.bpmn.WorkflowServiceClient;
 import org.wso2.bps.integration.common.utils.BPSMasterTest;
-import org.wso2.bps.integration.tests.bpmn.BPMNTestConstants;
 import org.wso2.bps.integration.tests.bpmn.BPMNTestUtils;
-import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.integration.common.admin.client.UserManagementClient;
-import org.wso2.carbon.integration.common.utils.mgt.ServerConfigurationManager;
 import org.wso2.carbon.user.mgt.stub.UserAdminUserAdminException;
 
-import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  * Test case for get tasks with runtime/tasks?candidateOrAssigned=<username> request
