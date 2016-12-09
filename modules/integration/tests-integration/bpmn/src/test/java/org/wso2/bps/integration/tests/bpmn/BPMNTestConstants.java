@@ -31,6 +31,7 @@ public class BPMNTestConstants {
     public static final String COMMENT_MESSAGE = "Testing 123";
     public final static String NOT_AVAILABLE = "Not Available";
     public static final String CAR_EXTENSION =".car";
+    public static final String BAR_EXTENSION =".bar";
 
 
     public static final String CREATED = "201";
@@ -42,6 +43,9 @@ public class BPMNTestConstants {
     public static final int PROCESS_DEPLOYMENT_MAX_RETRY_COUNT = 200;
     public static final int PROCESS_DEPLOYMENT_WAIT_TIME_PER_RETRY = 500;
     public static final String ACTIVITI_CONFIGURATION_FILE_NAME = "activiti.xml";
+    public static final String REGISTRY_CONFIGURATION_FILE_NAME = "registry.xml";
 
     public static final String DIR_CONFIG = "configs";
+    public static final String DIR_DEPLOYMENT = "deployment";
+    public static final String DIR_SLAVE_CONFIGS = "slaveConfigs";
 }
