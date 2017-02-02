@@ -684,7 +684,7 @@
         <imp.pkg.version.axis2>[1.6.1, 1.7.0)</imp.pkg.version.axis2>
         <axis2.osgi.version>1.6.1.wso2v20</axis2.osgi.version>
         <axis2.osgi.version.range>[1.6.1, 1.7.0)</axis2.osgi.version.range>
-        <axis2.transports.version>2.0.0.wso2v1</axis2.transports.version>
+        <axis2.transports.version>2.0.0-wso2v1</axis2.transports.version>
 
         <!-- Apache Axiom -->
         <orbit.version.axiom>1.2.11.wso2v11</orbit.version.axiom>
