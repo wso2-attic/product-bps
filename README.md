@@ -1,3 +1,7 @@
+NOTE
+----
+Since WSO2 BPS will be include in WSO2 Integrator(http://wso2.com/integration) as the BPM profile, we are deprecating this product and moving it to attic.
+
 WSO2 Business Process Server 
 -----------------------------
 
